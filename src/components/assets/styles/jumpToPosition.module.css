@@ -5,6 +5,15 @@
 
 .jumpToPositionInput {
   display: block;
+  font-weight: bold;
   padding: calc(var(--layout-spacing) / 2);
   border-bottom: 2px solid var(--theme-subdue);
+}
+
+.jumpToPositionInput[data-focus-visible] {
+  outline: 2px solid var(--theme-focus);
+}
+
+.jumpToPositionNumberField[data-disabled] {
+  color: var(--theme-disable);
 }
