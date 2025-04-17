@@ -190,8 +190,8 @@ export const RSPrefs: IRSPrefs = {
       ActionKeys.settings,
       ActionKeys.toc,
       ActionKeys.fullscreen,
-      ActionKeys.layoutStrategy
-    //  ActionKeys.jumpToPosition
+      ActionKeys.layoutStrategy,
+      ActionKeys.jumpToPosition
     ],
     collapse: {
       // Number of partially icons to display
@@ -265,8 +265,18 @@ export const RSPrefs: IRSPrefs = {
       [ActionKeys.jumpToPosition]: {
         visibility: ActionVisibility.overflow,
         shortcut: null, // `${ ShortcutMetaKeywords.shift }+${ ShortcutMetaKeywords.alt }+J`,
+        sheet: {
+          defaultSheet: SheetTypes.popover,
+          breakpoints: {
+            [StaticBreakpoints.compact]: SheetTypes.bottomSheet
+          }
+        },
         docked: {
           dockable: DockTypes.none
+        },
+        snapped: {
+          scrim: true,
+          minHeight: "content-height"
         }
       }
     }

@@ -78,7 +78,10 @@
     },
     "jumpToPosition": {
       "tooltip": "Jump to…",
-      "trigger": "Jump to position"
+      "trigger": "Jump to position",
+      "heading": "Jump to position",
+      "close": "Close jump to position",
+      "label": "Select a position from {{ positionStart }} to {{ positionEnd }}:"
     },
     "overflowMenu": {
       "active": {

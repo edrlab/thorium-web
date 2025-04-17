@@ -9,7 +9,7 @@ import readerStateStyles from "./assets/styles/readerStates.module.css";
 import readerHeaderStyles from "./assets/styles/readerHeader.module.css";
 
 import { FullscreenAction } from "./FullscreenAction";
-import { JumpToPositionAction } from "./JumpToPositionAction";
+import { JumpToPositionAction, JumpToPositionActionContainer } from "./JumpToPositionAction";
 import { LayoutStrategyAction, LayoutStrategiesActionContainer } from "./LayoutStrategyAction";
 import { SettingsAction, SettingsActionContainer } from "./SettingsAction";
 import { TocAction, TocActionContainer } from "./TocAction";
@@ -26,7 +26,8 @@ const ActionsMap: { [key in ActionKeys]: IActionsMapObject } = {
     trigger: FullscreenAction
   },
   [ActionKeys.jumpToPosition]: {
-    trigger: JumpToPositionAction
+    trigger: JumpToPositionAction,
+    container: JumpToPositionActionContainer
   },
   [ActionKeys.layoutStrategy]: {
     trigger: LayoutStrategyAction,

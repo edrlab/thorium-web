@@ -58,6 +58,7 @@ import { CUSTOM_SCHEME, ScrollActions } from "@/helpers/scrollAffordance";
 import { localData } from "@/helpers/localData";
 import { getPlatformModifier } from "@/helpers/keyboard/getMetaKeys";
 import { createTocTree } from "@/helpers/toc/createTocTree";
+import { deserializePositions } from "@/helpers/positions/deserializePositions";
 
 import { toggleActionOpen } from "@/lib/actionsReducer";
 import { useAppSelector, useAppDispatch, useAppStore } from "@/lib/hooks";
@@ -77,7 +78,8 @@ import {
   setProgression, 
   setRunningHead, 
   setTocTree, 
-  setTocEntry
+  setTocEntry,
+  setPositionsList
 } from "@/lib/publicationReducer";
 import { Dispatch } from "@reduxjs/toolkit";
 
@@ -544,7 +546,11 @@ export const Reader = ({ rawManifest, selfHref }: { rawManifest: object, selfHre
 
     const fetchPositions = async () => {
       positionsList = await publication.current?.positionsFromManifest();
-      if (positionsList && positionsList.length > 0) dispatch(setProgression( { totalPositions: positionsList.length }));
+      if (positionsList && positionsList.length > 0) {
+        dispatch(setProgression( { totalPositions: positionsList.length }))
+      };
+      const deserializedPositionsList = deserializePositions(positionsList);
+      dispatch(setPositionsList(deserializedPositionsList));
     };
 
     fetchPositions()

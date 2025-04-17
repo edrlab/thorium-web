@@ -6,6 +6,7 @@ const initialState: IPublicationState = {
   isFXL: false,
   isRTL: false,
   progression: {},
+  positionsList: [],
   atPublicationStart: false,
   atPublicationEnd: false,
   tocTree: undefined, 
@@ -28,6 +29,9 @@ export const publicationSlice = createSlice({
     setProgression: (state, action) => {
       state.progression = {...state.progression, ...action.payload }
     },
+    setPositionsList: (state, action) => {
+      state.positionsList = action.payload
+    },
     setPublicationStart: (state, action) => {
       state.atPublicationStart = action.payload
     },
@@ -49,6 +53,7 @@ export const {
   setFXL,
   setRTL,
   setProgression,
+  setPositionsList, 
   setPublicationStart,
   setPublicationEnd,
   setTocTree, 

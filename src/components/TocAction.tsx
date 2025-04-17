@@ -60,8 +60,6 @@ export const TocActionContainer: React.FC<IActionComponentContainer> = ({ trigge
     if (keys === "all" || !keys || keys.size === 0) return;
 
     const key = [...keys][0];
-
-    console.log(key);
     
     const el = document.querySelector(`[data-key=${key}]`);
     const href = el?.getAttribute("data-href");

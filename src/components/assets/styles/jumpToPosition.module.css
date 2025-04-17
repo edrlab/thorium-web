@@ -1,0 +1,10 @@
+.jumpToPositionLabel {
+  margin-block: var(--layout-spacing);
+  display: block;
+}
+
+.jumpToPositionInput {
+  display: block;
+  padding: calc(var(--layout-spacing) / 2);
+  border-bottom: 2px solid var(--theme-subdue);
+}
