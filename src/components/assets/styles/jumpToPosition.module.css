@@ -1,5 +1,6 @@
 .jumpToPositionForm {
   display: flex;
+  gap: calc(var(--layout-spacing) / 2);
 }
 
 .jumpToPositionLabel {
@@ -10,16 +11,9 @@
 .jumpToPositionInput {
   display: block;
   font-weight: bold;
-  padding: calc(var(--layout-spacing) / 2);
-  border-bottom: 2px solid var(--theme-subdue);
-}
-
-.jumpToPositionInput[data-focus-visible] {
-  outline: 2px solid var(--theme-focus);
-}
-
-.jumpToPositionNumberField[data-disabled] {
-  color: var(--theme-disable);
+  padding: calc(var(--icon-size, 24px) * (1/4)) calc(var(--layout-spacing) / 2);
+  border-radius: var(--layout-radius);
+  border: 2px solid var(--theme-subdue);
 }
 
 .jumpToPositionButton {
@@ -36,10 +30,12 @@
   background-color: var(--theme-hover);
 }
 
+.jumpToPositionInput[data-focus-visible],
 .jumpToPositionButton[data-focus-visible] {
   outline: 2px solid var(--theme-focus);
 }
 
+.jumpToPositionNumberField[data-disabled],
 .jumpToPositionButton[data-disabled] {
   color: var(--theme-disable);
 }
