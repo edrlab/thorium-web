@@ -47,7 +47,9 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
   // And not only that the array simply includes the position
   const positionInRange = useCallback(() => {
     if (!positionNumbers) return false;
-    return position >= positionNumbers[0] && position <= positionNumbers[1];
+    return positionNumbers.length === 2
+      ? position >= positionNumbers[0] && position <= positionNumbers[1]
+      : position === positionNumbers[0];
   }, [position, positionNumbers]);
 
   // Label indicates the total number of positions for the book
