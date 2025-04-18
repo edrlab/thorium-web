@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { FormEvent, useCallback, useEffect, useState } from "react";
 
 import { RSPrefs } from "@/preferences";
 
@@ -14,7 +14,7 @@ import { ActionIcon } from "./ActionTriggers/ActionIcon";
 import { OverflowMenuItem } from "./ActionTriggers/OverflowMenuItem";
 import { SheetWithType } from "./Sheets/SheetWithType";
 
-import { Input, Label, NumberField } from "react-aria-components";
+import { Button, Form, Input, Label, NumberField } from "react-aria-components";
 
 import { useEpubNavigator } from "@/hooks/useEpubNavigator";
 import { useDocking } from "@/hooks/useDocking";
@@ -28,14 +28,22 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
   const actionState = useAppSelector(state => state.actions.keys[ActionKeys.jumpToPosition]);
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
+  // TODO: Update. We don’t have a timeline yet, so we use the progression we already have
+  const positionNumbers = useAppSelector(state => state.publication.progression.currentPositions);
+
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const dispatch = useAppDispatch();
 
   const docking = useDocking(ActionKeys.jumpToPosition);
   const sheetType = docking.sheetType;
 
-  const { currentLocator, go } = useEpubNavigator();
+  const { go } = useEpubNavigator();
 
+  // Component has to handle updates locally since EpubNavigator updates positions, 
+  // so we use these as an intermediary
+  const [position, setPosition] = useState(0);
+
+  // Label indicates the total number of positions for the book
   const makeFieldLabel = useCallback(() => {
     const jsonTemplate = parseTemplate(Locale.reader.jumpToPosition.label);
     return jsonTemplate({ positionStart: 1, positionEnd: positionsList.length });
@@ -48,16 +56,36 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
     }));
   }, [dispatch]);
 
-  const handleAction = useCallback((value: number) => {
+  // NumberField onChange won’t fire if the value has been typed
+  // so we need to handle the input manually
+  const handleInput = useCallback((e: FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement;
+    setPosition(parseInt(target.value));
+  }, []);
+
+  // This is a form submit handler so we have to preventDefault
+  // We have to use this otherwise any change will trigger a navigation
+  const handleAction = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!positionsList) return;
     
-    const item = positionsList.find(item => item.locations.position === value);
+    const item = positionsList.find(item => item.locations.position === position);
     
-    if (!item) return setOpen(false);
+    if (!item || (!!position && positionNumbers?.includes(position))) return setOpen(false);
 
     go(item, !reducedMotion, () => setOpen(false));
-  }, [positionsList, reducedMotion, go, setOpen]); 
+  }, [position, positionsList, positionNumbers, reducedMotion, go, setOpen]); 
 
+  // We don’t have the position when the component mounts because EpubNavigator
+  // hasn’t even be loaded yet, so we must update it when positionNumbers has been set
+  useEffect(() => {
+    if (!position && positionNumbers) {
+      setPosition(positionNumbers[0]);
+    }
+  }, [positionNumbers, position]);
+
+  // In case there is no positions list we return
   if (!positionsList) return null;
 
   return(
@@ -76,19 +104,40 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
         docker: docking.getDocker()
       } }
     >
-      <NumberField
-        className={ jumpToPositionStyles.jumpToPositionNumberField }
-        defaultValue={ currentLocator()?.locations.position }
-        minValue={ 1 }
-        maxValue={ positionsList.length }
-        step={ 1 }
-        formatOptions={ { style: "decimal" } }
-        onChange={ handleAction }
-        isWheelDisabled={ true}
+      <Form 
+        className={ jumpToPositionStyles.jumpToPositionForm }
+        onSubmit={ handleAction }
       >
-        <Label className={ jumpToPositionStyles.jumpToPositionLabel }>{ makeFieldLabel() }</Label>
-        <Input className={ jumpToPositionStyles.jumpToPositionInput } inputMode="numeric" />
-      </NumberField>
+        <NumberField
+          name="jumpToPosition"
+          className={ jumpToPositionStyles.jumpToPositionNumberField }
+          onChange={ setPosition }
+          onInput={ handleInput }
+          value={ position }
+          minValue={ 1 }
+          maxValue={ positionsList.length }
+          step={ 1 }
+          formatOptions={ { style: "decimal" } }
+          isWheelDisabled={ true }
+        >
+          <Label 
+            className={ jumpToPositionStyles.jumpToPositionLabel }
+          >
+            { makeFieldLabel() }
+          </Label>
+          <Input 
+            className={ jumpToPositionStyles.jumpToPositionInput } 
+            inputMode="numeric" 
+          />
+        </NumberField>
+        <Button 
+          className={ jumpToPositionStyles.jumpToPositionButton } 
+          type="submit" 
+          isDisabled={ !position || (!!position && positionNumbers?.includes(position)) }
+        >
+          { Locale.reader.jumpToPosition.go }
+        </Button>
+      </Form>
     </SheetWithType>
     </>
   )
@@ -106,6 +155,7 @@ export const JumpToPositionAction: React.FC<IActionComponentTrigger> = ({ varian
     }));
   }
 
+  // In case there is no positions list we return
   if (!positionsList) return null;
     
   return(

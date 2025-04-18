@@ -1,3 +1,7 @@
+.jumpToPositionForm {
+  display: flex;
+}
+
 .jumpToPositionLabel {
   margin-block: var(--layout-spacing);
   display: block;
@@ -15,5 +19,27 @@
 }
 
 .jumpToPositionNumberField[data-disabled] {
+  color: var(--theme-disable);
+}
+
+.jumpToPositionButton {
+  box-sizing: content-box;
+  border: 2px solid var(--theme-subdue);
+  padding: calc(var(--icon-size, 24px) * (1/4)) calc(var(--icon-size, 24px) * (1/2));
+  text-align: center;
+  border-radius: var(--layout-radius);
+  margin-inline-start: auto;
+  align-self: flex-end;
+}
+
+.jumpToPositionButton[data-hovered] {
+  background-color: var(--theme-hover);
+}
+
+.jumpToPositionButton[data-focus-visible] {
+  outline: 2px solid var(--theme-focus);
+}
+
+.jumpToPositionButton[data-disabled] {
   color: var(--theme-disable);
 }
