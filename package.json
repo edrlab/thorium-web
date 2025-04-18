@@ -29,30 +29,30 @@
     "@readium/navigator": "link:src/readium/ts-toolkit/navigator",
     "@readium/navigator-html-injectables": "link:src/readium/ts-toolkit/navigator-html-injectables",
     "@readium/shared": "link:src/readium/ts-toolkit/shared",
-    "@reduxjs/toolkit": "^2.6.1",
+    "@reduxjs/toolkit": "^2.7.0",
     "classnames": "^2.5.1",
     "debounce": "^2.2.0",
     "json-templates": "^5.1.0",
-    "motion": "^12.6.3",
-    "next": "15.2.4",
+    "motion": "^12.7.4",
+    "next": "15.3.1",
     "react": "^19.1.0",
-    "react-aria": "^3.38.1",
-    "react-aria-components": "^1.7.1",
+    "react-aria": "^3.39.0",
+    "react-aria-components": "^1.8.0",
     "react-dom": "^19.1.0",
     "react-modal-sheet": "^4.0.1",
     "react-redux": "^9.2.0",
     "react-resizable-panels": "^2.1.7",
-    "react-stately": "^3.36.1"
+    "react-stately": "^3.37.0"
   },
   "devDependencies": {
-    "@readium/css": ">=2.0.0-beta.11",
+    "@readium/css": "2.0.0-beta.12",
     "@svgr/webpack": "^8.1.0",
     "@types/json-templates": "^3.0.3",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.1",
-    "eslint": "^9.23.0",
-    "eslint-config-next": "15.2.4",
-    "typescript": "^5.8.2"
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "eslint": "^9.24.0",
+    "eslint-config-next": "15.3.1",
+    "typescript": "^5.8.3"
   }
 }
