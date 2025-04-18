@@ -106,7 +106,7 @@ Here's a high-level system diagram showing the relationships between the compone
 
 ## Prerequisites for implementation
 
-> [!Important]
+> [!IMPORTANT]
 > The following are outside of the control of the Thorium Web project and must be implemented by the deployer.
 
 Thorium Web follows the [Readium Architecture](https://readium.org/architecture/). To get started with the implementation of Thorium Web, we need to set up a few things first:
@@ -138,7 +138,7 @@ Thorium Web is a complex project that relies heavily on several other projects, 
 > [!IMPORTANT]
 > Before reporting an issue in the Thorium Web issue tracker, please check the following:
 > - **ts-toolkit:** If the issue is related to the ts-toolkit (Navigator, injectables, shared models), please report it in the [ts-toolkit issue tracker](https://github.com/readium/ts-toolkit/issues).
-> - **ReadiumCSS:** If the issue is related to EPUB rendering and settings, please report it in the [ReadiumCSS issue tracker](https://github.com/readium/readium-css/issues).
+> - **ReadiumCSS:** If the issue is related to EPUB rendering and the application of settings, please report it in the [ReadiumCSS issue tracker](https://github.com/readium/readium-css/issues).
 
 By reporting issues in the correct issue tracker, we can ensure that the root cause of the problem is addressed and fixed in the relevant project.
 
@@ -181,7 +181,7 @@ Here are some best practices and recommendations for working with Thorium Web:
 
 [Readium Architecture](https://readium.org/architecture/): All Readium implementations (mobile, desktop or Web) are split in two main modules, which use the Readium Web Publication Manifest to communicate together. In Thorium Web, the Publication Server is responsible for serving a Readium Web Publication Manifest and the resources of a publication over HTTPS, and the Navigator is meant to navigate in the resources of a publication.
 
-Preferences API: The Preferences API is a way to submit a set of Preferences to the Navigator, which will then recalculate its settings and update the presentation. It is used in TS-Toolkit to configure Navigators.
+[Preferences API](https://readium.org/architecture/proposals/009-preferences-api.html): The Preferences API is a way to submit a set of Preferences to the Navigator, which will then recalculate its settings and update the presentation. It is used in TS-Toolkit to configure Navigators.
 
 [Readium CSS](https://readium.org/readium-css/): Readium CSS is a CSS library whose purpose is to style EPUB publications in a reliable manner. It is used by Thorium Web to style EPUB publications through the Preferences API.
 
