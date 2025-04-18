@@ -77,13 +77,10 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
     go(item, !reducedMotion, () => setOpen(false));
   }, [position, positionsList, positionNumbers, reducedMotion, go, setOpen]); 
 
-  // We don’t have the position when the component mounts because EpubNavigator
-  // hasn’t even be loaded yet, so we must update it when positionNumbers has been set
+  // Since we are using an intermediary local state, we must keep track when positionNumbers changes
   useEffect(() => {
-    if (!position && positionNumbers) {
-      setPosition(positionNumbers[0]);
-    }
-  }, [positionNumbers, position]);
+    positionNumbers && setPosition(positionNumbers[0]);
+  }, [positionNumbers]);
 
   // In case there is no positions list we return
   if (!positionsList) return null;
