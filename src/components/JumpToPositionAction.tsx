@@ -43,6 +43,13 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
   // so we use these as an intermediary
   const [position, setPosition] = useState(0);
 
+  // Position Numbers can be a range so we must check position is in range
+  // And not only that the array simply includes the position
+  const positionInRange = useCallback(() => {
+    if (!positionNumbers) return false;
+    return position >= positionNumbers[0] && position <= positionNumbers[1];
+  }, [position, positionNumbers]);
+
   // Label indicates the total number of positions for the book
   const makeFieldLabel = useCallback(() => {
     const jsonTemplate = parseTemplate(Locale.reader.jumpToPosition.label);
@@ -72,10 +79,10 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
     
     const item = positionsList.find(item => item.locations.position === position);
     
-    if (!item || (!!position && positionNumbers?.includes(position))) return setOpen(false);
+    if (!item || positionInRange()) return setOpen(false);
 
     go(item, !reducedMotion, () => setOpen(false));
-  }, [position, positionsList, positionNumbers, reducedMotion, go, setOpen]); 
+  }, [position, positionsList, reducedMotion, positionInRange, go, setOpen]); 
 
   // Since we are using an intermediary local state, we must keep track when positionNumbers changes
   useEffect(() => {
@@ -130,7 +137,7 @@ export const JumpToPositionActionContainer: React.FC<IActionComponentContainer> 
         <Button 
           className={ jumpToPositionStyles.jumpToPositionButton } 
           type="submit" 
-          isDisabled={ !position || (!!position && positionNumbers?.includes(position)) }
+          isDisabled={ !position || positionInRange() }
         >
           { Locale.reader.jumpToPosition.go }
         </Button>
