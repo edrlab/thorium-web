@@ -5,6 +5,7 @@ import { RSPrefs } from "@/preferences";
 import Locale from "../resources/locales/en.json";
 
 import Chevron from "./assets/icons/chevron_right.svg";
+import Close from "./assets/icons/close.svg";
 
 import { Link } from "@readium/shared";
 import { ActionComponentVariant, ActionKeys, IActionComponentContainer, IActionComponentTrigger } from "@/models/actions";
@@ -20,7 +21,7 @@ import TocIcon from "./assets/icons/toc.svg";
 import { ActionIcon } from "./ActionTriggers/ActionIcon";
 import { SheetWithType } from "./Sheets/SheetWithType";
 import { OverflowMenuItem } from "./ActionTriggers/OverflowMenuItem";
-import { Button, Collection, Selection } from "react-aria-components";
+import { Button, Collection, Input, Label, SearchField, Selection } from "react-aria-components";
 import {
   Tree,
   TreeItem,
@@ -29,11 +30,14 @@ import {
 
 import { useEpubNavigator } from "@/hooks/useEpubNavigator";
 import { useDocking } from "@/hooks/useDocking";
+import { useFilter } from "react-aria";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
 import { setTocEntry } from "@/lib/publicationReducer";
 import { setHovering, setImmersive } from "@/lib/readerReducer";
+
+import { isActiveElement } from "@/helpers/focus";
 
 export const TocActionContainer: React.FC<IActionComponentContainer> = ({ triggerRef }) => {
   const tocEntry = useAppSelector(state => state.publication.tocEntry);
@@ -49,12 +53,41 @@ export const TocActionContainer: React.FC<IActionComponentContainer> = ({ trigge
   const docking = useDocking(ActionKeys.toc);
   const sheetType = docking.sheetType;
 
+  const { contains } = useFilter({ sensitivity: "base" });
+  const [filterValue, setFilterValue] = React.useState("");
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  const filterTocTree = (items: TocItem[], filterValue: string): TocItem[] => {
+    if (!filterValue) {
+      return items;
+    }
+    
+    const recursiveFilter = (items: TocItem[]): TocItem[] => {
+      return items.reduce((acc: TocItem[], item: TocItem) => {
+        if (item.title && contains(item.title, filterValue)) {
+          acc.push({ ...item, children: undefined });
+        }
+        if (item.children) {
+          acc.push(...recursiveFilter(item.children));
+        }
+        return acc;
+      }, []);
+    };
+  
+    const result = recursiveFilter(items);
+    return result.map((item: TocItem, index: number) => ({ ...item, key: `${item.id}-${index}` }));
+  };
+  
+  const displayedTocTree = filterTocTree(tocTree || [], filterValue);
+
   const setOpen = useCallback((value: boolean) => {
+    if (!value) setFilterValue("");
+
     dispatch(setActionOpen({ 
       key: ActionKeys.toc,
       isOpen: value 
     }));
-  }, [dispatch]);
+  }, [dispatch, setFilterValue]);
 
   const handleAction = (keys: Selection) => {
     if (keys === "all" || !keys || keys.size === 0) return;
@@ -79,10 +112,7 @@ export const TocActionContainer: React.FC<IActionComponentContainer> = ({ trigge
           dispatch(setTocEntry(key));
           dispatch(setImmersive(true));
           dispatch(setHovering(false));
-          dispatch(setActionOpen({ 
-            key: ActionKeys.toc,
-            isOpen: false 
-          }));
+          setOpen(false);
         }
 
     goLink(link, true, cb);
@@ -91,9 +121,9 @@ export const TocActionContainer: React.FC<IActionComponentContainer> = ({ trigge
   // Since React Aria components intercept keys and do not continue propagation
   // we have to handle the escape key in capture phase
   useEffect(() => {
-    if (actionState.isOpen && (!actionState.docking || actionState.docking === DockingKeys.transient)) {
+    if (actionState.isOpen && (!actionState.docking || actionState.docking === DockingKeys.transient)) {      
       const handleEscape = (event: KeyboardEvent) => {
-        if (event.key === "Escape") {
+        if ((!isActiveElement(searchInputRef.current) && !filterValue) && event.key === "Escape" ) {
           setOpen(false);
         }
       };
@@ -130,49 +160,72 @@ export const TocActionContainer: React.FC<IActionComponentContainer> = ({ trigge
       } }
     >
       { tocTree && tocTree.length > 0 
-      ? (<Tree
-          aria-label={ Locale.reader.toc.entries }
-          selectionMode="single"
-          items={ tocTree }
-          className={ tocStyles.tocTree }
-          onSelectionChange={ handleAction }
-          defaultSelectedKeys={ tocEntry ? [tocEntry] : [] }
-          selectedKeys={ tocEntry ? [tocEntry] : [] } 
-          defaultExpandedKeys={ tocTree
-            .filter(item => isItemInChildren(item, tocEntry))
-            .map(item => item.id) 
-          }
-        >
-          { function renderItem(item) {
-            return (
-              <TreeItem 
-                data-href={ item.href }
-                className={ tocStyles.tocTreeItem }
-                textValue={ item.title || "" }
-              >
-                <TreeItemContent>
-                  { item.children 
-                    ? (<Button 
-                        slot="chevron" 
-                        className={ tocStyles.tocTreeItemButton }
-                        { ...(isRTL ? { style: { transform: "scaleX(-1)" }} : {}) }
-                      >
-                        <Chevron aria-hidden="true" focusable="false" />
-                    </Button>) 
-                    : null
-                  }
-                    <div className={ tocStyles.tocTreeItemText }>
-                      <div className={ tocStyles.tocTreeItemTextTitle }>{ item.title }</div>
-                      { item.position && <div className={ tocStyles.tocTreeItemTextPosition }>{ item.position }</div> }
-                    </div>
-                </TreeItemContent>
-                <Collection items={ item.children }>
-                  { renderItem }
-                </Collection>
-              </TreeItem>
-            );
-          }}
-        </Tree>) 
+      ? (<>
+          <SearchField 
+            value={ filterValue }
+            onChange={ setFilterValue }
+            onClear={ () => setFilterValue("") }
+            className={ tocStyles.tocSearch }
+          >
+            <Label className={ tocStyles.tocSearchLabel }>
+              { Locale.reader.toc.search.label }
+            </Label>
+            <Input 
+              ref={ searchInputRef}
+              className={ tocStyles.tocSearchInput } 
+              placeholder={ Locale.reader.toc.search.placeholder }
+            />
+            <Button
+              className={ tocStyles.tocSearchButton }
+              isDisabled={ !filterValue }
+            >
+              <Close aria-hidden="true" focusable="false" />
+            </Button>
+          </SearchField>
+          <Tree
+            aria-label={ Locale.reader.toc.entries }
+            selectionMode="single"
+            items={ displayedTocTree }
+            className={ tocStyles.tocTree }
+            onSelectionChange={ handleAction }
+            defaultSelectedKeys={ tocEntry ? [tocEntry] : [] }
+            selectedKeys={ tocEntry ? [tocEntry] : [] }
+            defaultExpandedKeys={ tocTree
+              .filter(item => isItemInChildren(item, tocEntry))
+              .map(item => item.id) 
+            }
+          >
+              { function renderItem(item) {
+                return (
+                  <TreeItem
+                    data-href={ item.href }
+                    className={ tocStyles.tocTreeItem }
+                    textValue={ item.title || "" }
+                  >
+                    <TreeItemContent>
+                      { item.children
+                        ? (<Button
+                          slot="chevron"
+                          className={ tocStyles.tocTreeItemButton }
+                          { ...(isRTL ? { style: { transform: "scaleX(-1)" } } : {}) }
+                        >
+                          <Chevron aria-hidden="true" focusable="false" />
+                        </Button>)
+                        : null
+                      }
+                      <div className={ tocStyles.tocTreeItemText }>
+                        <div className={ tocStyles.tocTreeItemTextTitle }>{ item.title }</div>
+                        { item.position && <div className={ tocStyles.tocTreeItemTextPosition }>{ item.position }</div> }
+                      </div>
+                    </TreeItemContent>
+                    <Collection items={ item.children }>
+                      { renderItem }
+                    </Collection>
+                  </TreeItem>
+                );
+              } }
+            </Tree>
+          </>) 
       : <div className={ tocStyles.empty }>{ Locale.reader.toc.empty }</div>
     }
     </SheetWithType>

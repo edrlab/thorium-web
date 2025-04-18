@@ -1,3 +1,60 @@
+/* Search */
+
+.tocSearch {
+  margin-bottom: var(--layout-spacing);
+  display: grid;
+  grid-template-areas: "label label"
+                       "input button";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  width: 100%;
+}
+
+.tocSearchLabel {
+  grid-area: label;
+  margin-bottom: calc(var(--layout-spacing) / 2);
+}
+
+.tocSearchInput {
+  grid-area: input;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border-radius: var(--layout-radius);
+  border: 2px solid var(--theme-subdue);
+  padding: calc(var(--icon-size, 24px) * (1/4)) calc(var(--layout-spacing) / 2);
+}
+
+.tocSearchInput::-webkit-search-cancel-button,
+.tocSearchInput::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+.tocSearchInput[data-focus-visible] {
+  outline: 2px solid var(--theme-focus);
+}
+
+.tocSearchButton {
+  grid-area: button;
+  margin-inline-start: calc(var(--icon-size, 24px) * -1.25);
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.tocSearchButton svg {
+  fill: var(--theme-text);
+  width: var(--icon-size, 24px);
+  height: var(--icon-size, 24px);
+}
+
+.tocSearchButton[data-disabled] {
+  display: none;
+}
+
+/* Tree */
+
 .tocTree {
   background: var(--theme-background);
   color: var(--theme-text);

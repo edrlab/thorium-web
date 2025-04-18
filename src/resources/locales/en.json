@@ -74,7 +74,12 @@
       "close": "Close table of contents",
       "heading": "Table of contents",
       "entries": "Entries in the table",
-      "empty": "The table of contents was not provided for this publication."
+      "empty": "The table of contents was not provided for this publication.",
+      "search": {
+        "label": "Search",
+        "placeholder": "Filter entries",
+        "clear": "Clear"
+      }
     },
     "jumpToPosition": {
       "tooltip": "Jump to…",
