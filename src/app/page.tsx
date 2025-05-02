@@ -11,16 +11,16 @@ export default function Home() {
 
       <ul>
         <li>
-          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FbW9ieS1kaWNrLmVwdWI">Moby Dick (reflow)</Link>
+          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FZ3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9tb2J5LWRpY2suZXB1Yg">Moby Dick (reflow)</Link>
         </li>
         <li>
-          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FbmF0aGFuaWVsLWhhd3Rob3JuZV90aGUtaG91c2Utb2YtdGhlLXNldmVuLWdhYmxlc19hZHZhbmNlZC5lcHVi">The House of the Seven Gables (reflow advanced)</Link>
+          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FZ3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9uYXRoYW5pZWwtaGF3dGhvcm5lX3RoZS1ob3VzZS1vZi10aGUtc2V2ZW4tZ2FibGVzX2FkdmFuY2VkLmVwdWI">The House of the Seven Gables (reflow advanced)</Link>
         </li>
         <li>
-          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FbGVzX2RpYWJvbGlxdWVzLmVwdWI">Les Diaboliques (reflow french)</Link>
+          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FZ3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXNfZGlhYm9saXF1ZXMuZXB1Yg">Les Diaboliques (reflow french)</Link>
         </li>
         <li>
-          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FQmVsbGFPcmlnaW5hbDMuZXB1Yg">Bella the Dragon (FXL)</Link>
+          <Link href="/read?book=https%3A%2F%2Fpublication-server.readium.org%2FZ3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9CZWxsYU9yaWdpbmFsMy5lcHVi">Bella the Dragon (FXL)</Link>
         </li>
       </ul>
     </main>

@@ -20,6 +20,8 @@ To get started with Thorium Web, follow these steps:
 
 The development server will automatically reload the page when you make changes to the code.
 
+You can take a look at the [Implementers’ Guide](./docs/ImplementersGuide.md) for more details.
+
 ## Customizing
 
 You can customize this project extensively through [Preferences](./src/preferences.ts): breakpoints, which and how to display actions, themes provided to users, configuration of the docking system, sizes and offsets of icons, etc.
