@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { defaultLetterSpacing, ThSettingsKeys, ThSettingsRangeVariant } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -26,6 +26,7 @@ export const StatefulLetterSpacing = ({ standalone = true }: StatefulSettingsIte
     step: RSPrefs.settings.keys?.[ThSettingsKeys.letterSpacing]?.step ?? defaultLetterSpacing.step
   };
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -43,15 +44,15 @@ export const StatefulLetterSpacing = ({ standalone = true }: StatefulSettingsIte
     { letterSpacingRangeConfig.variant === ThSettingsRangeVariant.numberField 
       ? <StatefulNumberField 
         standalone={ standalone }
-        label={ Locale.reader.settings.letterSpacing.title }
+        label={ locale.reader.settings.letterSpacing.title }
         defaultValue={ 0 } 
         value={ letterSpacing || 0 } 
         onChange={ async(value) => await updatePreference(value) } 
         range={ letterSpacingRangeConfig.range }
         step={ letterSpacingRangeConfig.step }
         steppers={{
-          decrementLabel: Locale.reader.settings.letterSpacing.decrease,
-          incrementLabel: Locale.reader.settings.letterSpacing.increase
+          decrementLabel: locale.reader.settings.letterSpacing.decrease,
+          incrementLabel: locale.reader.settings.letterSpacing.increase
         }}
         formatOptions={{ style: "percent" }} 
         isWheelDisabled={ true }
@@ -59,7 +60,7 @@ export const StatefulLetterSpacing = ({ standalone = true }: StatefulSettingsIte
       />
       : <StatefulSlider
         standalone={ standalone }
-        label={ Locale.reader.settings.letterSpacing.title }
+        label={ locale.reader.settings.letterSpacing.title }
         defaultValue={ 0 } 
         value={ letterSpacing || 0 } 
         onChange={ async(value) => await updatePreference(value as number) } 

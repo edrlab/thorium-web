@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { defaultParagraphIndent, ThSettingsKeys, ThSettingsRangeVariant } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -26,6 +26,7 @@ export const StatefulParagraphIndent = ({ standalone = true }: StatefulSettingsI
       step: RSPrefs.settings.keys?.[ThSettingsKeys.paragraphIndent]?.step ?? defaultParagraphIndent.step
     };
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -43,15 +44,15 @@ export const StatefulParagraphIndent = ({ standalone = true }: StatefulSettingsI
     { paragraphIndentRangeConfig.variant === ThSettingsRangeVariant.numberField 
       ? <StatefulNumberField 
         standalone={ standalone }
-        label={ Locale.reader.settings.paraIndent.title }
+        label={ locale.reader.settings.paraIndent.title }
         defaultValue={ 0 } 
         value={ paragraphIndent || 0 } 
         onChange={ async(value) => await updatePreference(value) } 
         range={ paragraphIndentRangeConfig.range }
         step={ paragraphIndentRangeConfig.step }
         steppers={{
-          decrementLabel: Locale.reader.settings.paraIndent.decrease,
-          incrementLabel: Locale.reader.settings.paraIndent.increase
+          decrementLabel: locale.reader.settings.paraIndent.decrease,
+          incrementLabel: locale.reader.settings.paraIndent.increase
         }}
         formatOptions={{
           signDisplay: "exceptZero",
@@ -63,7 +64,7 @@ export const StatefulParagraphIndent = ({ standalone = true }: StatefulSettingsI
       />
       : <StatefulSlider
         standalone={ standalone }
-        label={ Locale.reader.settings.paraIndent.title }
+        label={ locale.reader.settings.paraIndent.title }
         defaultValue={ 0 } 
         value={ paragraphIndent || 0 } 
         onChange={ async(value) => await updatePreference(value as number) } 

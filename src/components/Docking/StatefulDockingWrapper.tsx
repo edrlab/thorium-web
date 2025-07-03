@@ -2,7 +2,7 @@
 
 import { ReactNode, useCallback, useEffect, useRef } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import dockingStyles from "./assets/styles/docking.module.css";
 
@@ -38,7 +38,8 @@ const DockHandle = ({
   isPopulated: boolean;
   hasDragIndicator?: boolean;
 }) => {
-  const handleID = `${ flow }-resize-handle`;
+  const handleID = `${flow}-resize-handle`;
+  const locale = useLocale();
 
   const direction = useAppSelector(state => state.reader.direction);
 
@@ -90,27 +91,28 @@ const DockPanel = ({
   const dispatch = useAppDispatch();
 
   const dockClassName = flow === ThDockingKeys.end && direction === ThLayoutDirection.ltr ? "right-dock" : "left-dock";
-
+  const locale = useLocale();
+  
   const makeDockLabel = useCallback(() => {    
     let label = "";
     if (flow === ThDockingKeys.end && direction === ThLayoutDirection.ltr) {
-      label += Locale.reader.app.docking.dockingRight;
+      label += locale.reader.app.docking.dockingRight;
     } else {
-      label += Locale.reader.app.docking.dockingLeft
+      label += locale.reader.app.docking.dockingLeft
     }
 
     if (actionKey) {
       if (!isPopulated) {
-        const jsonTemplate = parseTemplate(Locale.reader.app.docking.dockingClosed);
+        const jsonTemplate = parseTemplate(locale.reader.app.docking.dockingClosed);
         // @ts-ignore
-        label += ` – ${ jsonTemplate({ action: Locale.reader[actionKey].heading }) }`
+        label += ` – ${ jsonTemplate({ action: locale.reader[actionKey].heading }) }`
       } else if (isCollapsed) {
-        const jsonTemplate = parseTemplate(Locale.reader.app.docking.dockingCollapsed);
+        const jsonTemplate = parseTemplate(locale.reader.app.docking.dockingCollapsed);
         // @ts-ignore
-        label += ` – ${ jsonTemplate({ action: Locale.reader[actionKey].heading }) }`
+        label += ` – ${ jsonTemplate({ action: locale.reader[actionKey].heading }) }`
       }
     } else {
-      label += ` – ${ Locale.reader.app.docking.dockingEmpty }`
+      label += ` – ${ locale.reader.app.docking.dockingEmpty }`
     }
 
     return label;

@@ -2,7 +2,7 @@
 
 import React, { ReactNode, RefObject } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import overflowMenuStyles from "./assets/styles/overflowMenu.module.css";
 
@@ -36,6 +36,7 @@ export const StatefulOverflowMenu = ({
   items,
   triggerRef
 }: StatefulOverflowMenuProps) => {
+  const locale = useLocale();
   const dispatch = useAppDispatch();
 
   const toggleMenuState = (value: boolean) => {
@@ -66,9 +67,9 @@ export const StatefulOverflowMenu = ({
           button: (
             <StatefulActionIcon
               className={ className ? className : overflowMenuStyles.activeButton }
-              aria-label={ Locale.reader.overflowMenu.active.trigger }
+              aria-label={ locale.reader.overflowMenu.active.trigger }
               placement="bottom"
-              tooltipLabel={ Locale.reader.overflowMenu.active.tooltip }
+              tooltipLabel={ locale.reader.overflowMenu.active.tooltip }
               visibility={ ThCollapsibilityVisibility.always }
             >
               <MenuIcon aria-hidden="true" focusable="false" />
@@ -84,9 +85,9 @@ export const StatefulOverflowMenu = ({
         <>
         <StatefulActionIcon 
           className={ className ? className : overflowMenuStyles.hintButton } 
-          aria-label={ Locale.reader.overflowMenu.hint.trigger }
+          aria-label={ locale.reader.overflowMenu.hint.trigger }
           placement="bottom"
-          tooltipLabel={ Locale.reader.overflowMenu.hint.tooltip } 
+          tooltipLabel={ locale.reader.overflowMenu.hint.tooltip } 
           visibility={ ThCollapsibilityVisibility.always }
           onPress={ () => { dispatch(toggleImmersive()) } }
           preventFocusOnPress={ true }

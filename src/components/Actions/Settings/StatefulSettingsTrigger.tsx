@@ -1,6 +1,7 @@
 "use client";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
+
 
 import TuneIcon from "./assets/icons/match_case.svg";
 
@@ -21,6 +22,7 @@ export const StatefulSettingsTrigger = ({ variant }: StatefulActionTriggerProps)
   const RSPrefs = usePreferences();
   const actionState = useAppSelector(state => state.actions.keys[ThActionsKeys.settings]);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const setOpen = (value: boolean) => {    
     dispatch(setActionOpen({
@@ -36,7 +38,7 @@ export const StatefulSettingsTrigger = ({ variant }: StatefulActionTriggerProps)
     <>
     { (variant && variant === ThActionsTriggerVariant.menu) 
       ? <StatefulOverflowMenuItem 
-          label={ Locale.reader.settings.trigger }
+          label={ locale.reader.settings.trigger }
           SVGIcon={ TuneIcon }
           shortcut={ RSPrefs.actions.keys[ThActionsKeys.settings].shortcut } 
           id={ ThActionsKeys.settings }
@@ -44,9 +46,9 @@ export const StatefulSettingsTrigger = ({ variant }: StatefulActionTriggerProps)
         />
       : <StatefulActionIcon 
           visibility={ RSPrefs.actions.keys[ThActionsKeys.settings].visibility }
-          aria-label={ Locale.reader.settings.trigger }
+          aria-label={ locale.reader.settings.trigger }
           placement="bottom" 
-          tooltipLabel={ Locale.reader.settings.tooltip } 
+          tooltipLabel={ locale.reader.settings.tooltip }
           onPress={ () => setOpen(!actionState?.isOpen) }
         >
           <TuneIcon aria-hidden="true" focusable="false" />

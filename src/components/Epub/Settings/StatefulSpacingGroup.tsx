@@ -9,7 +9,7 @@ import {
   ThSpacingSettingsKeys 
 } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulGroupWrapper } from "../../Settings/StatefulGroupWrapper";
 
@@ -23,6 +23,7 @@ export const StatefulSpacingGroup = () => {
   const RSPrefs = usePreferences();
   const { spacingSettingsComponentsMap } = usePlugins();
   const dispatch = useAppDispatch();
+  const locale = useLocale();
   
   const setSpacingContainer = useCallback(() => {
     dispatch(setSettingsContainer(ThSettingsContainerKeys.spacing));
@@ -31,9 +32,9 @@ export const StatefulSpacingGroup = () => {
   return (
     <>
     <StatefulGroupWrapper 
-      heading={ Locale.reader.settings.spacing.title }
-      moreLabel={ Locale.reader.settings.spacing.advanced.trigger }
-      moreTooltip={ Locale.reader.settings.spacing.advanced.tooltip }
+      heading={ locale.reader.settings.spacing.title }
+      moreLabel={ locale.reader.settings.spacing.advanced.trigger }
+      moreTooltip={ locale.reader.settings.spacing.advanced.tooltip }
       onPressMore={ setSpacingContainer }
       componentsMap={ spacingSettingsComponentsMap }
       prefs={ RSPrefs.settings.spacing }

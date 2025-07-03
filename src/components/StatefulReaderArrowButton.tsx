@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-import Locale from "../resources/locales/en.json";
+import { useLocale } from "./Epub/AppLocale";
 
 import arrowStyles from "./assets/styles/readerArrowButton.module.css";
 import readerSharedUI from "./assets/styles/readerSharedUI.module.css";
@@ -34,6 +34,7 @@ export const StatefulReaderArrowButton = ({
   onPress,
   ...props
 }: StatefulReaderArrowButtonProps) => {
+  const locale = useLocale();
   const RSPrefs = usePreferences();
   
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -55,8 +56,8 @@ export const StatefulReaderArrowButton = ({
     direction === "right" && !isRTL || 
     direction === "left" && isRTL
   ) 
-    ? Locale.reader.navigation.goForward 
-    : Locale.reader.navigation.goBackward;
+    ? locale.reader.navigation.goForward 
+    : locale.reader.navigation.goBackward;
 
   const handleClassNameFromState = () => {
     let className = "";

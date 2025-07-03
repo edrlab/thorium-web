@@ -2,7 +2,7 @@
 
 import React, { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import { Link } from "@readium/shared";
 import { ThActionsKeys, ThDockingKeys, ThSheetTypes, ThLayoutDirection } from "@/preferences/models/enums";
@@ -34,6 +34,7 @@ import { setHovering, setImmersive } from "@/lib/readerReducer";
 import { isActiveElement } from "@/core/Helpers/focusUtilities";
 
 export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProps) => {
+  const locale = useLocale();
   const treeRef = useRef<HTMLDivElement | null>(null);
   
   const tocEntry = useAppSelector(state => state.publication.tocEntry);
@@ -163,7 +164,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
       sheetProps={ {
         id: ThActionsKeys.toc,
         triggerRef: triggerRef, 
-        heading: Locale.reader.toc.heading,
+        heading: locale.reader.toc.heading,
         className: tocStyles.toc,
         placement: "bottom",
         isOpen: actionState?.isOpen || false,
@@ -176,7 +177,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
       { tocTree && tocTree.length > 0 
       ? (<>
         <ThFormSearchField
-          aria-label={ Locale.reader.toc.search.label }
+          aria-label={ locale.reader.toc.search.label }
           value={ filterValue }
           onChange={ setFilterValue }
           onClear={ () => setFilterValue("") }
@@ -188,7 +189,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
             input: {
               ref: searchInputRef,
               className: tocStyles.tocSearchInput,
-              placeholder: Locale.reader.toc.search.placeholder
+              placeholder: locale.reader.toc.search.placeholder
             },
             searchIcon: {
               className: tocStyles.tocSearchIcon,
@@ -204,7 +205,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
           // TODO: Remove this when we handle fragments
           key={ forceRerender }
           ref={ treeRef }
-          aria-label={ Locale.reader.toc.entries }
+          aria-label={ locale.reader.toc.entries }
           selectionMode="single"
           items={ displayedTocTree }
           className={ tocStyles.tocTree }
@@ -247,7 +248,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
           } }
         </Tree>
       </>) 
-      : <div className={ tocStyles.empty }>{ Locale.reader.toc.empty }</div>
+      : <div className={ tocStyles.empty }>{ locale.reader.toc.empty }</div>
     }
     </StatefulSheetWrapper>
     </>

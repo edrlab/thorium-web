@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { ThTextAlignOptions } from "@/preferences/models/enums";
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
@@ -24,6 +24,7 @@ export const StatefulTextAlign = ({ standalone = true }: StatefulSettingsItemPro
   const isRTL = useAppSelector(state => state.publication.isRTL);
   const textAlign = useAppSelector(state => state.settings.textAlign);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -56,24 +57,24 @@ export const StatefulTextAlign = ({ standalone = true }: StatefulSettingsItemPro
     <>
     <StatefulRadioGroup 
       standalone={ standalone } 
-      label={ Locale.reader.settings.align.title }
+      label={ locale.reader.settings.align.title }
       orientation="horizontal" 
       value={ textAlign } 
       onChange={ async (val: string) => await updatePreference(val) }
       items={[
         {
           icon: BookIcon,
-          label: Locale.reader.settings.align.publisher, 
+          label: locale.reader.settings.align.publisher,
           value: ThTextAlignOptions.publisher 
         },
         {
           icon: isRTL ? RightAlignIcon : LeftAlignIcon,
-          label: isRTL ? Locale.reader.settings.align.right : Locale.reader.settings.align.left, 
+          label: isRTL ? locale.reader.settings.align.right : locale.reader.settings.align.left,
           value: ThTextAlignOptions.start 
         },
         {
           icon: JustifyIcon,
-          label: Locale.reader.settings.align.justify, 
+          label: locale.reader.settings.align.justify,
           value: ThTextAlignOptions.justify 
         }
       ]}

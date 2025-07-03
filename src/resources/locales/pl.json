@@ -1,0 +1,249 @@
+{
+  "bookUrlConverter": {
+    "label": "Wczytaj publikację EPUB ze zdalnego serwera (musi obsługiwać żądania zakresu bajtów):",
+    "placeholder": "https://www.example.org/ebook.epub",
+    "button": "Wczytaj",
+    "error": "URL jest nieprawidłowy. Sprawdź poprawność adresu URL i spróbuj ponownie."
+  },
+  "reader": {
+    "app": {
+      "loading": "Ładuję...",
+      "publicationWrapper": "Jesteś teraz w publikacji.",
+      "docking": {
+        "dockingLeft": "Panel zadokowany po lewej",
+        "dockingRight": "Panel zadokowany po prawej",
+        "dockingEmpty": "Aktualnie pusty",
+        "dockingClosed": "Jest zamknięty, zawiera {{ action }}",
+        "dockingCollapsed": "Jest zwinięty, zawiera {{ action }}"
+      },
+      "header": {
+        "label": "Górny pasek",
+        "runningHead": "Nagłówek bieżący",
+        "runningHeadFallback": "...",
+        "actions": "Akcje"
+      },
+      "footer": {
+        "label": "Dolny pasek"
+      },
+      "progression": {
+        "wrapper": "Aktualny postęp",
+        "of": "{{ current }} z {{ reference }}",
+        "referenceFallback": "bieżący rozdział",
+        "pubFallback": "publikacja"
+      },
+      "docker": {
+        "wrapper": "Opcje dokowania",
+        "dockToLeft": {
+          "trigger": "Zadokuj po lewej stronie",
+          "tooltip": "Dokuj po lewej stronie"
+        },
+        "dockToRight": {
+          "trigger": "Zadokuj po prawej stronie",
+          "tooltip": "Dokuj po prawej stronie"
+        },
+        "popover": {
+          "trigger": "Wyświetl w oknie",
+          "tooltip": "Wyskakujące okno"
+        },
+        "fullscreen": {
+          "trigger": "Wyświetl na treści",
+          "tooltip": "Nakładka"
+        },
+        "close": {
+          "trigger": "Zamknij",
+          "tooltip": "Zamknij"
+        }
+      },
+      "back": {
+        "trigger": "Wróć"
+      }
+    },
+    "navigation": {
+      "goForward": "Do przodu",
+      "goBackward": "Do tyłu",
+      "scroll": {
+        "wrapper": "Nawiguj przez publikację",
+        "prevLabel": "Poprzedni",
+        "nextLabel": "Następny",
+        "prevA11yLabel": "Przejdź do poprzedniego zasobu",
+        "nextA11yLabel": "Przejdź do następnego zasobu"
+      }
+    },
+    "fullscreen": {
+      "tooltip": "Pełny ekran",
+      "trigger": "Przełącz w tryb pełnoekranowy",
+      "close": "Wyjdź z trybu pełnoekranowego"
+    },
+    "toc": {
+      "tooltip": "Spis treści",
+      "trigger": "Spis treści",
+      "close": "Zamknij spis treści",
+      "heading": "Spis treści",
+      "entries": "Pozycje w spisie treści",
+      "empty": "Spis treści nie został dostarczony dla tej publikacji.",
+      "search": {
+        "label": "Szukaj",
+        "placeholder": "Szukaj",
+        "clear": "Wyczyść"
+      }
+    },
+    "jumpToPosition": {
+      "tooltip": "Przejdź do...",
+      "trigger": "Przejdź do pozycji",
+      "heading": "Przejdź do pozycji",
+      "go": "Idź",
+      "close": "Zamknij (przejście do pozycji)",
+      "label": "Wybierz pozycję od {{ positionStart }} do {{ positionEnd }}:"
+    },
+    "overflowMenu": {
+      "active": {
+        "tooltip": "Więcej akcji",
+        "trigger": "Przełącz menu"
+      },
+      "hint": {
+        "tooltip": "Przełącz akcje",
+        "trigger": "Wyświetl akcje"
+      }
+    },
+    "layoutStrategy": {
+      "tooltip": "Układ",
+      "trigger": "Strategia układu",
+      "close": "Zamknij menu strategii układu",
+      "heading": "Strategia układu",
+      "title": "Strategia",
+      "margin": "Margines",
+      "lineLength": "Długość wersu",
+      "columns": "Kolumny",
+      "minChars": "Wyłącz minimalną długość wersu",
+      "maxChars": "Wyłącz maksymalną długość wersu",
+      "minimalLineLength": {
+        "title": "Minimalna długość wersu",
+        "increase": "Zwiększ minimalną długość wersu",
+        "decrease": "Zmniejsz minimalną długość wersu"
+      },
+      "optimalLineLength": {
+        "title": "Optymalna długość wersu",
+        "increase": "Zwiększ optymalną długość wersu",
+        "decrease": "Zmniejsz optymalną długość wersu"
+      },
+      "maximalLineLength": {
+        "title": "Maksymalna długość wersu",
+        "increase": "Zwiększ maksymalną długość wersu",
+        "decrease": "Zmniejsz maksymalną długość wersu"
+      }
+    },
+    "settings": {
+      "tooltip": "Ustawienia",
+      "trigger": "Menu ustawień",
+      "close": "Zamknij menu ustawień",
+      "heading": "Ustawienia wyświetlania",
+      "themes": {
+        "title": "Motywy",
+        "auto": "Automatyczny",
+        "light": "Jasny",
+        "sepia": "Sepia",
+        "paper": "Papier",
+        "dark": "Ciemny",
+        "contrast1": "Kontrast 1",
+        "contrast2": "Kontrast 2",
+        "contrast3": "Kontrast 3"
+      },
+      "zoom": {
+        "title": "Powiększenie",
+        "increase": "Zwiększ powiększenie",
+        "decrease": "Zmniejsz powiększenie"
+      },
+      "fontSize": {
+        "title": "Rozmiar czcionki",
+        "increase": "Zwiększ rozmiar czcionki",
+        "decrease": "Zmniejsz rozmiar czcionki"
+      },
+      "fontFamily": {
+        "title": "Wybór czcionek",
+        "labels": {
+          "publisher": "Czcionka wydawcy",
+          "oldStyle": "Old style serif",
+          "modern": "Modern serif",
+          "sans": "Sans-serif",
+          "humanist": "Humanist sans-serif",
+          "monospace": "Monospace"
+        }
+      },
+      "fontWeight": {
+        "title": "Grubość kroju",
+        "increase": "Zwiększ grubość kroju",
+        "decrease": "Zmniejsz grubość kroju"
+      },
+      "normalizeText": {
+        "title": "Normalizacja tekstu",
+        "label": "Usuń całe formatowanie tekstu"
+      },
+      "align": {
+        "title": "Wyrównanie tekstu",
+        "publisher": "Domyślne",
+        "left": "Do lewej",
+        "justify": "Wyjustuj",
+        "right": "Do prawej"
+      },
+      "hyphens": {
+        "title": "Dzielenie wyrazów",
+        "label": "Włącz dzielenie wyrazów"
+      },
+      "text": {
+        "title": "Tekst",
+        "advanced": {
+          "tooltip": "Więcej opcji",
+          "trigger": "Więcej opcji formatowania"
+        }
+      },
+      "lineHeight": {
+        "title": "Interlinia",
+        "publisher": "Domyślna",
+        "small": "Ciasna",
+        "medium": "Zrównow.",
+        "large": "Luźna"
+      },
+      "paraSpacing": {
+        "title": "Odstęp między akapitami",
+        "increase": "Zwiększ odstęp między akapitami",
+        "decrease": "Zmniejsz odstęp między akapitami"
+      },
+      "paraIndent": {
+        "title": "Wcięcie akapitu",
+        "increase": "Zwiększ wcięcie akapitu",
+        "decrease": "Zmniejsz wcięcie akapitu"
+      },
+      "wordSpacing": {
+        "title": "Odstępy między wyrazami",
+        "increase": "Zwiększ odstępy między wyrazami",
+        "decrease": "Zmniejsz odstępy między wyrazami"
+      },
+      "letterSpacing": {
+        "title": "Odstępy między literami",
+        "increase": "Zwiększ odstępy między literami",
+        "decrease": "Zmniejsz odstępy między literami"
+      },
+      "publisherStyles": {
+        "label": "Użyj oryginalnego formatowania"
+      },
+      "spacing": {
+        "title": "Odstępy",
+        "advanced": {
+          "tooltip": "Więcej opcji",
+          "trigger": "Więcej opcji odstępów"
+        }
+      },
+      "layout": {
+        "title": "Układ",
+        "scrolled": "Ciągły",
+        "paginated": "Stronicowany"
+      },
+      "column": {
+        "title": "Kolumny",
+        "auto": "Automatycznie",
+        "one": "1 kol",
+        "two": "2 kol"
+      }
+    }
+  }
+}

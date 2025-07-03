@@ -4,7 +4,7 @@ import { useCallback, useRef } from "react";
 
 import { defaultLineHeights, ThLineHeightOptions, ThSettingsKeys } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -27,6 +27,7 @@ export const StatefulPublisherStyles = ({ standalone = true }: StatefulSettingsI
   const wordSpacing = useAppSelector(state => state.settings.wordSpacing);
 
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const lineHeightOptions = useRef({
     [ThLineHeightOptions.publisher]: null,
@@ -64,7 +65,7 @@ export const StatefulPublisherStyles = ({ standalone = true }: StatefulSettingsI
     <>
     <StatefulSwitch 
       standalone={ standalone }
-      label={ Locale.reader.settings.publisherStyles.label }
+      label={ locale.reader.settings.publisherStyles.label }
       onChange={ async (isSelected: boolean) => await updatePreference(isSelected) }
       isSelected={ publisherStyles }
     />

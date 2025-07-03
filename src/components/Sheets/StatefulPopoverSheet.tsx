@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import { StatefulSheet } from "./models/sheets";
 import { ThSheetHeaderVariant } from "@/preferences/models/enums";
@@ -47,6 +47,7 @@ export const StatefulPopoverSheet = ({
   const popoverHeaderRef = useRef<HTMLDivElement | null>(null);
   const popoverBodyRef = useRef<HTMLDivElement | null>(null);
   const popoverCloseRef = useRef<HTMLButtonElement | null>(null);
+  const locale = useLocale();
 
   if (React.Children.toArray(children).length > 0) {
     return(
@@ -87,10 +88,10 @@ export const StatefulPopoverSheet = ({
           { headerVariant === ThSheetHeaderVariant.previous 
             ? <ThNavigationButton 
                 direction={ direction === "ltr" ? "left" : "right" }
-                label={ Locale.reader.app.back.trigger }
+                label={ locale.reader.app.back.trigger }
                 ref={ popoverCloseRef }
                 className={ classNames(className, readerSharedUI.backButton) } 
-                aria-label={ Locale.reader.app.back.trigger }
+                aria-label={ locale.reader.app.back.trigger }
                 onPress={ onClosePress }
               />
               : <StatefulDocker 

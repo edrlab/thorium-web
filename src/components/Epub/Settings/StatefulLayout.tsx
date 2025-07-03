@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { ThLayoutOptions } from "@/preferences/models/enums";
 
@@ -20,6 +20,7 @@ export const StatefulLayout = () => {
   const isScroll = useAppSelector(state => state.settings.scroll);
 
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences, handleScrollAffordances } = useEpubNavigator();
 
@@ -37,19 +38,19 @@ export const StatefulLayout = () => {
     <>
     <StatefulRadioGroup
       standalone={ true }
-      label={ Locale.reader.settings.layout.title }
+      label={ locale.reader.settings.layout.title }
       orientation="horizontal"
       value={ isScroll ? ThLayoutOptions.scroll : ThLayoutOptions.paginated }
       onChange={ async (val: string) => await updatePreference(val) }
       items={[
         {
           icon: PaginatedIcon,
-          label: Locale.reader.settings.layout.paginated,
+          label: locale.reader.settings.layout.paginated,
           value: ThLayoutOptions.paginated
         },
         {
           icon: ScrollableIcon,
-          label: Locale.reader.settings.layout.scrolled,
+          label: locale.reader.settings.layout.scrolled,
           value: ThLayoutOptions.scroll
         }
       ]} 

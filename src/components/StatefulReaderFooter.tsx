@@ -2,8 +2,7 @@
 
 import React from "react";
 
-import Locale from "../resources/locales/en.json";
-
+import { useLocale } from "./Epub/AppLocale"
 import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch } from "@/lib/hooks";
 
@@ -12,6 +11,7 @@ import { StatefulReaderProgression } from "./StatefulReaderProgression";
 
 export const StatefulReaderFooter = () => {
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const setHover = () => {
     dispatch(setHovering(true));
@@ -25,7 +25,7 @@ export const StatefulReaderFooter = () => {
     <>
     <ThFooter 
       id="bottom-bar" 
-      aria-label={ Locale.reader.app.footer.label } 
+      aria-label={ locale.reader.app.footer.label } 
       onMouseEnter={ setHover } 
       onMouseLeave={ removeHover }
     >

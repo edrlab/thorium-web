@@ -2,7 +2,7 @@
 
 import { CSSProperties, Key, useCallback, useRef } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -19,10 +19,11 @@ import { setFontFamily } from "@/lib/settingsReducer";
 import { defaultFontFamilyOptions } from "@/preferences/models/const";
 
 export const StatefulFontFamily = ({ standalone = true }: StatefulSettingsItemProps) => {
+  const locale = useLocale();
   const fontFamily = useAppSelector(state => state.settings.fontFamily);
   const fontFamilyOptions = useRef(Object.entries(defaultFontFamilyOptions).map(([property, stack]) => ({
       id: property,
-      label: Locale.reader.settings.fontFamily.labels[property as keyof typeof Locale.reader.settings.fontFamily.labels],
+      label: locale.reader.settings.fontFamily.labels[property as keyof typeof locale.reader.settings.fontFamily.labels],
       value: stack
     }))
   );
@@ -54,10 +55,10 @@ export const StatefulFontFamily = ({ standalone = true }: StatefulSettingsItemPr
       { ...(standalone 
         ? { 
           className: settingsStyles.readerSettingsGroup,
-          label: Locale.reader.settings.fontFamily.title
+          label: locale.reader.settings.fontFamily.title
         } 
         : {
-          "aria-label": Locale.reader.settings.fontFamily.title
+          "aria-label": locale.reader.settings.fontFamily.title
         }) }
       selectedKey={ fontFamily }
       onSelectionChange={ async (key) => await updatePreference(key) }

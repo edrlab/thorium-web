@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { defaultWordSpacing, ThSettingsKeys, ThSettingsRangeVariant } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -26,6 +26,7 @@ export const StatefulWordSpacing = ({ standalone = true }: StatefulSettingsItemP
     step: RSPrefs.settings.keys?.[ThSettingsKeys.wordSpacing]?.step ?? defaultWordSpacing.step
   };
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -43,15 +44,15 @@ export const StatefulWordSpacing = ({ standalone = true }: StatefulSettingsItemP
     { wordSpacingRangeConfig.variant === ThSettingsRangeVariant.numberField 
       ? <StatefulNumberField 
         standalone={ standalone }
-        label={ Locale.reader.settings.wordSpacing.title }
+        label={ locale.reader.settings.wordSpacing.title }
         defaultValue={ 0 } 
         value={ wordSpacing || 0 } 
         onChange={ async(value) => await updatePreference(value) } 
         range={ wordSpacingRangeConfig.range }
         step={ wordSpacingRangeConfig.step }
         steppers={{
-          decrementLabel: Locale.reader.settings.wordSpacing.decrease,
-          incrementLabel: Locale.reader.settings.wordSpacing.increase
+          decrementLabel: locale.reader.settings.wordSpacing.decrease,
+          incrementLabel: locale.reader.settings.wordSpacing.increase
         }}
         formatOptions={{ style: "percent" }} 
         isWheelDisabled={ true }
@@ -59,7 +60,7 @@ export const StatefulWordSpacing = ({ standalone = true }: StatefulSettingsItemP
       />
       : <StatefulSlider
         standalone={ standalone }
-        label={ Locale.reader.settings.wordSpacing.title }
+        label={ locale.reader.settings.wordSpacing.title }
         defaultValue={ 0 } 
         value={ wordSpacing || 0 } 
         onChange={ async(value) => await updatePreference(value as number) } 

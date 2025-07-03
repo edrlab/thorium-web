@@ -4,7 +4,7 @@ import React, { useCallback } from "react";
 
 import { ActionKeyType, usePreferenceKeys } from "@/preferences";
 
-import Locale from "../resources/locales/en.json";
+import { useLocale } from "./Epub/AppLocale";
 
 import readerHeaderStyles from "./assets/styles/readerHeader.module.css";
 
@@ -20,6 +20,7 @@ import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export const StatefulReaderHeader = () => {
+  const locale = useLocale();
   const { reflowActionKeys, fxlActionKeys } = usePreferenceKeys();
   const RSPrefs = usePreferences();
   const { actionsComponentsMap } = usePlugins();
@@ -65,14 +66,14 @@ export const StatefulReaderHeader = () => {
     <ThHeader 
       className={ readerHeaderStyles.header } 
       id="top-bar" 
-      aria-label={ Locale.reader.app.header.label } 
+      aria-label={ locale.reader.app.header.label } 
       onMouseEnter={ setHover } 
       onMouseLeave={ removeHover }
     >
       <ThRunningHead 
-        label={ runningHead || Locale.reader.app.header.runningHeadFallback } 
+        label={ runningHead || locale.reader.app.header.runningHeadFallback } 
         syncDocTitle={ true }
-        aria-label={ Locale.reader.app.header.runningHead }
+        aria-label={ locale.reader.app.header.runningHead }
       />
       
       <StatefulCollapsibleActionsBar 
@@ -80,7 +81,7 @@ export const StatefulReaderHeader = () => {
         items={ listActionItems() }
         prefs={{ ...RSPrefs.actions, displayOrder: isFXL ? RSPrefs.actions.fxlOrder : RSPrefs.actions.reflowOrder }}
         className={ readerHeaderStyles.actionsWrapper } 
-        aria-label={ Locale.reader.app.header.actions } 
+        aria-label={ locale.reader.app.header.actions } 
         overflowActionCallback={ (isImmersive && !isHovering) }
         overflowMenuDisplay={ (!isImmersive || isHovering) }
       />

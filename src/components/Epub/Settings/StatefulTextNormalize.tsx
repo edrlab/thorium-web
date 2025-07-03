@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -16,6 +16,7 @@ import { setTextNormalization } from "@/lib/settingsReducer";
 export const StatefulTextNormalize = ({ standalone = true }: StatefulSettingsItemProps) => {
   const textNormalization = useAppSelector(state => state.settings.textNormalization);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -29,8 +30,8 @@ export const StatefulTextNormalize = ({ standalone = true }: StatefulSettingsIte
     <>
     <StatefulSwitch 
       standalone={ standalone }
-      heading={ Locale.reader.settings.normalizeText.title }
-      label={ Locale.reader.settings.normalizeText.label }
+      heading={ locale.reader.settings.normalizeText.title }
+      label={ locale.reader.settings.normalizeText.label }
       onChange={ async (isSelected: boolean) => await updatePreference(isSelected) }
       isSelected={ textNormalization ?? false }
     />

@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import readerSharedUI from "../assets/styles/readerSharedUI.module.css";
 
@@ -28,6 +28,7 @@ export const StatefulDockTransientFullscreen = ({ variant, associatedKey }: Stat
   const isDisabled = !actions.isDocked(associatedKey) || actions.whichDocked(associatedKey) === ThDockingKeys.transient;
   
   const dispatch = useAppDispatch();
+  const locale = useLocale();
     
   const handlePress = useCallback(() => {
     if (associatedKey) {
@@ -42,7 +43,7 @@ export const StatefulDockTransientFullscreen = ({ variant, associatedKey }: Stat
     <>
     { (variant && variant === ThActionsTriggerVariant.menu) 
       ? <StatefulOverflowMenuItem 
-          label={ Locale.reader.app.docker.fullscreen.trigger }
+          label={ locale.reader.app.docker.fullscreen.trigger }
           SVGIcon={ Dialog } 
           shortcut={ RSPrefs.docking.keys[ThDockingKeys.transient].shortcut }
           onAction={ handlePress } 
@@ -51,9 +52,9 @@ export const StatefulDockTransientFullscreen = ({ variant, associatedKey }: Stat
         />
       : <StatefulActionIcon 
           className={ readerSharedUI.dockerButton }  
-          aria-label={ Locale.reader.app.docker.fullscreen.trigger }
+          aria-label={ locale.reader.app.docker.fullscreen.trigger }
           placement="bottom" 
-          tooltipLabel={ Locale.reader.app.docker.fullscreen.tooltip } 
+          tooltipLabel={ locale.reader.app.docker.fullscreen.tooltip } 
           onPress={ handlePress } 
           isDisabled={ isDisabled }
         >

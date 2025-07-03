@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 import { fontWeightRangeConfig } from "@readium/navigator";
@@ -18,6 +18,7 @@ export const StatefulFontWeight = ({ standalone = true }: StatefulSettingsItemPr
   const fontFamily = useAppSelector(state => state.settings.fontFamily);
   const fontWeight = useAppSelector(state => state.settings.fontWeight);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -31,7 +32,7 @@ export const StatefulFontWeight = ({ standalone = true }: StatefulSettingsItemPr
     <>
     <StatefulSlider
       standalone={ standalone }
-      label={ Locale.reader.settings.fontWeight.title }
+      label={ locale.reader.settings.fontWeight.title }
       defaultValue={ 400 } 
       value={ fontWeight } 
       onChange={ async(value) => await updatePreference(value as number) } 

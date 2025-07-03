@@ -4,7 +4,7 @@ import React, { useCallback, useRef } from "react";
 
 import { defaultLineHeights, ThLineHeightOptions, ThSettingsKeys } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -26,6 +26,7 @@ export const StatefulLineHeight = ({ standalone = true }: StatefulSettingsItemPr
   const publisherStyles = useAppSelector(state => state.settings.publisherStyles);
   const lineHeight = useAppSelector(state => state.settings.lineHeight);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { getSetting, submitPreferences } = useEpubNavigator();
 
@@ -56,29 +57,29 @@ export const StatefulLineHeight = ({ standalone = true }: StatefulSettingsItemPr
     <>
     <StatefulRadioGroup 
       standalone={ standalone }
-      label={ Locale.reader.settings.lineHeight.title }
+      label={ locale.reader.settings.lineHeight.title }
       orientation="horizontal"
       value={ publisherStyles ? ThLineHeightOptions.publisher : lineHeight } 
       onChange={ async (val: string) => await updatePreference(val) }
       items={[
         {
           icon: BookIcon,
-          label: Locale.reader.settings.lineHeight.publisher, 
+          label: locale.reader.settings.lineHeight.publisher,
           value: ThLineHeightOptions.publisher 
         },
         {
           icon: SmallIcon,
-          label: Locale.reader.settings.lineHeight.small, 
+          label: locale.reader.settings.lineHeight.small,
           value: ThLineHeightOptions.small 
         },
         {
           icon: MediumIcon,
-          label: Locale.reader.settings.lineHeight.medium, 
+          label: locale.reader.settings.lineHeight.medium,
           value: ThLineHeightOptions.medium 
         },
         {
           icon: LargeIcon,
-          label: Locale.reader.settings.lineHeight.large, 
+          label: locale.reader.settings.lineHeight.large,
           value: ThLineHeightOptions.large 
         },
       ]}

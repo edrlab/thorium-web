@@ -2,7 +2,7 @@
 
 import React, { FormEvent, useCallback, useEffect, useState } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import { ThActionsKeys } from "@/preferences/models/enums";
 import { StatefulActionContainerProps } from "../models/actions";
@@ -24,6 +24,7 @@ import parseTemplate from "json-templates";
 export const StatefulJumpToPositionContainer = ({ 
   triggerRef 
 }: StatefulActionContainerProps) => {
+  const locale = useLocale();
   const actionState = useAppSelector(state => state.actions.keys[ThActionsKeys.jumpToPosition]);
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
@@ -53,7 +54,7 @@ export const StatefulJumpToPositionContainer = ({
 
   // Label indicates the total number of positions for the book
   const makeFieldLabel = useCallback(() => {
-    const jsonTemplate = parseTemplate(Locale.reader.jumpToPosition.label);
+    const jsonTemplate = parseTemplate(locale.reader.jumpToPosition.label);
     return jsonTemplate({ positionStart: 1, positionEnd: positionsList.length });
   }, [positionsList]);
 
@@ -100,7 +101,7 @@ export const StatefulJumpToPositionContainer = ({
         sheetProps={{
           id: ThActionsKeys.jumpToPosition,
           triggerRef: triggerRef,
-          heading: Locale.reader.jumpToPosition.heading,
+          heading: locale.reader.jumpToPosition.heading,
           className: jumpToPositionStyles.jumpToPosition,
           placement: "bottom",
           isOpen: actionState?.isOpen || false,
@@ -110,7 +111,7 @@ export const StatefulJumpToPositionContainer = ({
         }}
       >
         <ThForm
-          label={ Locale.reader.jumpToPosition.go }
+          label={ locale.reader.jumpToPosition.go }
           className={ jumpToPositionStyles.jumpToPositionForm }
           onSubmit={ handleAction }
           compounds={{

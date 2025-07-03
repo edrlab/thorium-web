@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import { ThActionsKeys } from "@/preferences/models/enums";
 import { StatefulActionTriggerProps } from "../models/actions";
@@ -18,6 +18,7 @@ import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { setActionOpen, useAppDispatch, useAppSelector } from "@/lib";
 
 export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTriggerProps) => {
+  const locale = useLocale();
   const RSPrefs = usePreferences();
   const actionState = useAppSelector(state => state.actions.keys[ThActionsKeys.jumpToPosition]);
   const positionsList = useAppSelector(state => state.publication.positionsList);
@@ -37,7 +38,7 @@ export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTrigger
     <>
     { (variant && variant === ThActionsTriggerVariant.menu) 
      ? <StatefulOverflowMenuItem 
-         label={ Locale.reader.jumpToPosition.trigger }
+         label={ locale.reader.jumpToPosition.trigger }
           SVGIcon={ TargetIcon }
           shortcut={ RSPrefs.actions.keys[ThActionsKeys.jumpToPosition].shortcut }
           id={ ThActionsKeys.jumpToPosition }
@@ -45,9 +46,9 @@ export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTrigger
         />
       : <StatefulActionIcon
           visibility={ RSPrefs.actions.keys[ThActionsKeys.jumpToPosition].visibility } 
-          aria-label={ Locale.reader.jumpToPosition.trigger }
+          aria-label={ locale.reader.jumpToPosition.trigger }
           placement="bottom" 
-          tooltipLabel={ Locale.reader.jumpToPosition.tooltip }
+          tooltipLabel={ locale.reader.jumpToPosition.tooltip }
           onPress={ () => setOpen(!actionState?.isOpen) }
         >
           <TargetIcon aria-hidden="true" focusable="false" />

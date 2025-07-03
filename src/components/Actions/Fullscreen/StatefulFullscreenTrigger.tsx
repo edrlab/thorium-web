@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import { ThActionsKeys } from "@/preferences/models/enums";
 import { StatefulActionTriggerProps } from "../models/actions";
@@ -27,6 +27,7 @@ export const StatefulFullscreenTrigger = ({ variant }: StatefulActionTriggerProp
   // Note: Not using React Aria ToggleButton here as fullscreen is quite
   // difficult to control in isolation due to collapsibility + shortcuts
 
+  const locale = useLocale();
   const RSPrefs = usePreferences();
 
   const dispatch = useAppDispatch();
@@ -36,7 +37,7 @@ export const StatefulFullscreenTrigger = ({ variant }: StatefulActionTriggerProp
   
   const fs = useFullscreen(onChange);
 
-  const label = fs.isFullscreen ? Locale.reader.fullscreen.close : Locale.reader.fullscreen.trigger;
+  const label = fs.isFullscreen ? locale.reader.fullscreen.close : locale.reader.fullscreen.trigger;
   const Icon = fs.isFullscreen ? FullscreenExit : FullscreenCorners;
 
   const handlePress = () => {
@@ -67,7 +68,7 @@ export const StatefulFullscreenTrigger = ({ variant }: StatefulActionTriggerProp
           visibility={ RSPrefs.actions.keys[ThActionsKeys.fullscreen].visibility }  
           aria-label={ label }
           placement="bottom" 
-          tooltipLabel={ Locale.reader.fullscreen.tooltip } 
+          tooltipLabel={ locale.reader.fullscreen.tooltip } 
           onPress={ handlePress } 
         >
           <Icon aria-hidden="true" focusable="false" />

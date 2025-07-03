@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useRef } from "react";
 
 import { ThemeKeyType, usePreferenceKeys } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
+
 import settingsStyles from "../../Settings/assets/styles/settings.module.css";
 
 import CheckIcon from "./assets/icons/check.svg";
@@ -51,6 +52,7 @@ export const StatefulTheme = ({ mapArrowNav }: { mapArrowNav?: number }) => {
   );
 
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const { submitPreferences } = useEpubNavigator();
 
@@ -160,7 +162,7 @@ export const StatefulTheme = ({ mapArrowNav }: { mapArrowNav?: number }) => {
     <StatefulRadioGroup
       ref={ radioGroupRef }
       standalone={ true }
-      label={ Locale.reader.settings.themes.title }
+      label={ locale.reader.settings.themes.title }
       value={ theme }
       onChange={ async (val) => await updatePreference(val as ThemeKeyType) }
     >
@@ -180,8 +182,8 @@ export const StatefulTheme = ({ mapArrowNav }: { mapArrowNav?: number }) => {
             } : {}) }
           >
           <span>
-            { t in Locale.reader.settings.themes 
-              ? Locale.reader.settings.themes[t as keyof typeof Locale.reader.settings.themes]
+            { t in locale.reader.settings.themes
+              ? locale.reader.settings.themes[t as keyof typeof locale.reader.settings.themes]
               : t
             } 
             { t === theme ? <CheckIcon aria-hidden="true" focusable="false" /> : <></> }

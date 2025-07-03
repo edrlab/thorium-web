@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React, { use, useCallback } from "react";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../AppLocale";
 
 import AutoLayoutIcon from "./assets/icons/document_scanner.svg";
 import OneColIcon from "./assets/icons/article.svg";
@@ -16,6 +16,8 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setColumnCount } from "@/lib/settingsReducer";
 
 export const StatefulColumns = () => {
+  const locale = useLocale();
+
   const isScroll = useAppSelector(state => state.settings.scroll);
   const isFXL = useAppSelector(state => state.publication.isFXL);
   const columnCount = useAppSelector(state => state.settings.columnCount) || "auto";
@@ -36,7 +38,7 @@ export const StatefulColumns = () => {
     <>
     <StatefulRadioGroup 
       standalone={ true }
-      label={ Locale.reader.settings.column.title }
+      label={ locale.reader.settings.column.title }
       orientation="horizontal"
       value={ columnCount }
       onChange={ async (val: string) => await updatePreference(val) }
@@ -44,17 +46,17 @@ export const StatefulColumns = () => {
       items={[
         {
           icon: AutoLayoutIcon,
-          label: Locale.reader.settings.column.auto, 
+          label: locale.reader.settings.column.auto,
           value: "auto" 
         },
         {
           icon: OneColIcon,
-          label: Locale.reader.settings.column.one, 
+          label: locale.reader.settings.column.one,
           value: "1" 
         },
         {
           icon: TwoColsIcon,
-          label: Locale.reader.settings.column.two, 
+          label: locale.reader.settings.column.two, 
           value: "2" 
         }
       ]}

@@ -11,6 +11,7 @@ import {
 } from "../../preferences";
 
 import Locale from "../../resources/locales/en.json";
+import { AppLocale } from "./AppLocale";
 
 import "../assets/styles/reader.css";
 import arrowStyles from "../assets/styles/readerArrowButton.module.css";
@@ -112,6 +113,7 @@ import { getPlatformModifier } from "@/core/Helpers/keyboardUtilities";
 import { createTocTree, TocItem } from "@/helpers/createTocTree";
 import { deserializePositions } from "@/helpers/deserializePositions";
 import { propsToCSSVars } from "@/core/Helpers/propsToCSSVars";
+import App from "next/app";
 
 export interface ReadiumCSSSettings {
   columnCount: string;
@@ -832,7 +834,8 @@ export const StatefulReader = ({
 
   return (
     <>
-    <I18nProvider locale={ RSPrefs.locale }>
+    <I18nProvider locale={RSPrefs.locale}>
+    <AppLocale locale={RSPrefs.locale}>
     <ThPluginProvider>
       <main>
         <StatefulDockingWrapper>
@@ -880,6 +883,7 @@ export const StatefulReader = ({
       </StatefulDockingWrapper>
     </main>
   </ThPluginProvider>
+  </AppLocale>
   </I18nProvider>
   </>
 )};

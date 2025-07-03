@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import readerSharedUI from "../assets/styles/readerSharedUI.module.css";
 
@@ -27,7 +27,8 @@ export const StatefulDockStart = ({ variant, associatedKey }: StatefulActionTrig
   const direction = useAppSelector(state => state.reader.direction);
   const actionsMap = useAppSelector(state => state.actions.keys);
   const isRTL = direction === ThLayoutDirection.rtl;
-  const localeKey = isRTL ? Locale.reader.app.docker.dockToRight : Locale.reader.app.docker.dockToLeft;
+  const locale = useLocale();
+  const localeKey = isRTL ? locale.reader.app.docker.dockToRight : locale.reader.app.docker.dockToLeft;
 
   const actions = useActions(actionsMap);
   const isDisabled = actions.whichDocked(associatedKey) === ThDockingKeys.start;

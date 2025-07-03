@@ -2,7 +2,7 @@
 
 import React, { useCallback, useRef } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import { StatefulSheet } from "./models/sheets";
 import { ThDockingKeys, ThSheetHeaderVariant, ThLayoutDirection } from "@/preferences/models/enums";
@@ -43,6 +43,7 @@ export const StatefulDockedSheet = ({
   const dockedSheetCloseRef = useRef<HTMLButtonElement | null>(null);
 
   const direction = useAppSelector(state => state.reader.direction);
+  const locale = useLocale();
 
   const classFromFlow = useCallback(() => {
     if (flow === ThDockingKeys.start) {
@@ -83,10 +84,10 @@ export const StatefulDockedSheet = ({
           { headerVariant === ThSheetHeaderVariant.previous 
             ? <ThNavigationButton
               direction={ direction === "ltr" ? "left" : "right" } 
-              label={ Locale.reader.app.back.trigger }
+              label={ locale.reader.app.back.trigger }
               ref={ dockedSheetCloseRef }
               className={ classNames(className, readerSharedUI.backButton) } 
-              aria-label={ Locale.reader.app.back.trigger }
+              aria-label={ locale.reader.app.back.trigger }
               onPress={ onClosePress }
             /> 
             : <StatefulDocker 

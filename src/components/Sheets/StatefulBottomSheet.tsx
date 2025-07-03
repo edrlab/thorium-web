@@ -4,7 +4,7 @@ import React, { CSSProperties, KeyboardEvent, useCallback, useMemo, useRef } fro
 
 import { ThBottomSheetDetent, ThSheetHeaderVariant } from "@/preferences";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import { StatefulSheet } from "./models/sheets";
 
@@ -52,6 +52,7 @@ export const StatefulBottomSheet = ({
   dismissEscapeKeyClose
 }: StatefulBottomSheetProps) => {
   const RSPrefs = usePreferences();
+  const locale = useLocale();
   const direction = useAppSelector((state) => state.reader.direction);
   const prefersReducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
 
@@ -314,16 +315,16 @@ export const StatefulBottomSheet = ({
         { headerVariant === ThSheetHeaderVariant.previous 
             ? <ThNavigationButton 
               direction={ direction === "ltr" ? "left" : "right" }
-              label={ Locale.reader.app.back.trigger }
+              label={ locale.reader.app.back.trigger }
               ref={ bottomSheetCloseRef }
               className={ classNames(className, readerSharedUI.backButton) } 
-              aria-label={ Locale.reader.app.back.trigger }
+              aria-label={ locale.reader.app.back.trigger }
               onPress={ onClosePress }
             /> 
             : <ThCloseButton
               ref={ bottomSheetCloseRef }
               className={ readerSharedUI.closeButton } 
-              aria-label={ Locale.reader.app.docker.close.trigger } 
+              aria-label={ locale.reader.app.docker.close.trigger } 
               onPress={ onClosePress }
             />
           }

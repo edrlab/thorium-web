@@ -2,7 +2,7 @@
 
 import { ThActionsKeys } from "@/preferences/models/enums";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import TocIcon from "./assets/icons/toc.svg";
 
@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
 
 export const StatefulTocTrigger = ({ variant }: StatefulActionTriggerProps) => {
+  const locale = useLocale();
   const RSPrefs = usePreferences();
   const actionState = useAppSelector(state => state.actions.keys[ThActionsKeys.toc]);
   const dispatch = useAppDispatch();
@@ -33,7 +34,7 @@ export const StatefulTocTrigger = ({ variant }: StatefulActionTriggerProps) => {
     <>
     { (variant && variant === ThActionsTriggerVariant.menu) 
       ? <StatefulOverflowMenuItem 
-          label={ Locale.reader.toc.trigger }
+          label={ locale.reader.toc.trigger }
           SVGIcon={ TocIcon } 
           shortcut={ RSPrefs.actions.keys[ThActionsKeys.toc].shortcut }
           id={ ThActionsKeys.toc }
@@ -41,9 +42,9 @@ export const StatefulTocTrigger = ({ variant }: StatefulActionTriggerProps) => {
         />
       : <StatefulActionIcon 
           visibility={ RSPrefs.actions.keys[ThActionsKeys.toc].visibility }
-          aria-label={ Locale.reader.toc.trigger } 
+          aria-label={ locale.reader.toc.trigger } 
           placement="bottom"
-          tooltipLabel={ Locale.reader.toc.tooltip } 
+          tooltipLabel={ locale.reader.toc.tooltip } 
           onPress={ () => setOpen(!actionState?.isOpen) }
         >
           <TocIcon aria-hidden="true" focusable="false" />

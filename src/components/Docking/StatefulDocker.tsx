@@ -2,7 +2,7 @@
 
 import React, { useCallback } from "react";
 
-import Locale from "../../resources/locales/en.json";
+import { useLocale } from "../Epub/AppLocale";
 
 import dockingStyles from "./assets/styles/docking.module.css";
 import readerSharedUI from "../assets/styles/readerSharedUI.module.css";
@@ -49,6 +49,7 @@ export const StatefulDocker = ({
   onClose
 }: StatefulDockerProps) => {
   const RSPrefs = usePreferences();
+  const locale = useLocale();
   
   const listActionItems = useCallback(() => {
     const actionsItems: ThActionEntry<ThDockingKeys>[] = [];
@@ -73,13 +74,13 @@ export const StatefulDocker = ({
         className={ dockingStyles.docker } 
         overflowMenuClassName={ readerSharedUI.dockerButton }
         prefs={ RSPrefs.docking }
-        aria-label={ Locale.reader.app.docker.wrapper }
+        aria-label={ locale.reader.app.docker.wrapper }
       />
 
       <ThCloseButton 
         ref={ ref }
         className={ readerSharedUI.dockerButton } 
-        aria-label={ Locale.reader.app.docker.close.trigger } 
+        aria-label={ locale.reader.app.docker.close.trigger } 
         onPress={ onClose }
         compounds={ {
           tooltipTrigger: {
@@ -89,7 +90,7 @@ export const StatefulDocker = ({
           tooltip: {
             className: readerSharedUI.tooltip
           },
-          label: Locale.reader.app.docker.close.tooltip
+          label: locale.reader.app.docker.close.tooltip
         }}
       />
     </Toolbar>

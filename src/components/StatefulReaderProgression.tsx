@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-import Locale from "../resources/locales/en.json";
+import { useLocale } from "./Epub/AppLocale";
 import progressionStyles from "./assets/styles/readerProgression.module.css";
 
 import { ThProgression } from "@/core/Components/Reader/ThProgression";
@@ -21,7 +21,9 @@ export interface UnstableProgressionObject {
 }
 
 export const StatefulReaderProgression = () => {
-  const jsonTemplate = parseTemplate(Locale.reader.app.progression.of);
+  const locale = useLocale();
+
+  const jsonTemplate = parseTemplate(locale.reader.app.progression.of);
   const progression: UnstableProgressionObject = useAppSelector(state => state.publication.progression);
 
   const [current, setCurrent] = useState("");
@@ -48,7 +50,7 @@ export const StatefulReaderProgression = () => {
     {( current && reference ) 
     && <ThProgression 
       id={ progressionStyles.current } 
-      aria-label={ Locale.reader.app.progression.wrapper }
+      aria-label={ locale.reader.app.progression.wrapper }
     >
       { jsonTemplate({ current: current, reference: reference }) }
     </ThProgression>}

@@ -10,7 +10,7 @@ import {
   usePreferenceKeys
 } from "@/preferences";
 
-import Locale from "../../../resources/locales/en.json";
+import { useLocale } from "../../Epub/AppLocale";
 
 import { 
   ThActionsKeys, 
@@ -51,6 +51,7 @@ export const StatefulSettingsContainer = ({
   const contains = useAppSelector(state => state.reader.settingsContainer);
   const actionState = useAppSelector(state => state.actions.keys[ThActionsKeys.settings]);
   const dispatch = useAppDispatch();
+  const locale = useLocale();
 
   const settingItems = useMemo(() => {
     return isFXL ? fxlSettingsKeys : reflowSettingsKeys
@@ -124,14 +125,14 @@ export const StatefulSettingsContainer = ({
   const getHeading = useCallback(() => {
     switch (contains) {
       case ThSettingsContainerKeys.text:
-        return Locale.reader.settings.text.title;
+        return locale.reader.settings.text.title;
 
       case ThSettingsContainerKeys.spacing:
-        return Locale.reader.settings.spacing.title;
+        return locale.reader.settings.spacing.title;
 
       case ThSettingsContainerKeys.initial:
       default:
-        return Locale.reader.settings.heading;
+        return locale.reader.settings.heading;
     }
   }, [contains]);
 
