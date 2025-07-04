@@ -832,10 +832,16 @@ export const StatefulReader = ({
   // Same for arrows and collapsible actions.
   if (!breakpoint) return null;
 
+  function normalizeToArray(input: string | string[] | null): string[] {
+    if (input == null) return [];
+    return Array.isArray(input) ? input : [input];
+  }
+  const bookLocale = rawManifest.metadata ? normalizeToArray(rawManifest.metadata.language)[0] : null;
+
   return (
     <>
     <I18nProvider locale={RSPrefs.locale}>
-    <AppLocale locale={RSPrefs.locale}>
+    <AppLocale locale={bookLocale || RSPrefs.locale}>
     <ThPluginProvider>
       <main>
         <StatefulDockingWrapper>

@@ -6,35 +6,31 @@ import React, { createContext, useContext, ReactNode } from 'react';
 import en from '../../resources/locales/en.json';
 import pl from '../../resources/locales/pl.json';
 
-type SupportedLocale = 'en' | 'pl';
-
 interface AppLocaleContextType {
-  locale: SupportedLocale;
+  locale: string;
   translations: typeof en;
 }
 
 const AppLocaleContext = createContext<AppLocaleContextType | undefined>(undefined);
 
 interface AppLocaleProps {
-  locale: SupportedLocale;
+  locale?: string;
   children: ReactNode;
 }
 
 export const AppLocale: React.FC<AppLocaleProps> = ({ locale, children }) => {
-  const getTranslations = (locale: SupportedLocale) => {
+  
+  const { currentLocale, translations } = (() => {
     switch (locale) {
       case 'pl':
-        return pl;
-      case 'en':
+        return { currentLocale: 'pl', translations: pl };
       default:
-        return en;
+        return { currentLocale: 'en', translations: en };
     }
-  };
-
-  const translations = getTranslations(locale);
-
+  })();
+  
   const value: AppLocaleContextType = {
-    locale,
+    locale: currentLocale,
     translations
   };
 
