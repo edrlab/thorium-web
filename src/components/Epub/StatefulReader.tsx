@@ -832,11 +832,7 @@ export const StatefulReader = ({
   // Same for arrows and collapsible actions.
   if (!breakpoint) return null;
 
-  function normalizeToArray(input: string | string[] | null): string[] {
-    if (input == null) return [];
-    return Array.isArray(input) ? input : [input];
-  }
-  const bookLocale = rawManifest.metadata ? normalizeToArray(rawManifest.metadata.language)[0] : null;
+  const bookLocale = publication.current?.metadata.languages?.at(0)
 
   return (
     <>
