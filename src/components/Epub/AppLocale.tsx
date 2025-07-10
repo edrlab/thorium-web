@@ -19,16 +19,17 @@ interface AppLocaleProps {
 }
 
 export const AppLocale: React.FC<AppLocaleProps> = ({ locale, children }) => {
-  
+
   const { currentLocale, translations } = (() => {
     switch (locale) {
       case 'pl':
+      case 'PL':
         return { currentLocale: 'pl', translations: pl };
       default:
         return { currentLocale: 'en', translations: en };
     }
   })();
-  
+
   const value: AppLocaleContextType = {
     locale: currentLocale,
     translations
