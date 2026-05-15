@@ -29,7 +29,13 @@ export const StatefulJumpToPositionContainer = ({
   const actionState = useAppSelector(state => profile ? state.actions.keys[profile][ThActionsKeys.jumpToPosition] : undefined);
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
-  const positionNumbers = useAppSelector(state => state.publication.unstableTimeline?.progression?.currentPositions);
+  // currentPositions is recreated on every navigator emit even when the numbers
+  // haven't changed; compare by value so the reset effect below doesn't clobber
+  // user input mid-typing
+  const positionNumbers = useAppSelector(
+    state => state.publication.unstableTimeline?.progression?.currentPositions,
+    (a, b) => a === b || (!!a && !!b && a.length === b.length && a.every((v, i) => v === b[i]))
+  );
 
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const dispatch = useAppDispatch();
