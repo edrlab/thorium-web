@@ -1,6 +1,7 @@
 import { ThCollapsibility, ThCollapsibilityVisibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { BreakpointsMap } from "@/core/Hooks/useBreakpoints";
 import { ThBreakpoints } from "./ui";
+import { CSSValueUnitless, CSSValueWithUnit } from "./CSSValues";
 import type { KeyCombo } from "@readium/navigator-html-injectables";
 import type { I18nValue } from "./i18n";
 
@@ -39,12 +40,19 @@ export interface ThAudioActionsTokens {
   snapped?: ThActionsSnappedPref;
 }
 
+// Numbers are pixels; unitless strings are percentages; explicit-unit
+// strings ("50%", "20rem", "40vw", ...) follow that unit's meaning.
+export type ThDockingSizeValue =
+  number
+  | CSSValueUnitless
+  | CSSValueWithUnit<"px" | "%" | "em" | "rem" | "vh" | "vw">;
+
 export interface ThActionsDockedPref {
   dockable: ThDockingTypes,
   dragIndicator?: boolean,
-  width?: number,
-  minWidth?: number,
-  maxWidth?: number
+  width?: ThDockingSizeValue,
+  minWidth?: ThDockingSizeValue,
+  maxWidth?: ThDockingSizeValue
 }
 
 export interface ThActionsSnappedPref {

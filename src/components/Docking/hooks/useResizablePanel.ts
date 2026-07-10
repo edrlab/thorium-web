@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { ThActionsDockedPref } from "@/preferences";
+import { ThActionsDockedPref, ThDockingSizeValue } from "@/preferences";
 
-import { DockStateObject } from "@/lib/actionsReducer";
+import { ActionsStateKeys, DockStateObject } from "@/lib/actionsReducer";
 
 import { useActions } from "@/core/Components/Actions/hooks/useActions";
 import { usePrevious } from "@/core/Hooks/usePrevious";
@@ -13,14 +13,10 @@ import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
 
 import { useAppSelector } from "@/lib/hooks";
 
-// TODO: Responsive.
-// When resizing the window, all widths should be recalculated.
-// There is no guarantee that the panel group is the same size as the window,
-// so we have to rewrite this hook to observe the panel group, and push the new
-// widths to the StatefulDockingWrapper so that it can update panels.
-// Note that the StatefulDockingWrapper cannot pass PanelGroup as a ref,
-// it requires using a utility method: getPanelGroupElement(id)
-// See https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels#can-a-attach-a-ref-to-the-dom-elements
+const isNumericSize = (value: ThDockingSizeValue | undefined): value is number => {
+  return typeof value === "number";
+};
+
 export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const preferences = useActionsPreferences();
   const { theming } = useSharedPreferences();
@@ -35,17 +31,24 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const previouslyCollapsed = usePrevious(panel?.collapsed);
 
   const previousWidth = actions.getDockedWidth(panel?.actionKey) || null;
-  const width = pref?.width || defaultWidth;
-  const minWidth = pref?.minWidth && pref.minWidth < width 
-    ? pref.minWidth 
-    : defaultWidth < width 
+  const width: ThDockingSizeValue = pref?.width ?? defaultWidth;
+
+  // Ascending-range clamping against the shared default only makes sense
+  // when comparing like-for-like pixel values; unit strings (%, rem, vw, ...)
+  // are used as configured, since they can't be compared to a pixel default
+  // without measuring the live DOM node. react-resizable-panels still
+  // enforces minSize/maxSize correctly at runtime regardless.
+  const minWidth: ThDockingSizeValue = isNumericSize(width) && isNumericSize(pref?.minWidth) && pref.minWidth < width
+    ? pref.minWidth
+    : isNumericSize(width) && isNumericSize(defaultWidth) && defaultWidth < width
       ? defaultWidth
-      : width;
-  const maxWidth = pref?.maxWidth && pref.maxWidth > width 
-    ? pref.maxWidth 
-    : defaultWidth > width
+      : pref?.minWidth ?? width;
+
+  const maxWidth: ThDockingSizeValue = isNumericSize(width) && isNumericSize(pref?.maxWidth) && pref.maxWidth > width
+    ? pref.maxWidth
+    : isNumericSize(width) && isNumericSize(defaultWidth) && defaultWidth > width
       ? defaultWidth
-      : width;
+      : pref?.maxWidth ?? width;
 
   const isPopulated = () => {
     return !!(panel?.active && actions.isOpen(panel?.actionKey));
@@ -64,56 +67,55 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   };
 
   const isResizable = () => {
-    return isPopulated() ? Math.round(width) > Math.round(minWidth) && Math.round(width) < Math.round(maxWidth) : false;
+    if (!isPopulated()) return false;
+
+    return isNumericSize(width) && isNumericSize(minWidth) && isNumericSize(maxWidth)
+      ? Math.round(width) > Math.round(minWidth) && Math.round(width) < Math.round(maxWidth)
+      : minWidth !== maxWidth;
   };
 
   const hasDragIndicator = () => {
     return pref?.dragIndicator || false;
   };
 
-  const getWidth = useCallback(() => {
-    return previousWidth 
-        ? Math.round((previousWidth / window.innerWidth) * 100) 
-        : Math.round((width / window.innerWidth) * 100);
-  }, [previousWidth, width]);
+  // react-resizable-panels only reads `defaultSize` once, when the Panel first
+  // registers with its Group; changing it on every render (e.g. echoing back
+  // the width Redux just recorded from a completed resize) forces the Panel to
+  // re-register and the whole Group to remount, which breaks keyboard resizing.
+  // Freeze the starting size and only recompute it when the docked action itself
+  // changes, not on every resize of the same action.
+  const initialWidthRef = useRef<{ actionKey: ActionsStateKeys | null; value: ThDockingSizeValue }>();
+  const actionKey = panel?.actionKey ?? null;
+  if (!initialWidthRef.current || initialWidthRef.current.actionKey !== actionKey) {
+    initialWidthRef.current = { actionKey, value: previousWidth ?? width };
+  }
 
-  const getMinWidth = useCallback(() => {
-    return Math.round((minWidth / window.innerWidth) * 100);
-  }, [minWidth]);
+  const getWidth = (): ThDockingSizeValue => {
+    return initialWidthRef.current!.value;
+  };
 
-  const getMaxWidth = useCallback(() => {
-    return Math.round((maxWidth / window.innerWidth) * 100);
-  }, [maxWidth]);
+  const getMinWidth = (): ThDockingSizeValue => {
+    return minWidth;
+  };
 
-  const getCurrentPxWidth = useCallback((percentage: number) => {
-    let current = Math.round((percentage * window.innerWidth) / 100);
-    
-    if (current < minWidth) {
-      current = minWidth;
-    }
-    
-    if (current > maxWidth) {
-      current = maxWidth;
-    }
-    
-    return current;
-  }, [minWidth, maxWidth]);
+  const getMaxWidth = (): ThDockingSizeValue => {
+    return maxWidth;
+  };
 
-  // When the docked action changes, we need to update its preferences 
+  // When the docked action changes, we need to update its preferences
   useEffect(() => {
     setPref(panel?.actionKey ? preferences.actionsKeys[panel.actionKey]?.docked || null : null);
   }, [panel?.actionKey, preferences]);
 
   return {
-    currentKey, 
-    isPopulated, 
-    isCollapsed, 
-    forceExpand, 
+    currentKey,
+    isPopulated,
+    isCollapsed,
+    forceExpand,
     isResizable,
-    hasDragIndicator, 
+    hasDragIndicator,
     getWidth,
     getMinWidth,
-    getMaxWidth,
-    getCurrentPxWidth
+    getMaxWidth
   }
 }

@@ -52,11 +52,17 @@ Each action with a sheet/container can have an optional `docked` configuration w
 
 - `dockable`: the docking options (in `ThDockingTypes` enum) to display to the user for this specific action (required);
 - `dragIndicator`: enable/disable the drag indicator if the actions’ container is resizable (default is `false`);
-- `width`: the initial/default width of the container when docked in `px`;
-- `minWidth`: the minimum width of the container when docked in `px`;
-- `maxWidth`: the maximum width of the container when docked in `px`.
+- `width`: the initial/default width of the container when docked;
+- `minWidth`: the minimum width of the container when docked;
+- `maxWidth`: the maximum width of the container when docked.
 
-For instance, if you want to Table of Contents to be dockable in both panels, with a drag handle, and make it resizable, you would configure:
+`width`, `minWidth`, and `maxWidth` accept a `ThDockingSizeValue`:
+
+- a plain `number`, interpreted as `px` (e.g. `360`);
+- a unitless string, interpreted as a percentage of the docking group’s width (e.g. `"30"`);
+- a string with an explicit CSS unit: `px`, `%`, `em`, `rem`, `vh`, or `vw` (e.g. `"30%"`, `"20rem"`, `"40vw"`).
+
+For instance, if you want the Table of Contents to be dockable in both panels, with a drag handle, and make it resizable, you would configure:
 
 ```
 [ThActionKeys.toc]: {
@@ -71,7 +77,7 @@ For instance, if you want to Table of Contents to be dockable in both panels, wi
 }
 ```
 
-Resizability is inferred from `width`, `minWidth`, and `maxWidth` and their values have to meet the requirement of an ascending range of values. 
+Resizability is inferred from `width`, `minWidth`, and `maxWidth` and their values have to meet the requirement of an ascending range of values. This ascending-range check only applies when all three are plain numbers (`px`); if you mix in a unit string, they are used as configured without this validation.
 
 If no width-related property is set at all, then the `default` set in `theming` will be used.
 

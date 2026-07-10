@@ -13,7 +13,10 @@
 
 .resizeHandle {
   position: relative;
-  width: 0;
+  /* Deliberately non-zero: a zero-width separator can tie in offsetLeft/
+     offsetWidth with an adjacent fully-collapsed Panel, which breaks
+     react-resizable-panels' offset-based Panel/Separator ordering. */
+  width: 1px;
 }
 
 .resizeHandle:focus-visible {

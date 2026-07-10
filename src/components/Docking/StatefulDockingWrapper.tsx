@@ -1,13 +1,13 @@
 "use client";
 
-import { ReactNode, useCallback, useEffect, useRef } from "react";
+import { ReactNode, RefObject, useCallback, useEffect, useRef } from "react";
 
 import readerStyles from "../assets/styles/thorium-web.reader.app.module.css";
 import dockingStyles from "./assets/styles/thorium-web.docking.module.css";
 
-import { ImperativePanelHandle, Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { Group, Panel, PanelImperativeHandle, Separator } from "react-resizable-panels";
 
-import { ThDockingTypes, ThDockingKeys, ThLayoutDirection } from "@/preferences/models";
+import { ThDockingTypes, ThDockingKeys, ThDockingSizeValue, ThLayoutDirection } from "@/preferences/models";
 import { ActionsStateKeys } from "@/lib/actionsReducer";
 
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
@@ -22,21 +22,18 @@ import { makeBreakpointsMap } from "@/core/Helpers/breakpointsMap";
 import classNames from "classnames";
 
 export interface DockPanelSizes {
-  width: number;
-  minWidth: number;
-  maxWidth: number;
-  getCurrentPxWidth: (percentage: number) => number;
+  width: ThDockingSizeValue;
+  minWidth: ThDockingSizeValue;
+  maxWidth: ThDockingSizeValue;
 }
 
 const DockHandle = ({
   flow,
   isResizable,
-  isPopulated, 
   hasDragIndicator
-}: { 
+}: {
   flow: ThDockingKeys.start | ThDockingKeys.end;
   isResizable: boolean;
-  isPopulated: boolean;
   hasDragIndicator?: boolean;
 }) => {
   const handleID = `${ flow }-resize-handle`;
@@ -53,16 +50,15 @@ const DockHandle = ({
 
   return(
     <>
-    <PanelResizeHandle 
-      id={ handleID } 
+    <Separator
+      id={ handleID }
       className={ dockingStyles.resizeHandle }
       disabled={ !isResizable }
-      tabIndex={ isPopulated ? 0 : -1 }
     >
-      { isResizable && hasDragIndicator && 
-        <div className={ classNames(dockingStyles.resizeHandleGrab, classFromFlow()) }></div> 
+      { isResizable && hasDragIndicator &&
+        <div className={ classNames(dockingStyles.resizeHandleGrab, classFromFlow()) }></div>
       }
-    </PanelResizeHandle>
+    </Separator>
     </>
   )
 };
@@ -76,8 +72,9 @@ const DockPanel = ({
   isCollapsed,
   forceExpand,
   hasDragIndicator,
-  profile
-}: { 
+  profile,
+  panelRef
+}: {
   actionKey: ActionsStateKeys | null;
   flow: ThDockingKeys.start | ThDockingKeys.end;
   sizes: DockPanelSizes;
@@ -87,10 +84,10 @@ const DockPanel = ({
   forceExpand: boolean;
   hasDragIndicator?: boolean;
   profile: string;
+  panelRef: RefObject<PanelImperativeHandle | null>;
 }) => {
   const { t } = useI18n();
 
-  const panelRef = useRef<ImperativePanelHandle>(null);
   const direction = useAppSelector(state => state.reader.direction);
   const dispatch = useAppDispatch();
 
@@ -117,19 +114,31 @@ const DockPanel = ({
     return label;
   }, [flow, direction, isPopulated, isCollapsed, actionKey, t]);
 
+  // Collapse/expand state and docked width are mirrored to Redux from the
+  // Group's onLayoutChanged callback (see StatefulDockingWrapper), which
+  // fires once per completed interaction — including these imperative calls.
+  //
+  // react-resizable-panels' imperative Panel methods can throw if called
+  // while the Panel's registration with its Group is momentarily out of
+  // sync (e.g. a breakpoint change adding/removing docked panels in the same
+  // render as this panel's populated state changes). These calls are a
+  // best-effort UI sync, not a source of truth, so a transient failure here
+  // must not crash the reader — it self-corrects on the next effect run.
   const collapsePanel = useCallback(() => {
-    if (panelRef.current) {
-      panelRef.current.collapse();
-      dispatch(collapseDockPanel({ slot: flow, profile }));
+    try {
+      panelRef.current?.collapse();
+    } catch (error) {
+      console.warn(`Failed to collapse ${ flow } dock panel`, error);
     }
-  }, [dispatch, flow, profile]);
+  }, [panelRef, flow]);
 
   const expandPanel = useCallback(() => {
-    if (panelRef.current) {
-      panelRef.current.expand();
-      dispatch(expandDockPanel({ slot: flow, profile }));
+    try {
+      panelRef.current?.expand();
+    } catch (error) {
+      console.warn(`Failed to expand ${ flow } dock panel`, error);
     }
-  }, [dispatch, flow, profile]);
+  }, [panelRef, flow]);
 
   useEffect(() => {
     dispatch(activateDockPanel({ slot: flow, profile }));
@@ -146,45 +155,35 @@ const DockPanel = ({
   return(
     <>
     { flow === ThDockingKeys.end &&
-      <DockHandle 
-        flow={ ThDockingKeys.end } 
-        isResizable={ isResizable } 
-        isPopulated={ isPopulated }
-        hasDragIndicator={ hasDragIndicator } 
-      /> 
-    } 
-    <Panel 
-      id={ `${ flow }-panel` } 
-      order={ flow === ThDockingKeys.end ? 3 : 1 } 
+      <DockHandle
+        flow={ ThDockingKeys.end }
+        isResizable={ isResizable }
+        hasDragIndicator={ hasDragIndicator }
+      />
+    }
+    <Panel
+      id={ `${ flow }-panel` }
       collapsible={ true }
       collapsedSize={ 0 }
-      ref={ panelRef }
-      defaultSize={ isPopulated ? sizes.width : 0 } 
-      minSize={ sizes.minWidth } 
+      panelRef={ panelRef }
+      defaultSize={ sizes.width }
+      minSize={ sizes.minWidth }
       maxSize={ sizes.maxWidth }
-      onCollapse={ collapsePanel }
-      onExpand={ expandPanel }
-      onResize={ (size: number) => size !== 0 && dispatch(setDockPanelWidth({
-        key: flow,
-        width: sizes.getCurrentPxWidth(size),
-        profile: profile
-      }))}
-      inert={ isCollapsed } 
+      inert={ isCollapsed }
     >
-      <div 
-        id={ flow } 
+      <div
+        id={ flow }
         aria-label={ makeDockLabel() }
         className={ classNames(dockingStyles.panelContainer, dockClassName) }
       ></div>
     </Panel>
-    { flow === ThDockingKeys.start && 
-      <DockHandle 
-        flow={ ThDockingKeys.start } 
-        isResizable={ isResizable } 
-        isPopulated={ isPopulated } 
-        hasDragIndicator={ hasDragIndicator } 
-      /> 
-    } 
+    { flow === ThDockingKeys.start &&
+      <DockHandle
+        flow={ ThDockingKeys.start }
+        isResizable={ isResizable }
+        hasDragIndicator={ hasDragIndicator }
+      />
+    }
   </>
   );
 };
@@ -196,14 +195,64 @@ export const StatefulDockingWrapper = ({
 }) => {
   const preferences = useActionsPreferences();
   const profile = useAppSelector(state => state.reader.profile);
-  
+  const dispatch = useAppDispatch();
+
   // Clean up stale docked actions
   useDockCleanup(profile);
-  
+
   const dockingStart = useAppSelector(state => profile && state.actions.dock[profile] ? state.actions.dock[profile][ThDockingKeys.start] : undefined);
   const dockingEnd = useAppSelector(state => profile && state.actions.dock[profile] ? state.actions.dock[profile][ThDockingKeys.end] : undefined)
   const startPanel = useResizablePanel(dockingStart);
   const endPanel = useResizablePanel(dockingEnd);
+
+  const startPanelRef = useRef<PanelImperativeHandle>(null);
+  const endPanelRef = useRef<PanelImperativeHandle>(null);
+  const wasCollapsedRef = useRef<Record<ThDockingKeys.start | ThDockingKeys.end, boolean>>({
+    [ThDockingKeys.start]: false,
+    [ThDockingKeys.end]: false
+  });
+
+  // react-resizable-panels only reads `defaultSize` once; ongoing width
+  // persistence and collapse/expand mirroring belong on the Group's
+  // onLayoutChanged, which fires once per completed interaction (mouse
+  // release or keyboard press) rather than on every intermediate frame of a
+  // drag, per the library's own guidance for "saving a layout".
+  const handleLayoutChanged = useCallback(() => {
+    if (!profile) return;
+
+    ([
+      [ThDockingKeys.start, startPanelRef],
+      [ThDockingKeys.end, endPanelRef]
+    ] as const).forEach(([flow, ref]) => {
+      const panel = ref.current;
+      if (!panel) return;
+
+      // Same transient-registration caveat as collapsePanel/expandPanel:
+      // this is a best-effort mirror to Redux, not a source of truth.
+      let inPixels: number;
+      try {
+        inPixels = panel.getSize().inPixels;
+      } catch (error) {
+        console.warn(`Failed to read ${ flow } dock panel size`, error);
+        return;
+      }
+
+      const isCollapsedNow = inPixels === 0;
+      const wasCollapsed = wasCollapsedRef.current[flow];
+      wasCollapsedRef.current[flow] = isCollapsedNow;
+
+      if (isCollapsedNow) {
+        if (!wasCollapsed) {
+          dispatch(collapseDockPanel({ slot: flow, profile }));
+        }
+      } else {
+        if (wasCollapsed) {
+          dispatch(expandDockPanel({ slot: flow, profile }));
+        }
+        dispatch(setDockPanelWidth({ key: flow, width: inPixels, profile }));
+      }
+    });
+  }, [profile, dispatch]);
 
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
 
@@ -225,51 +274,51 @@ export const StatefulDockingWrapper = ({
 
     return (
       <>
-      <PanelGroup direction="horizontal">
-        { 
-          (dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.start) 
-          && profile && <DockPanel 
+      <Group id="docking-panel-group" orientation="horizontal" onLayoutChanged={ handleLayoutChanged }>
+        {
+          (dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.start)
+          && profile && <DockPanel
             actionKey={ startPanel.currentKey() }
-            flow={ ThDockingKeys.start } 
+            flow={ ThDockingKeys.start }
             sizes={{
               width: startPanel.getWidth(),
               minWidth: startPanel.getMinWidth(),
-              maxWidth: startPanel.getMaxWidth(),
-              getCurrentPxWidth: startPanel.getCurrentPxWidth
-            }} 
+              maxWidth: startPanel.getMaxWidth()
+            }}
             isResizable={ startPanel.isResizable() }
             isPopulated={ startPanel.isPopulated() }
-            isCollapsed={ startPanel.isCollapsed() } 
+            isCollapsed={ startPanel.isCollapsed() }
             forceExpand={ startPanel.forceExpand() }
             hasDragIndicator={ startPanel.hasDragIndicator() }
             profile={ profile }
+            panelRef={ startPanelRef }
           />
         }
-    
-        <Panel id="main-panel" order={ 2 }>
+
+        <Panel id="main-panel">
           { children }
         </Panel>
-    
-        { 
-          (dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.end) 
-          && profile && <DockPanel 
+
+        {
+          (dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.end)
+          && profile && <DockPanel
             actionKey={ endPanel.currentKey() }
-            flow={ ThDockingKeys.end } 
+            flow={ ThDockingKeys.end }
             sizes={{
               width: endPanel.getWidth(),
               minWidth: endPanel.getMinWidth(),
-              maxWidth: endPanel.getMaxWidth(),
-              getCurrentPxWidth: endPanel.getCurrentPxWidth
-            }} 
+              maxWidth: endPanel.getMaxWidth()
+            }}
             isResizable={ endPanel.isResizable() }
             isPopulated={ endPanel.isPopulated() }
-            isCollapsed={ endPanel.isCollapsed() } 
+            isCollapsed={ endPanel.isCollapsed() }
             forceExpand={ endPanel.forceExpand() }
             hasDragIndicator={ endPanel.hasDragIndicator() }
             profile={ profile }
+            panelRef={ endPanelRef }
           />
         }
-      </PanelGroup>
+      </Group>
     </>
     )
   }
