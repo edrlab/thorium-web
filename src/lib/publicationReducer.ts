@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Locator } from "@readium/shared";
+import { SerializedLocator } from "@/helpers/serializePositions";
 import { ThemeTokens } from "@/preferences/hooks/useTheming";
 import { ScriptMode } from "@readium/navigator";
-import { UnstableTimeline } from "@/core/Hooks/useTimeline";
-import { TocItem, toEntryRef } from "@/helpers/buildTocTree";
+import { Progress } from "@/core/Hooks/usePublicationProgress";
+import { TocItem, TocEntryRef, toEntryRef } from "@/helpers/buildTocTree";
 
-export interface AdjacentTimelineItem {
-  title: string;
+export interface TimelineItemRef {
+  title?: string;
   href: string;
 }
 
@@ -17,13 +17,17 @@ export interface PublicationReducerState {
   isRTL: boolean;
   scriptMode: ScriptMode;
   hasDisplayTransformability: boolean;
-  positionsList: Locator[],
+  positionsList: SerializedLocator[],
   atPublicationStart: boolean;
   atPublicationEnd: boolean;
-  unstableTimeline?: UnstableTimeline;
+  progress?: Progress;
+  toc: {
+    tree?: TocItem[];
+    currentEntry?: TocEntryRef | null;
+  };
   adjacentTimelineItems: {
-    previous: AdjacentTimelineItem | null;
-    next: AdjacentTimelineItem | null;
+    previous: TimelineItemRef | null;
+    next: TimelineItemRef | null;
   };
   coverTheme?: ThemeTokens;
 }
@@ -37,7 +41,8 @@ const initialState: PublicationReducerState = {
   positionsList: [],
   atPublicationStart: false,
   atPublicationEnd: false,
-  unstableTimeline: undefined,
+  progress: undefined,
+  toc: { tree: undefined, currentEntry: undefined },
   adjacentTimelineItems: { previous: null, next: null },
   coverTheme: undefined,
 }
@@ -70,40 +75,20 @@ export const publicationSlice = createSlice({
     setPublicationEnd: (state, action) => {
       state.atPublicationEnd = action.payload
     },
-    setTimeline: (state, action) => {
-      state.unstableTimeline = {
-        ...action.payload,
-        toc: action.payload.toc || { tree: undefined, currentEntry: undefined }
-      };
+    setProgress: (state, action: { payload: Progress }) => {
+      state.progress = action.payload;
     },
-    setTocTree: (state, action) => {
-      if (!state.unstableTimeline) {
-        state.unstableTimeline = {
-          toc: { tree: action.payload, currentEntry: undefined }
-        };
-      } else if (state.unstableTimeline.toc) {
-        state.unstableTimeline.toc.tree = action.payload;
-      } else {
-        state.unstableTimeline.toc = { tree: action.payload, currentEntry: undefined };
-      }
+    setTocTree: (state, action: { payload: TocItem[] | undefined }) => {
+      state.toc.tree = action.payload;
     },
-    setAdjacentTimelineItems: (state, action: { payload: { previous: AdjacentTimelineItem | null; next: AdjacentTimelineItem | null } }) => {
+    setAdjacentTimelineItems: (state, action: { payload: { previous: TimelineItemRef | null; next: TimelineItemRef | null } }) => {
       state.adjacentTimelineItems = action.payload;
     },
     setCoverTheme: (state, action: { payload: ThemeTokens | undefined }) => {
       state.coverTheme = action.payload;
     },
     setTocEntry: (state, action: { payload: TocItem | null }) => {
-      const entry = action.payload ? toEntryRef(action.payload) : null;
-      if (!state.unstableTimeline) {
-        state.unstableTimeline = {
-          toc: { tree: undefined, currentEntry: entry }
-        };
-      } else if (state.unstableTimeline.toc) {
-        state.unstableTimeline.toc.currentEntry = entry;
-      } else {
-        state.unstableTimeline.toc = { tree: undefined, currentEntry: entry };
-      }
+      state.toc.currentEntry = action.payload ? toEntryRef(action.payload) : null;
     }
   }
 });
@@ -118,7 +103,7 @@ export const {
   setPositionsList,
   setPublicationStart,
   setPublicationEnd,
-  setTimeline,
+  setProgress,
   setTocTree,
   setTocEntry,
   setAdjacentTimelineItems,

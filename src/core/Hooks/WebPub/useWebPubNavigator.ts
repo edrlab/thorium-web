@@ -5,7 +5,8 @@ import { useCallback, useRef } from "react";
 import {
   Link,
   Locator,
-  Publication
+  Publication,
+  Timeline
 } from "@readium/shared";
 import {
   ExperimentalWebPubNavigator,
@@ -192,6 +193,7 @@ export const useWebPubNavigator = () => {
     getSetting,
     submitPreferences,
     getCframes,
-    getScriptMode: currentScriptMode
+    getScriptMode: currentScriptMode,
+    timeline: useCallback((): Timeline | undefined => navigatorInstance?.timeline, []),
   }
 }

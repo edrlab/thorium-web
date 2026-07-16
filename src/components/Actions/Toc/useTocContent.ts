@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Key, useFilter } from "react-aria-components";
 
-import { TocItem } from "@/core/Hooks/useTimeline";
+import { TocItem } from "@/helpers/buildTocTree";
 
 interface UseTocContentOptions {
   isOpen: boolean;
@@ -24,7 +24,7 @@ function filterTocTree(
       if (item.children) acc.push(...recursiveFilter(item.children));
       return acc;
     }, []);
-  return recursiveFilter(items).map((item, i) => ({ ...item, key: `${item.id}-${i}` }));
+  return recursiveFilter(items);
 }
 
 export function useTocContent({ isOpen, tocTree, tocEntry }: UseTocContentOptions) {

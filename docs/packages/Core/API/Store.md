@@ -142,11 +142,14 @@ interface PublicationReducerState {
   positionsList: Locator[];
   atPublicationStart: boolean;
   atPublicationEnd: boolean;
-  unstableTimeline?: UnstableTimeline;
-  adjacentTimelineItems: { previous: AdjacentTimelineItem | null; next: AdjacentTimelineItem | null };
+  progress?: Progress;
+  toc: { tree?: TocItem[]; currentEntry?: TocEntryRef | null };
+  adjacentTimelineItems: { previous: TimelineItemRef | null; next: TimelineItemRef | null };
   coverTheme?: ThemeTokens;
 }
 ```
+
+`Progress` (from `@/core/Hooks/usePublicationProgress`) holds only chapter/progress data derived from the real Readium `Timeline` plus position/percentage math computed separately from `positionsList` — it does not carry the TOC tree, which is tracked independently in `toc` since Timeline is not meant to replace TOC.
 
 **Actions:**
 - `setFontLanguage`: Set font language
@@ -157,10 +160,10 @@ interface PublicationReducerState {
 - `setPositionsList`: Update positions list
 - `setPublicationStart`: Set at publication start state
 - `setPublicationEnd`: Set at publication end state
-- `setTimeline`: Set timeline data
+- `setProgress`: Set reading-progress data (title, current chapter, position/percentage math)
 - `setTocTree`: Set table of contents tree
 - `setTocEntry`: Set current TOC entry
-- `setAdjacentTimelineItems`: Set adjacent timeline items (previous/next)
+- `setAdjacentTimelineItems`: Set adjacent timeline items (previous/next), sourced from the real Timeline's `adjacentTo()`
 - `setCoverTheme`: Set the cover-extracted theme tokens (runtime only, not persisted)
 
 > [!IMPORTANT]

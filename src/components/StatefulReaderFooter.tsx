@@ -43,7 +43,7 @@ export const StatefulReaderFooter = ({
   const isScroll = useIsScroll();
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
-  const timeline = useAppSelector(state => state.publication.unstableTimeline);
+  const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
 
   const dispatch = useAppDispatch();
 
@@ -95,7 +95,7 @@ export const StatefulReaderFooter = ({
     const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
         previous,
-        timeline?.previousItem?.title,
+        adjacentTimelineItems.previous?.title,
         isFXL ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
         isFXL ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
       ),
@@ -105,7 +105,7 @@ export const StatefulReaderFooter = ({
     const nextLink: ThPaginationLinkProps | undefined = next ? {
       node: buildNode(
         next,
-        timeline?.nextItem?.title,
+        adjacentTimelineItems.next?.title,
         isFXL ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
         isFXL ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
       ),
@@ -115,11 +115,11 @@ export const StatefulReaderFooter = ({
     return isRTL
       ? { left: nextLink, right: previousLink }
       : { left: previousLink, right: nextLink };
-  }, [go, previousLocator, nextLocator, buildNode, timeline, reducedMotion, isFXL, isRTL]);
+  }, [go, previousLocator, nextLocator, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
 
   useEffect(() => {
     updateLinks();
-  }, [timeline, updateLinks]);
+  }, [adjacentTimelineItems, updateLinks]);
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode

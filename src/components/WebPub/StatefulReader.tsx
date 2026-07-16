@@ -30,7 +30,8 @@ import {
 import { WebPubNavigatorListeners } from "@readium/navigator";
 import {
   Locator,
-  Publication
+  Publication,
+  TimelineItem
 } from "@readium/shared";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
@@ -46,7 +47,10 @@ import { useWebPubReaderInit } from "./Hooks/useReaderInit";
 import { useWebPubKeyboardPeripherals } from "./Hooks/useWebPubKeyboardPeripherals";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { useI18n } from "@/i18n/useI18n";
-import { useTimeline } from "@/core/Hooks/useTimeline";
+import { usePublicationProgress } from "@/core/Hooks/usePublicationProgress";
+import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
+import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
+import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 import { usePositionStorage } from "@/hooks/usePositionStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
@@ -61,8 +65,8 @@ import {
   toggleImmersive, 
   setFullscreen,
 } from "@/lib/readerReducer";
-import { 
-  setTimeline,
+import {
+  setProgress,
   setPublicationStart,
   setPublicationEnd
 } from "@/lib/publicationReducer";
@@ -173,21 +177,30 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const { handleFullscreen } = useFullscreen(onFsChange);
 
   const webPubNavigator = useWebPubNavigator();
-  const { 
+  const {
     currentPositions,
     canGoBackward,
     canGoForward,
+    timeline: getNavigatorTimeline
   } = webPubNavigator;
 
   const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKey, positionStorage);
 
-  const timeline = useTimeline({
+  const tocTree = useAppSelector(state => state.publication.toc?.tree);
+
+  const [currentTimelineItem, setCurrentTimelineItem] = useState<TimelineItem | undefined>(undefined);
+
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(publication);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(publication, tocTree);
+
+  const timeline = usePublicationProgress({
     publication: publication,
+    currentTimelineItem,
     currentLocation: localData,
     currentPositions: currentPositions() || [],
     positionsList: undefined,
-    onChange: (timeline) => {
-      dispatch(setTimeline(timeline));
+    onChange: (progress) => {
+      dispatch(setProgress(progress));
     }
   });
 
@@ -236,6 +249,18 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   const listeners: WebPubNavigatorListeners = useMemo(() => ({
     frameLoaded: async function (_wnd: Window): Promise<void> {},
+    timelineItemChanged: function (item: TimelineItem | undefined): void {
+      setCurrentTimelineItem(item);
+
+      if (!item) {
+        clearAdjacentItems();
+        clearCurrentTocEntry();
+        return;
+      }
+
+      updateAdjacentItems(item);
+      updateCurrentTocEntry(item);
+    },
     positionChanged: async function (locator: Locator): Promise<void> {
       setLocalData(locator);
 
@@ -307,12 +332,18 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         }
       }
     },
-  }), [setLocalData, canGoBackward, canGoForward, dispatch, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey]);
+  }), [setLocalData, canGoBackward, canGoForward, dispatch, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
-  const initialPosition = useMemo(() => getLocalData(), [getLocalData]);
+  // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
+  // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
+  // needs real prototype methods (.time(), etc.), so deserialize it here at the point of use.
+  const initialPosition = useMemo(() => {
+    const stored = getLocalData();
+    return stored ? (Locator.deserialize(stored) ?? null) : null;
+  }, [getLocalData]);
 
   // Initialize reader using the new composite hook
-  useWebPubReaderInit({
+  const { navigatorReady } = useWebPubReaderInit({
     container,
     publication,
     initialPosition,
@@ -332,6 +363,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       dispatch(setLoading(false));
     },
   });
+
+  useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
 
   return (
     <>

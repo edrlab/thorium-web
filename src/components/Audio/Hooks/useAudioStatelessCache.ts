@@ -2,15 +2,15 @@
 
 import { useRef } from "react";
 import { AudioSettings, useAudioSettingsCache } from "@/core/Hooks/Audio/useAudioSettingsCache";
-import { AdjacentTimelineItem } from "@/lib/publicationReducer";
+import { TimelineItemRef } from "@/lib/publicationReducer";
 
 export interface AudioStatelessCache {
   settings: AudioSettings;
   sleepTimerOnTrackEnd: boolean;
   sleepTimerOnFragmentEnd: boolean;
   adjacentTimelineItems: {
-    previous: AdjacentTimelineItem | null;
-    next: AdjacentTimelineItem | null;
+    previous: TimelineItemRef | null;
+    next: TimelineItemRef | null;
   };
 }
 
@@ -27,8 +27,8 @@ export const useAudioStatelessCache = (
   sleepTimerOnTrackEnd: boolean,
   sleepTimerOnFragmentEnd: boolean,
   adjacentTimelineItems: {
-    previous: AdjacentTimelineItem | null;
-    next: AdjacentTimelineItem | null;
+    previous: TimelineItemRef | null;
+    next: TimelineItemRef | null;
   }
 ) => {
   const settingsCache = useAudioSettingsCache(

@@ -12,7 +12,7 @@ import {
   TreeItemContent
 } from "react-aria-components";
 
-import { TocItem } from "@/core/Hooks/useTimeline";
+import { TocItem } from "@/helpers/buildTocTree";
 import { ThFormSearchField } from "@/core/Components";
 
 import Chevron from "./assets/icons/chevron_right.svg";
@@ -97,7 +97,6 @@ export const TocContent = ({
         { function renderItem(item) {
           return (
             <TreeItem
-              data-href={ item.href }
               className={ tocStyles.treeItem }
               textValue={ item.title || "" }
             >

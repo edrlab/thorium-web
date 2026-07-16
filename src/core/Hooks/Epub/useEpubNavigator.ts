@@ -5,8 +5,10 @@ import { useCallback, useRef } from "react";
 import {
   Link,
   Locator,
-  Publication
+  Publication,
+  Timeline
 } from "@readium/shared";
+import { SerializedLocator } from "@/helpers/serializePositions";
 import {
   EpubNavigator,
   EpubNavigatorListeners,
@@ -30,7 +32,7 @@ export interface EpubNavigatorLoadProps {
   container: HTMLDivElement | null;
   publication: Publication;
   listeners: EpubNavigatorListeners;
-  positionsList?: Locator[];
+  positionsList?: SerializedLocator[];
   initialPosition?: Locator;
   preferences?: IEpubPreferences;
   defaults?: IEpubDefaults;
@@ -63,7 +65,7 @@ export const useEpubNavigator = () => {
         config.container,
         config.publication,
         config.listeners,
-        config.positionsList,
+        config.positionsList?.map((p) => Locator.deserialize(p)).filter((l): l is Locator => !!l),
         config.initialPosition,
         {
           preferences: config.preferences || {},
@@ -203,5 +205,6 @@ export const useEpubNavigator = () => {
     submitPreferences,
     getCframes,
     getScriptMode: currentScriptMode,
+    timeline: useCallback((): Timeline | undefined => navigatorInstance?.timeline, []),
   }
 }

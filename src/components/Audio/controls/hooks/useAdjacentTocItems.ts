@@ -11,8 +11,8 @@ const flattenTocTree = (items: TocItem[]): TocItem[] => {
 };
 
 export const useAdjacentTocItems = (): { previous: TocItem | null; next: TocItem | null } => {
-  const tocTree = useAppSelector(state => state.publication.unstableTimeline?.toc?.tree);
-  const tocCurrentEntry = useAppSelector(state => state.publication.unstableTimeline?.toc?.currentEntry);
+  const tocTree = useAppSelector(state => state.publication.toc?.tree);
+  const tocCurrentEntry = useAppSelector(state => state.publication.toc?.currentEntry);
 
   if (!tocTree || !tocCurrentEntry) return { previous: null, next: null };
 

@@ -427,27 +427,47 @@ function usePrevious<T>(
 - Ref-based storage for performance
 - Updates only after render
 
-### useTimeline
+### usePublicationProgress
 
-> [!CAUTION]
-> This hook is unstable and will change in the future.
-
-Tracks and manages timeline data so that navigation can be contextualized more easily (current toc entry, positions, title, etc.).
+Computes reading-progress data (position/percentage math, current chapter title) for EPUB/WebPub, decoupled from the real Readium `Timeline` and from TOC tracking. Position/percentage math is derived from `positionsList`/`currentLocation`; the current chapter's identity comes from the real `TimelineItem` supplied by the navigator's `timelineItemChanged` listener.
 
 ```typescript
-function useTimeline(
-  publication: Publication | null, 
-  currentLocation?: Locator, 
-  currentPositions: number[],
-  positionsList: Locator[],
-  onChange?: (timeline: UnstableTimeline) => void
-): UnstableTimeline
+function usePublicationProgress(
+  publication: Publication | null,
+  currentTimelineItem?: TimelineItem, // from @readium/shared
+  currentLocation?: Locator,
+  currentPositions?: number[],
+  positionsList?: Locator[],
+  onChange?: (progress: Progress) => void
+): Progress
 ```
 
 **Features:**
-- Creates timeline data to contextualize navigation (toc, items, positions)
-- Provides current timeline state (current toc entry, current item, previous item, next item)
-- Handles timeline updates
+- Computes position ranges, relative/total progression, and positions-left from `positionsList`
+- Sources the current chapter's title/href from the real Timeline via `publication.timeline.linkFor()`
+- Independent of TOC tracking (see `useTocEntryTracking`) and Timeline adjacency (see `useTimelineAdjacency`)
+
+### useTimelineAdjacency
+
+Resolves previous/next chapter via the publication's real Readium `Timeline` (`Timeline.adjacentTo()`), dispatching to the `adjacentTimelineItems` store slice. Shared by Epub, WebPub, and Audio.
+
+```typescript
+function useTimelineAdjacency(publication: Publication | null): {
+  updateAdjacentItems: (item: TimelineItem) => void;
+  clearAdjacentItems: () => void;
+}
+```
+
+### useTocEntryTracking
+
+Resolves/clears the current TOC entry from an href, reusing `findTocItemByHref`. Pure TOC logic — has no knowledge of Timeline; callers typically obtain the href via `publication.timeline.linkFor(item)?.href`.
+
+```typescript
+function useTocEntryTracking(tocTreeRef: RefObject<TocItem[] | undefined>): {
+  updateCurrentTocEntry: (href: string) => void;
+  clearCurrentTocEntry: () => void;
+}
+```
 
 ### useFonts
 
