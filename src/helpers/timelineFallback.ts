@@ -22,21 +22,7 @@ const walkPrecedingResources = <T,>(
   return undefined;
 };
 
-export const resolveWithPrecedingFallback = <T,>(
-  publication: Publication,
-  item: TimelineItem,
-  resolve: (candidate: TimelineItem) => T | undefined
-): T | undefined => {
-  const direct = resolve(item);
-  if (direct !== undefined) return direct;
-
-  const href = publication.timeline.linkFor(item)?.href;
-  if (!href) return undefined;
-
-  return walkPrecedingResources(publication, href, candidate => resolve(candidate));
-};
-
-// Same fallback for display titles; appends "(N)" when inherited so repeated
+// Falls back to a preceding resource's title; appends "(N)" when inherited so repeated
 // labels (e.g. next/next) don't look identical.
 export const resolveChapterTitle = (
   publication: Publication,

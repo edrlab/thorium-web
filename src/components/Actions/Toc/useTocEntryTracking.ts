@@ -5,11 +5,9 @@ import { Publication, TimelineItem } from "@readium/shared";
 import { useAppDispatch } from "@/lib/hooks";
 import { setTocEntry } from "@/lib/publicationReducer";
 import { findTocItemByHref, TocItem } from "@/helpers/buildTocTree";
-import { resolveWithPrecedingFallback } from "@/helpers/timelineFallback";
 
-// Resolves the current TOC entry for a TimelineItem (falling back to the
-// nearest preceding resource when the current one has none) and maps it to
-// our local tree's row id for highlighting.
+// Resolves the current TOC entry for a TimelineItem via Timeline.tocEntryFor
+// and maps it to our local tree's row id for highlighting.
 //
 // tocTreeRef: the navigator listeners are wired up once on mount, before the
 // tree exists, so we read it through a ref to keep the callback identity
@@ -28,7 +26,7 @@ export const useTocEntryTracking = (publication: Publication | null, tocTree: To
       dispatch(setTocEntry(null));
       return;
     }
-    const entry = resolveWithPrecedingFallback(publication, item, candidate => publication.timeline.tocEntryFor(candidate));
+    const entry = publication.timeline.tocEntryFor(item);
     const matched = entry ? findTocItemByHref(tocTreeRef.current || [], entry.link.href) : undefined;
     dispatch(setTocEntry(matched || null));
   }, [dispatch, publication]);
