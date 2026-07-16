@@ -109,6 +109,7 @@
     "react-stately": "^3.47.0"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "4.20260702.1",
     "@svgr/webpack": "^8.1.0",
     "@types/css-modules": "^1.0.5",
     "@types/node": "^22.19.7",
@@ -122,6 +123,7 @@
     "glob": "^13.0.6",
     "immer": "11.1.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "4.107.1"
   }
 }
