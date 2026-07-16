@@ -4,9 +4,10 @@ import { Publication, TimelineItem } from "@readium/shared";
 
 import { useAppDispatch } from "@/lib/hooks";
 import { setAdjacentTimelineItems } from "@/lib/publicationReducer";
+import { resolveChapterTitle } from "@/helpers/timelineFallback";
 
-// Real Timeline adjacency only — previous/next chapter lookup via the
-// publication's native Timeline. No TOC involvement.
+// adjacentTo() stays resource-by-resource so every resource is reachable;
+// only the label falls back to a preceding titled resource, never the target.
 export const useTimelineAdjacency = (publication: Publication | null) => {
   const dispatch = useAppDispatch();
 
@@ -17,8 +18,12 @@ export const useTimelineAdjacency = (publication: Publication | null) => {
     const { previous, next } = tl.adjacentTo(item);
 
     dispatch(setAdjacentTimelineItems({
-      previous: previous ? { title: previous.title, href: tl.linkFor(previous)?.href ?? "" } : null,
-      next: next ? { title: next.title, href: tl.linkFor(next)?.href ?? "" } : null
+      previous: previous
+        ? { title: resolveChapterTitle(publication, previous), href: tl.linkFor(previous)?.href ?? "" }
+        : null,
+      next: next
+        ? { title: resolveChapterTitle(publication, next), href: tl.linkFor(next)?.href ?? "" }
+        : null
     }));
   }, [dispatch, publication]);
 

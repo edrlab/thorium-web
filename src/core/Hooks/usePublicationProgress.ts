@@ -2,6 +2,7 @@ import { useEffect, useMemo } from "react";
 
 import { Locator, Publication, TimelineItem } from "@readium/shared";
 import { SerializedLocator } from "@/helpers/serializePositions";
+import { resolveChapterTitle } from "@/helpers/timelineFallback";
 
 export interface ProgressionDetails {
   totalItems?: number;
@@ -71,6 +72,10 @@ export const usePublicationProgress = ({
     ? publication?.readingOrder.items.findIndex(item => item.href === currentHref)
     : undefined;
 
+  const currentChapter = currentTimelineItem && publication
+    ? resolveChapterTitle(publication, currentTimelineItem)
+    : undefined;
+
   const progress: Progress = useMemo(() => {
     const positionRange = currentHref ? positionEntries[currentHref]?.positionRange : undefined;
     const endPosition = positionRange?.[1];
@@ -85,7 +90,7 @@ export const usePublicationProgress = ({
         currentPositions: currentPositions || [],
         relativeProgression: currentLocation?.locations.progression,
         totalProgression: currentLocation?.locations.totalProgression,
-        currentChapter: currentTimelineItem?.title,
+        currentChapter,
         positionsLeft: (!positionsList?.length || endPosition === undefined || currentPosition === undefined)
           ? undefined
           : Math.max(0, endPosition - currentPosition)
@@ -93,7 +98,7 @@ export const usePublicationProgress = ({
     };
   }, [
     publication,
-    currentTimelineItem,
+    currentChapter,
     currentHref,
     currentIndex,
     positionEntries,
