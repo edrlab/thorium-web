@@ -71,7 +71,7 @@ const detectProfile = (manifest: Manifest): ReaderProfile => {
   
   // Check for epub profile
   if (profiles.some((profile: Profile) => 
-    profile === Profile.EPUB
+    profile === Profile.EPUB || profile === Profile.DIVINA
   )) {
     return "epub";
   }
