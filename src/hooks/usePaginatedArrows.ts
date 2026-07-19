@@ -22,7 +22,11 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const { preferences } = usePreferences();
   const hasArrows = useAppSelector(state => state.reader.hasArrows);
   const isFXL = useAppSelector(state => state.publication.isFXL);
+  const profile = useAppSelector(state => state.reader.profile);
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
+
+  // Divina is page-based like FXL: same arrow affordances apply
+  const pageBased = isFXL || profile === "divina";
   
   // Get reader state transitions
   const {
@@ -38,11 +42,11 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const dispatch = useAppDispatch();
 
   // Memoize the prefs object to avoid recreating it on every render
-  const prefs = useMemo(() => 
-    isFXL 
-      ? preferences.affordances.paginated.fxl 
+  const prefs = useMemo(() =>
+    pageBased
+      ? preferences.affordances.paginated.fxl
       : preferences.affordances.paginated.reflow,
-    [isFXL, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
+    [pageBased, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
   );
 
   // Memoize the breakpoints map to avoid recreating it on every breakpoint change
@@ -64,15 +68,15 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
     // Force layered variant for FXL to prevent layout issues
     // FXL navigator is using the window width to calculate the layout
     // so we need to force the layered variant to prevent layout issues
-    if (isFXL) {
+    if (pageBased) {
       return {
         ...result,
         variant: ThArrowVariant.layered
       };
     }
-    
+
     return result;
-  }, [breakpoint, prefsMap, isFXL, prefs.default]);
+  }, [breakpoint, prefsMap, pageBased, prefs.default]);
 
   // Track previous prefs
   const prevVariant = usePrevious(variant);

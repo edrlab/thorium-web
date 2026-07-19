@@ -84,6 +84,7 @@ export const useFilteredPreferenceKeys = () => {
       reflowSettingsKeys: filter(keys.reflowSettingsKeys),
       fxlSettingsKeys: filter(keys.fxlSettingsKeys),
       webPubSettingsKeys: filter(keys.webPubSettingsKeys),
+      divinaSettingsKeys: filter(keys.divinaSettingsKeys),
       mainTextSettingsKeys: filter(keys.mainTextSettingsKeys),
       subPanelTextSettingsKeys: filter(keys.subPanelTextSettingsKeys),
       mainSpacingSettingsKeys: filter(keys.mainSpacingSettingsKeys),

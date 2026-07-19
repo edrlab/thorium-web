@@ -1,19 +1,20 @@
 import { useContext, useMemo } from "react";
 import { NavigatorContext } from "../NavigatorProvider";
-import { EpubSettings, WebPubSettings, FXLFrameManager, FrameManager, WebPubFrameManager, ScriptMode } from "@readium/navigator";
+import { DivinaSettings, EpubSettings, WebPubSettings, FXLFrameManager, FrameManager, WebPubFrameManager, ScriptMode } from "@readium/navigator";
 import { Link, Locator } from "@readium/shared";
 
 // Import the navigator hook types
 import type { useEpubNavigator } from "../../Hooks/Epub/useEpubNavigator";
 import type { useWebPubNavigator } from "../../Hooks/WebPub/useWebPubNavigator";
+import type { useDivinaNavigator } from "../../Hooks/Divina/useDivinaNavigator";
 import type { useAudioNavigator } from "../../Hooks/Audio/useAudioNavigator";
 
 // Define proper types for navigator interfaces
-type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator>;
+type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator> | ReturnType<typeof useDivinaNavigator>;
 type MediaNavigator = ReturnType<typeof useAudioNavigator>;
 
-// Union of all settings keys across both navigator types
-type AllVisualSettings = EpubSettings & WebPubSettings;
+// Union of all settings keys across all navigator types
+type AllVisualSettings = EpubSettings & WebPubSettings & DivinaSettings;
 
 // Define the callback type used across navigators
 type NavigationCallback = (ok: boolean) => void;
@@ -97,8 +98,8 @@ export const useNavigator = () => {
       isVisual: () => isVisual,
 
       getScriptMode: (): ScriptMode | undefined => {
-        if (isVisual && (navigator as ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator>).getScriptMode) {
-          return (navigator as ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator>).getScriptMode?.();
+        if (isVisual && (navigator as VisualNavigator).getScriptMode) {
+          return (navigator as VisualNavigator).getScriptMode?.();
         }
         return undefined;
       },

@@ -13,5 +13,6 @@ export * from "./preferencesReducer";
 export * from "./globalPreferencesReducer";
 export * from "./readerReducer";
 export * from "./webPubSettingsReducer";
+export * from "./divinaSettingsReducer";
 export * from "./audioSettingsReducer";
 export * from "./playerReducer";

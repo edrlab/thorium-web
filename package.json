@@ -38,6 +38,8 @@
     "./core/preferences": "./dist/preferences/index.mjs",
     "./audio": "./dist/components/Audio/index.mjs",
     "./audio/styles": "./dist/components/Audio/index.css",
+    "./divina": "./dist/components/Divina/index.mjs",
+    "./divina/styles": "./dist/components/Divina/index.css",
     "./epub": "./dist/components/Epub/index.mjs",
     "./epub/styles": "./dist/components/Epub/index.css",
     "./misc": "./dist/components/Misc/index.mjs",

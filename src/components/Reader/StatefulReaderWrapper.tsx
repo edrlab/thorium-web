@@ -35,6 +35,7 @@ import { InitOptions } from "i18next";
 
 const StatefulEpubReader = lazy(() => import("@/components/Epub").then(mod => ({ default: mod.StatefulReader })));
 const StatefulWebPubReader = lazy(() => import("@/components/WebPub").then(mod => ({ default: mod.ExperimentalWebPubStatefulReader })));
+const StatefulDivinaReader = lazy(() => import("@/components/Divina").then(mod => ({ default: mod.StatefulDivinaReader })));
 const StatefulPlayer = lazy(() => import("@/components/Audio").then(mod => ({ default: mod.StatefulPlayer })));
 
 export interface PositionStorage {
@@ -56,10 +57,11 @@ export interface ReaderPlugins {
   epub?: ThPluginFactory;
   webPub?: ThPluginFactory;
   audio?: ThPluginFactory;
+  divina?: ThPluginFactory;
 }
 
 export interface ReaderComponentProps<
-  P extends "epub" | "webPub" | "audio" | undefined | null = undefined,
+  P extends "epub" | "webPub" | "audio" | "divina" | undefined | null = undefined,
   K extends CustomizableKeys = {}
 > {
   profile: P;
@@ -71,7 +73,7 @@ export interface ReaderComponentProps<
   i18n?: Partial<InitOptions>;
   preferences?: P extends "audio"
     ? { initialPreferences?: ThAudioPreferences<K>; adapter?: ThAudioPreferencesAdapter<K> }
-    : P extends "epub" | "webPub"
+    : P extends "epub" | "webPub" | "divina"
     ? { initialPreferences?: ThPreferences<K>; adapter?: ThPreferencesAdapter<K> }
     : never;
 }
@@ -84,6 +86,7 @@ export const StatefulReaderWrapper = ({ profile, plugins, isLoading, preferences
   const pendingFactory = profile === "epub" ? plugins?.epub
     : profile === "webPub" ? plugins?.webPub
     : profile === "audio" ? plugins?.audio
+    : profile === "divina" ? plugins?.divina
     : undefined;
 
   useEffect(() => {
@@ -183,7 +186,7 @@ const StatefulAudioContent = ({ publication, localDataKey, positionStorage, cove
 // ─── Reader inner content ─────────────────────────────────────────────────────
 
 interface ReaderContentProps {
-  profile: "epub" | "webPub" | undefined | null;
+  profile: "epub" | "webPub" | "divina" | undefined | null;
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
@@ -195,7 +198,12 @@ const StatefulReaderContent = ({ profile, publication, plugins, coverUrl, ...pro
   const { preferences, resolveFontLanguage } = usePreferences();
   const themeObject = useAppSelector(state => state.theming.theme);
   const isFXL = useAppSelector(state => state.publication.isFXL);
-  const theme = profile === "epub" ? (isFXL ? themeObject.fxl : themeObject.reflow) : ThThemeKeys.light;
+  // Divina shares the fxl theme slot
+  const theme = profile === "epub"
+    ? (isFXL ? themeObject.fxl : themeObject.reflow)
+    : profile === "divina"
+      ? themeObject.fxl
+      : ThThemeKeys.light;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -236,6 +244,8 @@ const StatefulReaderContent = ({ profile, publication, plugins, coverUrl, ...pro
   switch (profile) {
     case "epub":
       return <Suspense><StatefulEpubReader publication={ publication } { ...props } plugins={ plugins } containerRefSetter={ setContainerRef } /></Suspense>;
+    case "divina":
+      return <Suspense><StatefulDivinaReader publication={ publication } { ...props } plugins={ plugins } containerRefSetter={ setContainerRef } /></Suspense>;
     case "webPub":
     default:
       return <Suspense><StatefulWebPubReader publication={ publication } { ...props } plugins={ plugins } containerRefSetter={ setContainerRef } /></Suspense>;

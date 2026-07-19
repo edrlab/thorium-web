@@ -9,6 +9,7 @@ export const NavPeripheralType = {
   moveEnd:          "th_nav_move_end",
   zoomIn:           "th_nav_zoom_in",
   zoomOut:          "th_nav_zoom_out",
+  zoomReset:        "th_nav_zoom_reset",
 } as const;
 
 // Ctrl/Cmd + = or Numpad+, covering Blink (187) and Gecko (61) key codes
@@ -29,6 +30,47 @@ export const ZOOM_OUT_KEY_COMBOS = [
   { keyCode: 189, meta: true  },
   { keyCode: 173, meta: true  },
   { keyCode: 109, meta: true  },
+] as const;
+
+// Ctrl/Cmd + 0 or Numpad0
+export const ZOOM_RESET_KEY_COMBOS = [
+  { keyCode: 48, ctrl: true  },
+  { keyCode: 96, ctrl: true  },
+  { keyCode: 48, meta: true  },
+  { keyCode: 96, meta: true  },
+] as const;
+
+// Gecko reports different keyCodes for =/+/- (61, 171, 173) than Blink.
+// These MUST stay Gecko-gated: in Blink, 173 is the AudioVolumeMute media
+// key and 171 can be a media/launcher key, so registering them bare would
+// hijack hardware keys on Chrome-family browsers.
+const isGecko = typeof navigator !== "undefined" && navigator.userAgent.includes("Gecko/");
+
+// Bare +/=/Numpad+ for image-based publications (divina), xbreader-style
+export const IMAGE_ZOOM_IN_KEY_COMBOS: { keyCode: number; shift?: boolean }[] = [
+  { keyCode: 187              },
+  { keyCode: 187, shift: true },
+  { keyCode: 107              },
+  ...(isGecko ? [
+    { keyCode: 61               },
+    { keyCode: 61,  shift: true },
+    // Dedicated + key on e.g. German/Nordic layouts
+    { keyCode: 171              },
+    { keyCode: 171, shift: true },
+  ] : []),
+];
+
+// Bare -/Numpad- for image-based publications (divina), xbreader-style
+export const IMAGE_ZOOM_OUT_KEY_COMBOS: { keyCode: number }[] = [
+  { keyCode: 189 },
+  { keyCode: 109 },
+  ...(isGecko ? [{ keyCode: 173 }] : []),
+];
+
+// Bare 0/Numpad0 for image-based publications (divina), xbreader-style
+export const IMAGE_ZOOM_RESET_KEY_COMBOS = [
+  { keyCode: 48 },
+  { keyCode: 96 },
 ] as const;
 
 export const ACTION_PERIPHERAL_PREFIX = "th_action_" as const;

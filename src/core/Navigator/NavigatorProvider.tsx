@@ -1,9 +1,10 @@
 import { createContext } from "react";
 import { useEpubNavigator } from "../Hooks/Epub/useEpubNavigator";
 import { useWebPubNavigator } from "../Hooks/WebPub/useWebPubNavigator";
+import { useDivinaNavigator } from "../Hooks/Divina/useDivinaNavigator";
 import { useAudioNavigator } from "../Hooks/Audio/useAudioNavigator";
 
-type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator>;
+type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator> | ReturnType<typeof useDivinaNavigator>;
 type MediaNavigator = ReturnType<typeof useAudioNavigator>;
 
 interface NavigatorContextValue {

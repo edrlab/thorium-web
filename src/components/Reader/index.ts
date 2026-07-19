@@ -8,8 +8,9 @@ import "../../app/reset.css";
 // Import all global dependencies
 export * from "../index";
 
-// Import Audio, EPUB and WebPub core exports
+// Import Audio, Divina, EPUB and WebPub core exports
 export * from "../Audio/audio-core";
+export * from "../Divina/divina-core";
 export * from "../Epub/epub-core";
 export * from "../WebPub/webpub-core";
 

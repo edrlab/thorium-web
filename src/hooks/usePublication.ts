@@ -16,6 +16,7 @@ import { useAppDispatch } from "@/lib/hooks";
 import {
   setRTL,
   setFXL,
+  setManifestScrolled,
   setScriptMode,
   setPositionsList,
   setHasDisplayTransformability,
@@ -24,6 +25,7 @@ import { getScriptMode } from "@readium/navigator";
 import { setReaderProfile, ReaderProfile } from "@/lib/readerReducer";
 import { serializePositions } from "@/helpers/serializePositions";
 import { ErrorHandler, ProcessedError } from "@/helpers/errorHandler";
+import { ensureProfileActions } from "@/lib";
 
 export interface UsePublicationOptions {
   url: string;
@@ -69,9 +71,16 @@ const detectProfile = (manifest: Manifest): ReaderProfile => {
     return "audio";
   }
   
+  // Check for divina profile before epub
+  if (profiles.some((profile: Profile) =>
+    profile === Profile.DIVINA
+  )) {
+    return "divina";
+  }
+
   // Check for epub profile
-  if (profiles.some((profile: Profile) => 
-    profile === Profile.EPUB || profile === Profile.DIVINA
+  if (profiles.some((profile: Profile) =>
+    profile === Profile.EPUB
   )) {
     return "epub";
   }
@@ -156,6 +165,10 @@ export const usePublication = ({
             const detectedProfile = detectProfile(manifestObj);
             setProfile(detectedProfile);
             dispatch(setReaderProfile(detectedProfile));
+            if (detectedProfile) {
+              // Heal persisted action state that predates this profile
+              dispatch(ensureProfileActions({ profile: detectedProfile }));
+            }
 
             const pub = new Publication({
               manifest: manifestObj,
@@ -204,6 +217,11 @@ export const usePublication = ({
       dispatch(setFXL(fxl));
     }
 
+    // Natively scrolled detection (webtoon divina is forced scrolled)
+    if (profile === "divina") {
+      dispatch(setManifestScrolled(publication.metadata.effectiveLayout === Layout.scrolled));
+    }
+
     // Display transformability
     const displayTransformability = publication.metadata.accessibility?.feature?.some(
       feature => feature && feature.value === Feature.DISPLAY_TRANSFORMABILITY.value
@@ -218,6 +236,30 @@ export const usePublication = ({
           const positionsList = await publication.positionsFromManifest();
           const deserializedPositionsList = serializePositions(positionsList);
           dispatch(setPositionsList(deserializedPositionsList ?? []));
+        } catch (error) {
+          console.error("Failed to fetch positions:", error);
+          dispatch(setPositionsList([]));
+        }
+      };
+
+      fetchPositions();
+    }
+
+    // Positions for divina: one per readingOrder image, synthesized when the
+    // manifest has no position list (mirrors DivinaNavigator's own positions)
+    if (profile === "divina" && publication) {
+      const fetchPositions = async () => {
+        try {
+          let positionsList = await publication.positionsFromManifest();
+          if (!positionsList?.length) {
+            const n = publication.readingOrder.items.length;
+            positionsList = publication.readingOrder.items.map((link, i) => link.locator.copyWithLocations({
+              progression: 0,
+              position: i + 1,
+              totalProgression: n > 0 ? i / n : 0
+            }));
+          }
+          dispatch(setPositionsList(serializePositions(positionsList)));
         } catch (error) {
           console.error("Failed to fetch positions:", error);
           dispatch(setPositionsList([]));
