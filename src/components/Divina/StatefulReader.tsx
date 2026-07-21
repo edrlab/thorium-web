@@ -129,6 +129,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const container = useRef<HTMLDivElement>(null);
 
   const isRTL = useAppSelector(state => state.publication.isRTL);
+  const positionsList = useAppSelector(state => state.publication.positionsList);
 
   const themeObject = useAppSelector(state => state.theming.theme);
   // Divina shares the fxl theme slot
@@ -195,7 +196,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     publication: publication,
     currentLocation: localData,
     currentPositions: currentPositions() || [],
-    positionsList: undefined,
+    positionsList: positionsList,
     onChange: (timeline) => {
       dispatch(setTimeline(timeline));
     }
