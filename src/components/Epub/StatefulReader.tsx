@@ -682,8 +682,9 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
               </nav> 
             : <></> }
 
-          <StatefulReaderFooter 
-            layout={ layoutUI } 
+          <StatefulReaderFooter
+            layout={ layoutUI }
+            publication={ publication }
             progressionFormatPref={
               isFXL 
                 ? preferences.theming.progression?.format?.fxl 

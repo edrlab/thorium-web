@@ -4,7 +4,7 @@ import { useAppSelector } from "@/lib/hooks";
 const flattenTocTree = (items: TocItem[]): TocItem[] => {
   const result: TocItem[] = [];
   for (const item of items) {
-    result.push(item);
+    if (item.href) result.push(item);
     if (item.children) result.push(...flattenTocTree(item.children));
   }
   return result;

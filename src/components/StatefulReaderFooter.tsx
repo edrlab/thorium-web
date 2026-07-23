@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat } from "@/preferences/models";
+import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
@@ -13,24 +13,28 @@ import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOve
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 
-import { Link } from "@readium/shared";
+import { Link, Publication } from "@readium/shared";
 
 import { useNavigator } from "@/core/Navigator";
 import { useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
+import { usePreferences } from "@/preferences/hooks/usePreferences";
 
 import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll } from "@/hooks";
+import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
 
 import classNames from "classnames";
 
 export const StatefulReaderFooter = ({
   layout,
+  publication,
   progressionFormatPref,
   progressionFormatFallback
 }: {
   layout: ThLayoutUI;
+  publication: Publication;
   progressionFormatPref?: ThFormatPref<ThProgressionFormat | ThProgressionFormat[]>;
   progressionFormatFallback: ThProgressionFormat | ThProgressionFormat[];
 }) => {
@@ -46,6 +50,9 @@ export const StatefulReaderFooter = ({
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
+  const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
+  const { preferences } = usePreferences();
+  const affordance = preferences.affordances.scroll.affordance;
 
   const dispatch = useAppDispatch();
 
@@ -88,8 +95,13 @@ export const StatefulReaderFooter = ({
   }, [t, breakpoint]);
 
   const updateLinks = useCallback(() => {
-    const previous = adjacentTimelineItems.previous;
-    const next = adjacentTimelineItems.next;
+    const previous = affordance === ThNavigationAffordance.readingOrder
+      ? previousReadingOrderItem
+      : adjacentTimelineItems.previous;
+
+    const next = affordance === ThNavigationAffordance.readingOrder
+      ? nextReadingOrderItem
+      : adjacentTimelineItems.next;
 
     const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
@@ -112,7 +124,17 @@ export const StatefulReaderFooter = ({
     return isRTL
       ? { left: nextLink, right: previousLink }
       : { left: previousLink, right: nextLink };
-  }, [goLink, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
+  }, [
+    goLink,
+    buildNode,
+    affordance,
+    adjacentTimelineItems,
+    previousReadingOrderItem,
+    nextReadingOrderItem,
+    reducedMotion,
+    isFXL,
+    isRTL
+  ]);
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode

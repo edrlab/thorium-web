@@ -68,9 +68,7 @@ export const usePublicationProgress = ({
 
   const navigatorTimeline = getNavigatorTimeline();
 
-  const currentHref = currentTimelineItem && navigatorTimeline
-    ? navigatorTimeline.linkFor(currentTimelineItem)?.href
-    : undefined;
+  const currentHref = currentLocation?.href;
 
   const currentIndex = currentHref
     ? publication?.readingOrder.items.findIndex(item => item.href === currentHref)

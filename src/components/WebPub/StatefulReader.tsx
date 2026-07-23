@@ -398,8 +398,9 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
               <div id="thorium-web-container" className={ readerStyles.iframeContainer } ref={ container }></div>
             </article>
 
-          <StatefulReaderFooter 
-            layout={ layoutUI } 
+          <StatefulReaderFooter
+            layout={ layoutUI }
+            publication={ publication }
             progressionFormatPref={ preferences.theming.progression?.format?.webPub }
             progressionFormatFallback={ ThProgressionFormat.readingOrderIndex }
           />

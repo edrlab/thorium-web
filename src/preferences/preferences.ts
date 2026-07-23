@@ -24,6 +24,7 @@ import {
   ThBackLinkPref,
   ThFormatPref,
   ThPaginatedAffordancePref,
+  ThScrollAffordance,
   ThDockingPref,
   ThSettingsGroupPref,
   ValidatedLanguageCollection,
@@ -228,6 +229,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
       toggleOnMiddlePointer: Array<"tap" | "click">;
       hideOnForwardScroll: boolean;
       showOnBackwardScroll: boolean;
+      affordance: ThScrollAffordance;
     },
     paginated: {
       reflow: ThPaginatedAffordancePref;
