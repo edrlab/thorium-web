@@ -172,6 +172,10 @@ export const useWebPubNavigator = () => {
     return getScriptMode(metadata);
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return {
     WebPubNavigatorLoad, 
     WebPubNavigatorDestroy, 
@@ -194,6 +198,6 @@ export const useWebPubNavigator = () => {
     submitPreferences,
     getCframes,
     getScriptMode: currentScriptMode,
-    timeline: useCallback((): Timeline | undefined => navigatorInstance?.timeline, []),
+    timeline,
   }
 }

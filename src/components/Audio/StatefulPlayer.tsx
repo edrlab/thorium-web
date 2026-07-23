@@ -159,18 +159,14 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
 
   const tocTree = useAppSelector(state => state.publication.toc?.tree);
 
-  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(publication);
-  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(publication, tocTree);
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
 
   // Callback to handle timeline navigation state updates
   const handleTimelineNavigation = useCallback((item: TimelineItem) => {
-    const tl = publication.timeline;
-
     updateAdjacentItems(item);
     updateCurrentTocEntry(item);
-
-    return tl.adjacentTo(item);
-  }, [publication, updateAdjacentItems, updateCurrentTocEntry]);
+  }, [updateAdjacentItems, updateCurrentTocEntry]);
 
   // Callback to check if affordance is timeline or toc (fragment-based)
   const isFragmentAffordance = useCallback((affordance: string) => {
@@ -207,7 +203,7 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
 
       // Capture the previous "next" item from cache BEFORE handleTimelineNavigation updates Redux state
       const previousNextItem = cache.current.adjacentTimelineItems.next;
-      const currentItemHref = publication.timeline.linkFor(item)?.href ?? "";
+      const currentItemHref = getNavigatorTimeline()?.linkFor(item)?.href ?? "";
 
       // Update TOC entry and adjacent items (this updates Redux state)
       handleTimelineNavigation(item);
@@ -299,7 +295,7 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
       }
     },
     contextMenu: (_data: ContextMenuEvent) => {}
-  }), [setLocalData, canGoBackward, canGoForward, isPlaying, dispatch, cache, submitPreferences, publication, handleTimelineNavigation, clearCurrentTocEntry, clearAdjacentItems, handleSleepTimerEndOfFragment, handleContinuousPlay, profile, getFocusedDockableKey]);
+  }), [setLocalData, canGoBackward, canGoForward, isPlaying, dispatch, cache, submitPreferences, getNavigatorTimeline, handleTimelineNavigation, clearCurrentTocEntry, clearAdjacentItems, handleSleepTimerEndOfFragment, handleContinuousPlay, profile, getFocusedDockableKey]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which

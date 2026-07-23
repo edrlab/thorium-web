@@ -182,6 +182,10 @@ export const useEpubNavigator = () => {
     return getScriptMode(metadata);
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return { 
     EpubNavigatorLoad, 
     EpubNavigatorDestroy, 
@@ -205,6 +209,6 @@ export const useEpubNavigator = () => {
     submitPreferences,
     getCframes,
     getScriptMode: currentScriptMode,
-    timeline: useCallback((): Timeline | undefined => navigatorInstance?.timeline, []),
+    timeline,
   }
 }

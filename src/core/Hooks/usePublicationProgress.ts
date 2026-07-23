@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 
-import { Locator, Publication, TimelineItem } from "@readium/shared";
+import { Locator, Publication, Timeline, TimelineItem } from "@readium/shared";
 import { SerializedLocator } from "@/helpers/serializePositions";
 import { resolveChapterTitle } from "@/helpers/timelineFallback";
 
@@ -26,6 +26,7 @@ interface PositionEntry {
 
 export const usePublicationProgress = ({
   publication,
+  getNavigatorTimeline,
   currentTimelineItem,
   currentLocation,
   currentPositions,
@@ -33,6 +34,7 @@ export const usePublicationProgress = ({
   onChange
 }: {
   publication: Publication | null;
+  getNavigatorTimeline: () => Timeline | undefined;
   currentTimelineItem?: TimelineItem;
   currentLocation?: Locator;
   currentPositions?: number[];
@@ -64,16 +66,18 @@ export const usePublicationProgress = ({
     return entries;
   }, [publication, positionsList]);
 
-  const currentHref = currentTimelineItem && publication
-    ? publication.timeline.linkFor(currentTimelineItem)?.href
+  const navigatorTimeline = getNavigatorTimeline();
+
+  const currentHref = currentTimelineItem && navigatorTimeline
+    ? navigatorTimeline.linkFor(currentTimelineItem)?.href
     : undefined;
 
   const currentIndex = currentHref
     ? publication?.readingOrder.items.findIndex(item => item.href === currentHref)
     : undefined;
 
-  const currentChapter = currentTimelineItem && publication
-    ? resolveChapterTitle(publication, currentTimelineItem)
+  const currentChapter = currentTimelineItem && navigatorTimeline
+    ? resolveChapterTitle(navigatorTimeline, currentTimelineItem)
     : undefined;
 
   const progress: Progress = useMemo(() => {

@@ -261,11 +261,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   const [currentTimelineItem, setCurrentTimelineItem] = useState<TimelineItem | undefined>(undefined);
 
-  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(publication);
-  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(publication, tocTree);
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
 
   const timeline = usePublicationProgress({
     publication: publication,
+    getNavigatorTimeline,
     currentTimelineItem,
     currentLocation: localData,
     currentPositions: currentPositions() || [],

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-import { Publication, TimelineItem } from "@readium/shared";
+import { Timeline, TimelineItem } from "@readium/shared";
 
 import { useAppDispatch } from "@/lib/hooks";
 import { setTocEntry } from "@/lib/publicationReducer";
@@ -15,21 +15,25 @@ import { findTocItemByHref, TocItem } from "@/helpers/buildTocTree";
 //
 // lastItemRef: the tree may still be empty on the very first event, so we
 // re-resolve the last-seen item once the tree lands.
-export const useTocEntryTracking = (publication: Publication | null, tocTree: TocItem[] | undefined) => {
+export const useTocEntryTracking = (
+  getNavigatorTimeline: () => Timeline | undefined,
+  tocTree: TocItem[] | undefined
+) => {
   const dispatch = useAppDispatch();
 
   const tocTreeRef = useRef(tocTree);
   const lastItemRef = useRef<TimelineItem | undefined>(undefined);
 
   const resolve = useCallback((item: TimelineItem | undefined) => {
-    if (!item || !publication) {
+    const tl = getNavigatorTimeline();
+    if (!item || !tl) {
       dispatch(setTocEntry(null));
       return;
     }
-    const entry = publication.timeline.tocEntryFor(item);
+    const entry = tl.tocEntryFor(item);
     const matched = entry ? findTocItemByHref(tocTreeRef.current || [], entry.link.href) : undefined;
     dispatch(setTocEntry(matched || null));
-  }, [dispatch, publication]);
+  }, [dispatch, getNavigatorTimeline]);
 
   useEffect(() => {
     tocTreeRef.current = tocTree;
