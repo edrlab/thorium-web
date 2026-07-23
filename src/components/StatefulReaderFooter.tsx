@@ -13,6 +13,8 @@ import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOve
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 
+import { Link } from "@readium/shared";
+
 import { useNavigator } from "@/core/Navigator";
 import { useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
@@ -68,20 +70,17 @@ export const StatefulReaderFooter = ({
     }
   };
 
-  const { previousLocator, nextLocator, go } = useNavigator().unified;
+  const { goLink } = useNavigator().unified;
 
   const buildNode = useCallback((
-    locator: ReturnType<typeof previousLocator>,
     title: string | undefined,
     compactKey: string,
     descriptiveKey: string
   ) => {
-    if (!locator) return undefined;
-
     return breakpoint !== ThBreakpoints.compact && breakpoint !== ThBreakpoints.medium ? (
       <>
         <span className={ readerStyles.srOnly }>{ t(descriptiveKey) }</span>
-        <span className={ readerPaginationStyles.label }>{ title || locator.title || t(compactKey) }</span>
+        <span className={ readerPaginationStyles.label }>{ title || t(compactKey) }</span>
       </>
     ) : (
       <span className={ readerPaginationStyles.label }>{ t(compactKey) }</span>
@@ -89,37 +88,31 @@ export const StatefulReaderFooter = ({
   }, [t, breakpoint]);
 
   const updateLinks = useCallback(() => {
-    const previous = previousLocator();
-    const next = nextLocator();
+    const previous = adjacentTimelineItems.previous;
+    const next = adjacentTimelineItems.next;
 
     const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
-        previous,
-        adjacentTimelineItems.previous?.title,
+        previous.title,
         isFXL ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
         isFXL ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
       ),
-      onPress: () => go(previous, !reducedMotion, () => {})
+      onPress: () => goLink(new Link({ href: previous.href }), !reducedMotion, () => {})
     } : undefined;
 
     const nextLink: ThPaginationLinkProps | undefined = next ? {
       node: buildNode(
-        next,
-        adjacentTimelineItems.next?.title,
+        next.title,
         isFXL ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
         isFXL ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
       ),
-      onPress: () => go(next, !reducedMotion, () => {})
+      onPress: () => goLink(new Link({ href: next.href }), !reducedMotion, () => {})
     } : undefined;
 
     return isRTL
       ? { left: nextLink, right: previousLink }
       : { left: previousLink, right: nextLink };
-  }, [go, previousLocator, nextLocator, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
-
-  useEffect(() => {
-    updateLinks();
-  }, [adjacentTimelineItems, updateLinks]);
+  }, [goLink, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode

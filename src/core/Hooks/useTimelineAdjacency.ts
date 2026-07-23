@@ -6,8 +6,6 @@ import { useAppDispatch } from "@/lib/hooks";
 import { setAdjacentTimelineItems } from "@/lib/publicationReducer";
 import { resolveChapterTitle } from "@/helpers/timelineFallback";
 
-// adjacentTo() stays resource-by-resource so every resource is reachable;
-// only the label falls back to a preceding titled resource, never the target.
 export const useTimelineAdjacency = (getNavigatorTimeline: () => Timeline | undefined) => {
   const dispatch = useAppDispatch();
 
