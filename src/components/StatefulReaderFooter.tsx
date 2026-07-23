@@ -16,7 +16,6 @@ import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 import { useNavigator } from "@/core/Navigator";
 import { useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
-import { Link } from "@readium/shared";
 
 import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -69,17 +68,20 @@ export const StatefulReaderFooter = ({
     }
   };
 
-  const { previousLocator, nextLocator, go, goLink } = useNavigator().unified;
+  const { previousLocator, nextLocator, go } = useNavigator().unified;
 
   const buildNode = useCallback((
+    locator: ReturnType<typeof previousLocator>,
     title: string | undefined,
     compactKey: string,
     descriptiveKey: string
   ) => {
+    if (!locator) return undefined;
+
     return breakpoint !== ThBreakpoints.compact && breakpoint !== ThBreakpoints.medium ? (
       <>
         <span className={ readerStyles.srOnly }>{ t(descriptiveKey) }</span>
-        <span className={ readerPaginationStyles.label }>{ title || t(compactKey) }</span>
+        <span className={ readerPaginationStyles.label }>{ title || locator.title || t(compactKey) }</span>
       </>
     ) : (
       <span className={ readerPaginationStyles.label }>{ t(compactKey) }</span>
@@ -87,46 +89,33 @@ export const StatefulReaderFooter = ({
   }, [t, breakpoint]);
 
   const updateLinks = useCallback(() => {
-    // Reflowable EPUBs can have several TOC entries (fragments) within the
-    // same resource: navigate through those via adjacentTimelineItems, whose
-    // title and href always describe the same target. FXL pages map 1:1 to
-    // resources, so plain reading-order adjacency stays the correct target there.
-    const previousPress = !isFXL && adjacentTimelineItems.previous
-      ? () => goLink(new Link({ href: adjacentTimelineItems.previous!.href }), !reducedMotion, () => {})
-      : (() => {
-          const previous = previousLocator();
-          return previous ? () => go(previous, !reducedMotion, () => {}) : undefined;
-        })();
+    const previous = previousLocator();
+    const next = nextLocator();
 
-    const nextPress = !isFXL && adjacentTimelineItems.next
-      ? () => goLink(new Link({ href: adjacentTimelineItems.next!.href }), !reducedMotion, () => {})
-      : (() => {
-          const next = nextLocator();
-          return next ? () => go(next, !reducedMotion, () => {}) : undefined;
-        })();
-
-    const previousLink: ThPaginationLinkProps | undefined = previousPress ? {
+    const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
+        previous,
         adjacentTimelineItems.previous?.title,
         isFXL ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
         isFXL ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
       ),
-      onPress: previousPress
+      onPress: () => go(previous, !reducedMotion, () => {})
     } : undefined;
 
-    const nextLink: ThPaginationLinkProps | undefined = nextPress ? {
+    const nextLink: ThPaginationLinkProps | undefined = next ? {
       node: buildNode(
+        next,
         adjacentTimelineItems.next?.title,
         isFXL ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
         isFXL ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
       ),
-      onPress: nextPress
+      onPress: () => go(next, !reducedMotion, () => {})
     } : undefined;
 
     return isRTL
       ? { left: nextLink, right: previousLink }
       : { left: previousLink, right: nextLink };
-  }, [go, goLink, previousLocator, nextLocator, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
+  }, [go, previousLocator, nextLocator, buildNode, adjacentTimelineItems, reducedMotion, isFXL, isRTL]);
 
   useEffect(() => {
     updateLinks();

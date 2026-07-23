@@ -12,17 +12,17 @@ importers:
         specifier: github:edrlab/thorium-locales
         version: thorium-locales@https://codeload.github.com/edrlab/thorium-locales/tar.gz/b416fdb5cfa7ade7562fe108550e3b566857a7b1
       '@readium/css':
-        specifier: ^2.0.5
+        specifier: '>=2.0.5'
         version: 2.0.5
       '@readium/navigator':
-        specifier: ^2.7.3
-        version: 2.7.3
+        specifier: '>=2.7.2'
+        version: 2.7.2
       '@readium/navigator-html-injectables':
-        specifier: ^2.6.2
-        version: 2.6.2
+        specifier: '>=2.6.1'
+        version: 2.6.1
       '@readium/shared':
-        specifier: ^2.3.2
-        version: 2.3.2
+        specifier: '>=2.3.1'
+        version: 2.3.1
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)
@@ -1470,20 +1470,16 @@ packages:
     resolution: {integrity: sha512-MA4viLVeYB18dEe0EQE8WaE90Azg3R91d21+Cyi8XF5Bj+FHXjLHVb9h+T8MXBa9wKriw0xdobJJ9yMDZ4O49Q==}
     engines: {node: '>=18'}
 
-  '@readium/navigator-html-injectables@2.6.2':
-    resolution: {integrity: sha512-ZmwwmdcVwgaHSKPToUJE+lJcO+cCf2ZQZ7Q0ynk8VjNlceUdTej+GMpouNmIvUNZoIPgLj2JMku1FG8QFGl/Rg==}
-    engines: {node: '>=18'}
-
-  '@readium/navigator@2.7.3':
-    resolution: {integrity: sha512-LwUiIKOObCvYMMdAWorMlecO4L+2xWn3qVsCTQxavWP6Tgn7XkSsRUQsqCaeSUdbzZf87QEJc6E7/xU/fA3UKg==}
+  '@readium/navigator@2.7.2':
+    resolution: {integrity: sha512-XYZYZ1QFqaMgHMgQ43ylQItrckxdUdZseogKcsKZA93BpgnwukWQZzmpLYIk1LWgWcVIb2gxIkVmqfwtEqRIRQ==}
     engines: {node: '>=18'}
 
   '@readium/shared@2.3.0':
     resolution: {integrity: sha512-svrkfzOuYVzBsBQc4WlClkVbexdhxNCtmxhVEG3O49BnlF6tDQvT6tV8FKDnCvrivuVtv/rhN2hoFkB/vRdX+Q==}
     engines: {node: '>=18'}
 
-  '@readium/shared@2.3.2':
-    resolution: {integrity: sha512-g/PlTdXMgsky1EdwxQtcmSFmh1GNMwH69a8BFDc9eWpIFMeC33QkNQzGeng+4MFwCjhbDIXhtLKEWOTKHXwAtw==}
+  '@readium/shared@2.3.1':
+    resolution: {integrity: sha512-LdLdoosJKeR/wMQscHEY07UDWLFcc3FbtNcBzeRor+ZDv/MI3jRsMZh14WXdng0IoO1tJDgSpZuzOF/VGkSJsA==}
     engines: {node: '>=18'}
 
   '@reduxjs/toolkit@2.11.2':
@@ -5344,21 +5340,16 @@ snapshots:
       '@readium/helpers': 1.0.0
       '@readium/shared': 2.3.0
 
-  '@readium/navigator-html-injectables@2.6.2':
-    dependencies:
-      '@readium/helpers': 1.0.0
-      '@readium/shared': 2.3.2
-
-  '@readium/navigator@2.7.3':
+  '@readium/navigator@2.7.2':
     dependencies:
       '@readium/decorator': 1.0.1
       '@readium/helpers': 1.0.0
-      '@readium/navigator-html-injectables': 2.6.2
-      '@readium/shared': 2.3.2
+      '@readium/navigator-html-injectables': 2.6.1
+      '@readium/shared': 2.3.1
 
   '@readium/shared@2.3.0': {}
 
-  '@readium/shared@2.3.2': {}
+  '@readium/shared@2.3.1': {}
 
   '@reduxjs/toolkit@2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)':
     dependencies:
