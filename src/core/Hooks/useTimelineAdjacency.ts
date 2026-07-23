@@ -15,7 +15,7 @@ export const useTimelineAdjacency = (getNavigatorTimeline: () => Timeline | unde
     const tl = getNavigatorTimeline();
     if (!tl) return;
 
-    const { previous, next } = tl.adjacentTo(item);
+    const { previous, next } = tl.navigableFrom(item);
 
     dispatch(setAdjacentTimelineItems({
       previous: previous
