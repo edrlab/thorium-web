@@ -2,6 +2,8 @@
 
 import React, { useCallback, useState, useMemo } from "react";
 
+import { Locator, LocatorLocations } from "@readium/shared";
+
 import audioStyles from "./assets/styles/thorium-web.audioProgressBar.module.css";
 
 import { ThAudioProgress } from "@/core/Components/Audio/ThAudioProgress";
@@ -16,7 +18,7 @@ export const StatefulAudioProgressBar = () => {
   const { t } = useI18n();
   const { preferences } = useAudioPreferences();
 
-  const tocEntry = useAppSelector(state => state.publication.unstableTimeline?.toc?.currentEntry);
+  const tocEntry = useAppSelector(state => state.publication.toc?.currentEntry);
   const currentChapter = tocEntry?.title;
 
   const isStalled = useAppSelector(state => state.player.isStalled);
@@ -43,7 +45,13 @@ export const StatefulAudioProgressBar = () => {
     const locator = currentLocator();
     const tl = timeline();
     if (!locator || !tl) return;
-    const item = tl.itemAtProgression(locator.href, progression, total);
+    const time = progression * total;
+    const hoverLocator = new Locator({
+      href: locator.href,
+      type: locator.type,
+      locations: new LocatorLocations({ fragments: [`t=${ time }`] })
+    });
+    const item = tl.locate(hoverLocator);
     setHoverLabel(item?.title);
   }, [currentLocator, timeline, total]);
 

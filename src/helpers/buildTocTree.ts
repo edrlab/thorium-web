@@ -1,55 +1,38 @@
-import { Link, Locator } from "@readium/shared";
+import { ContextualizedTocEntry, Timeline } from "@readium/shared";
 
 export interface TocItem {
   id: string;
   href: string;
-  title?: string;
+  title: string;
+  position?: string;
   children?: TocItem[];
-  position?: number;
 }
 
 export type TocEntryRef = Omit<TocItem, "children">;
 
 export const toEntryRef = ({ children: _, ...ref }: TocItem): TocEntryRef => ref;
 
-export const buildTocTree = (
-  links: Link[],
-  idGenerator: () => string,
-  positionsList?: Locator[],
-  publicationTitle?: string
-): TocItem[] => {
-  return links.map((link) => {
-    const newId = idGenerator();
+export const buildTocTreeFromTimeline = (timeline: Timeline, publicationTitle?: string): TocItem[] => {
+  let counter = 0;
 
-    let href = link.href;
-    const fragmentIndex = href.indexOf("#");
-    if (fragmentIndex !== -1) {
-      const baseHref = href.substring(0, fragmentIndex);
-      const duplicateLink = links.find((l) => l.href.startsWith(baseHref) && l.href !== href);
-      if (!duplicateLink) {
-        href = baseHref;
-      }
-    }
+  const map = (entries: ContextualizedTocEntry[]): TocItem[] =>
+    entries.map((entry) => {
+      counter += 1;
 
-    const counter = parseInt(newId.split("-")[1], 10);
+      return {
+        id: `toc-${ counter }`,
+        href: entry.link.href,
+        title: entry.link.title || (
+          publicationTitle
+            ? `${ publicationTitle } ${ counter }`
+            : `Resource ${ counter }`
+        ),
+        position: entry.position ?? entry.timestamp,
+        children: entry.children ? map(entry.children) : undefined
+      };
+    });
 
-    const treeNode: TocItem = {
-      id: newId,
-      href: href,
-      title: link.title || (
-        publicationTitle
-          ? `${ publicationTitle } ${ counter }`
-          : newId
-      ),
-      position: positionsList?.find((position) => position.href === href)?.locations.position
-    };
-
-    if (link.children) {
-      treeNode.children = buildTocTree(link.children.items, idGenerator, positionsList, publicationTitle);
-    }
-
-    return treeNode;
-  });
+  return map(timeline.contextualizedToc);
 };
 
 export const findTocItemById = (items: TocItem[], id: string): TocItem | undefined => {
@@ -64,20 +47,10 @@ export const findTocItemById = (items: TocItem[], id: string): TocItem | undefin
 };
 
 export const findTocItemByHref = (items: TocItem[], href: string): TocItem | undefined => {
-  // Pass 1: exact href match
-  const exact = searchTocItems(items, (item) => item.href === href);
-  if (exact) return exact;
-
-  // Pass 2: bare href match (strip fragment on both sides)
-  const bareHref = href.split("#")[0];
-  return searchTocItems(items, (item) => item.href.split("#")[0] === bareHref);
-};
-
-const searchTocItems = (items: TocItem[], predicate: (item: TocItem) => boolean): TocItem | undefined => {
   for (const item of items) {
-    if (predicate(item)) return item;
+    if (item.href === href) return item;
     if (item.children) {
-      const found = searchTocItems(item.children, predicate);
+      const found = findTocItemByHref(item.children, href);
       if (found) return found;
     }
   }

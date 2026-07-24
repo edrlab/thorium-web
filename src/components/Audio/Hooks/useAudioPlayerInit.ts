@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState, useRef } from "react";
 
-import { Locator, LocatorLocations, Publication } from "@readium/shared";
+import { Locator, Publication } from "@readium/shared";
 import { AudioNavigatorListeners, IAudioContentProtectionConfig, IKeyboardPeripheralsConfig } from "@readium/navigator";
 import { ThAudioPreferences } from "@/preferences/audioPreferences";
 
@@ -58,10 +58,7 @@ export const useAudioPlayerInit = ({
     const config: AudioNavigatorLoadProps = {
       publication,
       listeners,
-      initialPosition: initialPosition ? new Locator({
-        ...initialPosition,
-        locations: initialPosition.locations ? new LocatorLocations(initialPosition.locations) : undefined
-      }) : undefined,
+      initialPosition: initialPosition ?? undefined,
       preferences: audioPreferences,
       defaults: audioDefaults,
       contentProtection: contentProtectionConfig,

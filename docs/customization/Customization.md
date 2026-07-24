@@ -93,19 +93,31 @@ The `scroll` object can be used to set the following properties:
 - `toggleOnMiddlePointer` to configure whether the scroll affordances should be toggled on middle tap or click.
 - `hideOnForwardScroll` to configure whether the scroll affordances should be hidden on forward scroll.
 - `showOnBackwardScroll` to configure whether the scroll affordances should be shown on backward scroll.
+- `affordance` to configure what previous/next chapter navigation in the scroll-mode footer is based on. Accepts a `ThScrollAffordance` value:
+  - `ThNavigationAffordance.timeline` (default): navigate to the previous/next timeline segment.
+  - `ThNavigationAffordance.readingOrder`: navigate to the previous/next resource in the reading order.
+
+> [!NOTE]
+> `ThNavigationAffordance.toc` is not a valid value here: a single toc entry can span multiple reading-order resources, so navigating strictly by toc entry can skip resources that have no toc entry of their own. Audio's per-track affordance preference (see the [Audio Customization doc](./audio/Customization.md#affordances)) is unaffected and still supports `toc`.
 
 For instance:
 
-```
+```typescript
+import { ThNavigationAffordance } from "@edrlab/thorium-web/preferences";
+
 affordances: {
   scroll: {
     hintInImmersive: false,
     toggleOnMiddlePointer: ["tap", "click"],
     hideOnForwardScroll: true,
-    showOnBackwardScroll: false
+    showOnBackwardScroll: false,
+    affordance: ThNavigationAffordance.readingOrder
   }
 }
 ```
+
+> [!NOTE]
+> This only affects the scroll-mode chapter pagination footer. Paginated EPUB arrow buttons always page through content resource-by-resource, regardless of this setting.
 
 ### Pagination
 

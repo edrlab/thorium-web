@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { ThLayoutUI, ThTextAlignOptions, ThLineHeightOptions } from "@/preferences/models";
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
 import { LineLengthStateObject, FontFamilyStateObject } from "@/lib/settingsReducer";
-import { Locator } from "@readium/shared";
+import { SerializedLocator } from "@/helpers/serializePositions";
 import { useEpubSettingsCache, ReadiumCSSSettings } from "@/core/Hooks/Epub/useEpubSettingsCache";
 
 export interface EPubStatelessCache {
@@ -13,7 +13,7 @@ export interface EPubStatelessCache {
   isHovering: boolean;
   arrowsOccupySpace: boolean;
   settings: ReadiumCSSSettings;
-  positionsList: Locator[];
+  positionsList: SerializedLocator[];
   colorScheme?: ThColorScheme;
   reducedMotion?: boolean;
 }
@@ -37,7 +37,7 @@ export const useEpubStatelessCache = (
   textNormalization: boolean,
   wordSpacing: number | null,
   theme: string | undefined,
-  positionsList: Locator[],
+  positionsList: SerializedLocator[],
   colorScheme: ThColorScheme,
   reducedMotion: boolean,
   layoutUI: ThLayoutUI,

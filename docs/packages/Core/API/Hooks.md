@@ -427,27 +427,51 @@ function usePrevious<T>(
 - Ref-based storage for performance
 - Updates only after render
 
-### useTimeline
+### usePublicationProgress
 
-> [!CAUTION]
-> This hook is unstable and will change in the future.
-
-Tracks and manages timeline data so that navigation can be contextualized more easily (current toc entry, positions, title, etc.).
+Computes reading-progress data (position/percentage math, current chapter title) for EPUB/WebPub, decoupled from the real Readium `Timeline` and from TOC tracking. Position/percentage math is derived from `positionsList`/`currentLocation`; the current chapter's identity comes from the real `TimelineItem` supplied by the navigator's `timelineItemChanged` listener.
 
 ```typescript
-function useTimeline(
-  publication: Publication | null, 
-  currentLocation?: Locator, 
-  currentPositions: number[],
-  positionsList: Locator[],
-  onChange?: (timeline: UnstableTimeline) => void
-): UnstableTimeline
+function usePublicationProgress(options: {
+  publication: Publication | null;
+  getNavigatorTimeline: () => Timeline | undefined;
+  currentTimelineItem?: TimelineItem; // from @readium/shared
+  currentLocation?: Locator;
+  currentPositions?: number[];
+  positionsList?: SerializedLocator[];
+  onChange?: (progress: Progress) => void;
+}): Progress
 ```
 
 **Features:**
-- Creates timeline data to contextualize navigation (toc, items, positions)
-- Provides current timeline state (current toc entry, current item, previous item, next item)
-- Handles timeline updates
+- Computes position ranges, relative/total progression, and positions-left from `positionsList`
+- Sources the current chapter's title from the real Timeline via `getNavigatorTimeline()` and `currentTimelineItem`
+- Independent of TOC tracking (see `useTocEntryTracking`) and Timeline adjacency (see `useTimelineAdjacency`)
+
+### useTimelineAdjacency
+
+Resolves previous/next chapter via the navigator's real Readium `Timeline` (`Timeline.navigableFrom()`), dispatching to the `adjacentTimelineItems` store slice. Shared by Epub, WebPub, and Audio.
+
+```typescript
+function useTimelineAdjacency(getNavigatorTimeline: () => Timeline | undefined): {
+  updateAdjacentItems: (item: TimelineItem) => void;
+  clearAdjacentItems: () => void;
+}
+```
+
+### useTocEntryTracking
+
+Resolves/clears the current TOC entry from a `TimelineItem` via `Timeline.tocEntryFor()`, reusing `findTocItemByHref` to map it to the local tree's row id. Pure TOC logic — has no knowledge of Timeline resolution itself; callers pass the `TimelineItem` obtained from the navigator's `timelineItemChanged` listener.
+
+```typescript
+function useTocEntryTracking(
+  getNavigatorTimeline: () => Timeline | undefined,
+  tocTree: TocItem[] | undefined
+): {
+  updateCurrentTocEntry: (item: TimelineItem) => void;
+  clearCurrentTocEntry: () => void;
+}
+```
 
 ### useFonts
 

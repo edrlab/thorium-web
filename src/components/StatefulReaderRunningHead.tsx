@@ -19,7 +19,7 @@ export const StatefulReaderRunningHead = ({
 }) => {
   const { t } = useI18n();
   
-  const unstableTimeline = useAppSelector(state => state.publication.unstableTimeline);
+  const progress = useAppSelector(state => state.publication.progress);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const isFullscreen = useAppSelector(state => state.reader.isFullscreen);
@@ -67,12 +67,12 @@ export const StatefulReaderRunningHead = ({
 
   const runningHead = useMemo(() => {
     if (displayFormat === ThRunningHeadFormat.title) {
-      return unstableTimeline?.title || "";
+      return progress?.title || "";
     } else if (displayFormat === ThRunningHeadFormat.chapter) {
-      return unstableTimeline?.progression?.currentChapter || unstableTimeline?.title || "";
+      return progress?.progression?.currentChapter || progress?.title || "";
     }
     return "";
-  }, [displayFormat, unstableTimeline]);
+  }, [displayFormat, progress]);
 
   if (!runningHead || displayFormat === ThRunningHeadFormat.none) return null;
   

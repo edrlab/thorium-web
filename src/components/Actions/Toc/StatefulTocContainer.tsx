@@ -29,10 +29,10 @@ import { TocContent } from "./TocContent";
 export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProps) => {
   const { t } = useI18n();
 
-  const unstableTimeline = useAppSelector(state => state.publication.unstableTimeline);
-  const tocEntry = unstableTimeline?.toc?.currentEntry ?? undefined;
+  const toc = useAppSelector(state => state.publication.toc);
+  const tocEntry = toc?.currentEntry ?? undefined;
   const tocEntryId = tocEntry?.id;
-  const tocTree = unstableTimeline?.toc?.tree;
+  const tocTree = toc?.tree;
 
   const { goLink, getScriptMode } = useNavigator().unified;
   // vertical-cjk has RTL reading progression but lays out as LTR in the TOC
@@ -56,24 +56,22 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
   const handleAction = (keys: Selection) => {
     if (keys === "all" || !keys || keys.size === 0) return;
 
-    const key = [...keys][0];
-    const el = document.querySelector(`[data-key=${key}]`);
-    const href = el?.getAttribute("data-href");
+    const key = [...keys][0] as string;
+    const matched = findTocItemById(tocTree || [], key);
 
-    if (!href) return;
+    if (!matched) return;
 
-    const link: Link = new Link({ href: href });
-    const matched = findTocItemById(tocTree || [], key as string);
+    const link: Link = new Link({ href: matched.href });
 
     const cb = actionState?.isOpen &&
       (sheetType === ThSheetTypes.dockedStart || sheetType === ThSheetTypes.dockedEnd)
         ? () => {
-          dispatch(setTocEntry(matched || null));
+          dispatch(setTocEntry(matched));
           dispatch(setImmersive(true));
           dispatch(setUserNavigated(true));
         }
         : () => {
-          dispatch(setTocEntry(matched || null));
+          dispatch(setTocEntry(matched));
           dispatch(setImmersive(true));
           dispatch(setUserNavigated(true));
           setOpen(false);

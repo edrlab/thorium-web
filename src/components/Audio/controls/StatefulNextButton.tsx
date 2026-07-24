@@ -10,7 +10,7 @@ import { useAppSelector } from "@/lib/hooks";
 import { useI18n } from "@/i18n/useI18n";
 import { useAudioPreferences } from "@/preferences";
 import { ThAudioAffordance } from "@/preferences/audioPreferences";
-import { useAdjacentTocItems } from "./hooks/useAdjacentTocItems";
+import { useAdjacentTocItems } from "../../hooks/useAdjacentTocItems";
 import { Link } from "@readium/shared";
 
 export const StatefulNextButton = ({ isDisabled }: { isDisabled?: boolean }) => {

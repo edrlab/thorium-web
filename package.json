@@ -64,10 +64,10 @@
     "increment": "node scripts/increment.mjs"
   },
   "peerDependencies": {
-    "@readium/css": ">=2.0.5",
-    "@readium/navigator": ">=2.6.1",
-    "@readium/navigator-html-injectables": ">=2.4.4",
-    "@readium/shared": ">=2.2.3",
+    "@readium/css": "^2.0.5",
+    "@readium/navigator": "^2.8.0",
+    "@readium/navigator-html-injectables": "^2.6.3",
+    "@readium/shared": "^2.4.0",
     "@reduxjs/toolkit": "^2.11.2",
     "i18next": "^25.8.13",
     "i18next-browser-languagedetector": "^8.2.1",
@@ -85,10 +85,10 @@
   },
   "dependencies": {
     "@edrlab/thorium-locales": "github:edrlab/thorium-locales",
-    "@readium/css": ">=2.0.5",
-    "@readium/navigator": ">=2.6.1",
-    "@readium/navigator-html-injectables": ">=2.4.4",
-    "@readium/shared": ">=2.2.3",
+    "@readium/css": "^2.0.5",
+    "@readium/navigator": "^2.8.0",
+    "@readium/navigator-html-injectables": "^2.6.3",
+    "@readium/shared": "^2.4.0",
     "@reduxjs/toolkit": "^2.11.2",
     "classnames": "^2.5.1",
     "colorthief": "^3.3.1",
@@ -109,6 +109,8 @@
     "react-stately": "^3.47.0"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "1.13.16",
+    "@cloudflare/workers-types": "4.20260702.1",
     "@svgr/webpack": "^8.1.0",
     "@types/css-modules": "^1.0.5",
     "@types/node": "^22.19.7",
@@ -122,6 +124,7 @@
     "glob": "^13.0.6",
     "immer": "11.1.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "4.107.1"
   }
 }
