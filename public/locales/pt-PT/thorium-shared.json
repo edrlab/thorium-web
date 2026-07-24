@@ -6,7 +6,7 @@
             "close": "Fechar",
             "collapse": "Contrair",
             "collapseAll": "Contrair todos",
-            "decrease": "Reduzir",
+            "decrease": "Diminuir",
             "disable": "Desativar",
             "enable": "Ativar",
             "exit": "Sair",
@@ -46,8 +46,8 @@
                 "descriptive": "Frase seguinte"
             },
             "goToPosition": {
-                "compact": "Saltar para…",
-                "descriptive": "Saltar para a posição"
+                "compact": "Ir para…",
+                "descriptive": "Ir para a posição"
             },
             "goToPreviousChapter": {
                 "compact": "Anterior",
@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Anterior",
                 "descriptive": "Frase anterior"
+            },
+            "readAloud": {
+                "compact": "Ler em voz alta"
             }
         },
         "annotations": {
@@ -176,7 +179,7 @@
                 },
                 "publisher": "Fonte do editor",
                 "sans": "Sem serifa",
-                "title": "Tipo de letra"
+                "title": "Família da letra"
             },
             "fontSize": "Tamanho do tipo de letra",
             "fontWeight": {
@@ -248,7 +251,7 @@
             "text": "Texto",
             "textAlign": {
                 "default": "Predefinição",
-                "justify": "Justificar",
+                "justify": "Justificado",
                 "left": "Esquerda",
                 "right": "Direita",
                 "title": "Alinhamento do texto"

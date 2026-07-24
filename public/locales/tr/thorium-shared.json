@@ -64,9 +64,89 @@
             "goToPreviousSentence": {
                 "compact": "Önceki",
                 "descriptive": "Önceki cümle"
+            },
+            "readAloud": {
+                "compact": "Sesli oku"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "Notu düzenle"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "Yer imi ekle"
+                    },
+                    "delete": {
+                        "compact": "Yer imini sil",
+                        "confirmation": "Bu yer imini silmek istediğinize emin misiniz?"
+                    }
+                },
+                "emptyState": {
+                    "description": "Okuma sırasında eklenen yeni yer imleri bu listede görünecektir.",
+                    "title": "Yer imi yok"
+                },
+                "title": "Yer İmleri"
+            },
+            "note": {
+                "title": "Not"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Son eklenen"
+                },
+                "lastEdited": {
+                    "compact": "Son düzenlenen"
+                },
+                "progression": {
+                    "compact": "İlerleme"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "Duraklat",
+                "play": "Oynat",
+                "skipBackward": {
+                    "compact": "Geri sar",
+                    "descriptive": "Geri sarar"
+                },
+                "skipForward": {
+                    "compact": "İleri sar",
+                    "descriptive": "İleri sarar"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "Geri sarma aralığı",
+                    "skipForwardInterval": "İleri sarma aralığı",
+                    "skipInterval": "Sarma aralığı",
+                    "title": "Ses Ayarları",
+                    "volume": "Ses düzeyi"
+                },
+                "autoPlay": {
+                    "label": "Sürekli oynatım",
+                    "title": "Otomatik oynat"
+                },
+                "playbackRate": {
+                    "compact": "Hız",
+                    "descriptive": "Oynatım hızı"
+                },
+                "sleepTimer": {
+                    "compact": "Zamanlayıcı",
+                    "descriptive": "Uyku zamanlayıcısı",
+                    "presets": {
+                        "endOfChapter": "Bölüm sonu",
+                        "endOfResource": "Kaynak sonu"
+                    }
+                }
             }
         },
         "preferences": {
+            "brightness": "Parlaklık",
             "columns": {
                 "auto": "Otomatik",
                 "dual": {

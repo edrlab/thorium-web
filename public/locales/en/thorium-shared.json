@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Previous",
                 "descriptive": "Previous sentence"
+            },
+            "readAloud": {
+                "compact": "Read aloud"
             }
         },
         "annotations": {

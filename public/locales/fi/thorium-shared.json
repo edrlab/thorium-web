@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Edellinen",
                 "descriptive": "Edellinen lause"
+            },
+            "readAloud": {
+                "compact": "Luenta"
             }
         },
         "annotations": {

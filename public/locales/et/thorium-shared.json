@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Tagasi",
                 "descriptive": "Eelmine lause"
+            },
+            "readAloud": {
+                "compact": "Loe valjult ette"
             }
         },
         "annotations": {
