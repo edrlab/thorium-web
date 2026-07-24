@@ -139,7 +139,7 @@ interface PublicationReducerState {
   isRTL: boolean;
   scriptMode: ScriptMode; // "ltr" | "rtl" | "cjk-horizontal" | "cjk-vertical"
   hasDisplayTransformability: boolean;
-  positionsList: Locator[];
+  positionsList: SerializedLocator[];
   atPublicationStart: boolean;
   atPublicationEnd: boolean;
   progress?: Progress;
