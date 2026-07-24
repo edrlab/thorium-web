@@ -27,15 +27,9 @@ Please do not submit pull requests for localization files as they will not be ac
 pnpm update-locales
 ```
 
-This updates the thorium-locales dependency, extracts the latest shared locales, and generates a completion report.
+This fetches the latest [thorium-locales](https://github.com/edrlab/thorium-locales) repository into a temporary directory, copies its shared locale files to `public/locales/[locale]/thorium-shared.json`, and generates a completion report. The resulting changes to `public/locales` should be reviewed and committed like any other change — this diff is the changelog for locale content, since thorium-locales itself isn't versioned.
 
-### Extracting Shared Locales
-
-```bash
-pnpm extract-locales
-```
-
-This copies locale files from the thorium-locales package to `public/locales/[locale]/thorium-shared.json`. It is run when building the Next.js application and bundling the NPM package.
+`public/locales` is committed to the repository and consumed directly by the Next.js application build and the NPM package bundle — neither depends on thorium-locales at build time.
 
 ### Checking Locale Status
 
