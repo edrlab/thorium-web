@@ -1,5 +1,9 @@
 ignoreScripts: true
 
+manage-package-manager-versions: true
+
 minimumReleaseAge: 4320 # 3 days
+minimumReleaseAgeExclude:
+  - "@readium/*"
 blockExoticSubdeps: true
 trustPolicy: no-downgrade
