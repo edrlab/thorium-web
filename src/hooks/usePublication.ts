@@ -167,7 +167,7 @@ export const usePublication = ({
               try {
                 const rawPositions = await pub.positionsFromManifest();
                 const positionsList = serializePositions(rawPositions);
-                dispatch(setPositionsList(positionsList));
+                dispatch(setPositionsList(positionsList ?? []));
               } catch (error) {
                 console.error("Failed to fetch positions:", error);
                 dispatch(setPositionsList([]));
@@ -217,7 +217,7 @@ export const usePublication = ({
         try {
           const positionsList = await publication.positionsFromManifest();
           const deserializedPositionsList = serializePositions(positionsList);
-          dispatch(setPositionsList(deserializedPositionsList));
+          dispatch(setPositionsList(deserializedPositionsList ?? []));
         } catch (error) {
           console.error("Failed to fetch positions:", error);
           dispatch(setPositionsList([]));
