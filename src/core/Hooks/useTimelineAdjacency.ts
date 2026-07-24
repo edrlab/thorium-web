@@ -15,12 +15,15 @@ export const useTimelineAdjacency = (getNavigatorTimeline: () => Timeline | unde
 
     const { previous, next } = tl.navigableFrom(item);
 
+    const previousHref = previous ? tl.linkFor(previous)?.href : undefined;
+    const nextHref = next ? tl.linkFor(next)?.href : undefined;
+
     dispatch(setAdjacentTimelineItems({
-      previous: previous
-        ? { title: resolveChapterTitle(tl, previous), href: tl.linkFor(previous)?.href ?? "" }
+      previous: previous && previousHref
+        ? { title: resolveChapterTitle(tl, previous), href: previousHref }
         : null,
-      next: next
-        ? { title: resolveChapterTitle(tl, next), href: tl.linkFor(next)?.href ?? "" }
+      next: next && nextHref
+        ? { title: resolveChapterTitle(tl, next), href: nextHref }
         : null
     }));
   }, [dispatch, getNavigatorTimeline]);
