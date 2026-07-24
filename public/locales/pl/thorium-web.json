@@ -48,6 +48,16 @@
             },
             "back": {
                 "trigger": "Wróć"
+            },
+            "printingDisabled": "Drukowanie zostało wyłączone",
+            "errors": {
+                "title": "Błąd",
+                "notFound": "Publikacja nie została znaleziona.",
+                "accessDenied": "Odmowa dostępu.",
+                "network": "Serwer niedostępny – spróbuj ponownie później.",
+                "serverError": "Błąd serwera – spróbuj ponownie później.",
+                "clientError": "Nieprawidłowe żądanie.",
+                "generic": "Nie można załadować publikacji."
             }
         },
         "navigation": {
@@ -65,7 +75,10 @@
         },
         "jumpToPosition": {
             "go": "Idź",
-            "label": "Wybierz pozycję od {{ positionStart }} do {{ positionEnd }}:"
+            "label": "Wybierz pozycję od {{ positionStart }} do {{ positionEnd }}:",
+            "error": {
+                "notFound": "Pozycja nie została znaleziona."
+            }
         },
         "overflowMenu": {
             "active": {
@@ -89,6 +102,28 @@
                     "tooltip": "Więcej opcji",
                     "trigger": "Więcej opcji odstępów"
                 }
+            }
+        }
+    },
+    "audio": {
+        "player": {
+            "progress": "Postęp odtwarzania",
+            "controls": "Sterowanie odtwarzaniem",
+            "mediaControls": "Ustawienia audio",
+            "coverAlt": "Okładka audiobook-a"
+        },
+        "remotePlayback": {
+            "trigger": "Zdalne odtwarzanie",
+            "connected": "Połączono zdalnie"
+        },
+        "settings": {
+            "sleepTimer": {
+                "hours": "g",
+                "minutes": "min",
+                "seconds": "s",
+                "start": "Start",
+                "instruction": "Odtwarzanie zostanie wstrzymane po upływie ustawionego czasu.",
+                "remaining": "Wstrzymanie za {{ remaining }}"
             }
         }
     }

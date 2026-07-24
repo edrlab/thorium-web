@@ -14,6 +14,8 @@ export interface AudioActionsPreferences {
   docking: ThDockingPref<ThDockingKeys>;
   primaryActionsKeys: Record<string, ThAudioActionsTokens>;
   secondaryActionsKeys: Record<string, ThActionsTokens>;
+  primaryDisplayOrder: string[];
+  secondaryDisplayOrder: string[];
 }
 
 /**
@@ -65,5 +67,7 @@ export const useAudioActionsPreferences = (): AudioActionsPreferences => {
     docking: audioCtx.preferences.docking,
     primaryActionsKeys: audioCtx.preferences.actions.primary.keys,
     secondaryActionsKeys: audioCtx.preferences.actions.secondary.keys,
+    primaryDisplayOrder: audioCtx.preferences.actions.primary.displayOrder as string[],
+    secondaryDisplayOrder: audioCtx.preferences.actions.secondary.displayOrder as string[],
   };
 };

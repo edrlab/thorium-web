@@ -37,6 +37,10 @@
                 "compact": "التالي",
                 "descriptive": "الصفحة التالية"
             },
+            "goToNextResource": {
+                "compact": "التالي",
+                "descriptive": "العنصر التالي"
+            },
             "goToNextSentence": {
                 "compact": "التالي",
                 "descriptive": "العبارة التالية"
@@ -53,9 +57,44 @@
                 "compact": "السابق",
                 "descriptive": "الصفحة السابقة"
             },
+            "goToPreviousResource": {
+                "compact": "السابق",
+                "descriptive": "الملف السابق"
+            },
             "goToPreviousSentence": {
                 "compact": "السابق",
                 "descriptive": "العبارة السابقة"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "تعديل الملاحظة"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "إضافة علامة مرجعية"
+                    },
+                    "delete": {
+                        "compact": "حذف العلامة المرجعية",
+                        "confirmation": "هل أنت متأكد من رغبتك في حذف هذه العلامة؟"
+                    }
+                },
+                "emptyState": {
+                    "description": "العلامات المرجعية المضافة في أثناء القراءة ستظهر في هذه القائمة.",
+                    "title": "لا توجد علامات مرجعية"
+                },
+                "title": "العلامات المرجعية"
+            },
+            "note": {
+                "title": "ملاحظة"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "المضاف حديثًا"
+                }
             }
         },
         "preferences": {

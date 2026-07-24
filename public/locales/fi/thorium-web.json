@@ -54,7 +54,7 @@
                 "title": "Virhe",
                 "notFound": "Julkaisua ei löytynyt.",
                 "accessDenied": "Pääsy evätty.",
-                "network": "Palvelin ei saatavilla - yritä myöhemmin uudelleen.",
+                "network": "Palvelin ei ole saatavilla - yritä myöhemmin uudelleen.",
                 "serverError": "Palvelinvirhe - yritä myöhemmin uudelleen.",
                 "clientError": "Epäkelpo pyyntö.",
                 "generic": "Ei voitu ladata julkaisua."
@@ -113,12 +113,12 @@
             "coverAlt": "Äänikirjan kansi"
         },
         "remotePlayback": {
-            "trigger": "Toisto etäyhteydellä",
-            "connected": "Etäyhteys päällä"
+            "trigger": "Toisto etänä",
+            "connected": "Laite yhdistetty"
         },
         "settings": {
             "sleepTimer": {
-                "hours": "h",
+                "hours": "t",
                 "minutes": "min",
                 "seconds": "s",
                 "start": "Aloita",

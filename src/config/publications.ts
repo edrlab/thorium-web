@@ -17,6 +17,8 @@ export const PUBLICATION_MANIFESTS = {
   "molly-hopper": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9tb2xseS1ob3BwZXItdjEuMS53ZWJwdWI/manifest.json",
   // Audiobooks
   "flatland": "https://readium.org/webpub-manifest/examples/Flatland/manifest.json",
+  "art-of-letters": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9hcnRfbGV0dGVycy56YWI%2Fmanifest.json",
+  "around-the-world": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9Bcm91bmRUaGVXb3JsZEluRWlnaHR5RGF5cy5tNGI%2Fmanifest.json",
   // RTL + CJK
   "haruko": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL0lEUEYvZXB1YjMtc2FtcGxlcy9yZWxlYXNlcy9kb3dubG9hZC8yMDIzMDcwNC9oYXJ1a28taHRtbC1qcGVnLmVwdWI/manifest.json",
   "israel-sailing": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL0lEUEYvZXB1YjMtc2FtcGxlcy9yZWxlYXNlcy9kb3dubG9hZC8yMDIzMDcwNC9pc3JhZWxzYWlsaW5nLmVwdWI/manifest.json",

@@ -37,3 +37,10 @@ export const toActionPeripheralType = (key: string) => `${ ACTION_PERIPHERAL_PRE
 
 export const fromActionPeripheralType = (type: string): string | null =>
   type.startsWith(ACTION_PERIPHERAL_PREFIX) ? type.slice(ACTION_PERIPHERAL_PREFIX.length) : null;
+
+export const DOCKING_PERIPHERAL_PREFIX = "th_docking_" as const;
+
+export const toDockingPeripheralType = (key: string) => `${ DOCKING_PERIPHERAL_PREFIX }${ key }`;
+
+export const fromDockingPeripheralType = (type: string): string | null =>
+  type.startsWith(DOCKING_PERIPHERAL_PREFIX) ? type.slice(DOCKING_PERIPHERAL_PREFIX.length) : null;

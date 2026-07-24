@@ -70,6 +70,7 @@ export const StatefulDockedSheet = ({
     return(
       <>
       <ThDockedPanel
+        id={ id }
         ref={ dockedSheetRef }
         isOpen={ isOpen }
         portal={ dockPortal }

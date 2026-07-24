@@ -200,6 +200,10 @@ const settings = {
 4. Copy the CSS URL, `link`, or `@import` statement from their website
 5. Use it with the helper function as shown above
 
+### Using Google Fonts
+
+You can also include Google Fonts in your font collection by manually defining the font configuration if you prefer or need more control. Here's how to do it:
+
 #### Using the Helper Function (Recommended)
 
 For convenience, you can use the `createDefinitionsFromGoogleFonts` helper.
@@ -233,10 +237,6 @@ const googleFonts = createDefinitionsFromGoogleFonts({
   }
 });
 ```
-
-### Using Google Fonts
-
-You can also include Google Fonts in your font collection by manually defining the font configuration if you prefer or need more control. Here's how to do it:
 
 #### Manual Configuration
 

@@ -1,13 +1,14 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useRef } from "react";
 
-import { 
-  Layout, 
-  Link, 
-  Locator, 
-  Publication 
+import {
+  Link,
+  Locator,
+  Publication,
+  Timeline
 } from "@readium/shared";
+import { SerializedLocator } from "@/helpers/serializePositions";
 import {
   EpubNavigator,
   EpubNavigatorListeners,
@@ -31,7 +32,7 @@ export interface EpubNavigatorLoadProps {
   container: HTMLDivElement | null;
   publication: Publication;
   listeners: EpubNavigatorListeners;
-  positionsList?: Locator[];
+  positionsList?: SerializedLocator[];
   initialPosition?: Locator;
   preferences?: IEpubPreferences;
   defaults?: IEpubDefaults;
@@ -53,47 +54,18 @@ export const useEpubNavigator = () => {
     return navigatorInstance?.settings[settingKey] as EpubSettings[K];
   }, []);
 
-  // [TMP] Working around positionChanged not firing consistently for FXL
-  // We’re observing the FXLFramePoolManager spine div element’s style
-  // and checking whether its translate3d has changed.
-  // Sure IntersectionObserver should be the obvious one to use here,
-  // observing iframes instead of the style attribute on the spine element
-  // but there’s additional complexity to handle as a spread = 2 iframes
-  // And keeping in sync while the FramePool is re-aligning on resize can be suboptimal
-  const FXLPositionChangedCallbackRef = useRef<((locator: Locator) => void) | undefined>(undefined);
-  const FXLPositionChanged = useMemo(() => {  
-    return new MutationObserver((mutationsList: MutationRecord[]) => {
-      for (const mutation of mutationsList) {
-        const re = /translate3d\(([^)]+)\)/;
-        const newVal = (mutation.target as HTMLElement).getAttribute(mutation.attributeName as string);
-        const oldVal = mutation.oldValue;
-        if (newVal?.split(re)[1] !== oldVal?.split(re)[1]) {
-          const locator = navigatorInstance?.currentLocator;
-          if (locator && FXLPositionChangedCallbackRef.current) {
-            FXLPositionChangedCallbackRef.current(locator);
-          }
-        }
-      }
-    });
-  }, []);
-
-  const EpubNavigatorLoad = useCallback((config: EpubNavigatorLoadProps, cb: Function, fxlCallback?: (locator: Locator) => void) => {
+  const EpubNavigatorLoad = useCallback((config: EpubNavigatorLoadProps, cb: Function) => {
     if (config.container) {
       container.current = config.container;
       containerParent.current = container.current? container.current.parentElement : null;
       
       publication.current = config.publication;
 
-      // Register FXL callback immediately if provided
-      if (fxlCallback) {
-        FXLPositionChangedCallbackRef.current = fxlCallback;
-      }
-
       navigatorInstance = new EpubNavigator(
         config.container,
         config.publication,
         config.listeners,
-        config.positionsList,
+        config.positionsList?.map((p) => Locator.deserialize(p)).filter((l): l is Locator => !!l),
         config.initialPosition,
         {
           preferences: config.preferences || {},
@@ -106,28 +78,17 @@ export const useEpubNavigator = () => {
 
       navigatorInstance.load().then(() => {
         cb();
-
-        if (navigatorInstance?.layout === Layout.fixed) {
-          // @ts-ignore
-          FXLPositionChanged.observe((navigatorInstance?.pool.spineElement as HTMLElement), {
-            attributeFilter: ["style"], 
-            attributeOldValue: true
-          });
-        }
       });
     }
-  }, [FXLPositionChanged]);
+  }, []);
 
   const EpubNavigatorDestroy = useCallback((cb: Function) => {
     cb();
 
-    if (navigatorInstance?.layout === Layout.fixed) {
-      FXLPositionChanged.disconnect();
-    }
     navigatorInstance?.destroy().then(() => {
       navigatorInstance = null; // Clear the singleton reference
     });
-  }, [FXLPositionChanged]);
+  }, []);
 
   const goRight = useCallback((animated: boolean, callback: cbb) => {
     navigatorInstance?.goRight(animated, callback);
@@ -161,34 +122,6 @@ export const useEpubNavigator = () => {
     return navigatorInstance?.currentLocator;
   }, []);
 
-  const getLocatorAtOffset = useCallback((offset: number) => {
-    const readingOrder = navigatorInstance?.publication?.readingOrder;
-    if (!readingOrder) return null;
-
-    const currentLocator = navigatorInstance?.currentLocator;
-    if (!currentLocator) return null;
-
-    const currentLocatorIndex = readingOrder.findIndexWithHref(currentLocator.href);
-    if (currentLocatorIndex === -1) return null;
-    
-    const newIndex = currentLocatorIndex + offset;
-    if (newIndex < 0 || newIndex >= readingOrder.items.length) return null;
-    
-    return readingOrder.items[newIndex];
-  }, []);
-
-  const previousLocator = useCallback(() => {
-    const link = getLocatorAtOffset(-1);
-    if (!link) return null;
-    return navigatorInstance?.publication?.manifest?.locatorFromLink(link);
-  }, [getLocatorAtOffset]);
-
-  const nextLocator = useCallback(() => {
-    const link = getLocatorAtOffset(1);
-    if (!link) return null;
-    return navigatorInstance?.publication?.manifest?.locatorFromLink(link);
-  }, [getLocatorAtOffset]);
-
   const currentPositions = useCallback(() => {
     return navigatorInstance?.viewport?.positions;
   }, []);
@@ -221,6 +154,10 @@ export const useEpubNavigator = () => {
     return getScriptMode(metadata);
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return { 
     EpubNavigatorLoad, 
     EpubNavigatorDestroy, 
@@ -232,8 +169,6 @@ export const useEpubNavigator = () => {
     go, 
     navLayout, 
     currentLocator,
-    previousLocator,
-    nextLocator,
     currentPositions,
     canGoBackward,
     canGoForward,
@@ -244,8 +179,6 @@ export const useEpubNavigator = () => {
     submitPreferences,
     getCframes,
     getScriptMode: currentScriptMode,
-    onFXLPositionChange: (cb: (locator: Locator) => void) => {
-      FXLPositionChangedCallbackRef.current = cb;
-    }
+    timeline,
   }
 }

@@ -1,36 +1,175 @@
 {
     "common": {
         "actions": {
+            "cancel": "Annuller",
             "clear": "Nulstil",
             "close": "Luk",
+            "collapse": "Sammenfold",
+            "collapseAll": "Sammenfold alt",
             "decrease": "Reducer",
+            "disable": "Deaktiver",
             "enable": "Aktiver",
             "exit": "Afslut",
+            "expand": "Fold ud",
+            "expandAll": "Fold alt ud",
+            "filter": "Filter",
+            "hide": "Skjul",
+            "hideAll": "Skjul alle",
             "increase": "Forøg",
+            "open": "Åben",
             "reset": "Nulstil",
             "search": "Søg",
-            "toggle": "Vis"
+            "show": "Vis",
+            "showAll": "Vis alle",
+            "sortBy": "Sorter efter",
+            "toggle": "Skift"
         }
     },
     "reader": {
         "actions": {
             "goBackward": "Naviger tilbage",
             "goForward": "Naviger frem",
+            "goToNextChapter": {
+                "compact": "Næste",
+                "descriptive": "Næste kapitel"
+            },
+            "goToNextPage": {
+                "compact": "Næste",
+                "descriptive": "Næste side"
+            },
+            "goToNextResource": {
+                "compact": "Næste",
+                "descriptive": "Næste ressource"
+            },
+            "goToNextSentence": {
+                "compact": "Næste",
+                "descriptive": "Næste sætning"
+            },
             "goToPosition": {
                 "compact": "Gå til…",
                 "descriptive": "Gå til position"
+            },
+            "goToPreviousChapter": {
+                "compact": "Forrige",
+                "descriptive": "Forrige kapitel"
+            },
+            "goToPreviousPage": {
+                "compact": "Forrige",
+                "descriptive": "Forrige side"
+            },
+            "goToPreviousResource": {
+                "compact": "Forrige",
+                "descriptive": "Forrige ressource"
+            },
+            "goToPreviousSentence": {
+                "compact": "Forrige",
+                "descriptive": "Forrige sætning"
+            },
+            "readAloud": {
+                "compact": "Læs højt"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "Rediger note"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "Tilføj bogmærke"
+                    },
+                    "delete": {
+                        "compact": "Slet bogmærke",
+                        "confirmation": "Er du sikker på at du vil slette bogmærket?"
+                    }
+                },
+                "emptyState": {
+                    "description": "Bogmærker du tilføjer under læsning vil blive vist på denne liste.",
+                    "title": "Ingen bogmærker"
+                },
+                "title": "Bogmærker"
+            },
+            "note": {
+                "title": "Note"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Senest tilføjet"
+                },
+                "lastEdited": {
+                    "compact": "Senest redigeret"
+                },
+                "progression": {
+                    "compact": "Position i bog"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "Pause",
+                "play": "Afspil",
+                "skipBackward": {
+                    "compact": "Spol tilbage",
+                    "descriptive": "Spol tilbage"
+                },
+                "skipForward": {
+                    "compact": "Spol frem",
+                    "descriptive": "Spol frem"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "Spol tilbage interval",
+                    "skipForwardInterval": "Spol frem interval",
+                    "skipInterval": "Spole interval",
+                    "title": "Lydindstillinger",
+                    "volume": "Lydstyrke"
+                },
+                "autoPlay": {
+                    "label": "Kontinuerlig afspilning",
+                    "title": "Autoplay"
+                },
+                "playbackRate": {
+                    "compact": "Hastighed",
+                    "descriptive": "Afspilningshastighed"
+                },
+                "sleepTimer": {
+                    "compact": "Timer",
+                    "descriptive": "Sleep timer",
+                    "presets": {
+                        "endOfChapter": "Kapitel slut",
+                        "endOfResource": "Slut på ressourcen"
+                    }
+                }
             }
         },
         "preferences": {
+            "brightness": "Lysstyrke",
             "columns": {
                 "auto": "Auto",
                 "dual": {
+                    "compact": "2 kol",
                     "descriptive": "2 kolonner"
                 },
                 "single": {
+                    "compact": "1 kol",
                     "descriptive": "1 kolonne"
                 },
                 "title": "Kolonner"
+            },
+            "fit": {
+                "auto": {
+                    "compact": "Automatisk"
+                },
+                "page": {
+                    "compact": "Side"
+                },
+                "title": "Tilpas",
+                "width": {
+                    "compact": "Bredde"
+                }
             },
             "fontFamily": {
                 "humanist": {
@@ -46,7 +185,7 @@
                     "compact": "Gammeldags",
                     "descriptive": "Gammeldags serif"
                 },
-                "publisher": "Bogens Skrifttype",
+                "publisher": "Bogens skrifttype",
                 "sans": "Sans-serif",
                 "title": "Skrifttype"
             },
@@ -66,6 +205,10 @@
                 "title": "Layout"
             },
             "letterSpacing": "Tegn afstand",
+            "ligatures": {
+                "label": "Aktiver ligaturer",
+                "title": "Ligaturer"
+            },
             "lineHeight": {
                 "default": "Normal",
                 "large": "Løs",
@@ -73,10 +216,31 @@
                 "small": "Tæt",
                 "title": "Linjehøjde"
             },
+            "noRuby": {
+                "label": "Skjul \"ruby\"-annoteringer",
+                "title": "\"Ruby\"-annoteringer"
+            },
+            "offsetFirstPage": "Vis første side alene",
             "paragraphIndent": "Afsnitsindrykning",
             "paragraphSpacing": "Afsnitsafstand",
             "publisherStyles": {
-                "label": "Brug original formatering"
+                "label": "Brug original formatering",
+                "title": "Udgiverens formatering"
+            },
+            "readingDirection": {
+                "default": {
+                    "compact": "Standard",
+                    "descriptive": "Anvend original læseretning"
+                },
+                "ltr": {
+                    "compact": "Højre",
+                    "descriptive": "Venstre til højre"
+                },
+                "rtl": {
+                    "compact": "Venstre",
+                    "descriptive": "Højre til venstre"
+                },
+                "title": "Læseretning"
             },
             "spacing": {
                 "presets": {
@@ -89,6 +253,18 @@
                     "title": "Forudindstillinger"
                 },
                 "title": "Afstande"
+            },
+            "spread": {
+                "always": {
+                    "compact": "Dobbeltside"
+                },
+                "auto": {
+                    "compact": "Automatisk"
+                },
+                "never": {
+                    "compact": "Enkeltside"
+                },
+                "title": "Sidevisning"
             },
             "text": "Tekst",
             "textAlign": {
@@ -108,6 +284,7 @@
                 "contrast2": "Kontrast 2",
                 "contrast3": "Kontrast 3",
                 "dark": "Mørk",
+                "gray": "Grå",
                 "light": "Lys",
                 "paper": "Papir",
                 "sepia": "Sepia",
@@ -118,18 +295,36 @@
             "zoom": "Zoom"
         },
         "progression": {
+            "pagesLeft": {
+                "descriptive_one": "{{ count }} side tilbage",
+                "descriptive_other": "{{ count }} sider tilbage"
+            },
+            "pagesLeftInChapter": {
+                "descriptive_one": "{{ count }} side tilbage i kapitlet",
+                "descriptive_other": "{{ count }} sider tilbage i kapitlet"
+            },
+            "pagesLeftInPublication": {
+                "descriptive_one": "{{ count }} side tilbage i bogen",
+                "descriptive_other": "{{ count }} sider tilbage i bogen"
+            },
             "percentage": "{{ percentage }}%",
             "positionsLeft": {
-                "descriptive_one": "",
-                "descriptive_other": "{{ count }} tilbage"
+                "compact_one": "{{ count }} tilbage",
+                "compact_other": "{{ count }} tilbage",
+                "descriptive_one": "{{ count }} position tilbage",
+                "descriptive_other": "{{ count }} positioner tilbage"
             },
             "positionsLeftInChapter": {
-                "descriptive_one": "",
-                "descriptive_other": "{{ count }} tilbage i nuværende kapitel"
+                "compact_one": "{{ count }} tilbage i kapitlet",
+                "compact_other": "{{ count }} tilbage i kapitlet",
+                "descriptive_one": "{{ count }} position tilbage i nuværende kapitel",
+                "descriptive_other": "{{ count }} positioner tilbage i nuværende kapitel"
             },
             "positionsLeftInPublication": {
-                "descriptive_one": "",
-                "descriptive_other": "{{ count }} tilbage i bogen"
+                "compact_one": "{{ count }} tilbage i bogen",
+                "compact_other": "{{ count }} tilbage i bogen",
+                "descriptive_one": "{{ count }} position tilbage i bogen",
+                "descriptive_other": "{{ count }} positioner tilbage i bogen"
             },
             "range": "{{ start }}–{{ end }}",
             "xOfY": {
@@ -137,9 +332,24 @@
                 "descriptive": "{{ x }} af {{ y }} ({{ z }})"
             }
         },
+        "search": {
+            "actions": {
+                "next": {
+                    "compact": "Næste resultat"
+                },
+                "previous": {
+                    "compact": "Forrige resultat"
+                }
+            },
+            "placeholder": "Søg efter enkeltord eller sætninger",
+            "result_one": "{{ current }} af {{ count }} resultat",
+            "result_other": "{{ current }} af {{ count }} resultater",
+            "title": "Søg"
+        },
         "tableOfContents": {
             "emptyState": {
-                "description": "Der blev ikke fundet nogen indholdsfortegnelse for denne bog."
+                "description": "Bogen indeholder ikke nogen indholdsfortegnelse.",
+                "title": "Ingen indholdsfortegnelse"
             },
             "title": "Indholdsfortegnelse"
         }

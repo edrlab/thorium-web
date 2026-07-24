@@ -139,12 +139,17 @@ interface PublicationReducerState {
   isRTL: boolean;
   scriptMode: ScriptMode; // "ltr" | "rtl" | "cjk-horizontal" | "cjk-vertical"
   hasDisplayTransformability: boolean;
-  positionsList: Locator[];
+  positionsList: SerializedLocator[];
   atPublicationStart: boolean;
   atPublicationEnd: boolean;
-  unstableTimeline?: UnstableTimeline;
+  progress?: Progress;
+  toc: { tree?: TocItem[]; currentEntry?: TocEntryRef | null };
+  adjacentTimelineItems: { previous: TimelineItemRef | null; next: TimelineItemRef | null };
+  coverTheme?: ThemeTokens;
 }
 ```
+
+`Progress` (from `@/core/Hooks/usePublicationProgress`) holds only chapter/progress data derived from the real Readium `Timeline` plus position/percentage math computed separately from `positionsList` — it does not carry the TOC tree, which is tracked independently in `toc` since Timeline is not meant to replace TOC.
 
 **Actions:**
 - `setFontLanguage`: Set font language
@@ -155,9 +160,11 @@ interface PublicationReducerState {
 - `setPositionsList`: Update positions list
 - `setPublicationStart`: Set at publication start state
 - `setPublicationEnd`: Set at publication end state
-- `setTimeline`: Set timeline data
+- `setProgress`: Set reading-progress data (title, current chapter, position/percentage math)
 - `setTocTree`: Set table of contents tree
 - `setTocEntry`: Set current TOC entry
+- `setAdjacentTimelineItems`: Set adjacent timeline items (previous/next), sourced from the real Timeline's `adjacentTo()`
+- `setCoverTheme`: Set the cover-extracted theme tokens (runtime only, not persisted)
 
 > [!IMPORTANT]
 > `isRTL` reflects the **publication content direction** (set from the manifest). For UI direction (driven by the user's locale preference), use `useLocale().direction` from `react-aria` instead.
@@ -260,6 +267,7 @@ interface ThemeReducerState {
   prefersContrast: ThContrast;
   forcedColors: boolean;
   breakpoint?: ThBreakpoints;
+  containerBreakpoint?: ThBreakpoints;
 }
 ```
 
@@ -272,6 +280,7 @@ interface ThemeReducerState {
 - `setContrast`: Set contrast preference
 - `setForcedColors`: Set forced colors mode
 - `setBreakpoint`: Set current breakpoint
+- `setContainerBreakpoint`: Set current container breakpoint
 
 ### Preferences Reducer
 

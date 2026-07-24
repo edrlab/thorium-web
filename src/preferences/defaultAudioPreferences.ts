@@ -187,9 +187,18 @@ export const defaultAudioPreferences: ThAudioPreferences<AudioDefaultKeys> =
       },
       collapse: true,
       keys: {
-        [ThDockingKeys.start]: { visibility: ThCollapsibilityVisibility.overflow, shortcut: null },
-        [ThDockingKeys.end]: { visibility: ThCollapsibilityVisibility.overflow, shortcut: null },
-        [ThDockingKeys.transient]: { visibility: ThCollapsibilityVisibility.overflow, shortcut: null }
+        [ThDockingKeys.start]: { 
+          visibility: ThCollapsibilityVisibility.overflow, 
+          shortcut: null 
+        },
+        [ThDockingKeys.end]: { 
+          visibility: ThCollapsibilityVisibility.overflow, 
+          shortcut: null 
+        },
+        [ThDockingKeys.transient]: { 
+          visibility: ThCollapsibilityVisibility.overflow, 
+          shortcut: null 
+        }
       }
     }
   });

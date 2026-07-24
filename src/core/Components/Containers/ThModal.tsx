@@ -19,6 +19,7 @@ export interface ThModalProps extends Omit<ModalOverlayProps, "children">, ThCon
 
 export const ThModal = ({
   ref,
+  id,
   focusOptions,
   compounds,
   children,
@@ -38,7 +39,7 @@ export const ThModal = ({
       ref={ resolvedRef }
       { ...props }
     >
-      <Dialog { ...compounds?.dialog }>
+      <Dialog id={ id } { ...compounds?.dialog }>
         { children }
       </Dialog>
     </Modal>

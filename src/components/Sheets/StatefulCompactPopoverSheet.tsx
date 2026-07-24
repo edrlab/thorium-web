@@ -17,12 +17,13 @@ export interface StatefulCompactPopoverSheetProps extends StatefulSheet {
   placement?: PopoverProps["placement"];
 }
 
-export const StatefulCompactPopoverSheet = ({ 
+export const StatefulCompactPopoverSheet = ({
+    id,
     triggerRef,
     heading,
     className,
     isOpen,
-    onOpenChange, 
+    onOpenChange,
     placement,
     children,
     resetFocus,
@@ -54,20 +55,21 @@ export const StatefulCompactPopoverSheet = ({
   if (React.Children.toArray(children).length > 0) {
     return(
       <>
-      <Popover 
+      <Popover
         ref={ popoverRef }
         triggerRef={ triggerRef }
         placement={ placement || "bottom" }
         isOpen={ isOpen }
-        onOpenChange={ onOpenChange } 
+        onOpenChange={ onOpenChange }
         isKeyboardDismissDisabled={ dismissEscapeKeyClose }
         className={ classNames(sheetStyles.compactPopover, className) }
       >
-        <Dialog 
+        <Dialog
+          id={ id }
           aria-label={ heading }
           className={ sheetStyles.dialog }
         >
-          <div 
+          <div
             ref={ popoverBodyRef }
             className={ sheetStyles.body }
           >

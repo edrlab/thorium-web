@@ -299,10 +299,11 @@ export const StatefulBottomSheet = ({
         prefersReducedMotion={ prefersReducedMotion }
         compounds={ {
           container: {
+            id: id,
             className: classNames(sheetStyles.draggable, detentClassName),
             ref: sheetContainerRef,
             style: {
-              maxWidth: maxWidthPref 
+              maxWidth: maxWidthPref
             } as CSSProperties
           },
           dragIndicator: {

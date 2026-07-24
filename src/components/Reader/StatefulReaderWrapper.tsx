@@ -20,9 +20,8 @@ import {
   setMonochrome,
   setReducedMotion,
   setReducedTransparency,
-  setCoverTheme
 } from "@/lib/themeReducer";
-import { setFontLanguage } from "@/lib/publicationReducer";
+import { setFontLanguage, setCoverTheme } from "@/lib/publicationReducer";
 import { propsToCSSVars } from "@/core/Helpers/propsToCSSVars";
 import { prefixString } from "@/core/Helpers/prefixString";
 import { useCoverBlobUrl } from "@/hooks/useCoverBlobUrl";

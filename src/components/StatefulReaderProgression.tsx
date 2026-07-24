@@ -29,7 +29,7 @@ export const StatefulReaderProgression = ({
 }) => {
   const { t } = useI18n();
   
-  const unstableTimeline = useAppSelector(state => state.publication.unstableTimeline);
+  const progress = useAppSelector(state => state.publication.progress);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isFullscreen = useAppSelector(state => state.reader.isFullscreen);
   const isHovering = useAppSelector(state => state.reader.isHovering);
@@ -76,16 +76,16 @@ export const StatefulReaderProgression = ({
     }
     
     if (Array.isArray(variants)) {
-      return getBestMatchingProgressionFormat(variants, unstableTimeline?.progression) || 
+      return getBestMatchingProgressionFormat(variants, progress?.progression) || 
         fallbackFormat.variants;
     }
     
     return variants;
-  }, [variants, unstableTimeline?.progression, fallbackFormat, isImmersive, isHovering, isFullscreen, displayInImmersive, displayInFullscreen]);
+  }, [variants, progress?.progression, fallbackFormat, isImmersive, isHovering, isFullscreen, displayInImmersive, displayInFullscreen]);
 
   // Compute display text based on current position and timeline
   const displayText = useMemo(() => {
-    if (displayFormat === ThProgressionFormat.none || !unstableTimeline?.progression) {
+    if (displayFormat === ThProgressionFormat.none || !progress?.progression) {
       return "";
     }
 
@@ -98,7 +98,7 @@ export const StatefulReaderProgression = ({
       positionsLeft,
       totalItems,
       currentIndex
-    } = unstableTimeline.progression;
+    } = progress.progression;
     
     let text = "";
     
@@ -180,7 +180,7 @@ export const StatefulReaderProgression = ({
     }
     
     return text;
-  }, [displayFormat, unstableTimeline, t]);
+  }, [displayFormat, progress, t]);
 
   if (!displayText || displayFormat === ThProgressionFormat.none) {
     return null;

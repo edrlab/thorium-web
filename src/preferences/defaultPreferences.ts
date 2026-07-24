@@ -15,6 +15,7 @@ import {
   ThRunningHeadFormat,
   ThDocumentTitleFormat,
   ThArrowVariant,
+  ThNavigationAffordance,
   lightTheme,
   darkTheme,
   paperTheme,
@@ -53,8 +54,6 @@ import {
 import { createPreferences, ThPreferences, DefaultKeys } from "./preferences";
 
 export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<DefaultKeys>({
-//  direction: ThLayoutDirection.ltr,
-//  locale: "en",
   experiments: {
     reflow: ["experimentalHeaderFiltering", "experimentalZoom"],
     webPub: ["experimentalHeaderFiltering", "experimentalZoom"]
@@ -246,7 +245,8 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       hintInImmersive: true,
       toggleOnMiddlePointer: ["tap", "click"],
       hideOnForwardScroll: true,
-      showOnBackwardScroll: true
+      showOnBackwardScroll: true,
+      affordance: ThNavigationAffordance.timeline
     },
     paginated: {
       reflow: {

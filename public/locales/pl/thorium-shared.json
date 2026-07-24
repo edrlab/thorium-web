@@ -1,32 +1,172 @@
 {
     "common": {
         "actions": {
+            "cancel": "Anuluj",
             "clear": "Wyczyść",
             "close": "Zamknij",
+            "collapse": "Zwiń",
+            "collapseAll": "Zwiń wszystkie",
             "decrease": "Zmniejsz",
+            "disable": "Wyłącz",
+            "enable": "Włącz",
+            "exit": "Wyjdź",
+            "expand": "Rozwiń",
+            "expandAll": "Rozwiń wszystkie",
+            "filter": "Filtruj",
+            "hide": "Ukryj",
+            "hideAll": "Ukryj wszystkie",
             "increase": "Zwiększ",
-            "search": "Szukaj"
+            "open": "Otwórz",
+            "reset": "Resetuj",
+            "search": "Szukaj",
+            "show": "Pokaż",
+            "showAll": "Pokaż wszystkie",
+            "sortBy": "Sortuj według",
+            "toggle": "Przełącz"
         }
     },
     "reader": {
         "actions": {
             "goBackward": "Do tyłu",
             "goForward": "Do przodu",
+            "goToNextChapter": {
+                "compact": "Następny",
+                "descriptive": "Następny rozdział"
+            },
+            "goToNextPage": {
+                "compact": "Następna",
+                "descriptive": "Następna strona"
+            },
+            "goToNextResource": {
+                "compact": "Następny",
+                "descriptive": "Następny zasób"
+            },
+            "goToNextSentence": {
+                "compact": "Następne",
+                "descriptive": "Następne zdanie"
+            },
             "goToPosition": {
                 "compact": "Przejdź do…",
                 "descriptive": "Przejdź do pozycji"
+            },
+            "goToPreviousChapter": {
+                "compact": "Poprzedni",
+                "descriptive": "Poprzedni rozdział"
+            },
+            "goToPreviousPage": {
+                "compact": "Poprzednia",
+                "descriptive": "Poprzednia strona"
+            },
+            "goToPreviousResource": {
+                "compact": "Poprzedni",
+                "descriptive": "Poprzedni zasób"
+            },
+            "goToPreviousSentence": {
+                "compact": "Poprzednie",
+                "descriptive": "Poprzednie zdanie"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "Edytuj notatkę"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "Dodaj zakładkę"
+                    },
+                    "delete": {
+                        "compact": "Usuń zakładkę",
+                        "confirmation": "Czy na pewno chcesz usunąć tę zakładkę?"
+                    }
+                },
+                "emptyState": {
+                    "description": "Nowe zakładki dodane podczas czytania pojawią się na tej liście.",
+                    "title": "Brak zakładek"
+                },
+                "title": "Zakładki"
+            },
+            "note": {
+                "title": "Notatka"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Ostatnio dodane"
+                },
+                "lastEdited": {
+                    "compact": "Ostatnio edytowane"
+                },
+                "progression": {
+                    "compact": "Postęp"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "Wstrzymaj",
+                "play": "Odtwarzaj",
+                "skipBackward": {
+                    "compact": "Cofnij",
+                    "descriptive": "Przewiń do tyłu"
+                },
+                "skipForward": {
+                    "compact": "Dalej",
+                    "descriptive": "Przewiń do przodu"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "Interwał przewijania do tyłu",
+                    "skipForwardInterval": "Interwał przewijania do przodu",
+                    "skipInterval": "Interwał przewijania",
+                    "title": "Ustawienia dźwięku",
+                    "volume": "Głośność"
+                },
+                "autoPlay": {
+                    "label": "Ciągłe odtwarzanie",
+                    "title": "Autoodtwarzanie"
+                },
+                "playbackRate": {
+                    "compact": "Szybkość",
+                    "descriptive": "Prędkość odtwarzania"
+                },
+                "sleepTimer": {
+                    "compact": "Timer",
+                    "descriptive": "Timer zasypiania",
+                    "presets": {
+                        "endOfChapter": "Koniec rozdziału",
+                        "endOfResource": "Koniec zasobu"
+                    }
+                }
             }
         },
         "preferences": {
+            "brightness": "Jasność",
             "columns": {
                 "auto": "Automatycznie",
                 "dual": {
-                    "compact": "2 kol"
+                    "compact": "2 kol",
+                    "descriptive": "Dwie kolumny"
                 },
                 "single": {
-                    "compact": "1 kol"
+                    "compact": "1 kol",
+                    "descriptive": "Jedna kolumna"
                 },
                 "title": "Kolumny"
+            },
+            "fit": {
+                "auto": {
+                    "compact": "Auto"
+                },
+                "page": {
+                    "compact": "Strona"
+                },
+                "title": "Dopasowanie",
+                "width": {
+                    "compact": "Szerokość"
+                }
             },
             "fontFamily": {
                 "humanist": {
@@ -48,8 +188,8 @@
             },
             "fontSize": "Rozmiar czcionki",
             "fontWeight": {
-                "bold": "Ryškesnis",
-                "normal": "Normalus",
+                "bold": "Pogrubiony",
+                "normal": "Normalny",
                 "title": "Grubość kroju"
             },
             "hyphens": {
@@ -62,6 +202,10 @@
                 "title": "Układ"
             },
             "letterSpacing": "Odstępy między literami",
+            "ligatures": {
+                "label": "Włącz ligatury",
+                "title": "Ligatury"
+            },
             "lineHeight": {
                 "default": "Domyślna",
                 "large": "Luźna",
@@ -69,13 +213,55 @@
                 "small": "Ciasna",
                 "title": "Interlinia"
             },
+            "noRuby": {
+                "label": "Ukryj adnotacje ruby",
+                "title": "Adnotacje ruby"
+            },
+            "offsetFirstPage": "Wyświetlaj pierwszą stronę osobno",
             "paragraphIndent": "Wcięcie akapitu",
             "paragraphSpacing": "Odstęp między akapitami",
             "publisherStyles": {
-                "label": "Użyj oryginalnego formatowania"
+                "label": "Użyj oryginalnego formatowania",
+                "title": "Style wydawcy"
+            },
+            "readingDirection": {
+                "default": {
+                    "compact": "Domyślny",
+                    "descriptive": "Użyj oryginalnego kierunku czytania"
+                },
+                "ltr": {
+                    "compact": "Prawo",
+                    "descriptive": "Od lewej do prawej"
+                },
+                "rtl": {
+                    "compact": "Lewo",
+                    "descriptive": "Od prawej do lewej"
+                },
+                "title": "Kierunek czytania"
             },
             "spacing": {
+                "presets": {
+                    "accessible": "Dostępne",
+                    "balanced": "Zbalansowane",
+                    "custom": "Niestandardowe",
+                    "default": "Domyślne",
+                    "loose": "Luźne",
+                    "tight": "Ciasne",
+                    "title": "Presety"
+                },
                 "title": "Odstępy"
+            },
+            "spread": {
+                "always": {
+                    "compact": "Podwójna strona"
+                },
+                "auto": {
+                    "compact": "Auto"
+                },
+                "never": {
+                    "compact": "Pojedyncza strona"
+                },
+                "title": "Rozkładówka"
             },
             "text": "Tekst",
             "textAlign": {
@@ -95,6 +281,7 @@
                 "contrast2": "Kontrast 2",
                 "contrast3": "Kontrast 3",
                 "dark": "Ciemny",
+                "gray": "Szary",
                 "light": "Jasny",
                 "paper": "Papier",
                 "sepia": "Sepia",
@@ -105,16 +292,71 @@
             "zoom": "Powiększenie"
         },
         "progression": {
+            "pagesLeft": {
+                "descriptive_few": "Pozostały {{ count }} strony",
+                "descriptive_many": "Pozostało {{ count }} stron",
+                "descriptive_one": "Pozostała {{ count }} strona"
+            },
+            "pagesLeftInChapter": {
+                "descriptive_few": "Pozostały {{ count }} strony w rozdziale",
+                "descriptive_many": "Pozostało {{ count }} stron w rozdziale",
+                "descriptive_one": "Pozostała {{ count }} strona w rozdziale"
+            },
+            "pagesLeftInPublication": {
+                "descriptive_few": "Pozostały {{ count }} strony w publikacji",
+                "descriptive_many": "Pozostało {{ count }} stron w publikacji",
+                "descriptive_one": "Pozostała {{ count }} strona w publikacji"
+            },
             "percentage": "{{ percentage }}%",
+            "positionsLeft": {
+                "compact_few": "Pozostały {{ count }}",
+                "compact_many": "Pozostało {{ count }}",
+                "compact_one": "Pozostała {{ count }}",
+                "descriptive_few": "Pozostały {{ count }} pozycje",
+                "descriptive_many": "Pozostało {{ count }} pozycji",
+                "descriptive_one": "Pozostała {{ count }} pozycja"
+            },
+            "positionsLeftInChapter": {
+                "compact_few": "Pozostały {{ count }} w rozdziale",
+                "compact_many": "Pozostało {{ count }} w rozdziale",
+                "compact_one": "Pozostała {{ count }} w rozdziale",
+                "descriptive_few": "Pozostały {{ count }} pozycje w rozdziale",
+                "descriptive_many": "Pozostało {{ count }} pozycji w rozdziale",
+                "descriptive_one": "Pozostała {{ count }} pozycja w rozdziale"
+            },
+            "positionsLeftInPublication": {
+                "compact_few": "Pozostały {{ count }} w publikacji",
+                "compact_many": "Pozostało {{ count }} w publikacji",
+                "compact_one": "Pozostała {{ count }} w publikacji",
+                "descriptive_few": "Pozostały {{ count }} pozycje w publikacji",
+                "descriptive_many": "Pozostało {{ count }} pozycji w publikacji",
+                "descriptive_one": "Pozostała {{ count }} pozycja w publikacji"
+            },
             "range": "{{ start }}–{{ end }}",
             "xOfY": {
                 "compact": "{{ x }} z {{ y }}",
                 "descriptive": "{{ x }} z {{ y }} ({{ z }})"
             }
         },
+        "search": {
+            "actions": {
+                "next": {
+                    "compact": "Następny wynik"
+                },
+                "previous": {
+                    "compact": "Poprzedni wynik"
+                }
+            },
+            "placeholder": "Szukaj słów kluczowych lub fraz",
+            "result_few": "{{ current }} z {{ count }} wyników",
+            "result_many": "{{ current }} z {{ count }} wyników",
+            "result_one": "{{ current }} z {{ count }} wyniku",
+            "title": "Szukaj"
+        },
         "tableOfContents": {
             "emptyState": {
-                "description": "Spis treści nie został dostarczony dla tej publikacji."
+                "description": "Spis treści nie został dostarczony dla tej publikacji.",
+                "title": "Brak spisu treści"
             },
             "title": "Spis treści"
         }

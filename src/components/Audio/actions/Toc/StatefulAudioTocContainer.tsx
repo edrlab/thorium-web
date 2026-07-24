@@ -31,10 +31,10 @@ export const StatefulAudioTocContainer = ({ triggerRef }: StatefulActionContaine
   const dispatch = useAppDispatch();
 
   const isOpen = useAppSelector(state => profile ? state.actions.keys[profile][ThAudioActionKeys.toc]?.isOpen ?? false : false);
-  const unstableTimeline = useAppSelector(state => state.publication.unstableTimeline);
-  const tocEntry = unstableTimeline?.toc?.currentEntry ?? undefined;
+  const toc = useAppSelector(state => state.publication.toc);
+  const tocEntry = toc?.currentEntry ?? undefined;
   const tocEntryId = tocEntry?.id;
-  const tocTree = unstableTimeline?.toc?.tree;
+  const tocTree = toc?.tree;
 
   const isRTL = useAppSelector(state => state.publication.isRTL);
 
@@ -64,26 +64,25 @@ export const StatefulAudioTocContainer = ({ triggerRef }: StatefulActionContaine
 
   const handleAction = (keys: Selection) => {
     if (keys === "all" || !keys || keys.size === 0) return;
-    const key = [...keys][0];
-    const el = document.querySelector(`[data-key=${key}]`);
-    const href = el?.getAttribute("data-href");
-    if (!href) return;
-    const matched = findTocItemById(tocTree || [], key as string);
+    const key = [...keys][0] as string;
+    const matched = findTocItemById(tocTree || [], key);
+
+    if (!matched) return;
 
     const cb = isOpen && (sheetType === ThSheetTypes.dockedStart || sheetType === ThSheetTypes.dockedEnd)
       ? () => {
-          dispatch(setTocEntry(matched || null));
+          dispatch(setTocEntry(matched));
           dispatch(setImmersive(true));
           dispatch(setUserNavigated(true));
         }
       : () => {
-          dispatch(setTocEntry(matched || null));
+          dispatch(setTocEntry(matched));
           dispatch(setImmersive(true));
           dispatch(setUserNavigated(true));
           setOpen(false);
         };
 
-    goLink(new Link({ href }), true, cb);
+    goLink(new Link({ href: matched.href }), true, cb);
   };
 
   return (

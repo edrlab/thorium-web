@@ -128,12 +128,12 @@ export const useTheming = <T extends string>({
   const inferThemeAuto = useCallback(() => {
     if (autoThemeSource === "cover") {
       if (coverThemeTokens) return "cover" as T;
-      // Pending: hold until resolved; failed: fall back to system
-      if (!coverThemeFailed) return undefined;
+      // Only hold while actively fetching; no URL or fetch failed → fall through to system
+      if (!coverThemeFailed && coverUrl) return undefined;
     }
     // Default behavior: use colorScheme (system)
     return colorSchemeRef.current === ThColorScheme.dark ? systemKeys?.dark : systemKeys?.light;
-  }, [systemKeys, autoThemeSource, coverThemeTokens, coverThemeFailed]);
+  }, [systemKeys, autoThemeSource, coverThemeTokens, coverThemeFailed, coverUrl]);
 
   const setThemeCustomProps = useCallback((t?: string) => {
     if (!t) {

@@ -9,14 +9,6 @@ This document covers customization options available for the `StatefulPlayer` au
 > - **Scroll / paged mode**: not applicable to audio.
 > - **Typography**, **pagination arrows**: not applicable to audio.
 
-## Direction
-
-Audio supports LTR/RTL layout direction via the optional `direction` property, using enum `ThLayoutDirection`.
-
-## Locale
-
-Set `locale` so React Aria derives the correct direction and language context.
-
 ## Theming
 
 Audio shares the same theming system as the reader. You can configure themes, breakpoints, icon size, and spacing in `theming`. See the [Theming doc](../Theming.md) for details.

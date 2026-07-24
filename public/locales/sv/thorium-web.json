@@ -52,12 +52,12 @@
             "printingDisabled": "Utskrift har inaktiverats",
             "errors": {
                 "title": "Fel",
-                "notFound": "Ingen publikation hittades.",
+                "notFound": "Ingen bok hittades.",
                 "accessDenied": "Access nekas.",
-                "network": "Server otillgänglig - försök igen senare.",
-                "serverError": "Serverfel - försök igen senare.",
+                "network": "Servern kan inte nås – försök igen senare.",
+                "serverError": "Serverfel – försök igen senare.",
                 "clientError": "Ogiltig begäran.",
-                "generic": "Kan inte ladda publikationen."
+                "generic": "Kan inte ladda boken."
             }
         },
         "navigation": {
@@ -75,7 +75,7 @@
         },
         "jumpToPosition": {
             "go": "Hoppa",
-            "label": "Välj en position från {{ positionStart }} till {{ positionEnd }}:",
+            "label": "Välj en position mellan {{ positionStart }} till {{ positionEnd }}:",
             "error": {
                 "notFound": "Positionen hittades inte."
             }
@@ -83,10 +83,10 @@
         "overflowMenu": {
             "active": {
                 "tooltip": "Fler åtgärder",
-                "trigger": "Växla meny"
+                "trigger": "Visa eller dölj meny"
             },
             "hint": {
-                "tooltip": "Växla åtgärder",
+                "tooltip": "Visa eller dölj åtgärder",
                 "trigger": "Visa åtgärder"
             }
         },
@@ -121,8 +121,8 @@
                 "hours": "h",
                 "minutes": "min",
                 "seconds": "s",
-                "instruction": "Uppspelningen pausas efter den inställda tiden.",
-                "remaining": "Pausar om {{ remaining }}",
+                "instruction": "Uppspelningen stoppas efter den inställda tiden.",
+                "remaining": "Stoppar uppspelning om {{ remaining }}",
                 "start": "Starta sömntimer"
             }
         }

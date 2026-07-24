@@ -16,12 +16,12 @@ import {
   ThDocumentTitleFormat,
   ThSpacingSettingsKeys,
   ThProgressionFormat,
-  ThSettingsKeys
+  ThSettingsKeys,
+  ThDockingKeys,
+  ThActionsKeys
 } from "../../preferences/models";
 
 import { ThPluginRegistry } from "../Plugins/PluginRegistry";
-
-import { useLocale } from "react-aria";
 import { ThPluginProvider } from "../Plugins/PluginProvider";
 import { NavigatorProvider } from "@/core/Navigator";
 
@@ -32,18 +32,20 @@ import {
   SuspiciousActivityEvent
 } from "@readium/navigator-html-injectables";
 import { EpubNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
-import { 
-  Locator, 
-  Publication, 
-  Layout
+import {
+  Locator,
+  Publication,
+  Layout,
+  TimelineItem
 } from "@readium/shared";
+import { PositionStorage, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
 import { StatefulReaderHeader } from "../StatefulReaderHeader";
 import { StatefulReaderArrowButton } from "../StatefulReaderArrowButton";
 import { StatefulReaderFooter } from "../StatefulReaderFooter";
-import { PositionStorage, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
 
+import { useLocale } from "react-aria";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
@@ -52,12 +54,17 @@ import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
-import { useTimeline } from "@/core/Hooks/useTimeline";
+import { usePublicationProgress } from "@/core/Hooks/usePublicationProgress";
+import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
+import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
+import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 import { useIsScroll, usePositionStorage } from "@/hooks";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
 import { usePaginatedArrows } from "@/hooks/usePaginatedArrows";
 import { useFonts } from "@/core/Hooks/fonts/useFonts";
+import { useZoomCallbacks } from "@/components/Settings/hooks/useZoomCallbacks";
+import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
 
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 
@@ -75,19 +82,18 @@ import {
   setScrollAffordance,
   setUserNavigated
 } from "@/lib/readerReducer";
-import { 
-  setTimeline,
+import {
+  setProgress,
   setPublicationStart,
   setPublicationEnd
 } from "@/lib/publicationReducer";
+import { toggleActionOpen, dockAction } from "@/lib/actionsReducer";
 
 import classNames from "classnames";
 import debounce from "debounce";
 import { buildThemeObject } from "@/preferences/helpers/buildThemeObject";
 import { createDefaultPlugin } from "../Plugins/helpers/createDefaultPlugin";
-import { NavPeripheralType, fromActionPeripheralType } from "../../helpers/peripherals";
-import { useZoomCallbacks } from "@/components/Settings/hooks/useZoomCallbacks";
-import { toggleActionOpen } from "@/lib/actionsReducer";
+import { NavPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "../../helpers/peripherals";
 import { getPlatformModifier } from "@/core/Helpers/keyboardUtilities";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
@@ -104,7 +110,6 @@ export const StatefulReader = ({
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
-
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
       plugins.forEach(plugin => {
@@ -220,6 +225,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const atPublicationEnd = useAppSelector(state => state.publication.atPublicationEnd);
 
   const dispatch = useAppDispatch();
+  const getFocusedDockableKey = useFocusedDockableKey();
 
   useEffect(() => {
     // Reset top bar visibility and last position
@@ -230,34 +236,43 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     dispatch(setFullscreen(isFullscreen));
   }, [dispatch]);
   
-  useFullscreen(onFsChange);
+  const { handleFullscreen } = useFullscreen(onFsChange);
 
   const epubNavigator = useEpubNavigator();
-  const { 
-    goLeft, 
-    goRight, 
-    goBackward, 
-    goForward,  
+  const {
+    goLeft,
+    goRight,
+    goBackward,
+    goForward,
     navLayout,
-    currentLocator,
     currentPositions,
     canGoBackward,
     canGoForward,
     isScrollStart,
     isScrollEnd,
     getCframes,
-    submitPreferences
+    submitPreferences,
+    timeline: getNavigatorTimeline
   } = epubNavigator;
 
   const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKey, positionStorage);
 
-  const timeline = useTimeline({
+  const tocTree = useAppSelector(state => state.publication.toc?.tree);
+
+  const [currentTimelineItem, setCurrentTimelineItem] = useState<TimelineItem | undefined>(undefined);
+
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
+
+  const timeline = usePublicationProgress({
     publication: publication,
+    getNavigatorTimeline,
+    currentTimelineItem,
     currentLocation: localData,
     currentPositions: currentPositions() || [],
     positionsList: positionsList,
-    onChange: (timeline) => {
-      dispatch(setTimeline(timeline));
+    onChange: (progress) => {
+      dispatch(setProgress(progress));
     }
   });
 
@@ -361,25 +376,6 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     }
   }, [canGoBackward, canGoForward, dispatch]);
 
-  // We need this as a workaround due to positionChanged being unreliable
-  // in FXL – if the frame is in the pool hidden and is shown again,
-  // positionChanged won’t fire.
-  const handleFXLProgression = useCallback((locator: Locator) => {
-    setLocalData(locator);
-    updatePublicationNavigationState();
-  }, [setLocalData, updatePublicationNavigationState]);
-
-  const initReadingEnv = useCallback(async () => {
-    if (navLayout() === Layout.fixed) {
-      // [TMP] Working around positionChanged not firing consistently for FXL
-      // Init'ing so that progression can be populated on first spread loaded
-      const cLoc = currentLocator();
-      if (cLoc) {
-        handleFXLProgression(cLoc);
-      };
-    }
-  }, [navLayout, currentLocator, handleFXLProgression]);
-
   const moveTo = useCallback((direction: "left" | "right" | "up" | "down" | "home" | "end") => {
     const navigationCallback = () => {
       dispatch(setUserNavigated(true));
@@ -412,18 +408,26 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   }, [dispatch, activateImmersiveOnAction, cache, goBackward, goForward]);
 
   const listeners: EpubNavigatorListeners = useMemo(() => ({
-    frameLoaded: async function (_wnd: Window): Promise<void> {
-      await initReadingEnv();
+    frameLoaded: async function (_wnd: Window): Promise<void> {},
+    timelineItemChanged: function (item: TimelineItem | undefined): void {
+      setCurrentTimelineItem(item);
+
+      if (!item) {
+        clearAdjacentItems();
+        clearCurrentTocEntry();
+        return;
+      }
+
+      updateAdjacentItems(item);
+      updateCurrentTocEntry(item);
     },
     positionChanged: async function (locator: Locator): Promise<void> {
-      if (navLayout() !== Layout.fixed) {
-        const debouncedHandleProgression = debounce(
-          async () => {
-            setLocalData(locator);
-            updatePublicationNavigationState();
-          }, 250);
-        debouncedHandleProgression();
-      }
+      const debouncedHandleProgression = debounce(
+        async () => {
+          setLocalData(locator);
+          updatePublicationNavigationState();
+        }, 250);
+      debouncedHandleProgression();
     },
     tap: function (_e: FrameClickEvent): boolean {
       handleTap(_e);
@@ -495,13 +499,37 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         case NavPeripheralType.zoomOut:          zoomOut();            break;
         default: {
           const actionKey = fromActionPeripheralType(data.type);
-          if (actionKey && profile) dispatch(toggleActionOpen({ key: actionKey, profile }));
+
+          if (actionKey === ThActionsKeys.fullscreen) {
+            handleFullscreen();
+            return;
+          }
+
+          if (actionKey && profile) {
+            dispatch(toggleActionOpen({ key: actionKey, profile }));
+            return;
+          }
+
+          const dockingKey = fromDockingPeripheralType(data.type);
+
+          if (dockingKey && profile) {
+            const actionKey = getFocusedDockableKey(dockingKey as ThDockingKeys);
+            if (actionKey) {
+              dispatch(dockAction({ key: actionKey, dockingKey: dockingKey as ThDockingKeys, profile }));
+            }
+          }
         }
       }
     },
-  }), [initReadingEnv, navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile]);
+  }), [navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
-  const initialPosition = useMemo(() => getLocalData(), [getLocalData]);
+  // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
+  // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which
+  // needs real prototype methods (.time(), etc.), so deserialize it here at the point of use.
+  const initialPosition = useMemo(() => {
+    const stored = getLocalData();
+    return stored ? (Locator.deserialize(stored) ?? null) : null;
+  }, [getLocalData]);
 
   // Initialize reader using the new composite hook
   const { navigatorReady } = useEpubReaderInit({
@@ -529,9 +557,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
     onNavigatorReady: () => {
       dispatch(setLoading(false));
-    },
-    fxlProgressionCallback: handleFXLProgression
+    }
   });
+
+  useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
 
   const applyConstraint = useCallback(async (value: number) => {
     await submitPreferences({
@@ -653,8 +682,9 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
               </nav> 
             : <></> }
 
-          <StatefulReaderFooter 
-            layout={ layoutUI } 
+          <StatefulReaderFooter
+            layout={ layoutUI }
+            publication={ publication }
             progressionFormatPref={
               isFXL 
                 ? preferences.theming.progression?.format?.fxl 

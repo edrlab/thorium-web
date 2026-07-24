@@ -70,7 +70,8 @@ export const StatefulPopoverSheet = ({
   if (React.Children.toArray(children).length > 0) {
     return(
       <>
-      <ThPopover 
+      <ThPopover
+        id={ id }
         ref={ popoverRef }
         triggerRef={ triggerRef }
         focusOptions={{

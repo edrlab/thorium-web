@@ -15,6 +15,7 @@ export enum ThContainerHeaderVariant {
 }
 
 export interface ThContainerProps {
+  id?: string;
   ref?: React.RefObject<HTMLDivElement | SheetRef | null>;
   focusOptions?: UseFirstFocusableProps;
   children: [React.ReactElement<ThContainerHeaderProps>, React.ReactElement<ThContainerBodyProps>];

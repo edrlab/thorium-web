@@ -150,6 +150,10 @@ export const useAudioNavigator = () => {
     return navigatorInstance?.currentTime || 0;
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return {
     AudioNavigatorLoad, 
     AudioNavigatorDestroy, 
@@ -177,6 +181,6 @@ export const useAudioNavigator = () => {
     remotePlayback: (navigatorInstance as any)?.remotePlayback as RemotePlayback | undefined,
     getSetting,
     submitPreferences,
-    timeline: useCallback((): Timeline | undefined => navigatorInstance?.timeline, []),
+    timeline,
   }
 }

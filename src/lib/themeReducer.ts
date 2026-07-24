@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
 import { ThContrast } from "@/core/Hooks/useContrast";
 import { ThBreakpoints } from "@/preferences/models";
-import { ThemeTokens } from "@/preferences/hooks/useTheming";
 
 export interface ThemeStateObject {
   reflow?: string;
@@ -23,7 +22,6 @@ export interface ThemeReducerState {
   monochrome: boolean;
   colorScheme: ThColorScheme;
   theme: ThemeStateObject;
-  coverTheme?: ThemeTokens;
   prefersReducedMotion: boolean;
   prefersReducedTransparency: boolean;
   prefersContrast: ThContrast;
@@ -40,7 +38,6 @@ const initialState: ThemeReducerState = {
     fxl: "auto",
     audio: "auto"
   },
-  coverTheme: undefined,
   prefersReducedMotion: false,
   prefersReducedTransparency: false, 
   prefersContrast: ThContrast.none,
@@ -61,9 +58,6 @@ export const themeSlice = createSlice({
     },
     setTheme: (state, action: ThemeStateChangePayload) => {
       state.theme[action.payload.key] = action.payload.value || "auto"
-    },
-    setCoverTheme: (state, action) => {
-      state.coverTheme = action.payload
     },
     setReducedMotion: (state, action) => {
       state.prefersReducedMotion = action.payload
@@ -87,11 +81,10 @@ export const themeSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { 
-  setMonochrome, 
-  setColorScheme, 
-  setTheme, 
-  setCoverTheme,
+export const {
+  setMonochrome,
+  setColorScheme,
+  setTheme,
   setReducedMotion, 
   setReducedTransparency, 
   setContrast, 

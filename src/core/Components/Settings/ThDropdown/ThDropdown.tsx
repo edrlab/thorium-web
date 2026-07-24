@@ -26,7 +26,7 @@ export interface ThDropdownEntry {
   value: string;
 }
 
-export interface ThDropdownProps extends SelectProps {
+export interface ThDropdownProps extends SelectProps<object> {
   ref?: React.ForwardedRef<HTMLDivElement>;
   label?: string;
   items?: Iterable<ThDropdownEntry>;

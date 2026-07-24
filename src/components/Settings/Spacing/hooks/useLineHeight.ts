@@ -27,7 +27,7 @@ const getLineHeightCompensation = (language: string): number => {
   if (data[language]?.lineHeightCompensation !== undefined) return data[language].lineHeightCompensation!;
   const stripped = language.split("-").slice(0, -1).join("-");
   if (stripped && data[stripped]?.lineHeightCompensation !== undefined) return data[stripped].lineHeightCompensation!;
-  return data.default?.lineHeightCompensation ?? 1;
+  return data.latin?.lineHeightCompensation ?? 1;
 };
 
 export const useLineHeight = () => {

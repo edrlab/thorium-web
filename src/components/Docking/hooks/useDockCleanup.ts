@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { ThDockingKeys } from "@/preferences/models";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { dockAction } from "@/lib/actionsReducer";
-import { useActionComponentStatus } from "@/core/Components/Actions/hooks/useActionComponentStatus";
+import { useActionComponentStatus } from "../../Actions/hooks/useActionComponentStatus";
 
 /**
  * Reusable hook to clean up stale docked actions.

@@ -9,16 +9,6 @@ Otherwise you should be able to modify the preferences object directly in [defau
 > [!NOTE]
 > Audio has its own separate preferences system. Use `createAudioPreferences` and `ThAudioPreferencesProvider` instead of their EPUB/WebPub equivalents. See the [Audio Customization doc](./audio/Customization.md) for a full overview.
 
-## Direction
-
-The App UI supports both Left-to-Right (LTR) and Right-to-Left (RTL) languages through optional property `direction`. It will switch the entire layout, including the docking panels, independently of the publication’s reading progression.
-
-Values can be `ltr` or `rtl` and a `ThLayoutDirection` enum is available as well. 
-
-## Locale
-
-For direction to work properly, the `locale` has to be set as well, since React Aria Components require this locale to derive the correct direction. If you don’t set it, then the user’s system/browser locale will be used, with the risk of resulting to a conflicting `dir` being used. 
-
 ## Metadata
 
 ### Document Title
@@ -103,19 +93,31 @@ The `scroll` object can be used to set the following properties:
 - `toggleOnMiddlePointer` to configure whether the scroll affordances should be toggled on middle tap or click.
 - `hideOnForwardScroll` to configure whether the scroll affordances should be hidden on forward scroll.
 - `showOnBackwardScroll` to configure whether the scroll affordances should be shown on backward scroll.
+- `affordance` to configure what previous/next chapter navigation in the scroll-mode footer is based on. Accepts a `ThScrollAffordance` value:
+  - `ThNavigationAffordance.timeline` (default): navigate to the previous/next timeline segment.
+  - `ThNavigationAffordance.readingOrder`: navigate to the previous/next resource in the reading order.
+
+> [!NOTE]
+> `ThNavigationAffordance.toc` is not a valid value here: a single toc entry can span multiple reading-order resources, so navigating strictly by toc entry can skip resources that have no toc entry of their own. Audio's per-track affordance preference (see the [Audio Customization doc](./audio/Customization.md#affordances)) is unaffected and still supports `toc`.
 
 For instance:
 
-```
+```typescript
+import { ThNavigationAffordance } from "@edrlab/thorium-web/preferences";
+
 affordances: {
   scroll: {
     hintInImmersive: false,
     toggleOnMiddlePointer: ["tap", "click"],
     hideOnForwardScroll: true,
-    showOnBackwardScroll: false
+    showOnBackwardScroll: false,
+    affordance: ThNavigationAffordance.readingOrder
   }
 }
 ```
+
+> [!NOTE]
+> This only affects the scroll-mode chapter pagination footer. Paginated EPUB arrow buttons always page through content resource-by-resource, regardless of this setting.
 
 ### Pagination
 

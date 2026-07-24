@@ -5,20 +5,20 @@
             "clear": "Išvalyti",
             "close": "Užverti",
             "collapse": "Suskleisti",
-            "collapseAll": "Suskleisti visus",
+            "collapseAll": "Suskleisti viską",
             "decrease": "Mažinti",
             "disable": "Išjungti",
             "enable": "Įjungti",
             "exit": "Išeiti",
             "expand": "Išskleisti",
-            "expandAll": "Išskleisti visus",
+            "expandAll": "Išskleisti viską",
             "filter": "Filtruoti",
             "hide": "Slėpti",
             "hideAll": "Slėpti visus",
             "increase": "Didinti",
             "open": "Atverti",
             "reset": "Atkurti",
-            "search": "Paieška",
+            "search": "Ieškoti",
             "show": "Rodyti",
             "showAll": "Rodyti visus",
             "sortBy": "Rikiuoti pagal",
@@ -37,6 +37,10 @@
                 "compact": "Kitas",
                 "descriptive": "Kitas puslapis"
             },
+            "goToNextResource": {
+                "compact": "Kitas",
+                "descriptive": "Kitas išteklius"
+            },
             "goToNextSentence": {
                 "compact": "Kitas",
                 "descriptive": "Kitas sakinys"
@@ -53,9 +57,92 @@
                 "compact": "Ankstesnis",
                 "descriptive": "Ankstesnis puslapis"
             },
+            "goToPreviousResource": {
+                "compact": "Ankstesnis",
+                "descriptive": "Ankstesnis išteklius"
+            },
             "goToPreviousSentence": {
                 "compact": "Ankstesnis",
                 "descriptive": "Ankstesnis sakinys"
+            },
+            "readAloud": {
+                "compact": "Skaityti garsiai"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "Redaguoti pastabą"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "Pridėti skirtuką"
+                    },
+                    "delete": {
+                        "compact": "Pašalinti skirtuką",
+                        "confirmation": "Ar tikrai norite pašalinti šį skirtuką?"
+                    }
+                },
+                "emptyState": {
+                    "description": "Šiame sąraše bus rodomi nauji skirtukai, pridėti skaitant.",
+                    "title": "Skirtukų nėra"
+                },
+                "title": "Skirtukai"
+            },
+            "note": {
+                "title": "Pastaba"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Pridėjimo data"
+                },
+                "lastEdited": {
+                    "compact": "Keitimo data"
+                },
+                "progression": {
+                    "compact": "Eiga"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "Pristabdyti",
+                "play": "Atkurti",
+                "skipBackward": {
+                    "compact": "Atgal",
+                    "descriptive": "Atsukti atgal"
+                },
+                "skipForward": {
+                    "compact": "Pirmyn",
+                    "descriptive": "Prasukti pirmyn"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "Atsukimo atgal intervalas",
+                    "skipForwardInterval": "Prasukimo į priekį intervalas",
+                    "skipInterval": "Prasukimo intervalas",
+                    "title": "Garso nuostatos",
+                    "volume": "Garsis"
+                },
+                "autoPlay": {
+                    "label": "Nepertraukiamas atkūrimas",
+                    "title": "Automatinis paleidimas"
+                },
+                "playbackRate": {
+                    "compact": "Sparta",
+                    "descriptive": "Atkūrimo sparta"
+                },
+                "sleepTimer": {
+                    "compact": "Laikmatis",
+                    "descriptive": "Miego laikmatis",
+                    "presets": {
+                        "endOfChapter": "Skyriaus pabaiga",
+                        "endOfResource": "Ištekliaus pabaiga"
+                    }
+                }
             }
         },
         "preferences": {
@@ -118,12 +205,20 @@
                 "title": "Išdėstymas"
             },
             "letterSpacing": "Raidžių išretinimas",
+            "ligatures": {
+                "label": "Įgalinti ligatūras",
+                "title": "Ligatūros"
+            },
             "lineHeight": {
                 "default": "Numatytasis",
                 "large": "Erdvus",
                 "medium": "Subalansuotas",
                 "small": "Glaudus",
                 "title": "Eilutės aukštis"
+            },
+            "noRuby": {
+                "label": "Slėpti „ruby“ anotacijas",
+                "title": "„Ruby“ anotacijos"
             },
             "offsetFirstPage": "Atvaizduoti pirmąjį puslapį atskirai",
             "paragraphIndent": "Pastraipos įtrauka",
@@ -246,9 +341,24 @@
                 "descriptive": "{{ x }} iš {{ y }} ({{ z }})"
             }
         },
+        "search": {
+            "actions": {
+                "next": {
+                    "compact": "Kitas rezultatas"
+                },
+                "previous": {
+                    "compact": "Ankstesnis rezultatas"
+                }
+            },
+            "placeholder": "Ieškoti raktažodžių ar frazių",
+            "result_few": "{{ current }} iš {{ count }} rezultatų",
+            "result_one": "{{ current }} iš {{ count }} rezultato",
+            "result_other": "{{ current }} iš {{ count }} rezultatų",
+            "title": "Paieška"
+        },
         "tableOfContents": {
             "emptyState": {
-                "description": "Šiam leidiniui nebuvo pateiktas turinys.",
+                "description": "Autorius nepateikė turinio.",
                 "title": "Nėra turinio"
             },
             "title": "Turinys"

@@ -200,8 +200,8 @@ export const ThAudioProgress = ({
           </div>
         </OverlayContainer>
       ) }
-      <span { ...compounds?.elapsedTime }>{ defaultElapsedTime }</span>
-      <span { ...compounds?.remainingTime }>{ defaultRemainingTime }</span>
+      <span { ...compounds?.elapsedTime } aria-hidden="true">{ defaultElapsedTime }</span>
+      <span { ...compounds?.remainingTime } aria-hidden="true">{ defaultRemainingTime }</span>
     </div>
   );
 };

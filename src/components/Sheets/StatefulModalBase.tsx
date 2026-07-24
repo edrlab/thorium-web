@@ -68,6 +68,7 @@ export const StatefulModalBase = ({
     return(
       <>
       <ThModal
+        id={ id }
         ref={ sheetRef }
         focusOptions={{
           withinRef: focusWithinRef ?? sheetBodyRef,

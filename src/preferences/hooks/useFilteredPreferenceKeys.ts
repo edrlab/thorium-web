@@ -50,7 +50,7 @@ const CJK_VERTICAL_EXCLUDED = [...deriveExcluded(ReadiumCSSSettings["cjk-vertica
 // Keys that are not applicable for each script mode and should be hidden from settings UI.
 // Derived from @readium/css settings.json; mongolian-vertical follows cjk-vertical.
 const EXCLUDED_BY_SCRIPT_MODE: Record<ScriptMode, string[]> = {
-  "ltr":              deriveExcluded(ReadiumCSSSettings["default"]),
+  "ltr":              deriveExcluded(ReadiumCSSSettings["ltr"]),
   "rtl":              deriveExcluded(ReadiumCSSSettings["rtl"]),
   "cjk-horizontal":   deriveExcluded(ReadiumCSSSettings["cjk-horizontal"]),
   "cjk-vertical":       CJK_VERTICAL_EXCLUDED,

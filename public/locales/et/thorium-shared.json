@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Tagasi",
                 "descriptive": "Eelmine lause"
+            },
+            "readAloud": {
+                "compact": "Loe valjult ette"
             }
         },
         "annotations": {
@@ -214,8 +217,8 @@
                 "title": "Rea kõrgus"
             },
             "noRuby": {
-                "label": "Peida „ruby“ märkused",
-                "title": "„Ruby“ märkused"
+                "label": "Peida „Ruby“ vormingus märkused",
+                "title": "„Ruby“ vormingus märkused"
             },
             "offsetFirstPage": "Näita esimest lehte eraldi",
             "paragraphIndent": "Lõikude taandrida",
@@ -307,7 +310,26 @@
             "percentage": "{{ percentage }}%",
             "positionsLeft": {
                 "compact_one": "Jäänud on {{ count }}",
-                "compact_other": "Jäänud on {{ count }}"
+                "compact_other": "Jäänud on {{ count }}",
+                "descriptive_one": "Jäänud on {{ count }} asukoht",
+                "descriptive_other": "Jäänud on {{ count }} asukohta"
+            },
+            "positionsLeftInChapter": {
+                "compact_one": "Jäänud on {{ count }} peatükk",
+                "compact_other": "Jäänud on {{ count }} peatükki",
+                "descriptive_one": "Peatükis on jäänud {{ count }} asukoht",
+                "descriptive_other": "Peatükis on jäänud {{ count }} asukohta"
+            },
+            "positionsLeftInPublication": {
+                "compact_one": "Väljaandes on jäänud {{ count }}",
+                "compact_other": "Väljaandes on jäänud {{ count }}",
+                "descriptive_one": "Väljaandes on jäänud {{ count }} asukoht",
+                "descriptive_other": "Väljaandes on jäänud {{ count }} asukohta"
+            },
+            "range": "{{ start }}-{{ end }}",
+            "xOfY": {
+                "compact": "{{ x }} / {{ y }}",
+                "descriptive": "{{ x }} / {{ y }} ({{ z }})"
             }
         },
         "search": {
@@ -320,6 +342,8 @@
                 }
             },
             "placeholder": "Otsi märksõnu või fraase",
+            "result_one": "{{ current }} / {{ count }} tulemus",
+            "result_other": "{{ current }} / {{ count }} tulemust",
             "title": "Otsi"
         },
         "tableOfContents": {

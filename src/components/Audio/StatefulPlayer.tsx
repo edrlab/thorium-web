@@ -10,9 +10,9 @@ import { ThPluginRegistry } from "../Plugins/PluginRegistry";
 import { ThPluginProvider } from "../Plugins/PluginProvider";
 import { NavigatorProvider } from "@/core/Navigator";
 
-import { Publication } from "@readium/shared";
+import { Locator, Publication } from "@readium/shared";
 import { ContextMenuEvent, SuspiciousActivityEvent } from "@readium/navigator-html-injectables";
-import { fromActionPeripheralType } from "@/helpers/peripherals";
+import { fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
 import { AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
 import { PositionStorage } from "../Reader/StatefulReaderWrapper";
 import { ThAudioPlayerComponent } from "@/preferences/models";
@@ -35,18 +35,21 @@ import { usePositionStorage } from "@/hooks/usePositionStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useAudioPlayerInit } from "./Hooks/useAudioPlayerInit";
 import { useAudioKeyboardPeripherals } from "./Hooks/useAudioKeyboardPeripherals";
+import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
+
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import {
   setLoading
 } from "@/lib/readerReducer";
-import { toggleActionOpen } from "@/lib/actionsReducer";
+import { toggleActionOpen, dockAction } from "@/lib/actionsReducer";
+import { ThDockingKeys } from "@/preferences/models";
 import {
   setPublicationStart,
   setPublicationEnd,
-  setTocEntry,
-  setAdjacentTimelineItems,
 } from "@/lib/publicationReducer";
-import { findTocItemByHref, TocItem } from "@/helpers/buildTocTree";
+import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
+import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
+import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
 import { isWebKit } from "@/helpers/browser";
 import { TimelineItem } from "@readium/shared";
 import { 
@@ -144,36 +147,26 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
   );
 
   const dispatch = useAppDispatch();
+  const getFocusedDockableKey = useFocusedDockableKey();
 
   const audioNavigator = useAudioNavigator();
-  const { canGoBackward, canGoForward, submitPreferences, pause, isPlaying } = audioNavigator;
+  const { canGoBackward, canGoForward, submitPreferences, pause, isPlaying, timeline: getNavigatorTimeline } = audioNavigator;
 
   const { setLocalData, getLocalData } = usePositionStorage(localDataKey, positionStorage);
 
   const documentTitle = publication?.metadata?.title?.getTranslation("en");
   useDocumentTitle(documentTitle);
 
-  const tocTree = useAppSelector(state => state.publication.unstableTimeline?.toc?.tree);
-  const tocTreeRef = useRef<TocItem[] | undefined>(undefined);
-  useEffect(() => {
-    tocTreeRef.current = tocTree;
-  }, [tocTree]);
+  const tocTree = useAppSelector(state => state.publication.toc?.tree);
+
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
 
   // Callback to handle timeline navigation state updates
   const handleTimelineNavigation = useCallback((item: TimelineItem) => {
-    const tl = publication.timeline;
-    const link = tl.linkFor(item);
-    if (link) {
-      const matched = findTocItemByHref(tocTreeRef.current || [], link.href);
-      dispatch(setTocEntry(matched || null));
-    }
-    const { previous, next } = tl.adjacentTo(item);
-    dispatch(setAdjacentTimelineItems({
-      previous: previous ? { title: previous.title, href: tl.linkFor(previous)?.href ?? "" } : null,
-      next: next ? { title: next.title, href: tl.linkFor(next)?.href ?? "" } : null,
-    }));
-    return { previous, next };
-  }, [dispatch, publication]);
+    updateAdjacentItems(item);
+    updateCurrentTocEntry(item);
+  }, [updateAdjacentItems, updateCurrentTocEntry]);
 
   // Callback to check if affordance is timeline or toc (fragment-based)
   const isFragmentAffordance = useCallback((affordance: string) => {
@@ -203,14 +196,14 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
   const listeners: AudioNavigatorListeners = useMemo(() => ({
     timelineItemChanged: (item: TimelineItem | undefined) => {
       if (!item) {
-        dispatch(setTocEntry(null));
-        dispatch(setAdjacentTimelineItems({ previous: null, next: null }));
+        clearCurrentTocEntry();
+        clearAdjacentItems();
         return;
       }
 
       // Capture the previous "next" item from cache BEFORE handleTimelineNavigation updates Redux state
       const previousNextItem = cache.current.adjacentTimelineItems.next;
-      const currentItemHref = publication.timeline.linkFor(item)?.href ?? "";
+      const currentItemHref = getNavigatorTimeline()?.linkFor(item)?.href ?? "";
 
       // Update TOC entry and adjacent items (this updates Redux state)
       handleTimelineNavigation(item);
@@ -286,14 +279,33 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
     contentProtection: (_type: string, _detail: SuspiciousActivityEvent) => {},
     peripheral: (data: KeyboardPeripheralEventData) => {
       const actionKey = fromActionPeripheralType(data.type);
-      if (actionKey && profile) dispatch(toggleActionOpen({ key: actionKey, profile }));
+
+      if (actionKey && profile) {
+        dispatch(toggleActionOpen({ key: actionKey, profile }));
+        return;
+      }
+
+      const dockingKey = fromDockingPeripheralType(data.type);
+
+      if (dockingKey && profile) {
+        const actionKey = getFocusedDockableKey(dockingKey as ThDockingKeys);
+        if (actionKey) {
+          dispatch(dockAction({ key: actionKey, dockingKey: dockingKey as ThDockingKeys, profile }));
+        }
+      }
     },
     contextMenu: (_data: ContextMenuEvent) => {}
-  }), [setLocalData, canGoBackward, canGoForward, isPlaying, dispatch, cache, submitPreferences, publication, handleTimelineNavigation, handleSleepTimerEndOfFragment, handleContinuousPlay, profile]);
+  }), [setLocalData, canGoBackward, canGoForward, isPlaying, dispatch, cache, submitPreferences, getNavigatorTimeline, handleTimelineNavigation, clearCurrentTocEntry, clearAdjacentItems, handleSleepTimerEndOfFragment, handleContinuousPlay, profile, getFocusedDockableKey]);
 
-  const initialPosition = useMemo(() => getLocalData(), [getLocalData]);
+  // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
+  // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
+  // needs real prototype methods (.time(), etc.), so deserialize it here at the point of use.
+  const initialPosition = useMemo(() => {
+    const stored = getLocalData();
+    return stored ? (Locator.deserialize(stored) ?? null) : null;
+  }, [getLocalData]);
 
-  useAudioPlayerInit({
+  const { navigatorReady } = useAudioPlayerInit({
     publication,
     initialPosition,
     listeners,
@@ -303,6 +315,8 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
     keyboardPeripherals,
     onNavigatorLoaded: () => dispatch(setLoading(false)),
   });
+
+  useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
 
   const { compact, expanded } = preferences.theming.layout;
 
@@ -401,7 +415,6 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
             <article
               ref={ wrapperRef }
               className={ isExpanded ? audioStyles.audioPlayerWrapperExpanded : audioStyles.audioPlayerWrapper }
-              aria-label={ t("reader.app.publicationWrapper") }
             >
               { isExpanded ? (
                 <>

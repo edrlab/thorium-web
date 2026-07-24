@@ -11,6 +11,7 @@ import { StatefulSheetWrapper } from "../../Sheets/StatefulSheetWrapper";
 import { ThForm } from "@/core/Components/Form/ThForm";
 import { ThFormNumberField } from "@/core/Components/Form/Fields/ThFormNumberField";
 
+import { Locator } from "@readium/shared";
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
 import { useDocking } from "../../Docking/hooks/useDocking";
 import { useI18n } from "@/i18n/useI18n";
@@ -29,7 +30,7 @@ export const StatefulJumpToPositionContainer = ({
   const actionState = useAppSelector(state => profile ? state.actions.keys[profile][ThActionsKeys.jumpToPosition] : undefined);
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
-  const positionNumbers = useAppSelector(state => state.publication.unstableTimeline?.progression?.currentPositions);
+  const positionNumbers = useAppSelector(state => state.publication.progress?.progression?.currentPositions);
 
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const dispatch = useAppDispatch();
@@ -82,13 +83,19 @@ export const StatefulJumpToPositionContainer = ({
 
     setErrorMessage(undefined); // Clear previous errors
 
-    const item = positionsList.find(item => item.locations.position === position);
+    const item = positionsList.find(item => item.locations?.position === position);
 
     if (!item) {
       setErrorMessage(t("reader.jumpToPosition.error.notFound"));
       return;
     }
-    
+
+    const locator = Locator.deserialize(item);
+    if (!locator) {
+      setErrorMessage(t("reader.jumpToPosition.error.notFound"));
+      return;
+    }
+
     if (positionInRange()) return setOpen(false);
 
     const cb = () => {
@@ -96,8 +103,8 @@ export const StatefulJumpToPositionContainer = ({
       dispatch(setImmersive(true));
       dispatch(setUserNavigated(true));
     };
-    
-    go(item, !reducedMotion, cb);
+
+    go(locator, !reducedMotion, cb);
   }, [position, positionsList, reducedMotion, t, positionInRange, go, setOpen, dispatch]);
 
   // Since we are using an intermediary local state, we must keep track when positionNumbers changes

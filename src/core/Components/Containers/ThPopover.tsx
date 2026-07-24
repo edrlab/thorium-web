@@ -18,14 +18,15 @@ export interface ThPopoverProps extends Omit<PopoverProps, "children">, ThContai
   }
 }
 
-export const ThPopover = ({ 
+export const ThPopover = ({
   ref,
+  id,
   triggerRef,
   focusOptions,
   compounds,
   maxHeight,
-  children, 
-  ...props 
+  children,
+  ...props
 }: ThPopoverProps) => {
   const resolvedRef = useObjectRef(ref as React.RefObject<HTMLDivElement | null>);
 
@@ -48,7 +49,7 @@ export const ThPopover = ({
       maxHeight={ maxHeight || computeMaxHeight() }
       { ...props }
     >
-      <Dialog { ...compounds?.dialog }>
+      <Dialog id={ id } { ...compounds?.dialog }>
         { children }
       </Dialog>
     </Popover>

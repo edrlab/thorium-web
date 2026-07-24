@@ -20,6 +20,7 @@
 }
 
 .audioCoverPlaceholder {
+  height: 100%;
   max-height: var(--th-layout-constraints-cover, 300px);
   width: auto;
   max-width: 100%;

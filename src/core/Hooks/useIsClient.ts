@@ -1,13 +1,15 @@
 "use client";
 
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const useIsClient = () => {
   const [isClient, setIsClient] = useState(false);
+  const isClientRef = useRef(false);
 
-  useLayoutEffect(() => {
-    if (typeof window !== "undefined") setIsClient(true);
+  useEffect(() => {
+    isClientRef.current = true;
+    setIsClient(true);
   }, []);
 
-  return isClient;
-}
+  return { isClient, isClientRef };
+};

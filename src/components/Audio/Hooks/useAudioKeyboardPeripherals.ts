@@ -1,19 +1,30 @@
 "use client";
 
 import { useMemo } from "react";
+
 import { IKeyboardPeripheralsConfig } from "@readium/navigator";
-import { toActionPeripheralType } from "@/helpers/peripherals";
-import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
+
+import { useAudioActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
+
+import { toActionPeripheralType, toDockingPeripheralType } from "@/helpers/peripherals";
 
 export const useAudioKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
-  const { actionsKeys } = useActionsPreferences();
+  const { primaryActionsKeys, secondaryActionsKeys, primaryDisplayOrder, secondaryDisplayOrder, docking } = useAudioActionsPreferences();
 
   return useMemo(() => {
     const config: IKeyboardPeripheralsConfig = [];
-    for (const [key, tokens] of Object.entries(actionsKeys)) {
+    const allKeys = { ...primaryActionsKeys, ...secondaryActionsKeys };
+
+    for (const [key, tokens] of Object.entries(allKeys)) {
       const shortcut = tokens?.shortcut;
-      if (shortcut) config.push({ type: toActionPeripheralType(key), keyCombos: shortcut.keyCombos });
+      const isInOrder = primaryDisplayOrder.includes(key) || secondaryDisplayOrder.includes(key);
+      if (shortcut && isInOrder) config.push({ type: toActionPeripheralType(key), keyCombos: shortcut.keyCombos });
     }
+
+    for (const [key, tokens] of Object.entries(docking.keys)) {
+      if (tokens?.shortcut) config.push({ type: toDockingPeripheralType(key), keyCombos: tokens.shortcut.keyCombos });
+    }
+
     return config;
-  }, [actionsKeys]);
+  }, [primaryActionsKeys, secondaryActionsKeys, primaryDisplayOrder, secondaryDisplayOrder, docking.keys]);
 };

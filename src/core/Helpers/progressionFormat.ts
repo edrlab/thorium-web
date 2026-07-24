@@ -1,7 +1,7 @@
 import { ThProgressionFormat } from "@/preferences/models";
-import { TimelineProgression } from "@/core/Hooks/useTimeline";
+import { ProgressionDetails } from "@/core/Hooks/usePublicationProgress";
 
-export const getSupportedProgressionFormats = (timeline?: TimelineProgression): ThProgressionFormat[] => {
+export const getSupportedProgressionFormats = (timeline?: ProgressionDetails): ThProgressionFormat[] => {
   if (!timeline) {
     return [ThProgressionFormat.none];
   }
@@ -60,7 +60,7 @@ export const canRenderProgressionFormat = (
 
 export const getBestMatchingProgressionFormat = (
   preferredFormats: ThProgressionFormat[],
-  timeline?: TimelineProgression
+  timeline?: ProgressionDetails
 ): ThProgressionFormat | null => {
   if (!timeline) {
     return null;

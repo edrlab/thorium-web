@@ -27,14 +27,14 @@
     },
     "reader": {
         "actions": {
-            "goBackward": "Indietro",
-            "goForward": "Avanti",
+            "goBackward": "Vai indietro",
+            "goForward": "Vai avanti",
             "goToNextChapter": {
                 "compact": "Successivo",
                 "descriptive": "Capitolo successivo"
             },
             "goToNextPage": {
-                "compact": "Successivo",
+                "compact": "Successiva",
                 "descriptive": "Pagina successiva"
             },
             "goToNextResource": {
@@ -42,7 +42,7 @@
                 "descriptive": "Risorsa successiva"
             },
             "goToNextSentence": {
-                "compact": "Successivo",
+                "compact": "Successiva",
                 "descriptive": "Frase seguente"
             },
             "goToPosition": {
@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Precedente",
                 "descriptive": "Frase precedente"
+            },
+            "readAloud": {
+                "compact": "Lettura ad alta voce"
             }
         },
         "annotations": {
@@ -79,7 +82,7 @@
                     },
                     "delete": {
                         "compact": "Elimina segnalibro",
-                        "confirmation": "Sei sicuro che vuoi eliminare questo segnalibro?"
+                        "confirmation": "Sei sicuro di voler eliminare questo segnalibro?"
                     }
                 },
                 "emptyState": {
@@ -126,7 +129,7 @@
                 },
                 "autoPlay": {
                     "label": "Riproduci fino alla fine",
-                    "title": "Autoplay"
+                    "title": "Lettura automatica"
                 },
                 "playbackRate": {
                     "compact": "Velocità",
@@ -221,12 +224,12 @@
             "paragraphIndent": "Rientro del paragrafo",
             "paragraphSpacing": "Spazio tra i paragrafi",
             "publisherStyles": {
-                "label": "Usare la formattazione originale",
+                "label": "Usa la formattazione originale",
                 "title": "Stile dell'editore"
             },
             "readingDirection": {
                 "default": {
-                    "compact": "Predefinito",
+                    "compact": "Predefinita",
                     "descriptive": "Usa la direzione di lettura originale"
                 },
                 "ltr": {
@@ -242,8 +245,8 @@
             "spacing": {
                 "presets": {
                     "accessible": "Accessibile",
-                    "balanced": "Bilanciato",
-                    "custom": "Personalizzato",
+                    "balanced": "Bilanciata",
+                    "custom": "Personalizzata",
                     "default": "Predefinito",
                     "loose": "Allargata",
                     "tight": "Stretta",
@@ -259,7 +262,7 @@
                     "compact": "Auto"
                 },
                 "never": {
-                    "compact": "Singola pagina"
+                    "compact": "Pagina singola"
                 },
                 "title": "Allarga"
             },

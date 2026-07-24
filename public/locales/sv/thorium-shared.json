@@ -78,12 +78,12 @@
                         "compact": "Lägg till bokmärke"
                     },
                     "delete": {
-                        "compact": "Radera bokmärke",
+                        "compact": "Ta bort bokmärke",
                         "confirmation": "Är du säker på att du vill ta bort detta bokmärke?"
                     }
                 },
                 "emptyState": {
-                    "description": "Nya bokmärken läggs till när du läser kommer att visas i den här listan.",
+                    "description": "Bokmärken som du lagt till under läsning kommer att visas i den här listan.",
                     "title": "Inga bokmärken"
                 },
                 "title": "Bokmärken"
@@ -99,7 +99,7 @@
                     "compact": "Senast redigerad"
                 },
                 "progression": {
-                    "compact": "Framsteg"
+                    "compact": "Läsposition"
                 }
             }
         },
@@ -108,7 +108,7 @@
                 "pause": "Paus",
                 "play": "Spela",
                 "skipBackward": {
-                    "compact": "Spola tillbaka",
+                    "compact": "Hoppa tillbaka",
                     "descriptive": "Hoppa bakåt"
                 },
                 "skipForward": {
@@ -120,13 +120,13 @@
                 "audio": {
                     "skipBackwardInterval": "Hoppa bakåt intervall",
                     "skipForwardInterval": "Hoppa framåt intervall",
-                    "skipInterval": "Hoppa intervall",
+                    "skipInterval": "Längd på hopp",
                     "title": "Ljudinställningar",
                     "volume": "Volym"
                 },
                 "autoPlay": {
-                    "label": "Kontinuerlig uppspelning",
-                    "title": "Autoplay"
+                    "label": "Fortsätt spela vid kapitelslut",
+                    "title": "Fortsätt spela vid kapitelslut"
                 },
                 "playbackRate": {
                     "compact": "Hastighet",

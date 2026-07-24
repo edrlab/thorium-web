@@ -47,7 +47,7 @@ export const StatefulTheme = () => {
   const themeObject = useAppSelector(state => state.theming.theme);
   const theme = profile === "audio" ? (themeObject.audio ?? "auto") : (isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
-  const coverTheme = useAppSelector(state => state.theming.coverTheme);
+  const coverTheme = useAppSelector(state => state.publication.coverTheme);
 
   const themeItems = useRef<(ThemeKeyType | "auto")[]>(
     themeArray.filter((theme: ThemeKeyType | "auto") => {

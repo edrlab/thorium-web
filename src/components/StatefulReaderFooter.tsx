@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef } from "react";
 import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat } from "@/preferences/models";
+import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
@@ -13,22 +13,28 @@ import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOve
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 
+import { Link, Publication } from "@readium/shared";
+
 import { useNavigator } from "@/core/Navigator";
 import { useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
+import { usePreferences } from "@/preferences/hooks/usePreferences";
 
 import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll } from "@/hooks";
+import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
 
 import classNames from "classnames";
 
 export const StatefulReaderFooter = ({
   layout,
+  publication,
   progressionFormatPref,
   progressionFormatFallback
 }: {
   layout: ThLayoutUI;
+  publication: Publication;
   progressionFormatPref?: ThFormatPref<ThProgressionFormat | ThProgressionFormat[]>;
   progressionFormatFallback: ThProgressionFormat | ThProgressionFormat[];
 }) => {
@@ -43,7 +49,10 @@ export const StatefulReaderFooter = ({
   const isScroll = useIsScroll();
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
-  const timeline = useAppSelector(state => state.publication.unstableTimeline);
+  const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
+  const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
+  const { preferences } = usePreferences();
+  const affordance = preferences.affordances.scroll.affordance;
 
   const dispatch = useAppDispatch();
 
@@ -68,20 +77,17 @@ export const StatefulReaderFooter = ({
     }
   };
 
-  const { previousLocator, nextLocator, go } = useNavigator().unified;
+  const { goLink } = useNavigator().unified;
 
   const buildNode = useCallback((
-    locator: ReturnType<typeof previousLocator>,
     title: string | undefined,
     compactKey: string,
     descriptiveKey: string
   ) => {
-    if (!locator) return undefined;
-
     return breakpoint !== ThBreakpoints.compact && breakpoint !== ThBreakpoints.medium ? (
       <>
         <span className={ readerStyles.srOnly }>{ t(descriptiveKey) }</span>
-        <span className={ readerPaginationStyles.label }>{ title || locator.title || t(compactKey) }</span>
+        <span className={ readerPaginationStyles.label }>{ title || t(compactKey) }</span>
       </>
     ) : (
       <span className={ readerPaginationStyles.label }>{ t(compactKey) }</span>
@@ -89,37 +95,46 @@ export const StatefulReaderFooter = ({
   }, [t, breakpoint]);
 
   const updateLinks = useCallback(() => {
-    const previous = previousLocator();
-    const next = nextLocator();
+    const previous = affordance === ThNavigationAffordance.readingOrder
+      ? previousReadingOrderItem
+      : adjacentTimelineItems.previous;
+
+    const next = affordance === ThNavigationAffordance.readingOrder
+      ? nextReadingOrderItem
+      : adjacentTimelineItems.next;
 
     const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
-        previous,
-        timeline?.previousItem?.title,
+        previous.title,
         isFXL ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
         isFXL ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
       ),
-      onPress: () => go(previous, !reducedMotion, () => {})
+      onPress: () => goLink(new Link({ href: previous.href }), !reducedMotion, () => {})
     } : undefined;
 
     const nextLink: ThPaginationLinkProps | undefined = next ? {
       node: buildNode(
-        next,
-        timeline?.nextItem?.title,
+        next.title,
         isFXL ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
         isFXL ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
       ),
-      onPress: () => go(next, !reducedMotion, () => {})
+      onPress: () => goLink(new Link({ href: next.href }), !reducedMotion, () => {})
     } : undefined;
 
     return isRTL
       ? { left: nextLink, right: previousLink }
       : { left: previousLink, right: nextLink };
-  }, [go, previousLocator, nextLocator, buildNode, timeline, reducedMotion, isFXL, isRTL]);
-
-  useEffect(() => {
-    updateLinks();
-  }, [timeline, updateLinks]);
+  }, [
+    goLink,
+    buildNode,
+    affordance,
+    adjacentTimelineItems,
+    previousReadingOrderItem,
+    nextReadingOrderItem,
+    reducedMotion,
+    isFXL,
+    isRTL
+  ]);
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode

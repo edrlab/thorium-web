@@ -91,7 +91,7 @@ export const useWebPubReaderInit = ({
       container: container.current,
       publication,
       listeners,
-      initialPosition: initialPosition ? new Locator(initialPosition) : undefined,
+      initialPosition: initialPosition ?? undefined,
       preferences: webPubPreferences,
       defaults: {
         experiments: preferences.experiments?.webPub || null
