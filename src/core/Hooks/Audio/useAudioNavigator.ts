@@ -9,6 +9,7 @@ import {
   Timeline
 } from "@readium/shared";
 import {
+  AudioMseLoaderFactory,
   AudioNavigator,
   AudioNavigatorListeners,
   AudioPreferences,
@@ -33,6 +34,8 @@ export interface AudioNavigatorLoadProps {
   contentProtection?: IContentProtectionConfig;
   keyboardPeripherals?: IKeyboardPeripheralsConfig;
   audioContext?: AudioContext;
+  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  mseLoaderFactory?: AudioMseLoaderFactory;
 }
 
 export const useAudioNavigator = () => {
@@ -58,6 +61,8 @@ export const useAudioNavigator = () => {
         defaults: config.defaults || {},
         contentProtection: config.contentProtection,
         keyboardPeripherals: config.keyboardPeripherals,
+        mediaElementSetup: config.mediaElementSetup,
+        mseLoaderFactory: config.mseLoaderFactory,
       }
     );
 

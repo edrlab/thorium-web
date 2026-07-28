@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 
 import { Publication, Locator } from "@readium/shared";
-import { getScriptMode } from "@readium/navigator";
+import { getScriptMode, AudioMseLoaderFactory } from "@readium/navigator";
 import { ThThemeKeys, ThemeKeyType, useTheming } from "@/preferences";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
@@ -71,6 +71,20 @@ export interface ReaderComponentProps<
   positionStorage?: PositionStorage;
   plugins?: ReaderPlugins;
   i18n?: Partial<InitOptions>;
+  /**
+   * Audio profile only: called with the persistent playback element before
+   * the first src is assigned, so the host can prepare it. Use for MSE/EME
+   * setups. Loading is deferred until a returned promise settles.
+   */
+  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  /**
+   * Audio profile only: when provided, media bytes reach the playback element
+   * through Media Source Extensions — the navigator creates one loader per
+   * track via this factory and the loader owns all fetching. Supply one for
+   * e.g. EME encrypted audio, since browsers have poor support for encrypted
+   * audio directly through `src`.
+   */
+  audioMseLoaderFactory?: AudioMseLoaderFactory;
   preferences?: P extends "audio"
     ? { initialPreferences?: ThAudioPreferences<K>; adapter?: ThAudioPreferencesAdapter<K> }
     : P extends "epub" | "webPub" | "divina"
@@ -80,7 +94,7 @@ export interface ReaderComponentProps<
 
 // ─── Outer wrapper — selects provider based on profile ────────────────────────
 
-export const StatefulReaderWrapper = ({ profile, plugins, isLoading, preferences, i18n: i18nOptions, ...props }: ReaderComponentProps<any, any>) => {
+export const StatefulReaderWrapper = ({ profile, plugins, isLoading, preferences, i18n: i18nOptions, mediaElementSetup, audioMseLoaderFactory, ...props }: ReaderComponentProps<any, any>) => {
   const [resolvedPlugins, setResolvedPlugins] = useState<ThPlugin[] | undefined>(undefined);
 
   const pendingFactory = profile === "epub" ? plugins?.epub
@@ -111,7 +125,7 @@ export const StatefulReaderWrapper = ({ profile, plugins, isLoading, preferences
         adapter={ preferences?.adapter as ThAudioPreferencesAdapter<any> | undefined }
       >
         <ThI18nProvider { ...i18nOptions }>
-          <StatefulAudioContent { ...props } coverUrl={ coverUrl } externalLoading={ isLoading ?? false } />
+          <StatefulAudioContent { ...props } coverUrl={ coverUrl } externalLoading={ isLoading ?? false } mediaElementSetup={ mediaElementSetup } audioMseLoaderFactory={ audioMseLoaderFactory } />
         </ThI18nProvider>
       </ThAudioPreferencesProvider>
     );
@@ -140,9 +154,15 @@ interface AudioContentProps {
   positionStorage?: PositionStorage;
   coverUrl?: string;
   externalLoading: boolean;
+  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  /**
+   * Audio profile only: MSE loader factory — see
+   * {@link ReaderComponentProps.audioMseLoaderFactory}.
+   */
+  audioMseLoaderFactory?: AudioMseLoaderFactory;
 }
 
-const StatefulAudioContent = ({ publication, localDataKey, positionStorage, coverUrl, externalLoading }: AudioContentProps) => {
+const StatefulAudioContent = ({ publication, localDataKey, positionStorage, coverUrl, externalLoading, mediaElementSetup, audioMseLoaderFactory }: AudioContentProps) => {
   const { preferences } = useAudioPreferences();
   const themeObject = useAppSelector(state => state.theming.theme);
   const dispatch = useAppDispatch();
@@ -177,7 +197,7 @@ const StatefulAudioContent = ({ publication, localDataKey, positionStorage, cove
   return (
     <StatefulLoader isLoading={ externalLoading || !themeResolved || !coverReady }>
       <Suspense>
-        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } />
+        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } mediaElementSetup={ mediaElementSetup } audioMseLoaderFactory={ audioMseLoaderFactory } />
       </Suspense>
     </StatefulLoader>
   );
