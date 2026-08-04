@@ -51,6 +51,7 @@ See [dedicated doc](./Collapsibility.md).
 Each action with a sheet/container can have an optional `docked` configuration with the following properties:
 
 - `dockable`: the docking options (in `ThDockingTypes` enum) to display to the user for this specific action (required);
+- `reserved`: reserves the action’s dock slot(s) so it can’t be popped out by the user and can’t be evicted from its slot by other actions (default is `false`, see [Reserved actions](#reserved-actions));
 - `dragIndicator`: enable/disable the drag indicator if the actions’ container is resizable (default is `false`);
 - `width`: the initial/default width of the container when docked;
 - `minWidth`: the minimum width of the container when docked;
@@ -85,7 +86,7 @@ Note the panels are also collapsible, and will try to keep the width the user ha
 
 ## Docked Sheets
 
-You can set the action’s container as docked using `ThSheetTypes.dockedStart` and `ThSheetTypes.dockedEnd` in the action’s `sheet` object, but it can’t be a `defaultSheet`, it can only be used in `breakpoints`. 
+You can set the action’s container as docked using `ThSheetTypes.dockedStart` and `ThSheetTypes.dockedEnd` in the action’s `sheet` object, either as the `defaultSheet` itself or per-breakpoint in `breakpoints`.
 
 For instance, if you want to have the Table of Contents docked by default on larger screens but as a popover otherwise:
 
@@ -101,11 +102,57 @@ For instance, if you want to have the Table of Contents docked by default on lar
 }
 ```
 
+Or, if you want it docked by default at every breakpoint where a dock slot is available:
+
+```
+[ThActionKeys.toc]: {
+  ...
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
 This preference must also meet the following requirements:
 
 - be compatible with `docking.dock` for its breakpoint;
 - be compatible with `docked.dockable` in its own configuration.
 
-This should dock and open the container on load if applicable. 
+This should dock and open the container on load if applicable.
 
 Note the user’s customization will override this preference.
+
+### `fallbackSheet`
+
+When `defaultSheet` (or a breakpoint’s resolved sheet) is `dockedStart`/`dockedEnd` but no dock slot is actually available — no breakpoint match in `docking.dock`, `docked.dockable` doesn’t allow the slot, or the slot is currently held by a [reserved](#reserved-actions) action — the container falls back to `fallbackSheet` instead. This only happens when the user opens the action; it’s never used to auto-pop a sheet open on its own.
+
+`fallbackSheet` accepts any `ThSheetTypes` value except `dockedStart`/`dockedEnd` (and `compactPopover`, or `popover` for audio actions). It defaults to `ThSheetTypes.modal` if not set.
+
+## Reserved actions
+
+Setting `docked.reserved` to `true` reserves the action’s dock slot(s) so that:
+
+- the user can’t pop it out to a popover/fullscreen/modal — no undock control is shown in its docker;
+- it can still be moved by the user between its own allowed slots (start/end) if `dockable` is `ThDockingTypes.both`;
+- no other, non-reserved action can evict it from a slot it currently occupies. That other action’s own docker button for that slot is disabled while the reserved action holds it, and becomes usable again once the reserved action releases it (closes, or moves to its other slot).
+- it still falls back to `fallbackSheet` (never silently to a popover) when the user opens it and no dock slot is available at all.
+
+```
+[ThActionKeys.toc]: {
+  ...
+  docked: {
+    dockable: ThDockingTypes.both,
+    reserved: true,
+    width: 360,
+    minWidth: 320,
+    maxWidth: 450
+  },
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
+Configuring two reserved actions with overlapping `dockable` slots (e.g. both `both`, or both `start`) is a misconfiguration with undefined resolution — the last one to dock wins. Give reserved actions non-overlapping `dockable` values (e.g. one `start`, the other `end`) instead.

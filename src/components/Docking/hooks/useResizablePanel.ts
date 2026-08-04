@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ThActionsDockedPref, ThDockingSizeValue } from "@/preferences";
 
-import { ActionsStateKeys, DockStateObject } from "@/lib/actionsReducer";
+import { DockStateObject } from "@/lib/actionsReducer";
 
 import { useActions } from "@/core/Components/Actions/hooks/useActions";
-import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
 
@@ -28,7 +27,6 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actions = useActions(actionsMap || {});
-  const previouslyCollapsed = usePrevious(panel?.collapsed);
 
   const previousWidth = actions.getDockedWidth(panel?.actionKey) || null;
   const width: ThDockingSizeValue = pref?.width ?? defaultWidth;
@@ -58,10 +56,6 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
     return !!panel?.collapsed;
   }
 
-  const forceExpand = () => {
-    return !!(isPopulated() && previouslyCollapsed && !panel?.collapsed);
-  }
-
   const currentKey = () => {
     return panel?.actionKey ?? null;
   };
@@ -78,20 +72,11 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
     return pref?.dragIndicator || false;
   };
 
-  // react-resizable-panels only reads `defaultSize` once, when the Panel first
-  // registers with its Group; changing it on every render (e.g. echoing back
-  // the width Redux just recorded from a completed resize) forces the Panel to
-  // re-register and the whole Group to remount, which breaks keyboard resizing.
-  // Freeze the starting size and only recompute it when the docked action itself
-  // changes, not on every resize of the same action.
-  const initialWidthRef = useRef<{ actionKey: ActionsStateKeys | null; value: ThDockingSizeValue } | undefined>(undefined);
-  const actionKey = panel?.actionKey ?? null;
-  if (!initialWidthRef.current || initialWidthRef.current.actionKey !== actionKey) {
-    initialWidthRef.current = { actionKey, value: previousWidth ?? width };
-  }
-
-  const getWidth = (): ThDockingSizeValue => {
-    return initialWidthRef.current!.value;
+  // The size an expanding panel is restored to: the last width the user
+  // resized this action to, falling back to its preference. Panels always mount
+  // shut (see the Panel's `defaultSize`), so this is the only size source.
+  const getTargetWidth = (): ThDockingSizeValue => {
+    return previousWidth ?? width;
   };
 
   const getMinWidth = (): ThDockingSizeValue => {
@@ -111,10 +96,9 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
     currentKey,
     isPopulated,
     isCollapsed,
-    forceExpand,
     isResizable,
     hasDragIndicator,
-    getWidth,
+    getTargetWidth,
     getMinWidth,
     getMaxWidth
   }

@@ -22,7 +22,8 @@ export interface ThActionsTokens {
   visibility: ThCollapsibilityVisibility;
   shortcut: ThShortcutConfig | null;
   sheet?: {
-    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.compactPopover>;
+    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.compactPopover>;
+    fallbackSheet?: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.compactPopover>;
     breakpoints: BreakpointsMap<Exclude<ThSheetTypes, ThSheetTypes.compactPopover>>;
   };
   docked?: ThActionsDockedPref;
@@ -33,7 +34,8 @@ export interface ThAudioActionsTokens {
   visibility: ThCollapsibilityVisibility;
   shortcut: ThShortcutConfig | null;
   sheet?: {
-    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.popover>;
+    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.popover>;
+    fallbackSheet?: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.popover>;
     breakpoints: BreakpointsMap<Exclude<ThSheetTypes, ThSheetTypes.popover>>;
   };
   docked?: ThActionsDockedPref;
@@ -49,6 +51,9 @@ export type ThDockingSizeValue =
 
 export interface ThActionsDockedPref {
   dockable: ThDockingTypes,
+  // When true, the action can't be undocked by the user (no transient/undock
+  // control) and can't be evicted from its slot by other, non-reserved actions.
+  reserved?: boolean,
   dragIndicator?: boolean,
   width?: ThDockingSizeValue,
   minWidth?: ThDockingSizeValue,

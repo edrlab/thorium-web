@@ -16,6 +16,7 @@ import { StatefulOverflowMenuItem } from "../Actions/Triggers/StatefulOverflowMe
 
 import { useActions } from "@/core/Components/Actions/hooks/useActions";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
+import { useDockReservation } from "./hooks/useDockReservation";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -28,6 +29,7 @@ export const StatefulDockStart = ({ variant, associatedKey }: StatefulActionTrig
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actions = useActions(actionsMap || {});
+  const { reserved, isSlotLockedByOther } = useDockReservation(associatedKey ?? "");
   const isRTL = direction === ThLayoutDirection.rtl;
   const translationKey = isRTL 
     ? "reader.app.docker.dockToRight" 
@@ -37,8 +39,8 @@ export const StatefulDockStart = ({ variant, associatedKey }: StatefulActionTrig
     tooltip: t(`${ translationKey }.tooltip`)
   };
 
-  const isDisabled = actions.whichDocked(associatedKey) === ThDockingKeys.start;
-  
+  const isDisabled = actions.whichDocked(associatedKey) === ThDockingKeys.start || isSlotLockedByOther(ThDockingKeys.start);
+
   const dispatch = useAppDispatch();
 
   const handlePress = useCallback(() => {
@@ -46,10 +48,11 @@ export const StatefulDockStart = ({ variant, associatedKey }: StatefulActionTrig
       dispatch(dockAction({
         key: associatedKey,
         dockingKey: ThDockingKeys.start,
-        profile: profile
+        profile: profile,
+        reserved
       }))
     }
-  }, [dispatch, associatedKey, profile]);
+  }, [dispatch, associatedKey, profile, reserved]);
   
   return(
     <>
