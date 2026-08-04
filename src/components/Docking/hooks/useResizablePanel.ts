@@ -84,7 +84,7 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   // re-register and the whole Group to remount, which breaks keyboard resizing.
   // Freeze the starting size and only recompute it when the docked action itself
   // changes, not on every resize of the same action.
-  const initialWidthRef = useRef<{ actionKey: ActionsStateKeys | null; value: ThDockingSizeValue }>();
+  const initialWidthRef = useRef<{ actionKey: ActionsStateKeys | null; value: ThDockingSizeValue } | undefined>(undefined);
   const actionKey = panel?.actionKey ?? null;
   if (!initialWidthRef.current || initialWidthRef.current.actionKey !== actionKey) {
     initialWidthRef.current = { actionKey, value: previousWidth ?? width };
