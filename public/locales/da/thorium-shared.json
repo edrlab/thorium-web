@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Forrige",
                 "descriptive": "Forrige sætning"
+            },
+            "readAloud": {
+                "compact": "Læs højt"
             }
         },
         "annotations": {

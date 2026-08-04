@@ -78,7 +78,7 @@
                         "compact": "Lägg till bokmärke"
                     },
                     "delete": {
-                        "compact": "Radera bokmärke",
+                        "compact": "Ta bort bokmärke",
                         "confirmation": "Är du säker på att du vill ta bort detta bokmärke?"
                     }
                 },
@@ -99,7 +99,7 @@
                     "compact": "Senast redigerad"
                 },
                 "progression": {
-                    "compact": "Framsteg"
+                    "compact": "Läsposition"
                 }
             }
         },
@@ -126,7 +126,7 @@
                 },
                 "autoPlay": {
                     "label": "Fortsätt spela vid kapitelslut",
-                    "title": "Kontinuerlig uppspelning"
+                    "title": "Fortsätt spela vid kapitelslut"
                 },
                 "playbackRate": {
                     "compact": "Hastighet",

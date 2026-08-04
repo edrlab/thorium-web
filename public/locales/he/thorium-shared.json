@@ -1,8 +1,10 @@
 {
     "common": {
         "actions": {
+            "cancel": "ביטול",
             "clear": "נקה",
-            "close": "סגור"
+            "close": "סגור",
+            "open": "פתח"
         }
     }
 }

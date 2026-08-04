@@ -15,6 +15,7 @@ import {
   ThRunningHeadFormat,
   ThDocumentTitleFormat,
   ThArrowVariant,
+  ThNavigationAffordance,
   lightTheme,
   darkTheme,
   paperTheme,
@@ -244,7 +245,8 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       hintInImmersive: true,
       toggleOnMiddlePointer: ["tap", "click"],
       hideOnForwardScroll: true,
-      showOnBackwardScroll: true
+      showOnBackwardScroll: true,
+      affordance: ThNavigationAffordance.timeline
     },
     paginated: {
       reflow: {

@@ -25,10 +25,6 @@ interface UnifiedNavigator {
   goLink(link: Link, animated: boolean, callback: NavigationCallback): void;
   currentLocator(): Locator | undefined;
 
-  // Unified previous/next navigation
-  previousLocator(): Locator | null;
-  nextLocator(): Locator | null;
-
   // Unified forward/backward navigation
   goForward(animated: boolean, callback: NavigationCallback): void;
   goBackward(animated: boolean, callback: NavigationCallback): void;
@@ -83,20 +79,6 @@ export const useNavigator = () => {
         return navigator.goLink(link, animated, callback);
       },
       currentLocator: (): Locator | undefined => navigator.currentLocator(),
-
-      previousLocator: (): Locator | null => {
-        if (isVisual && navigator.previousLocator) {
-          return navigator.previousLocator() || null;
-        }
-        return null;
-      },
-
-      nextLocator: (): Locator | null => {
-        if (isVisual && navigator.nextLocator) {
-          return navigator.nextLocator() || null;
-        }
-        return null;
-      },
 
       goForward: (animated: boolean, callback: NavigationCallback) => {
         if (navigator.goForward) {

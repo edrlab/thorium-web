@@ -5,7 +5,8 @@ import { useCallback, useRef } from "react";
 import {
   Link,
   Locator,
-  Publication
+  Publication,
+  Timeline
 } from "@readium/shared";
 import {
   ExperimentalWebPubNavigator,
@@ -113,34 +114,6 @@ export const useWebPubNavigator = () => {
     return navigatorInstance?.currentLocator;
   }, []);
 
-  const getLocatorAtOffset = useCallback((offset: number) => {
-    const readingOrder = navigatorInstance?.publication?.readingOrder;
-    if (!readingOrder) return null;
-
-    const currentLocator = navigatorInstance?.currentLocator;
-    if (!currentLocator) return null;
-
-    const currentLocatorIndex = readingOrder.findIndexWithHref(currentLocator.href);
-    if (currentLocatorIndex === -1) return null;
-
-    const newIndex = currentLocatorIndex + offset;
-    if (newIndex < 0 || newIndex >= readingOrder.items.length) return null;
-
-    return readingOrder.items[newIndex];
-  }, []);
-
-  const previousLocator = useCallback(() => {
-    const link = getLocatorAtOffset(-1);
-    if (!link) return null;
-    return navigatorInstance?.publication?.manifest?.locatorFromLink(link);
-  }, [getLocatorAtOffset]);
-
-  const nextLocator = useCallback(() => {
-    const link = getLocatorAtOffset(1);
-    if (!link) return null;
-    return navigatorInstance?.publication?.manifest?.locatorFromLink(link);
-  }, [getLocatorAtOffset]);
-
   const currentPositions = useCallback(() => {
     return navigatorInstance?.viewport?.positions;
   }, []);
@@ -171,6 +144,10 @@ export const useWebPubNavigator = () => {
     return getScriptMode(metadata);
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return {
     WebPubNavigatorLoad, 
     WebPubNavigatorDestroy, 
@@ -181,8 +158,6 @@ export const useWebPubNavigator = () => {
     goLink, 
     go, 
     currentLocator,
-    previousLocator,
-    nextLocator,
     currentPositions,
     canGoBackward,
     canGoForward,
@@ -192,6 +167,7 @@ export const useWebPubNavigator = () => {
     getSetting,
     submitPreferences,
     getCframes,
-    getScriptMode: currentScriptMode
+    getScriptMode: currentScriptMode,
+    timeline,
   }
 }

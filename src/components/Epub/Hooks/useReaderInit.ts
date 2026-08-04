@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState, useRef } from "react";
 
 import { Locator, Publication } from "@readium/shared";
+import { SerializedLocator } from "@/helpers/serializePositions";
 import { EpubNavigatorListeners, IContentProtectionConfig, ILinkInjectable, IBlobInjectable } from "@readium/navigator";
 import { useEpubKeyboardPeripherals } from "./useEpubKeyboardPeripherals";
 import { ThPreferences } from "@/preferences";
@@ -16,7 +17,7 @@ import { useEpubNavigator, EpubNavigatorLoadProps } from "@/core/Hooks/Epub/useE
 interface UseEpubReaderInitProps {
   container: React.RefObject<HTMLDivElement | null>;
   publication: Publication | null;
-  positionsList?: Locator[];
+  positionsList?: SerializedLocator[];
   initialPosition: Locator | null;
   listeners: EpubNavigatorListeners;
   preferences: ThPreferences;
@@ -113,8 +114,8 @@ export const useEpubReaderInit = ({
       container: container.current,
       publication,
       listeners,
-      positionsList: positionsList?.map(loc => new Locator(loc)) || [],
-      initialPosition: initialPosition ? new Locator(initialPosition) : undefined,
+      positionsList: positionsList || [],
+      initialPosition: initialPosition ?? undefined,
       preferences: epubPreferences,
       defaults: epubDefaults,
       injectables: injectables || undefined,

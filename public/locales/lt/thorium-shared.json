@@ -5,20 +5,20 @@
             "clear": "Išvalyti",
             "close": "Užverti",
             "collapse": "Suskleisti",
-            "collapseAll": "Suskleisti visus",
+            "collapseAll": "Suskleisti viską",
             "decrease": "Mažinti",
             "disable": "Išjungti",
             "enable": "Įjungti",
             "exit": "Išeiti",
             "expand": "Išskleisti",
-            "expandAll": "Išskleisti visus",
+            "expandAll": "Išskleisti viską",
             "filter": "Filtruoti",
             "hide": "Slėpti",
             "hideAll": "Slėpti visus",
             "increase": "Didinti",
             "open": "Atverti",
             "reset": "Atkurti",
-            "search": "Paieška",
+            "search": "Ieškoti",
             "show": "Rodyti",
             "showAll": "Rodyti visus",
             "sortBy": "Rikiuoti pagal",
@@ -64,6 +64,9 @@
             "goToPreviousSentence": {
                 "compact": "Ankstesnis",
                 "descriptive": "Ankstesnis sakinys"
+            },
+            "readAloud": {
+                "compact": "Skaityti garsiai"
             }
         },
         "annotations": {
@@ -83,21 +86,44 @@
                     }
                 },
                 "emptyState": {
+                    "description": "Šiame sąraše bus rodomi nauji skirtukai, pridėti skaitant.",
                     "title": "Skirtukų nėra"
                 },
                 "title": "Skirtukai"
             },
             "note": {
                 "title": "Pastaba"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Pridėjimo data"
+                },
+                "lastEdited": {
+                    "compact": "Keitimo data"
+                },
+                "progression": {
+                    "compact": "Eiga"
+                }
             }
         },
         "playback": {
             "actions": {
                 "pause": "Pristabdyti",
-                "play": "Atkurti"
+                "play": "Atkurti",
+                "skipBackward": {
+                    "compact": "Atgal",
+                    "descriptive": "Atsukti atgal"
+                },
+                "skipForward": {
+                    "compact": "Pirmyn",
+                    "descriptive": "Prasukti pirmyn"
+                }
             },
             "preferences": {
                 "audio": {
+                    "skipBackwardInterval": "Atsukimo atgal intervalas",
+                    "skipForwardInterval": "Prasukimo į priekį intervalas",
+                    "skipInterval": "Prasukimo intervalas",
                     "title": "Garso nuostatos",
                     "volume": "Garsis"
                 },

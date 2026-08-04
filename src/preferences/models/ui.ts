@@ -48,6 +48,17 @@ export enum ThArrowVariant {
   layered = "layered"
 }
 
+export enum ThNavigationAffordance {
+  timeline = "timeline",
+  readingOrder = "readingOrder",
+  toc = "toc"
+}
+
+// `toc` is excluded: a toc entry can span multiple reading-order resources,
+// so navigating strictly by toc entry can skip resources that have no toc
+// entry of their own. `timeline` already walks every reading-order resource.
+export type ThScrollAffordance = Exclude<ThNavigationAffordance, ThNavigationAffordance.toc>;
+
 export enum ThBreakpoints {
   compact = "compact",
   medium = "medium",
