@@ -7,7 +7,12 @@ const nextConfig = {
   // Disable React running twice as it messes up with iframes
   reactStrictMode: false,
   typedRoutes: true,
-  
+
+  // colorthief's Node.js entry point depends on sharp, which can't run in
+  // the Workers runtime. It's only ever called client-side on an
+  // HTMLImageElement, so keep it out of the server bundle entirely.
+  serverExternalPackages: ["colorthief"],
+
   // Configure asset prefix for CDN or subdirectory support
   assetPrefix: process.env.ASSET_PREFIX || undefined,
   
