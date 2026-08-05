@@ -82,7 +82,7 @@ Resizability is inferred from `width`, `minWidth`, and `maxWidth` and their valu
 
 If no width-related property is set at all, then the `default` set in `theming` will be used.
 
-Note the panels are also collapsible, and will try to keep the width the user has previously set on open/expand.
+Note the panels can be dragged shut, which closes the action they contain, and dragged back out to reopen it. Either way they will try to keep the width the user has previously set.
 
 ## Docked Sheets
 

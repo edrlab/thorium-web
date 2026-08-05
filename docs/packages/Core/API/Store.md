@@ -88,43 +88,44 @@ Manages state for action-related features.
 ```typescript
 interface ActionsReducerState {
   keys: {
-    [key in ActionsStateKeys]: {
-      isOpen: boolean | null;
-      docking: ThDockingKeys | null;
-      dockedWidth?: number;
+    // Profile-keyed: `epub`, `webPub`, `audio`
+    [profile: string]: {
+      [key in ActionsStateKeys]?: {
+        isOpen?: boolean | null;
+        docking?: ThDockingKeys | null;
+        dockedWidth?: number;
+      };
     };
   };
   dock: {
-    [ThDockingKeys.start]: {
-      actionKey: ActionsStateKeys | null;
-      active: boolean;
-      collapsed: boolean;
-      width?: number;
-    };
-    [ThDockingKeys.end]: {
-      actionKey: ActionsStateKeys | null;
-      active: boolean;
-      collapsed: boolean;
-      width?: number;
+    [profile: string]: {
+      [ThDockingKeys.start]: DockStateObject;
+      [ThDockingKeys.end]: DockStateObject;
     };
   };
   overflow: {
-    [key in OverflowStateKeys]: {
+    [key in OverflowStateKeys]?: {
       isOpen: boolean;
     };
   };
 }
+
+interface DockStateObject {
+  actionKey: ActionsStateKeys | null;
+  active: boolean;
+  width?: number;
+  // Set from the action’s `docked.reserved` preference, see the Docking doc
+  reserved?: boolean;
+}
 ```
 
 **Actions:**
-- `dockAction`: Dock/undock an action
+- `dockAction`: Dock/undock an action. Takes the requester’s `reserved` flag, and arbitrates on it: a reserved occupant can’t be evicted by a non-reserved action
 - `setActionOpen`: Set action state open/closed
 - `toggleActionOpen`: Toggle action state
 - `setOverflow`: Set overflow state open/closed
 - `activateDockPanel`: Activate a dock panel
 - `deactivateDockPanel`: Deactivate a dock panel
-- `collapseDockPanel`: Collapse a dock panel
-- `expandDockPanel`: Expand a dock panel
 - `setDockPanelWidth`: Set dock panel width
 
 ### Publication Reducer
