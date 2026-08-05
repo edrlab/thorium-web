@@ -37,6 +37,10 @@ yarn-error.log*
 # wrangler
 .wrangler
 
+# opennext
+.open-next
+cloudflare-env.d.ts
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

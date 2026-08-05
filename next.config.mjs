@@ -1,3 +1,7 @@
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+
+initOpenNextCloudflareForDev();
+
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   // Disable React running twice as it messes up with iframes
