@@ -200,8 +200,8 @@
                 "title": "Skiemenavimas"
             },
             "layout": {
-                "paginated": "Puslapiuotas",
-                "scrolled": "Slenkamasis",
+                "paginated": "Puslapiais",
+                "scrolled": "Slenkamas",
                 "title": "Išdėstymas"
             },
             "letterSpacing": "Raidžių išretinimas",
@@ -210,9 +210,9 @@
                 "title": "Ligatūros"
             },
             "lineHeight": {
-                "default": "Numatytasis",
+                "default": "Numatytas",
                 "large": "Erdvus",
-                "medium": "Subalansuotas",
+                "medium": "Vidutinis",
                 "small": "Glaudus",
                 "title": "Eilutės aukštis"
             },
@@ -245,9 +245,9 @@
             "spacing": {
                 "presets": {
                     "accessible": "Prieinamas",
-                    "balanced": "Subalansuotas",
+                    "balanced": "Vidutinis",
                     "custom": "Tinkintas",
-                    "default": "Numatytasis",
+                    "default": "Numatytas",
                     "loose": "Erdvus",
                     "tight": "Glaustas",
                     "title": "Išankstiniai"
