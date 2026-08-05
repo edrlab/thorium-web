@@ -1,6 +1,6 @@
 Locale Completion Status
 Reference language: en
-Generated: 2026-07-24T14:29:54.800Z
+Generated: 2026-08-05T13:41:12.200Z
 
 
 Locale Completion Summary:
@@ -84,9 +84,9 @@ FI (100% complete, 100% of inferred usage)
    USED                  ■■■■■■■■■■ 100%  (126/126)
 
 FR (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  99%  (188/189)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
    thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■■■■■■■■■ 100%  (250/251)
+   TOTAL                 ■■■■■■■■■■ 100%  (251/251)
    USED                  ■■■■■■■■■■ 100%  (126/126)
 
 IT (100% complete, 100% of inferred usage)
