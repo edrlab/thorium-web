@@ -131,7 +131,9 @@ When `defaultSheet` (or a breakpoint’s resolved sheet) is `dockedStart`/`docke
 
 ## Reserved actions
 
-Setting `docked.reserved` to `true` reserves the action’s dock slot(s) so that:
+`docked.reserved` only takes effect when the action’s own `sheet.defaultSheet` is `dockedStart` or `dockedEnd` — i.e. it lives in the dock by default. Otherwise it is ignored entirely, as if unset: the action docks only when the user chooses to, and behaves like any other dockable action, undock control included. This is what keeps `reserved` from trapping an action the user only dropped into the dock experimentally — there is nothing to protect it *from* if being docked was never its default state.
+
+With that satisfied, setting `docked.reserved` to `true` reserves the action’s dock slot(s) so that:
 
 - the user can’t pop it out to a popover/fullscreen/modal — no undock control is shown in its docker;
 - it can still be moved by the user between its own allowed slots (start/end) if `dockable` is `ThDockingTypes.both`;
