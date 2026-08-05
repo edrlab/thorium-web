@@ -20,7 +20,7 @@ export const useDocking = <T extends string>(key: T) => {
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actionState = actionsMap?.[key];
-  const { reserved, isSlotLockedByOther } = useDockReservation(key);
+  const { dock, reserved, isSlotLockedByOther } = useDockReservation(key);
   const dispatch = useAppDispatch();
 
   const dockingPref = preferences.docking.dock;
@@ -66,21 +66,17 @@ export const useDocking = <T extends string>(key: T) => {
     }
   }, [sheetPref]);
 
-  // Falling back to the sheet pref is only safe if that pref isn’t itself
-  // pointing at a dock slot the action can’t have: there would be no panel to
-  // portal into, and the action would be unreachable at this breakpoint. Each
-  // branch below only checks the one slot it knows about, so the pref is
-  // validated against both here
+  // The pref can itself point at a dock slot the action can’t have, leaving it
+  // with no panel to portal into. Branches below each check only the one slot
+  // they know about, so validate against both here
   const usableSheetPref = useCallback((): ThSheetTypes => {
     if (sheetPref === ThSheetTypes.dockedStart && !canBeDocked(ThDockingTypes.start)) return safeDefaultSheet;
     if (sheetPref === ThSheetTypes.dockedEnd && !canBeDocked(ThDockingTypes.end)) return safeDefaultSheet;
     return sheetPref;
   }, [sheetPref, canBeDocked, safeDefaultSheet]);
 
-  // Derived, never stored: a copy held in state lags a render behind the values
-  // it is computed from, and the effects below would then dispatch corrections
-  // against a sheet type that is already stale — which is how the writers of
-  // `docking` and `dock[slot].actionKey` end up fighting each other
+  // Derived, never stored: held in state it lags a render behind the values it
+  // comes from, and the effects below then dispatch against a stale sheet type
   const sheetType: ThSheetTypes = useMemo(() => {
     // Protect against null breakpoint during initialization
     if (!breakpoint) {
@@ -215,47 +211,98 @@ export const useDocking = <T extends string>(key: T) => {
     return dockerKeys;
   }, [preferences.docking.displayOrder, currentDockConfig, sheetPref, dockablePref, reserved, canBeDocked]);
 
-  // Bootstrap: the action resolves to a docked sheet from prefs alone and has
-  // never been interacted with, so the slot it expects has never been populated.
-  // Gated on isOpen still being unset, so it runs at most once per action
+  // Two independent gaps to fill once the breakpoint says this action is docked.
+  // Both guards are cleared by their own dispatch, so each is one-shot
   useEffect(() => {
-    if (actionState?.isOpen != null || !profile) return;
-    if (!isDockedType(sheetType)) return;
+    if (!profile || !isDockedType(sheetType)) return;
 
-    dispatch(dockAction({
-      key: key,
-      dockingKey: sheetType === ThSheetTypes.dockedStart ? ThDockingKeys.start : ThDockingKeys.end,
-      profile: profile,
-      reserved
-    }));
-    dispatch(setActionOpen({
-      key: key,
-      isOpen: true,
-      profile
-    }));
-  }, [actionState?.isOpen, sheetType, key, dispatch, profile, reserved]);
+    // The slot was never claimed: docking comes from prefs, or the action was
+    // opened at a breakpoint where it rendered as another sheet type.
+    // Displacing a non-reserved occupant is allowed — dockAction is the one
+    // place that arbitrates reservation
+    if (actionState?.docking == null) {
+      dispatch(dockAction({
+        key: key,
+        dockingKey: sheetType === ThSheetTypes.dockedStart ? ThDockingKeys.start : ThDockingKeys.end,
+        profile: profile,
+        reserved
+      }));
+    }
 
-  // The action was showing in a slot that has just stopped being usable — the
-  // breakpoint dropped it, or a reserved action claimed it. Dismiss it once,
-  // and deliberately leave `docking` pointing at the slot: that is what lets
-  // the action reclaim it, without any repair dispatch, once the slot is back.
-  //
-  // Strictly the docked -> undocked edge, never the state of being undocked:
-  // the action stays openable as its fallback sheet in the meantime, which a
-  // standing condition here would prevent by closing it again on every open
-  useEffect(() => {
-    if (!previousSheetType || !isDockedType(previousSheetType) || isDockedType(sheetType)) return;
-    if (!breakpoint || !profile || !actionState?.isOpen) return;
-
-    const docking = actionState.docking;
-    if (docking === ThDockingKeys.start || docking === ThDockingKeys.end) {
+    // Persistence nulls `isOpen` for docked actions (see updateActionsState in
+    // store.ts) to defer the open decision to the breakpoint resolved here
+    if (actionState?.isOpen == null) {
       dispatch(setActionOpen({
         key: key,
-        isOpen: false,
+        isOpen: true,
         profile
       }));
     }
-  }, [dispatch, key, sheetType, previousSheetType, breakpoint, profile, actionState?.isOpen, actionState?.docking]);
+  }, [actionState?.docking, actionState?.isOpen, sheetType, key, dispatch, profile, reserved]);
+
+  // Dismiss when the sheet stops being docked. `docking` is left pointing at
+  // the slot, so it is reclaimed for free once the slot comes back
+  useEffect(() => {
+    // This was not dismissed on breakpoint change, but by the user
+    if (actionState?.docking === ThDockingKeys.transient) return;
+
+    // What the user docked has the upper hand: losing the slot to a breakpoint
+    // falls back to the sheet pref but stays open. Only a reserved occupant
+    // overrides that choice, since it can’t be displaced
+    if (actionState?.docking === ThDockingKeys.start && !isSlotLockedByOther(ThDockingKeys.start)) return;
+    if (actionState?.docking === ThDockingKeys.end && !isSlotLockedByOther(ThDockingKeys.end)) return;
+
+    if (!previousSheetType || !isDockedType(previousSheetType) || isDockedType(sheetType)) return;
+    if (!breakpoint || !profile) return;
+
+    dispatch(setActionOpen({
+      key: key,
+      isOpen: false,
+      profile
+    }));
+  }, [dispatch, key, sheetType, previousSheetType, breakpoint, profile, actionState?.docking, isSlotLockedByOther]);
+
+  // Sync action docking property with profile dock state when profile changes.
+  // The slot is authoritative here: it can already name this action while the
+  // action's own `docking` still belongs to the profile we came from
+  useEffect(() => {
+    if (!profile || !dock) return;
+
+    const isDockedInStart = dock[ThDockingKeys.start]?.actionKey === key;
+    const isDockedInEnd = dock[ThDockingKeys.end]?.actionKey === key;
+
+    if (isDockedInStart && actionState?.docking !== ThDockingKeys.start) {
+      dispatch(dockAction({
+        key: key,
+        dockingKey: ThDockingKeys.start,
+        profile: profile,
+        reserved
+      }));
+      // Restore isOpen state if action was docked
+      if (actionState?.isOpen === false) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: true,
+          profile
+        }));
+      }
+    } else if (isDockedInEnd && actionState?.docking !== ThDockingKeys.end) {
+      dispatch(dockAction({
+        key: key,
+        dockingKey: ThDockingKeys.end,
+        profile: profile,
+        reserved
+      }));
+      // Restore isOpen state if action was docked
+      if (actionState?.isOpen === false) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: true,
+          profile
+        }));
+      }
+    }
+  }, [profile, dock, actionState?.docking, actionState?.isOpen, key, dispatch, reserved]);
 
   return {
     getDocker,

@@ -112,8 +112,8 @@ const migrateDockStateToProfileKeyed = (state: ActionsReducerState): ActionsRedu
       // Migrate to new profile-keyed format, only for epub profile
       const newDock: any = {};
       newDock["epub"] = {
-        [ThDockingKeys.start]: oldDock[ThDockingKeys.start] || { actionKey: null, active: false, collapsed: false },
-        [ThDockingKeys.end]: oldDock[ThDockingKeys.end] || { actionKey: null, active: false, collapsed: false }
+        [ThDockingKeys.start]: oldDock[ThDockingKeys.start] || { actionKey: null, active: false },
+        [ThDockingKeys.end]: oldDock[ThDockingKeys.end] || { actionKey: null, active: false }
       };
       return {
         ...state,

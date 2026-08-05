@@ -10,14 +10,13 @@ import { Group, Layout, LayoutChangedMeta, Panel, PanelImperativeHandle, Separat
 import { ThDockingTypes, ThDockingKeys, ThDockingSizeValue, ThLayoutDirection } from "@/preferences/models";
 import { ActionsStateKeys } from "@/lib/actionsReducer";
 
-import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { useResizablePanel } from "./hooks/useResizablePanel";
 import { useDockCleanup } from "./hooks/useDockCleanup";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { activateDockPanel, collapseDockPanel, deactivateDockPanel, expandDockPanel, setActionOpen, setDockPanelWidth } from "@/lib/actionsReducer";
+import { activateDockPanel, deactivateDockPanel, setActionOpen, setDockPanelWidth } from "@/lib/actionsReducer";
 
 import { makeBreakpointsMap } from "@/core/Helpers/breakpointsMap";
 import classNames from "classnames";
@@ -66,22 +65,22 @@ const DockHandle = ({
 const DockPanel = ({
   actionKey,
   flow,
+  dockConfig,
   sizes,
   targetWidth,
   isResizable,
   isPopulated,
-  isCollapsed,
   hasDragIndicator,
   profile,
   panelRef
 }: {
   actionKey: ActionsStateKeys | null;
   flow: ThDockingKeys.start | ThDockingKeys.end;
+  dockConfig: ThDockingTypes;
   sizes: DockPanelSizes;
   targetWidth: ThDockingSizeValue;
   isResizable: boolean;
   isPopulated: boolean;
-  isCollapsed: boolean;
   hasDragIndicator?: boolean;
   profile: string;
   panelRef: RefObject<PanelImperativeHandle | null>;
@@ -91,8 +90,8 @@ const DockPanel = ({
   const direction = useAppSelector(state => state.reader.direction);
   const dispatch = useAppDispatch();
 
-  // Read through a ref so a resize, which updates the remembered width, doesn’t
-  // change expandPanel’s identity and re-trigger the sync effect below
+  // Through a ref so a resize doesn’t change expandPanel’s identity and
+  // re-trigger the sync effect
   const targetWidthRef = useRef(targetWidth);
   targetWidthRef.current = targetWidth;
 
@@ -107,29 +106,21 @@ const DockPanel = ({
     }
 
     if (actionKey) {
+      // A shut slot still holds its action, so it announces what it contains
       if (!isPopulated) {
         label += ` – ${ t("reader.app.docking.dockingClosed", { action: t(`reader.${ actionKey }.heading`) }) }`;
-      } else if (isCollapsed) {
-        label += ` – ${ t("reader.app.docking.dockingCollapsed", { action: t(`reader.${ actionKey }.heading`) }) }`;
       }
     } else {
       label += ` – ${ t("reader.app.docking.dockingEmpty") }`;
     }
 
     return label;
-  }, [flow, direction, isPopulated, isCollapsed, actionKey, t]);
+  }, [flow, direction, isPopulated, actionKey, t]);
 
-  // Collapse/expand state and docked width are mirrored to Redux from the
-  // Group's onLayoutChanged callback (see StatefulDockingWrapper), which is
-  // their only writer: the DOM layout is the source of truth for both, and a
-  // second writer here would fight it.
-  //
-  // react-resizable-panels' imperative Panel methods can throw if called
-  // while the Panel's registration with its Group is momentarily out of
-  // sync (e.g. a breakpoint change adding/removing docked panels in the same
-  // render as this panel's populated state changes). These calls are a
-  // best-effort UI sync, not a source of truth, so a transient failure here
-  // must not crash the reader — it self-corrects on the next effect run.
+  // The imperative Panel methods throw when the Panel's registration with its
+  // Group is momentarily out of sync, e.g. a breakpoint change mounting panels
+  // in the same render as this one's populated state changes. Best-effort UI
+  // sync, not a source of truth, so a failure must not crash the reader
   const collapsePanel = useCallback(() => {
     try {
       panelRef.current?.collapse();
@@ -138,9 +129,8 @@ const DockPanel = ({
     }
   }, [panelRef, flow]);
 
-  // resize() rather than expand(): expand() restores whatever size the library
-  // happens to remember and falls back to minSize when it remembers nothing,
-  // which is the case for every panel here since they all mount shut
+  // resize() not expand(): expand() falls back to minSize when the library has
+  // no remembered size, which is the case for every panel here as they mount shut
   const expandPanel = useCallback(() => {
     try {
       panelRef.current?.resize(targetWidthRef.current);
@@ -157,17 +147,27 @@ const DockPanel = ({
     }
   }, [dispatch, flow, profile]);
 
+  // The panel's size is asserted from occupancy, never read back from the DOM:
+  // a slot whose action is open is at its width, any other is at zero. Shutting
+  // a panel closes its action (see handleLayoutChanged), so there is no third
+  // state to reconcile and no order in which these can disagree.
+  //
+  // `dockConfig` is a dependency because the Group caches layouts keyed by its
+  // set of panel ids and restores one whenever a panel registers: a breakpoint
+  // adding or removing the *other* slot resizes this one to whatever that set
+  // last held, without this panel remounting or its own state changing.
+  //
   // Deferred to the next animation frame: a breakpoint change can mount a
   // DockPanel in the same commit its populated state changes, racing the
   // Group's own panel registration and throwing (see collapsePanel/
-  // expandPanel above). Running after that commit has settled avoids it.
+  // expandPanel above). Running after that commit has settled avoids it
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
       isPopulated ? expandPanel() : collapsePanel();
     });
 
     return () => cancelAnimationFrame(raf);
-  }, [isPopulated, collapsePanel, expandPanel]);
+  }, [isPopulated, dockConfig, collapsePanel, expandPanel]);
 
   return(
     <>
@@ -184,18 +184,14 @@ const DockPanel = ({
       collapsedSize={ 0 }
       panelRef={ panelRef }
       // A literal, never derived: `defaultSize` sits in the library's
-      // registerPanel effect deps, so any change unregisters and re-registers
-      // the Panel and makes the Group emit a layout event — a render-driven
-      // value here would feed straight back into a dispatch. Every panel
-      // therefore starts shut and is sized by the effect above once it holds an
-      // open action, which is also what stops it flashing at full width first.
+      // registerPanel effect deps, so any change re-registers the Panel and
+      // makes the Group emit a layout event. Panels mount shut and are sized by
+      // the effect above, which also avoids a flash at full width
       defaultSize={ 0 }
       minSize={ sizes.minWidth }
       maxSize={ sizes.maxWidth }
       groupResizeBehavior="preserve-pixel-size"
-      // Driven by occupancy, not by the collapsed mirror: a panel holding no
-      // open action is inert, while a panel the user dragged shut still has to
-      // accept the drag that reopens it
+      // Occupancy, not the collapsed mirror, which can lag behind the DOM
       inert={ !isPopulated }
     >
       <div
@@ -234,34 +230,27 @@ export const StatefulDockingWrapper = ({
 
   const startPanelRef = useRef<PanelImperativeHandle>(null);
   const endPanelRef = useRef<PanelImperativeHandle>(null);
-  // A panel that has never laid out is collapsed as far as this mirror is
-  // concerned, so the first real layout is treated as a transition
-  const wasCollapsedRef = useRef<Record<ThDockingKeys.start | ThDockingKeys.end, boolean>>({
-    [ThDockingKeys.start]: true,
-    [ThDockingKeys.end]: true
-  });
 
   const startActionKey = startPanel.currentKey();
   const endActionKey = endPanel.currentKey();
+  const isStartPopulated = startPanel.isPopulated();
+  const isEndPopulated = endPanel.isPopulated();
 
-  // Sole writer of `dock[slot].collapsed` and of the persisted widths. The DOM
-  // layout is the source of truth for both, so nothing else may dispatch them.
-  //
-  // onLayoutChanged fires once per completed interaction (mouse release or
-  // keyboard press) rather than on every frame of a drag, per the library's own
-  // guidance for "saving a layout".
+  // Sole writer of the persisted widths and of a docked action's open state,
+  // and it only ever records a drag. onLayoutChanged fires once per completed
+  // interaction, not on every frame of one
   const handleLayoutChanged = useCallback((_layout: Layout, meta: LayoutChangedMeta) => {
     if (!profile) return;
 
     ([
-      [ThDockingKeys.start, startPanelRef, startActionKey],
-      [ThDockingKeys.end, endPanelRef, endActionKey]
-    ] as const).forEach(([flow, ref, actionKey]) => {
+      [ThDockingKeys.start, startPanelRef, startActionKey, isStartPopulated],
+      [ThDockingKeys.end, endPanelRef, endActionKey, isEndPopulated]
+    ] as const).forEach(([flow, ref, actionKey, isPopulated]) => {
       const panel = ref.current;
       if (!panel) return;
 
       // Same transient-registration caveat as collapsePanel/expandPanel:
-      // this is a best-effort mirror to Redux, not a source of truth.
+      // a failure here must not crash the reader
       let inPixels: number;
       try {
         inPixels = panel.getSize().inPixels;
@@ -270,35 +259,39 @@ export const StatefulDockingWrapper = ({
         return;
       }
 
-      const isCollapsedNow = inPixels === 0;
-      const wasCollapsed = wasCollapsedRef.current[flow];
-      wasCollapsedRef.current[flow] = isCollapsedNow;
-
-      if (isCollapsedNow) {
-        if (!wasCollapsed) {
-          dispatch(collapseDockPanel({ slot: flow, profile }));
-
-          // Dragging a panel shut is how the user closes a docked action; the
-          // width it had is already persisted, so the trigger reopens it there
-          if (meta.isUserInteraction && actionKey) {
-            dispatch(setActionOpen({ key: actionKey, isOpen: false, profile }));
+      // Everything that is not a drag: mounting, constraint recomputation, our
+      // own imperative calls, and the Group's cached-layout restores. Those
+      // restores are keyed on the set of panel ids, so a slot holding nothing
+      // comes back at the width that set last had — clamp it, but write
+      // nothing, or a panel the Group resized to zero would read as dismissed
+      if (!meta.isUserInteraction) {
+        if (!isPopulated && inPixels !== 0) {
+          try {
+            panel.collapse();
+          } catch (error) {
+            console.warn(`Failed to collapse ${ flow } dock panel`, error);
           }
         }
-      } else {
-        if (wasCollapsed) {
-          dispatch(expandDockPanel({ slot: flow, profile }));
-        }
-
-        // Only a real resize may overwrite the remembered width. Mounting,
-        // constraint recomputation and our own imperative calls all emit layout
-        // events too, and letting those through is what makes a docked panel
-        // drift with the window instead of holding its pixel width.
-        if (meta.isUserInteraction) {
-          dispatch(setDockPanelWidth({ key: flow, width: inPixels, profile }));
-        }
+        return;
       }
+
+      if (!actionKey) return;
+
+      // Dragging a panel shut closes its action, dragging it back out reopens
+      // it: the panel and its action are one thing, so the separator and the
+      // trigger are two routes to the same state
+      if (inPixels === 0) {
+        dispatch(setActionOpen({ key: actionKey, isOpen: false, profile }));
+        return;
+      }
+
+      if (!isPopulated) {
+        dispatch(setActionOpen({ key: actionKey, isOpen: true, profile }));
+      }
+
+      dispatch(setDockPanelWidth({ key: flow, width: inPixels, profile }));
     });
-  }, [profile, dispatch, startActionKey, endActionKey]);
+  }, [profile, dispatch, startActionKey, endActionKey, isStartPopulated, isEndPopulated]);
 
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
 
@@ -313,32 +306,6 @@ export const StatefulDockingWrapper = ({
   const dockConfig = breakpoint && dockingMap[breakpoint] || ThDockingTypes.both;
   const hasStartSlot = dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.start;
   const hasEndSlot = dockConfig === ThDockingTypes.both || dockConfig === ThDockingTypes.end;
-  const previousHasStartSlot = usePrevious(hasStartSlot);
-  const previousHasEndSlot = usePrevious(hasEndSlot);
-
-  // Closing the occupant of a slot the breakpoint has just taken away belongs
-  // here, not in the occupant's own useDocking: that hook lives in the action's
-  // container, which is not necessarily mounted at every breakpoint, so an
-  // action whose trigger is hidden in the narrow layout would never be told to
-  // close. It would still read as open when the slot came back, and the panel
-  // would reopen empty. This wrapper is always mounted.
-  //
-  // Strictly the edge, never the standing state: while the slot is missing the
-  // action has to stay openable as its fallback sheet, which a standing
-  // condition would undo by closing it again on every open.
-  //
-  // `docking` is deliberately untouched, so the action reclaims the slot as
-  // soon as the breakpoint allows it again.
-  useEffect(() => {
-    if (!profile) return;
-
-    if (previousHasStartSlot && !hasStartSlot && startActionKey) {
-      dispatch(setActionOpen({ key: startActionKey, isOpen: false, profile }));
-    }
-    if (previousHasEndSlot && !hasEndSlot && endActionKey) {
-      dispatch(setActionOpen({ key: endActionKey, isOpen: false, profile }));
-    }
-  }, [dispatch, profile, hasStartSlot, hasEndSlot, previousHasStartSlot, previousHasEndSlot, startActionKey, endActionKey]);
 
   if (!preferences.docking.dock) {
     return(
@@ -355,6 +322,7 @@ export const StatefulDockingWrapper = ({
           && profile && <DockPanel
             actionKey={ startActionKey }
             flow={ ThDockingKeys.start }
+            dockConfig={ dockConfig }
             sizes={{
               minWidth: startPanel.getMinWidth(),
               maxWidth: startPanel.getMaxWidth()
@@ -362,7 +330,6 @@ export const StatefulDockingWrapper = ({
             targetWidth={ startPanel.getTargetWidth() }
             isResizable={ startPanel.isResizable() }
             isPopulated={ startPanel.isPopulated() }
-            isCollapsed={ startPanel.isCollapsed() }
             hasDragIndicator={ startPanel.hasDragIndicator() }
             profile={ profile }
             panelRef={ startPanelRef }
@@ -378,6 +345,7 @@ export const StatefulDockingWrapper = ({
           && profile && <DockPanel
             actionKey={ endActionKey }
             flow={ ThDockingKeys.end }
+            dockConfig={ dockConfig }
             sizes={{
               minWidth: endPanel.getMinWidth(),
               maxWidth: endPanel.getMaxWidth()
@@ -385,7 +353,6 @@ export const StatefulDockingWrapper = ({
             targetWidth={ endPanel.getTargetWidth() }
             isResizable={ endPanel.isResizable() }
             isPopulated={ endPanel.isPopulated() }
-            isCollapsed={ endPanel.isCollapsed() }
             hasDragIndicator={ endPanel.hasDragIndicator() }
             profile={ profile }
             panelRef={ endPanelRef }

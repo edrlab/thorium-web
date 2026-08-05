@@ -50,11 +50,9 @@ export const StatefulDockedSheet = ({
   const profile = useAppSelector(state => state.reader.profile);
   const isSlotActive = useAppSelector(state => profile && flow ? !!state.actions.dock[profile]?.[flow]?.active : false);
 
-  // The node we portal into only exists while its DockPanel is mounted, and
-  // `active` is dispatched exactly on that mount/unmount. Resolving the node in
-  // state keyed on it is what makes the lookup re-run when the panel appears:
-  // reading getElementById during render can return null on the commit that
-  // mounts the panel, and nothing would ever re-render to correct it
+  // The node only exists while its DockPanel is mounted, and `active` tracks
+  // exactly that. Resolved in state because reading it during render can return
+  // null on the mounting commit, with no re-render to ever correct it
   useEffect(() => {
     setDockPortal(flow ? document.getElementById(flow) : null);
   }, [flow, isSlotActive, isOpen]);

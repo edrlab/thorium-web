@@ -52,16 +52,14 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
     return !!(panel?.active && actions.isOpen(panel?.actionKey));
   };
 
-  const isCollapsed = () => {
-    return !!panel?.collapsed;
-  }
-
   const currentKey = () => {
     return panel?.actionKey ?? null;
   };
 
+  // Occupancy, not openness: dragging the separator out is how a shut panel is
+  // reopened, so its handle has to stay live. A slot holding nothing has none
   const isResizable = () => {
-    if (!isPopulated()) return false;
+    if (!panel?.actionKey) return false;
 
     return isNumericSize(width) && isNumericSize(minWidth) && isNumericSize(maxWidth)
       ? Math.round(width) > Math.round(minWidth) && Math.round(width) < Math.round(maxWidth)
@@ -72,9 +70,8 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
     return pref?.dragIndicator || false;
   };
 
-  // The size an expanding panel is restored to: the last width the user
-  // resized this action to, falling back to its preference. Panels always mount
-  // shut (see the Panel's `defaultSize`), so this is the only size source.
+  // The size an expanding panel is restored to. Panels always mount shut, so
+  // this is their only size source
   const getTargetWidth = (): ThDockingSizeValue => {
     return previousWidth ?? width;
   };
@@ -95,7 +92,6 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   return {
     currentKey,
     isPopulated,
-    isCollapsed,
     isResizable,
     hasDragIndicator,
     getTargetWidth,

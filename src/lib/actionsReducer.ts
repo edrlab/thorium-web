@@ -18,7 +18,6 @@ export interface OverflowStateObject {
 export interface DockStateObject {
   actionKey: ActionsStateKeys | null;
   active: boolean;
-  collapsed: boolean;
   width?: number;
   reserved?: boolean;
 }
@@ -114,37 +113,31 @@ const initialState: ActionsReducerState = {
     epub: {
       [ThDockingKeys.start]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       },
       [ThDockingKeys.end]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       }
     },
     webPub: {
       [ThDockingKeys.start]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       },
       [ThDockingKeys.end]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       }
     },
     audio: {
       [ThDockingKeys.start]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       },
       [ThDockingKeys.end]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       }
     }
   },
@@ -161,13 +154,11 @@ const initializeProfileDock = (state: ActionsReducerState, profile: string) => {
     state.dock[profile] = {
       [ThDockingKeys.start]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       },
       [ThDockingKeys.end]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       }
     };
   }
@@ -207,9 +198,8 @@ export const actionsSlice = createSlice({
 
           // We need to find if any other action has the same docking key.
           // If it does, we also have to close it so that its transient sheet
-          // doesn’t pop over on the screen when it’s replaced.
-          // The requester is skipped: re-docking where it already is must not
-          // close it as a side effect of evicting itself
+          // doesn’t pop over on the screen when it’s replaced. The requester is
+          // skipped: re-docking in place must not close it by evicting itself
           for (const k in profileKeys) {
             if (k !== key && profileKeys[k as ActionsStateKeys]?.docking === dockingKey) {
               profileKeys[k as ActionsStateKeys] = {
@@ -247,9 +237,8 @@ export const actionsSlice = createSlice({
 
           // We need to find if any other action has the same docking key.
           // If it does, we also have to close it so that its transient sheet
-          // doesn’t pop over on the screen when it’s replaced.
-          // The requester is skipped: re-docking where it already is must not
-          // close it as a side effect of evicting itself
+          // doesn’t pop over on the screen when it’s replaced. The requester is
+          // skipped: re-docking in place must not close it by evicting itself
           for (const k in profileKeys) {
             if (k !== key && profileKeys[k as ActionsStateKeys]?.docking === dockingKey) {
               profileKeys[k as ActionsStateKeys] = {
@@ -336,10 +325,9 @@ export const actionsSlice = createSlice({
         isOpen: action.payload.isOpen 
       }
     },
-    // Every dock slot mutation below replaces the slot object, which changes
-    // the identity of `state.dock[profile]` and wakes every effect keyed on it.
-    // Bail out when the value is already correct so a redundant dispatch stays
-    // inert instead of feeding another render.
+    // Each mutation below replaces the slot object, changing the identity of
+    // `state.dock[profile]` and waking every effect keyed on it. Bail out when
+    // the value is already correct so redundant dispatches stay inert
     activateDockPanel: (state, action: ActionStateSlotPayloadWithProfile) => {
       const { slot, profile } = action.payload;
       initializeProfileDock(state, profile);
@@ -356,24 +344,6 @@ export const actionsSlice = createSlice({
       state.dock[profile][slot] = {
         ...state.dock[profile][slot],
         active: false
-      }
-    },
-    collapseDockPanel: (state, action: ActionStateSlotPayloadWithProfile) => {
-      const { slot, profile } = action.payload;
-      initializeProfileDock(state, profile);
-      if (state.dock[profile][slot].collapsed) return;
-      state.dock[profile][slot] = {
-        ...state.dock[profile][slot],
-        collapsed: true
-      }
-    },
-    expandDockPanel: (state, action: ActionStateSlotPayloadWithProfile) => {
-      const { slot, profile } = action.payload;
-      initializeProfileDock(state, profile);
-      if (!state.dock[profile][slot].collapsed) return;
-      state.dock[profile][slot] = {
-        ...state.dock[profile][slot],
-        collapsed: false
       }
     },
     setDockPanelWidth: (state, action: ActionStateSlotWidthPayload) => {
@@ -410,9 +380,7 @@ export const {
   toggleActionOpen, 
   setOverflow, 
   activateDockPanel, 
-  deactivateDockPanel, 
-  collapseDockPanel,
-  expandDockPanel, 
+  deactivateDockPanel,
   setDockPanelWidth
 } = actionsSlice.actions;
 
