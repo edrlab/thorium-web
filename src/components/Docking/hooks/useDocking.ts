@@ -84,6 +84,11 @@ export const useDocking = <T extends string>(key: T) => {
   const hasStaleTransient = actionState?.docking === ThDockingKeys.transient && reserved;
   const effectiveDocking = hasStaleTransient ? undefined : actionState?.docking;
 
+  // sheetPref once it's known to name a slot other than the one actually
+  // being resolved: a non-docked value is a deliberate per-breakpoint choice
+  // and used as-is, a docked one carries no usable slot information here
+  const nonDockedSheetPref = isDockedType(sheetPref) ? safeDefaultSheet : sheetPref;
+
   // Derived, never stored: held in state it lags a render behind the values it
   // comes from, and the effects below then dispatch against a stale sheet type
   const sheetType: ThSheetTypes = useMemo(() => {
@@ -117,31 +122,22 @@ export const useDocking = <T extends string>(key: T) => {
           return usableSheetPref();
         }
 
-      // If action.docking is set to start/end then we check the docking slot is available
+      // The chosen slot may not be the one the static pref names, so
+      // usableSheetPref (keyed to sheetPref's own slot) can't be reused here.
+      // Unavailable: an explicit per-breakpoint non-docked sheet wins,
+      // otherwise fall to fallbackSheet
       case ThDockingKeys.start:
         if (canBeDocked(ThDockingTypes.start)) {
           return ThSheetTypes.dockedStart;
         } else {
-          // if the pref is not docked start, return the pref
-          // else return the safe fallback
-          if (!isDockedSheetPref(ThSheetTypes.dockedStart)) {
-            return usableSheetPref();
-          } else {
-            return safeDefaultSheet;
-          }
+          return nonDockedSheetPref;
         }
 
       case ThDockingKeys.end:
         if (canBeDocked(ThDockingTypes.end)) {
           return ThSheetTypes.dockedEnd;
         } else {
-          // if the pref is not docked end, return the pref
-          // else return the safe fallback
-          if (!isDockedSheetPref(ThSheetTypes.dockedEnd)) {
-            return usableSheetPref();
-          } else {
-            return safeDefaultSheet;
-          }
+          return nonDockedSheetPref;
         }
 
       // If action.docking is null or undefined then we rely on pref
@@ -167,7 +163,7 @@ export const useDocking = <T extends string>(key: T) => {
       default:
         return safeDefaultSheet;
     }
-  }, [dockablePref, safeDefaultSheet, effectiveDocking, canBeDocked, isDockedSheetPref, usableSheetPref, breakpoint]);
+  }, [dockablePref, safeDefaultSheet, effectiveDocking, canBeDocked, isDockedSheetPref, usableSheetPref, nonDockedSheetPref, breakpoint]);
 
   const previousSheetType = usePrevious(sheetType);
 
