@@ -5,9 +5,12 @@
 	"compatibility_flags": ["nodejs_compat"],
 	"assets": {
 		"directory": ".open-next/assets",
-		"binding": "ASSETS",
+		"binding": "ASSETS"
+	},
+	"images": {
+		"binding": "IMAGES"
 	},
 	"vars": {
-		"PNPM_VERSION": "11.1.0",
-	},
+		"PNPM_VERSION": "11.1.0"
+	}
 }
