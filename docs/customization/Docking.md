@@ -127,18 +127,18 @@ Note the user’s customization will override this preference.
 
 When `defaultSheet` (or a breakpoint’s resolved sheet) is `dockedStart`/`dockedEnd` but no dock slot is actually available — no breakpoint match in `docking.dock`, `docked.dockable` doesn’t allow the slot, or the slot is currently held by a [reserved](#reserved-actions) action — the container falls back to `fallbackSheet` instead. This only happens when the user opens the action; it’s never used to auto-pop a sheet open on its own.
 
-`fallbackSheet` accepts any `ThSheetTypes` value except `dockedStart`/`dockedEnd` (and `compactPopover`, or `popover` for audio actions). It defaults to `ThSheetTypes.modal` if not set.
+`fallbackSheet` accepts any `ThSheetTypes` value except `dockedStart`/`dockedEnd`. Primary-zone audio actions (`actions.primary.keys`) additionally exclude `popover` (they use `compactPopover` instead); every other action — reader actions and secondary-zone audio actions (`actions.secondary.keys`) alike — additionally excludes `compactPopover`. It defaults to `ThSheetTypes.modal` if not set.
 
 ## Reserved actions
 
-`docked.reserved` only takes effect when the action’s own `sheet.defaultSheet` is `dockedStart` or `dockedEnd` — i.e. it lives in the dock by default. Otherwise it is ignored entirely, as if unset: the action docks only when the user chooses to, and behaves like any other dockable action, undock control included. This is what keeps `reserved` from trapping an action the user only dropped into the dock experimentally — there is nothing to protect it *from* if being docked was never its default state.
+`docked.reserved` only takes effect when the action’s own `sheet.defaultSheet` is `dockedStart` or `dockedEnd` — i.e. it lives in the dock by default. Otherwise it is ignored entirely, as if unset: the action docks only when the user chooses to, and behaves like any other dockable action, undock control included.
 
 With that satisfied, setting `docked.reserved` to `true` reserves the action’s dock slot(s) so that:
 
 - the user can’t pop it out to a popover/fullscreen/modal — no undock control is shown in its docker;
 - it can still be moved by the user between its own allowed slots (start/end) if `dockable` is `ThDockingTypes.both`;
-- no other, non-reserved action can evict it from a slot it currently occupies. That other action’s own docker button for that slot is disabled while the reserved action holds it, and becomes usable again once the reserved action releases it (closes, or moves to its other slot).
-- it still falls back to `fallbackSheet` (never silently to a popover) when the user opens it and no dock slot is available at all.
+- no other, non-reserved action can evict it from a slot it currently occupies. That other action’s own docker button for that slot is disabled while the reserved action holds it, and becomes usable again once the reserved action releases it by moving to its other slot — closing it does not release the slot, it stays reserved and occupied.
+- it still falls back to breakpoints, then `fallbackSheet` (or modal if undefined) when the user opens it and no dock slot is available at all.
 
 ```
 [ThActionKeys.toc]: {
