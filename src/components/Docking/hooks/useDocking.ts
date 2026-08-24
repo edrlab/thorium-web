@@ -35,6 +35,7 @@ export const useDocking = <T extends string>(key: T) => {
   // Use type assertion to tell TypeScript that the key is valid
   const actionPref = preferences.actionsKeys[key as keyof typeof preferences.actionsKeys];
   const dockablePref = actionPref?.docked?.dockable || ThDockingTypes.none;
+  const reopenOnLoadPref = !!actionPref?.docked?.reopenOnLoad;
 
   const defaultSheet = actionPref?.sheet?.defaultSheet || ThSheetTypes.popover;
   const fallbackSheet = actionPref?.sheet?.fallbackSheet || ThSheetTypes.modal;
@@ -213,7 +214,23 @@ export const useDocking = <T extends string>(key: T) => {
   // Two independent gaps to fill once the breakpoint says this action is docked.
   // Both guards are cleared by their own dispatch, so each is one-shot
   useEffect(() => {
-    if (!profile || !isDockedType(sheetType)) return;
+    if (!profile) return;
+
+    if (!isDockedType(sheetType)) {
+      // Docking isn't available at this breakpoint. A remembered `isOpen:
+      // true` from a wider viewport shouldn't leak into whatever fallback
+      // sheet this action renders as on a cold load — the "dismiss when
+      // sheet stops being docked" effect below can't catch this itself,
+      // since `usePrevious` has nothing to compare against on first render
+      if ((actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: false,
+          profile
+        }));
+      }
+      return;
+    }
 
     // The slot was never claimed: docking comes from prefs, or the action was
     // opened at a breakpoint where it rendered as another sheet type.
@@ -228,18 +245,19 @@ export const useDocking = <T extends string>(key: T) => {
       }));
     }
 
-    // Persistence nulls `isOpen` for docked actions (see updateActionsState in
-    // store.ts) to defer the open decision to the breakpoint resolved here.
-    // A stale transient was persisted as closed against a sheet type the
-    // action no longer has, so it gets the same deferred decision
+    // isOpen is only undetermined here for an action that's never been
+    // docked before (nothing to remember), or a stale transient whose
+    // persisted `false` belonged to a sheet type it no longer has. Both
+    // fall back to `docked.reopenOnLoad`; any other persisted value is the
+    // user's own choice and is left untouched
     if (actionState?.isOpen == null || hasStaleTransient) {
       dispatch(setActionOpen({
         key: key,
-        isOpen: true,
+        isOpen: reopenOnLoadPref,
         profile
       }));
     }
-  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, sheetType, key, dispatch, profile, reserved]);
+  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, key, dispatch, profile, reserved, reopenOnLoadPref]);
 
   // Dismiss when the sheet stops being docked. `docking` is left pointing at
   // the slot, so it is reclaimed for free once the slot comes back
@@ -279,8 +297,10 @@ export const useDocking = <T extends string>(key: T) => {
         profile: profile,
         reserved
       }));
-      // Restore isOpen state if action was docked
-      if (actionState?.isOpen === false) {
+      // isOpen is only undetermined here for an action that's never been
+      // docked before in this profile; anything else (true or false) is
+      // the user's own choice and stays untouched
+      if (actionState?.isOpen == null && reopenOnLoadPref) {
         dispatch(setActionOpen({
           key: key,
           isOpen: true,
@@ -294,8 +314,10 @@ export const useDocking = <T extends string>(key: T) => {
         profile: profile,
         reserved
       }));
-      // Restore isOpen state if action was docked
-      if (actionState?.isOpen === false) {
+      // isOpen is only undetermined here for an action that's never been
+      // docked before in this profile; anything else (true or false) is
+      // the user's own choice and stays untouched
+      if (actionState?.isOpen == null && reopenOnLoadPref) {
         dispatch(setActionOpen({
           key: key,
           isOpen: true,
@@ -303,7 +325,7 @@ export const useDocking = <T extends string>(key: T) => {
         }));
       }
     }
-  }, [profile, dock, actionState?.docking, actionState?.isOpen, key, dispatch, reserved]);
+  }, [profile, dock, actionState?.docking, actionState?.isOpen, key, dispatch, reserved, reopenOnLoadPref]);
 
   return {
     getDocker,

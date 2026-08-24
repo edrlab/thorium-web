@@ -52,6 +52,7 @@ Each action with a sheet/container can have an optional `docked` configuration w
 
 - `dockable`: the docking options (in `ThDockingTypes` enum) to display to the user for this specific action (required);
 - `reserved`: reserves the action’s dock slot(s) so it can’t be popped out by the user and can’t be evicted from its slot by other actions (default is `false`, see [Reserved actions](#reserved-actions));
+- `reopenOnLoad`: the default open/closed state the *first* time the action is docked with no remembered choice yet (default is `false`, see [Reopening on load](#reopening-on-load));
 - `dragIndicator`: enable/disable the drag indicator if the actions’ container is resizable (default is `false`);
 - `width`: the initial/default width of the container when docked;
 - `minWidth`: the minimum width of the container when docked;
@@ -119,7 +120,9 @@ This preference must also meet the following requirements:
 - be compatible with `docking.dock` for its breakpoint;
 - be compatible with `docked.dockable` in its own configuration.
 
-This should dock and open the container on load if applicable.
+This should dock the container on load if applicable. Whether it also opens
+is a separate decision made by `docked.reopenOnLoad` — see
+[Reopening on load](#reopening-on-load).
 
 Note the user’s customization will override this preference.
 
@@ -158,3 +161,31 @@ With that satisfied, setting `docked.reserved` to `true` reserves the action’s
 ```
 
 Configuring two reserved actions with overlapping `dockable` slots (e.g. both `both`, or both `start`) is a misconfiguration with undefined resolution — the last one to dock wins. Give reserved actions non-overlapping `dockable` values (e.g. one `start`, the other `end`) instead.
+
+## Reopening on load
+
+`docked.reopenOnLoad` only decides the open/closed state the *first* time an action is docked with no remembered choice — an action that's never been docked before, or one whose transient state became stale after being reserved. It defaults to `false`, so a docked action starts closed the first time around.
+
+Once the user opens or closes the action themselves, that choice is what persists — across reloads and profile switches alike. `reopenOnLoad` never overrides it; there's no "always force open/closed" mode.
+
+If you want a GitBook-style Table of Contents that's open the first time it's docked:
+
+```
+[ThActionKeys.toc]: {
+  ...
+  docked: {
+    dockable: ThDockingTypes.both,
+    reserved: true,
+    reopenOnLoad: true,
+    width: 360,
+    minWidth: 320,
+    maxWidth: 450
+  },
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
+One exception: if the action was docked and left open on a wider viewport, then the app is reloaded on a breakpoint where docking isn’t available at all, it starts closed instead of popping open immediately as a fallback sheet (popover/modal/bottomSheet/fullscreen). This only applies to a cold load — resizing the window down during an active session leaves an already-open docked action open, now rendered as its fallback sheet instead.

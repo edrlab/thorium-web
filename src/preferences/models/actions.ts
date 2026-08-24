@@ -54,6 +54,11 @@ export interface ThActionsDockedPref {
   // When true, the action can't be undocked by the user (no transient/undock
   // control) and can't be evicted from its slot by other, non-reserved actions.
   reserved?: boolean,
+  // Default open/closed state the first time this action is docked with no
+  // remembered choice yet (never docked before, or a stale transient). Once
+  // the user opens or closes it themselves, that choice is what persists
+  // across reload/profile switches — this only fills the initial gap.
+  reopenOnLoad?: boolean,
   dragIndicator?: boolean,
   width?: ThDockingSizeValue,
   minWidth?: ThDockingSizeValue,
