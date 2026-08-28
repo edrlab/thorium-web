@@ -329,7 +329,7 @@ export const StatefulDockingWrapper = ({
             }}
             targetWidth={ startPanel.getTargetWidth() }
             isResizable={ startPanel.isResizable() }
-            isPopulated={ startPanel.isPopulated() }
+            isPopulated={ isStartPopulated }
             hasDragIndicator={ startPanel.hasDragIndicator() }
             profile={ profile }
             panelRef={ startPanelRef }
@@ -352,7 +352,7 @@ export const StatefulDockingWrapper = ({
             }}
             targetWidth={ endPanel.getTargetWidth() }
             isResizable={ endPanel.isResizable() }
-            isPopulated={ endPanel.isPopulated() }
+            isPopulated={ isEndPopulated }
             hasDragIndicator={ endPanel.hasDragIndicator() }
             profile={ profile }
             panelRef={ endPanelRef }
