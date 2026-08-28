@@ -1,7 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
-
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
 
 import { StatefulActionTriggerProps } from "@/components/Actions/models/actions";
@@ -14,46 +12,26 @@ import DocktoRight from "./assets/icons/dock_to_left.svg";
 import { StatefulActionIcon } from "../Actions/Triggers/StatefulActionIcon";
 import { StatefulOverflowMenuItem } from "../Actions/Triggers/StatefulOverflowMenuItem";
 
-import { useActions } from "@/core/Components/Actions/hooks/useActions";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
-import { useDockReservation } from "./hooks/useDockReservation";
+import { useDockTrigger } from "./hooks/useDockTrigger";
 import { useI18n } from "@/i18n/useI18n";
 
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { dockAction } from "@/lib/actionsReducer";
+import { useAppSelector } from "@/lib/hooks";
 
 export const StatefulDockEnd = ({ variant, associatedKey }: StatefulActionTriggerProps) => {
   const preferences = useActionsPreferences();
   const { t } = useI18n();
   const direction = useAppSelector(state => state.reader.direction);
-  const profile = useAppSelector(state => state.reader.profile);
-  const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
-  const actions = useActions(actionsMap || {});
-  const { reserved, isSlotLockedByOther } = useDockReservation(associatedKey ?? "");
+  const { isDisabled, handlePress } = useDockTrigger(ThDockingKeys.end, associatedKey);
   const isRTL = direction === ThLayoutDirection.rtl;
-  const translationKey = isRTL 
-    ? "reader.app.docker.dockToLeft" 
+  const translationKey = isRTL
+    ? "reader.app.docker.dockToLeft"
     : "reader.app.docker.dockToRight";
   const localeKey = {
     trigger: t(`${ translationKey }.trigger`),
     tooltip: t(`${ translationKey }.tooltip`)
   };
 
-  const isDisabled = actions.whichDocked(associatedKey) === ThDockingKeys.end || isSlotLockedByOther(ThDockingKeys.end);
-
-  const dispatch = useAppDispatch();
-
-  const handlePress = useCallback(() => {
-    if (associatedKey && profile) {
-      dispatch(dockAction({
-        key: associatedKey,
-        dockingKey: ThDockingKeys.end,
-        profile: profile,
-        reserved
-      }))
-    }
-  }, [dispatch, associatedKey, profile, reserved]);
-  
   return(
     <>
     { (variant && variant === ThActionsTriggerVariant.menu) 
