@@ -16,6 +16,15 @@ const isNumericSize = (value: ThDockingSizeValue | undefined): value is number =
   return typeof value === "number";
 };
 
+// A "px" string is a pixel value like a plain number and can be compared
+// against one directly; %/em/rem/vh/vw can't be without measuring the live
+// DOM node
+const toPixels = (value: ThDockingSizeValue | undefined): number | undefined => {
+  if (isNumericSize(value)) return value;
+  if (typeof value === "string" && value.endsWith("px")) return parseFloat(value);
+  return undefined;
+};
+
 export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const preferences = useActionsPreferences();
   const { theming } = useSharedPreferences();
@@ -32,21 +41,31 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const width: ThDockingSizeValue = pref?.width ?? defaultWidth;
 
   // Ascending-range clamping against the shared default only makes sense
-  // when comparing like-for-like pixel values; unit strings (%, rem, vw, ...)
-  // are used as configured, since they can't be compared to a pixel default
-  // without measuring the live DOM node. react-resizable-panels still
-  // enforces minSize/maxSize correctly at runtime regardless.
-  const minWidth: ThDockingSizeValue = isNumericSize(width) && isNumericSize(pref?.minWidth) && pref.minWidth < width
-    ? pref.minWidth
-    : isNumericSize(width) && isNumericSize(defaultWidth) && defaultWidth < width
-      ? defaultWidth
-      : pref?.minWidth ?? width;
+  // when comparing like-for-like pixel values; unit strings that aren't
+  // pixels (%, rem, vw, ...) are used as configured, since they can't be
+  // compared to a pixel default without measuring the live DOM node.
+  // react-resizable-panels still enforces minSize/maxSize correctly at
+  // runtime regardless.
+  const widthPx = toPixels(width);
+  const defaultWidthPx = toPixels(defaultWidth);
 
-  const maxWidth: ThDockingSizeValue = isNumericSize(width) && isNumericSize(pref?.maxWidth) && pref.maxWidth > width
-    ? pref.maxWidth
-    : isNumericSize(width) && isNumericSize(defaultWidth) && defaultWidth > width
-      ? defaultWidth
-      : pref?.maxWidth ?? width;
+  const minWidthPx = toPixels(pref?.minWidth);
+  const minWidth: ThDockingSizeValue = widthPx !== undefined && minWidthPx !== undefined && minWidthPx < widthPx
+    ? minWidthPx
+    : pref?.minWidth !== undefined && minWidthPx === undefined
+      ? pref.minWidth
+      : widthPx !== undefined && defaultWidthPx !== undefined && defaultWidthPx < widthPx
+        ? defaultWidth
+        : pref?.minWidth ?? width;
+
+  const maxWidthPx = toPixels(pref?.maxWidth);
+  const maxWidth: ThDockingSizeValue = widthPx !== undefined && maxWidthPx !== undefined && maxWidthPx > widthPx
+    ? maxWidthPx
+    : pref?.maxWidth !== undefined && maxWidthPx === undefined
+      ? pref.maxWidth
+      : widthPx !== undefined && defaultWidthPx !== undefined && defaultWidthPx > widthPx
+        ? defaultWidth
+        : pref?.maxWidth ?? width;
 
   const isPopulated = () => {
     return !!(panel?.active && actions.isOpen(panel?.actionKey));
@@ -71,9 +90,14 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   };
 
   // The size an expanding panel is restored to. Panels always mount shut, so
-  // this is their only size source
+  // this is their only size source. Re-clamped against the current bounds:
+  // a width saved before the config's min/max shrank must not ask the panel
+  // to resize outside the bounds it's configured with now
   const getTargetWidth = (): ThDockingSizeValue => {
-    return previousWidth ?? width;
+    if (previousWidth == null) return width;
+    if (isNumericSize(minWidth) && previousWidth < minWidth) return minWidth;
+    if (isNumericSize(maxWidth) && previousWidth > maxWidth) return maxWidth;
+    return previousWidth;
   };
 
   const getMinWidth = (): ThDockingSizeValue => {
