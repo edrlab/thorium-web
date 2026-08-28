@@ -221,8 +221,10 @@ export const useDocking = <T extends string>(key: T) => {
       // true` from a wider viewport shouldn't leak into whatever fallback
       // sheet this action renders as on a cold load — the "dismiss when
       // sheet stops being docked" effect below can't catch this itself,
-      // since `usePrevious` has nothing to compare against on first render
-      if ((actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
+      // since `usePrevious` has nothing to compare against on first render.
+      // Gated to that one-shot case: previousSheetType is only null on
+      // mount, so a later deliberate reopen isn't clobbered right back shut
+      if (previousSheetType == null && (actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
         dispatch(setActionOpen({
           key: key,
           isOpen: false,
@@ -257,7 +259,7 @@ export const useDocking = <T extends string>(key: T) => {
         profile
       }));
     }
-  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, key, dispatch, profile, reserved, reopenOnLoadPref]);
+  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, previousSheetType, key, dispatch, profile, reserved, reopenOnLoadPref]);
 
   // Dismiss when the sheet stops being docked. `docking` is left pointing at
   // the slot, so it is reclaimed for free once the slot comes back
