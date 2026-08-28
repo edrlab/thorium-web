@@ -289,10 +289,18 @@ export const useDocking = <T extends string>(key: T) => {
   useEffect(() => {
     if (!profile || !dock) return;
 
-    const isDockedInStart = dock[ThDockingKeys.start]?.actionKey === key;
-    const isDockedInEnd = dock[ThDockingKeys.end]?.actionKey === key;
+    const startSlot = dock[ThDockingKeys.start];
+    const endSlot = dock[ThDockingKeys.end];
+    const isDockedInStart = startSlot?.actionKey === key;
+    const isDockedInEnd = endSlot?.actionKey === key;
+    const wasAlreadyDockedInStart = actionState?.docking === ThDockingKeys.start;
+    const wasAlreadyDockedInEnd = actionState?.docking === ThDockingKeys.end;
 
-    if (isDockedInStart && actionState?.docking !== ThDockingKeys.start) {
+    // Re-dispatch whenever the slot assignment changes, or when it doesn't
+    // but the persisted `reserved` flag has drifted from the current pref
+    // (e.g. `docked.reserved` was toggled in config for an action that's
+    // already sitting in its slot)
+    if (isDockedInStart && (!wasAlreadyDockedInStart || startSlot?.reserved !== reserved)) {
       dispatch(dockAction({
         key: key,
         dockingKey: ThDockingKeys.start,
@@ -302,14 +310,14 @@ export const useDocking = <T extends string>(key: T) => {
       // isOpen is only undetermined here for an action that's never been
       // docked before in this profile; anything else (true or false) is
       // the user's own choice and stays untouched
-      if (actionState?.isOpen == null && reopenOnLoadPref) {
+      if (!wasAlreadyDockedInStart && actionState?.isOpen == null && reopenOnLoadPref) {
         dispatch(setActionOpen({
           key: key,
           isOpen: true,
           profile
         }));
       }
-    } else if (isDockedInEnd && actionState?.docking !== ThDockingKeys.end) {
+    } else if (isDockedInEnd && (!wasAlreadyDockedInEnd || endSlot?.reserved !== reserved)) {
       dispatch(dockAction({
         key: key,
         dockingKey: ThDockingKeys.end,
@@ -319,7 +327,7 @@ export const useDocking = <T extends string>(key: T) => {
       // isOpen is only undetermined here for an action that's never been
       // docked before in this profile; anything else (true or false) is
       // the user's own choice and stays untouched
-      if (actionState?.isOpen == null && reopenOnLoadPref) {
+      if (!wasAlreadyDockedInEnd && actionState?.isOpen == null && reopenOnLoadPref) {
         dispatch(setActionOpen({
           key: key,
           isOpen: true,
