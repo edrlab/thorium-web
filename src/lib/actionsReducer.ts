@@ -188,49 +188,13 @@ export const actionsSlice = createSlice({
       // so we override the previous value, and sync
       // any other action with the same docking key
       switch(dockingKey) {
-        case ThDockingKeys.start: {
-          // A reserved occupant can't be evicted by a non-reserved action:
-          // bail out entirely so the requester's own state stays untouched
-          const occupant = profileDock[ThDockingKeys.start];
-          if (occupant.actionKey && occupant.actionKey !== key && occupant.reserved && !reserved) {
-            return;
-          }
-
-          // We need to find if any other action has the same docking key.
-          // If it does, we also have to close it so that its transient sheet
-          // doesn’t pop over on the screen when it’s replaced. The requester is
-          // skipped: re-docking in place must not close it by evicting itself
-          for (const k in profileKeys) {
-            if (k !== key && profileKeys[k as ActionsStateKeys]?.docking === dockingKey) {
-              profileKeys[k as ActionsStateKeys] = {
-                ...profileKeys[k as ActionsStateKeys],
-                docking: ThDockingKeys.transient,
-                isOpen: false
-              };
-            }
-          }
-
-          // We need to populate the docking slot
-          profileDock[ThDockingKeys.start] = {
-            ...profileDock[ThDockingKeys.start],
-            actionKey: key,
-            reserved: !!reserved
-          }
-          // And remove it from the other one
-          if (profileDock[ThDockingKeys.end].actionKey === key) {
-            profileDock[ThDockingKeys.end] = {
-              ...profileDock[ThDockingKeys.end],
-              actionKey: null,
-              reserved: false
-            }
-          }
-          break;
-        }
-
+        case ThDockingKeys.start:
         case ThDockingKeys.end: {
+          const otherSlot = dockingKey === ThDockingKeys.start ? ThDockingKeys.end : ThDockingKeys.start;
+
           // A reserved occupant can't be evicted by a non-reserved action:
           // bail out entirely so the requester's own state stays untouched
-          const occupant = profileDock[ThDockingKeys.end];
+          const occupant = profileDock[dockingKey];
           if (occupant.actionKey && occupant.actionKey !== key && occupant.reserved && !reserved) {
             return;
           }
@@ -250,15 +214,15 @@ export const actionsSlice = createSlice({
           }
 
           // We need to populate the docking slot
-          profileDock[ThDockingKeys.end] = {
-            ...profileDock[ThDockingKeys.end],
+          profileDock[dockingKey] = {
+            ...profileDock[dockingKey],
             actionKey: key,
             reserved: !!reserved
           }
           // And remove it from the other one
-          if (profileDock[ThDockingKeys.start].actionKey === key) {
-            profileDock[ThDockingKeys.start] = {
-              ...profileDock[ThDockingKeys.start],
+          if (profileDock[otherSlot].actionKey === key) {
+            profileDock[otherSlot] = {
+              ...profileDock[otherSlot],
               actionKey: null,
               reserved: false
             }
