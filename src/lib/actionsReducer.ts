@@ -316,12 +316,13 @@ export const actionsSlice = createSlice({
       initializeProfileDock(state, profile);
       initializeProfileKeys(state, profile);
 
-      if (state.dock[profile][key].width === width) return;
-
-      // Copy the value in the action state
-      // in case we do something with it later.
-
+      // The slot's own width can already match (e.g. a new occupant renders
+      // at the same default width the previous one left behind), while the
+      // occupant's own persisted width is still unset — both must agree for
+      // there to be nothing to do
       const dockKey: ActionsStateKeys | null = state.dock[profile][key].actionKey;
+      if (state.dock[profile][key].width === width && (!dockKey || state.keys[profile][dockKey]?.dockedWidth === width)) return;
+
       if (dockKey) {
         state.keys[profile][dockKey] = {
           ...state.keys[profile][dockKey],
