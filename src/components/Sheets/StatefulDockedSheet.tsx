@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useRef, useEffect } from "react";
+import React, { useCallback, useRef, useEffect, useState } from "react";
 
 import { StatefulSheet } from "./models/sheets";
 import { ThDockingKeys, ThSheetHeaderVariant, ThLayoutDirection } from "@/preferences/models";
@@ -40,13 +40,22 @@ export const StatefulDockedSheet = ({
     focusWithinRef
   }: StatefulDockedSheetProps) => {
   const { t } = useI18n()
-  const dockPortal = flow && document.getElementById(flow);
   const dockedSheetRef = useRef<HTMLDivElement | null>(null);
   const dockedSheetHeaderRef = useRef<HTMLDivElement | null>(null);
   const dockedSheetBodyRef = useRef<HTMLDivElement | null>(null);
   const dockedSheetCloseRef = useRef<HTMLButtonElement | null>(null);
+  const [dockPortal, setDockPortal] = useState<HTMLElement | null>(null);
 
   const direction = useAppSelector(state => state.reader.direction);
+  const profile = useAppSelector(state => state.reader.profile);
+  const isSlotActive = useAppSelector(state => profile && flow ? !!state.actions.dock[profile]?.[flow]?.active : false);
+
+  // The node only exists while its DockPanel is mounted, and `active` tracks
+  // exactly that. Resolved in state because reading it during render can return
+  // null on the mounting commit, with no re-render to ever correct it
+  useEffect(() => {
+    setDockPortal(flow ? document.getElementById(flow) : null);
+  }, [flow, isSlotActive, isOpen]);
 
   // Update the CSS variable when the sheet is open and header ref is available
   useEffect(() => {

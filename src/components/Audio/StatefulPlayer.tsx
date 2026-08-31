@@ -288,9 +288,9 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
       const dockingKey = fromDockingPeripheralType(data.type);
 
       if (dockingKey && profile) {
-        const actionKey = getFocusedDockableKey(dockingKey as ThDockingKeys);
-        if (actionKey) {
-          dispatch(dockAction({ key: actionKey, dockingKey: dockingKey as ThDockingKeys, profile }));
+        const focused = getFocusedDockableKey(dockingKey as ThDockingKeys);
+        if (focused) {
+          dispatch(dockAction({ key: focused.key, dockingKey: dockingKey as ThDockingKeys, profile, reserved: focused.reserved }));
         }
       }
     },

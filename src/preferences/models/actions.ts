@@ -1,6 +1,7 @@
 import { ThCollapsibility, ThCollapsibilityVisibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { BreakpointsMap } from "@/core/Hooks/useBreakpoints";
 import { ThBreakpoints } from "./ui";
+import { CSSValueUnitless, CSSValueWithUnit } from "./CSSValues";
 import type { KeyCombo } from "@readium/navigator-html-injectables";
 import type { I18nValue } from "./i18n";
 
@@ -21,7 +22,8 @@ export interface ThActionsTokens {
   visibility: ThCollapsibilityVisibility;
   shortcut: ThShortcutConfig | null;
   sheet?: {
-    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.compactPopover>;
+    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.compactPopover>;
+    fallbackSheet?: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.compactPopover>;
     breakpoints: BreakpointsMap<Exclude<ThSheetTypes, ThSheetTypes.compactPopover>>;
   };
   docked?: ThActionsDockedPref;
@@ -32,19 +34,35 @@ export interface ThAudioActionsTokens {
   visibility: ThCollapsibilityVisibility;
   shortcut: ThShortcutConfig | null;
   sheet?: {
-    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.popover>;
+    defaultSheet: Exclude<ThSheetTypes, ThSheetTypes.popover>;
+    fallbackSheet?: Exclude<ThSheetTypes, ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd | ThSheetTypes.popover>;
     breakpoints: BreakpointsMap<Exclude<ThSheetTypes, ThSheetTypes.popover>>;
   };
   docked?: ThActionsDockedPref;
   snapped?: ThActionsSnappedPref;
 }
 
+// Numbers are pixels; unitless strings are percentages; explicit-unit
+// strings ("50%", "20rem", "40vw", ...) follow that unit's meaning.
+export type ThDockingSizeValue =
+  number
+  | CSSValueUnitless
+  | CSSValueWithUnit<"px" | "%" | "em" | "rem" | "vh" | "vw">;
+
 export interface ThActionsDockedPref {
   dockable: ThDockingTypes,
+  // When true, the action can't be undocked by the user (no transient/undock
+  // control) and can't be evicted from its slot by other, non-reserved actions.
+  reserved?: boolean,
+  // Default open/closed state the first time this action is docked with no
+  // remembered choice yet (never docked before, or a stale transient). Once
+  // the user opens or closes it themselves, that choice is what persists
+  // across reload/profile switches — this only fills the initial gap.
+  reopenOnLoad?: boolean,
   dragIndicator?: boolean,
-  width?: number,
-  minWidth?: number,
-  maxWidth?: number
+  width?: ThDockingSizeValue,
+  minWidth?: ThDockingSizeValue,
+  maxWidth?: ThDockingSizeValue
 }
 
 export interface ThActionsSnappedPref {

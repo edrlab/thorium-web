@@ -2,7 +2,7 @@
     "reader": {
         "app": {
             "loading": "جارٍ التحميل",
-            "publicationWrapper": "أنت الآن داخل المنشور.",
+            "publicationWrapper": "أنت الآن داخل الكتاب.",
             "docking": {
                 "dockingLeft": "لوحة مثبتة على اليسار",
                 "dockingRight": "لوحة مثبتة على اليمين",
@@ -31,10 +31,10 @@
                 "wrapper": "خيارات التثبيت",
                 "dockToLeft": {
                     "trigger": "تثبيت إلى اليسار",
-                    "tooltip": "تثبيت إلى اليسار"
+                    "tooltip": "تثبيت على اليسار"
                 },
                 "dockToRight": {
-                    "trigger": "تثبيت اللوحة إلى اليمين",
+                    "trigger": "تثبيت على اليمين",
                     "tooltip": "تثبيت إلى اليمين"
                 },
                 "popover": {
@@ -43,16 +43,26 @@
                 },
                 "fullscreen": {
                     "trigger": "العرض فوق المحتوى",
-                    "tooltip": "طبقة فوقية"
+                    "tooltip": "نافذة ملء الشاشة"
                 }
             },
             "back": {
                 "trigger": "رجوع"
+            },
+            "printingDisabled": "الطباعة ممنوعة",
+            "errors": {
+                "title": "خطأ",
+                "notFound": "الكتاب غير موجود.",
+                "accessDenied": "محظور.",
+                "network": "الخادم غير متاح؛ يرجى التجربة مرة أخرى لاحقًا.",
+                "serverError": "خطأ في الخادم؛ يرجى التجربة مرة أخرى لاحقًا.",
+                "clientError": "طلب خاطئ.",
+                "generic": "لم نتمكن من تحميل الكتاب."
             }
         },
         "navigation": {
             "scroll": {
-                "wrapper": "التنقّل داخل المنشور"
+                "wrapper": "التنقّل داخل الكتاب"
             }
         },
         "fullscreen": {
@@ -61,10 +71,60 @@
             "close": "الخروج من وضع ملء الشاشة"
         },
         "toc": {
-            "entries": "مدخلات الجدول"
+            "entries": "عناصر الجدول"
         },
         "jumpToPosition": {
-            "go": "اذهب"
+            "go": "اذهب إلى الموضع المحدد",
+            "label": "اختر موضعًا بين {{ positionStart }} و{{ positionEnd }}:",
+            "error": {
+                "notFound": "الموضع غير موجود."
+            }
+        },
+        "overflowMenu": {
+            "active": {
+                "tooltip": "اختيارات أخرى",
+                "trigger": "فتح قائمة الخيارات"
+            },
+            "hint": {
+                "tooltip": "تغيير قائمة الخيارات",
+                "trigger": "عرض الخيارات"
+            }
+        },
+        "settings": {
+            "text": {
+                "advanced": {
+                    "tooltip": "إعدادات أخرى",
+                    "trigger": "خيارات تنسيق أخرى"
+                }
+            },
+            "spacing": {
+                "advanced": {
+                    "tooltip": "خيارات أخرى",
+                    "trigger": "خيارات مسافات أخرى"
+                }
+            }
+        }
+    },
+    "audio": {
+        "player": {
+            "progress": "تقدم التشغيل",
+            "controls": "خيارات التحكم في التشغيل",
+            "mediaControls": "إعدادات الصوت",
+            "coverAlt": "غلاف الكتاب الصوتي"
+        },
+        "remotePlayback": {
+            "trigger": "التشغيل عن بعد",
+            "connected": "التشغيل عن بعد قيد الاتصال"
+        },
+        "settings": {
+            "sleepTimer": {
+                "hours": "ساعة",
+                "minutes": "دقائق",
+                "seconds": "ثانية",
+                "start": "بدء المؤقت",
+                "instruction": "سيتوقف التشغيل بعد المدة المحددة.",
+                "remaining": "إيقاف مؤقت بعد {{ remaining }}"
+            }
         }
     }
 }

@@ -17,8 +17,7 @@
         "dockingLeft": "Docked panel left",
         "dockingRight": "Docked panel right",
         "dockingEmpty": "Currently empty",
-        "dockingClosed": "Is closed, contains {{ action }}",
-        "dockingCollapsed": "Is Collapsed, contains {{ action }}"
+        "dockingClosed": "Is closed, contains {{ action }}"
       },
       "header": {
         "backLink": {

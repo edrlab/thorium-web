@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Gå bakåt",
             "goForward": "Gå framåt",
+            "goToExtendedDescription": {
+                "compact": "Utökad beskrivning"
+            },
             "goToNextChapter": {
                 "compact": "Nästa",
                 "descriptive": "Nästa kapitel"
@@ -64,6 +67,9 @@
             "goToPreviousSentence": {
                 "compact": "Föregående",
                 "descriptive": "Föregående mening"
+            },
+            "readAloud": {
+                "compact": "Läs högt"
             }
         },
         "annotations": {

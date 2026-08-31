@@ -121,7 +121,7 @@
                 "hours": "h",
                 "minutes": "min",
                 "seconds": "s",
-                "start": "Inicio",
+                "start": "Iniciar",
                 "instruction": "La reproducción se pausará transcurrido el tiempo establecido.",
                 "remaining": "Pausando en {{ remaining }}"
             }

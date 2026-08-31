@@ -14,6 +14,7 @@ import {
   ThSettingsTimerPref,
   ThBackLinkPref,
   ThDockingPref,
+  ThDockingSizeValue,
   ThAudioPlayerComponent,
   ThAudioProgressBarVariant,
   ThAudioPublicationMetadataComponent,
@@ -148,7 +149,7 @@ export interface ThAudioPreferences<K extends AudioCustomizableKeys = {}> {
         variant?: ThAudioProgressBarVariant;
       };
       defaults: {
-        dockingWidth: number;
+        dockingWidth: ThDockingSizeValue;
         scrim: string;
       };
       constraints?: {

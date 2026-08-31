@@ -1,26 +1,30 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { ThActionsDockedPref } from "@/preferences";
+import { ThActionsDockedPref, ThDockingSizeValue } from "@/preferences";
 
 import { DockStateObject } from "@/lib/actionsReducer";
 
 import { useActions } from "@/core/Components/Actions/hooks/useActions";
-import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
 
 import { useAppSelector } from "@/lib/hooks";
 
-// TODO: Responsive.
-// When resizing the window, all widths should be recalculated.
-// There is no guarantee that the panel group is the same size as the window,
-// so we have to rewrite this hook to observe the panel group, and push the new
-// widths to the StatefulDockingWrapper so that it can update panels.
-// Note that the StatefulDockingWrapper cannot pass PanelGroup as a ref,
-// it requires using a utility method: getPanelGroupElement(id)
-// See https://github.com/bvaughn/react-resizable-panels/tree/main/packages/react-resizable-panels#can-a-attach-a-ref-to-the-dom-elements
+const isNumericSize = (value: ThDockingSizeValue | undefined): value is number => {
+  return typeof value === "number";
+};
+
+// A "px" string is a pixel value like a plain number and can be compared
+// against one directly; %/em/rem/vh/vw can't be without measuring the live
+// DOM node
+const toPixels = (value: ThDockingSizeValue | undefined): number | undefined => {
+  if (isNumericSize(value)) return value;
+  if (typeof value === "string" && value.endsWith("px")) return parseFloat(value);
+  return undefined;
+};
+
 export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const preferences = useActionsPreferences();
   const { theming } = useSharedPreferences();
@@ -32,88 +36,90 @@ export const useResizablePanel = (panel: DockStateObject | undefined) => {
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actions = useActions(actionsMap || {});
-  const previouslyCollapsed = usePrevious(panel?.collapsed);
 
   const previousWidth = actions.getDockedWidth(panel?.actionKey) || null;
-  const width = pref?.width || defaultWidth;
-  const minWidth = pref?.minWidth && pref.minWidth < width 
-    ? pref.minWidth 
-    : defaultWidth < width 
-      ? defaultWidth
-      : width;
-  const maxWidth = pref?.maxWidth && pref.maxWidth > width 
-    ? pref.maxWidth 
-    : defaultWidth > width
-      ? defaultWidth
-      : width;
+  const width: ThDockingSizeValue = pref?.width ?? defaultWidth;
+
+  // Ascending-range clamping against the shared default only makes sense
+  // when comparing like-for-like pixel values; unit strings that aren't
+  // pixels (%, rem, vw, ...) are used as configured, since they can't be
+  // compared to a pixel default without measuring the live DOM node.
+  // react-resizable-panels still enforces minSize/maxSize correctly at
+  // runtime regardless.
+  const widthPx = toPixels(width);
+  const defaultWidthPx = toPixels(defaultWidth);
+
+  const minWidthPx = toPixels(pref?.minWidth);
+  const minWidth: ThDockingSizeValue = widthPx !== undefined && minWidthPx !== undefined && minWidthPx < widthPx
+    ? minWidthPx
+    : pref?.minWidth !== undefined && minWidthPx === undefined
+      ? pref.minWidth
+      : widthPx !== undefined && defaultWidthPx !== undefined && defaultWidthPx < widthPx
+        ? defaultWidth
+        : pref?.minWidth ?? width;
+
+  const maxWidthPx = toPixels(pref?.maxWidth);
+  const maxWidth: ThDockingSizeValue = widthPx !== undefined && maxWidthPx !== undefined && maxWidthPx > widthPx
+    ? maxWidthPx
+    : pref?.maxWidth !== undefined && maxWidthPx === undefined
+      ? pref.maxWidth
+      : widthPx !== undefined && defaultWidthPx !== undefined && defaultWidthPx > widthPx
+        ? defaultWidth
+        : pref?.maxWidth ?? width;
 
   const isPopulated = () => {
     return !!(panel?.active && actions.isOpen(panel?.actionKey));
   };
 
-  const isCollapsed = () => {
-    return !!panel?.collapsed;
-  }
-
-  const forceExpand = () => {
-    return !!(isPopulated() && previouslyCollapsed && !panel?.collapsed);
-  }
-
   const currentKey = () => {
     return panel?.actionKey ?? null;
   };
 
+  // Occupancy, not openness: dragging the separator out is how a shut panel is
+  // reopened, so its handle has to stay live. A slot holding nothing has none
   const isResizable = () => {
-    return isPopulated() ? Math.round(width) > Math.round(minWidth) && Math.round(width) < Math.round(maxWidth) : false;
+    if (!panel?.actionKey) return false;
+
+    return isNumericSize(width) && isNumericSize(minWidth) && isNumericSize(maxWidth)
+      ? Math.round(width) > Math.round(minWidth) && Math.round(width) < Math.round(maxWidth)
+      : minWidth !== maxWidth;
   };
 
   const hasDragIndicator = () => {
     return pref?.dragIndicator || false;
   };
 
-  const getWidth = useCallback(() => {
-    return previousWidth 
-        ? Math.round((previousWidth / window.innerWidth) * 100) 
-        : Math.round((width / window.innerWidth) * 100);
-  }, [previousWidth, width]);
+  // The size an expanding panel is restored to. Panels always mount shut, so
+  // this is their only size source. Re-clamped against the current bounds:
+  // a width saved before the config's min/max shrank must not ask the panel
+  // to resize outside the bounds it's configured with now
+  const getTargetWidth = (): ThDockingSizeValue => {
+    if (previousWidth == null) return width;
+    if (isNumericSize(minWidth) && previousWidth < minWidth) return minWidth;
+    if (isNumericSize(maxWidth) && previousWidth > maxWidth) return maxWidth;
+    return previousWidth;
+  };
 
-  const getMinWidth = useCallback(() => {
-    return Math.round((minWidth / window.innerWidth) * 100);
-  }, [minWidth]);
+  const getMinWidth = (): ThDockingSizeValue => {
+    return minWidth;
+  };
 
-  const getMaxWidth = useCallback(() => {
-    return Math.round((maxWidth / window.innerWidth) * 100);
-  }, [maxWidth]);
+  const getMaxWidth = (): ThDockingSizeValue => {
+    return maxWidth;
+  };
 
-  const getCurrentPxWidth = useCallback((percentage: number) => {
-    let current = Math.round((percentage * window.innerWidth) / 100);
-    
-    if (current < minWidth) {
-      current = minWidth;
-    }
-    
-    if (current > maxWidth) {
-      current = maxWidth;
-    }
-    
-    return current;
-  }, [minWidth, maxWidth]);
-
-  // When the docked action changes, we need to update its preferences 
+  // When the docked action changes, we need to update its preferences
   useEffect(() => {
     setPref(panel?.actionKey ? preferences.actionsKeys[panel.actionKey]?.docked || null : null);
   }, [panel?.actionKey, preferences]);
 
   return {
-    currentKey, 
-    isPopulated, 
-    isCollapsed, 
-    forceExpand, 
+    currentKey,
+    isPopulated,
     isResizable,
-    hasDragIndicator, 
-    getWidth,
+    hasDragIndicator,
+    getTargetWidth,
     getMinWidth,
-    getMaxWidth,
-    getCurrentPxWidth
+    getMaxWidth
   }
 }

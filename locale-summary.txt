@@ -1,10 +1,11 @@
 Locale Completion Status
 Reference language: en
-Generated: 2026-08-05T13:41:12.200Z
+Generated: 2026-08-31T07:24:45.099Z
 
 
 Locale Completion Summary:
 ----------------------------------------
+AR     [■■■■■■■■■■■■■■■■■■■■] 100%
 DA     [■■■■■■■■■■■■■■■■■■■■] 100%
 EN     [■■■■■■■■■■■■■■■■■■■■] 100%
 ES     [■■■■■■■■■■■■■■■■■■■■] 100%
@@ -16,11 +17,11 @@ LT     [■■■■■■■■■■■■■■■■■■■■] 100%
 SV     [■■■■■■■■■■■■■■■■■■■■] 100%
 PL     [■■■■■■■■■■■■■■■■■■■□]  96%
 PT-PT  [■■■■■■■■■■■■■■■■■■□□]  90%
-AR     [■■■■■■■■■■■■■■□□□□□□]  73%
-PT-BR  [■■■■■■■■■■■■□□□□□□□□]  63%
-TA     [■■■■■■■■□□□□□□□□□□□□]  43%
+SL     [■■■■■■■■■■■■■■■□□□□□]  76%
+PT-BR  [■■■■■■■■■■■■□□□□□□□□]  62%
+TA     [■■■■■■■■□□□□□□□□□□□□]  42%
 TR     [■■■■■■■■□□□□□□□□□□□□]  40%
-EL     [■■■■■□□□□□□□□□□□□□□□]  25%
+EL     [■■■■□□□□□□□□□□□□□□□□]  24%
 BG     [■□□□□□□□□□□□□□□□□□□□]   5%
 HE     [□□□□□□□□□□□□□□□□□□□□]   3%
 BRH    [□□□□□□□□□□□□□□□□□□□□]   0%
@@ -29,6 +30,7 @@ UK     [□□□□□□□□□□□□□□□□□□□□]   0%
 
 Inferred Usage Summary:
 ----------------------------------------
+AR     [■■■■■■■■■■■■■■■■■■■■] 100%
 DA     [■■■■■■■■■■■■■■■■■■■■] 100%
 EN     [■■■■■■■■■■■■■■■■■■■■] 100%
 ES     [■■■■■■■■■■■■■■■■■■■■] 100%
@@ -41,10 +43,10 @@ SV     [■■■■■■■■■■■■■■■■■■■■] 100%
 PL     [■■■■■■■■■■■■■■■■■■■■] 100%
 PT-PT  [■■■■■■■■■■■■■■■■□□□□]  84%
 PT-BR  [■■■■■■■■■■■■■□□□□□□□]  69%
-AR     [■■■■■■■■■■■■■□□□□□□□]  65%
 TA     [■■■■■■■■■■■■□□□□□□□□]  63%
+SL     [■■■■■■■■■■■□□□□□□□□□]  58%
 EL     [■■■■■■■■□□□□□□□□□□□□]  42%
-TR     [■■■■■□□□□□□□□□□□□□□□]  29%
+TR     [■■■■■■□□□□□□□□□□□□□□]  30%
 BG     [■■□□□□□□□□□□□□□□□□□□]  10%
 HE     [□□□□□□□□□□□□□□□□□□□□]   4%
 BRH    [□□□□□□□□□□□□□□□□□□□□]   0%
@@ -53,71 +55,77 @@ UK     [□□□□□□□□□□□□□□□□□□□□]   0%
 Locale Breakdown:
 ----------------------------------------
 
-DA (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+AR (100% complete, 100% of inferred usage)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
+
+DA (100% complete, 100% of inferred usage)
+   thorium-shared.json   ■■■■■■■■■□  99%  (189/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■■■■■■■■■ 100%  (250/251)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 EN (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 ES (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   thorium-shared.json   ■■■■■■■■■□  99%  (189/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■■■■■■■■■ 100%  (250/251)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 ET (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 FI (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 FR (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   thorium-shared.json   ■■■■■■■■■□  99%  (189/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■■■■■■■■■ 100%  (250/251)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 IT (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 LT (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (189/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
    TOTAL                 ■■■■■■■■■■ 100%  (251/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 SV (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  99%  (188/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■■■■■■■■■ 100%  (250/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■■■■■■■■■ 100%  (251/251)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 PL (96% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  94%  (178/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■■■■■■■■□  96%  (240/251)
-   USED                  ■■■■■■■■■■ 100%  (126/126)
+   thorium-shared.json   ■■■■■■■■■□  95%  (180/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■■■■■■■■□  96%  (241/251)
+   USED                  ■■■■■■■■■■ 100%  (125/125)
 
 PT-PT (90% complete, 84% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  94%  (177/189)
-   thorium-web.json      ■■■■■■■■□□  81%  (50/62)
-   TOTAL                 ■■■■■■■■■□  90%  (227/251)
-   USED                  ■■■■■■■■□□  84%  (106/126)
+   thorium-shared.json   ■■■■■■■■■□  93%  (177/190)
+   thorium-web.json      ■■■■■■■■□□  80%  (49/61)
+   TOTAL                 ■■■■■■■■■□  90%  (226/251)
+   USED                  ■■■■■■■■□□  84%  (105/125)
 
    ----------------------------------------
    Missing Keys:
@@ -147,21 +155,27 @@ PT-PT (90% complete, 84% of inferred usage)
    • reader.preferences.noRuby.label
 
 
-AR (73% complete, 65% of inferred usage)
-   thorium-shared.json   ■■■■■■■■□□  80%  (151/189)
-   thorium-web.json      ■■■■■□□□□□  52%  (32/62)
-   TOTAL                 ■■■■■■■□□□  73%  (183/251)
-   USED                  ■■■■■■□□□□  65%  (82/126)
+SL (76% complete, 58% of inferred usage)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
+   thorium-web.json      □□□□□□□□□□   0%  (0/61)
+   TOTAL                 ■■■■■■■□□□  76%  (190/251)
+   USED                  ■■■■■□□□□□  58%  (73/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (26 keys):
+   WEB (52 keys):
+   • reader.fullscreen.close
+   • reader.fullscreen.trigger
+   • reader.fullscreen.tooltip
    • reader.jumpToPosition.label
    • reader.jumpToPosition.error.notFound
+   • reader.jumpToPosition.go
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
+   • reader.toc.entries
    • audio.player.coverAlt
+   • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
    • audio.settings.sleepTimer.minutes
@@ -172,6 +186,16 @@ AR (73% complete, 65% of inferred usage)
    • audio.settings.sleepTimer.start
    • audio.player.controls
    • audio.player.progress
+   • reader.app.docker.fullscreen.trigger
+   • reader.app.docker.fullscreen.tooltip
+   • reader.app.docker.popover.trigger
+   • reader.app.docker.popover.tooltip
+   • reader.app.docker.wrapper
+   • reader.app.docking.dockingRight
+   • reader.app.docking.dockingLeft
+   • reader.app.docking.dockingClosed
+   • reader.app.docking.dockingEmpty
+   • reader.app.publicationWrapper
    • reader.app.errors.notFound
    • reader.app.errors.accessDenied
    • reader.app.errors.network
@@ -179,37 +203,27 @@ AR (73% complete, 65% of inferred usage)
    • reader.app.errors.clientError
    • reader.app.errors.generic
    • reader.app.errors.title
+   • reader.app.loading
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
    • reader.settings.text.advanced.tooltip
-
-   SHARED (18 keys):
-   • reader.playback.preferences.audio.title
-   • reader.playback.preferences.autoPlay.title
-   • reader.playback.preferences.autoPlay.label
-   • reader.playback.preferences.audio.skipBackwardInterval
-   • reader.playback.preferences.audio.skipForwardInterval
-   • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • reader.playback.preferences.audio.volume
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
-   • reader.preferences.ligatures.title
-   • reader.preferences.ligatures.label
-   • reader.preferences.noRuby.title
-   • reader.preferences.noRuby.label
+   • reader.app.back.trigger
+   • reader.app.header.backLink.tooltip
+   • reader.app.header.backLink.trigger
+   • reader.app.footer.label
+   • reader.navigation.scroll.wrapper
+   • reader.app.header.label
+   • reader.app.progression.referenceFallback
+   • reader.app.progression.wrapper
+   • reader.app.header.runningHead
 
 
-PT-BR (63% complete, 69% of inferred usage)
-   thorium-shared.json   ■■■■■■□□□□  61%  (116/189)
-   thorium-web.json      ■■■■■■□□□□  66%  (41/62)
-   TOTAL                 ■■■■■■□□□□  63%  (157/251)
-   USED                  ■■■■■■□□□□  69%  (87/126)
+PT-BR (62% complete, 69% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  61%  (116/190)
+   thorium-web.json      ■■■■■■□□□□  66%  (40/61)
+   TOTAL                 ■■■■■■□□□□  62%  (156/251)
+   USED                  ■■■■■■□□□□  69%  (86/125)
 
    ----------------------------------------
    Missing Keys:
@@ -258,11 +272,11 @@ PT-BR (63% complete, 69% of inferred usage)
    • reader.preferences.noRuby.label
 
 
-TA (43% complete, 63% of inferred usage)
-   thorium-shared.json   ■■■□□□□□□□  35%  (66/189)
-   thorium-web.json      ■■■■■■□□□□  66%  (41/62)
-   TOTAL                 ■■■■□□□□□□  43%  (107/251)
-   USED                  ■■■■■■□□□□  63%  (80/126)
+TA (42% complete, 63% of inferred usage)
+   thorium-shared.json   ■■■□□□□□□□  35%  (66/190)
+   thorium-web.json      ■■■■■■□□□□  66%  (40/61)
+   TOTAL                 ■■■■□□□□□□  42%  (106/251)
+   USED                  ■■■■■■□□□□  63%  (79/125)
 
    ----------------------------------------
    Missing Keys:
@@ -318,16 +332,16 @@ TA (43% complete, 63% of inferred usage)
    • reader.preferences.noRuby.label
 
 
-TR (40% complete, 29% of inferred usage)
-   thorium-shared.json   ■■■■■□□□□□  53%  (101/189)
-   thorium-web.json      □□□□□□□□□□   0%  (0/62)
+TR (40% complete, 30% of inferred usage)
+   thorium-shared.json   ■■■■■□□□□□  53%  (101/190)
+   thorium-web.json      □□□□□□□□□□   0%  (0/61)
    TOTAL                 ■■■■□□□□□□  40%  (101/251)
-   USED                  ■■□□□□□□□□  29%  (37/126)
+   USED                  ■■■□□□□□□□  30%  (37/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (53 keys):
+   WEB (52 keys):
    • reader.fullscreen.close
    • reader.fullscreen.trigger
    • reader.fullscreen.tooltip
@@ -357,7 +371,6 @@ TR (40% complete, 29% of inferred usage)
    • reader.app.docking.dockingRight
    • reader.app.docking.dockingLeft
    • reader.app.docking.dockingClosed
-   • reader.app.docking.dockingCollapsed
    • reader.app.docking.dockingEmpty
    • reader.app.publicationWrapper
    • reader.app.errors.notFound
@@ -421,11 +434,11 @@ TR (40% complete, 29% of inferred usage)
    • reader.preferences.textNormalization.label
 
 
-EL (25% complete, 42% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/189)
-   thorium-web.json      ■■■■■■■■■■ 100%  (62/62)
-   TOTAL                 ■■□□□□□□□□  25%  (62/251)
-   USED                  ■■■■□□□□□□  42%  (53/126)
+EL (24% complete, 42% of inferred usage)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
+   thorium-web.json      ■■■■■■■■■■ 100%  (61/61)
+   TOTAL                 ■■□□□□□□□□  24%  (61/251)
+   USED                  ■■■■□□□□□□  42%  (52/125)
 
    ----------------------------------------
    Missing Keys:
@@ -508,15 +521,15 @@ EL (25% complete, 42% of inferred usage)
 
 
 BG (5% complete, 10% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/189)
-   thorium-web.json      ■■□□□□□□□□  21%  (13/62)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
+   thorium-web.json      ■■□□□□□□□□  21%  (13/61)
    TOTAL                 □□□□□□□□□□   5%  (13/251)
-   USED                  ■□□□□□□□□□  10%  (12/126)
+   USED                  ■□□□□□□□□□  10%  (12/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (41 keys):
+   WEB (40 keys):
    • reader.fullscreen.close
    • reader.fullscreen.trigger
    • reader.fullscreen.tooltip
@@ -544,7 +557,6 @@ BG (5% complete, 10% of inferred usage)
    • reader.app.docker.popover.tooltip
    • reader.app.docker.wrapper
    • reader.app.docking.dockingClosed
-   • reader.app.docking.dockingCollapsed
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -636,15 +648,15 @@ BG (5% complete, 10% of inferred usage)
 
 
 HE (3% complete, 4% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   2%  (4/189)
-   thorium-web.json      □□□□□□□□□□   5%  (3/62)
+   thorium-shared.json   □□□□□□□□□□   2%  (4/190)
+   thorium-web.json      □□□□□□□□□□   5%  (3/61)
    TOTAL                 □□□□□□□□□□   3%  (7/251)
-   USED                  □□□□□□□□□□   4%  (5/126)
+   USED                  □□□□□□□□□□   4%  (5/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (51 keys):
+   WEB (50 keys):
    • reader.fullscreen.close
    • reader.fullscreen.trigger
    • reader.fullscreen.tooltip
@@ -674,7 +686,6 @@ HE (3% complete, 4% of inferred usage)
    • reader.app.docking.dockingRight
    • reader.app.docking.dockingLeft
    • reader.app.docking.dockingClosed
-   • reader.app.docking.dockingCollapsed
    • reader.app.docking.dockingEmpty
    • reader.app.errors.notFound
    • reader.app.errors.accessDenied
@@ -771,15 +782,15 @@ HE (3% complete, 4% of inferred usage)
 
 
 BRH (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/189)
-   thorium-web.json      □□□□□□□□□□   0%  (0/62)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
+   thorium-web.json      □□□□□□□□□□   0%  (0/61)
    TOTAL                 □□□□□□□□□□   0%  (0/251)
-   USED                  □□□□□□□□□□   0%  (0/126)
+   USED                  □□□□□□□□□□   0%  (0/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (53 keys):
+   WEB (52 keys):
    • reader.fullscreen.close
    • reader.fullscreen.trigger
    • reader.fullscreen.tooltip
@@ -809,7 +820,6 @@ BRH (0% complete, 0% of inferred usage)
    • reader.app.docking.dockingRight
    • reader.app.docking.dockingLeft
    • reader.app.docking.dockingClosed
-   • reader.app.docking.dockingCollapsed
    • reader.app.docking.dockingEmpty
    • reader.app.publicationWrapper
    • reader.app.errors.notFound
@@ -911,15 +921,15 @@ BRH (0% complete, 0% of inferred usage)
 
 
 UK (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/189)
-   thorium-web.json      □□□□□□□□□□   0%  (0/62)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
+   thorium-web.json      □□□□□□□□□□   0%  (0/61)
    TOTAL                 □□□□□□□□□□   0%  (0/251)
-   USED                  □□□□□□□□□□   0%  (0/126)
+   USED                  □□□□□□□□□□   0%  (0/125)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (53 keys):
+   WEB (52 keys):
    • reader.fullscreen.close
    • reader.fullscreen.trigger
    • reader.fullscreen.tooltip
@@ -949,7 +959,6 @@ UK (0% complete, 0% of inferred usage)
    • reader.app.docking.dockingRight
    • reader.app.docking.dockingLeft
    • reader.app.docking.dockingClosed
-   • reader.app.docking.dockingCollapsed
    • reader.app.docking.dockingEmpty
    • reader.app.publicationWrapper
    • reader.app.errors.notFound
@@ -1055,17 +1064,15 @@ UK (0% complete, 0% of inferred usage)
 DYNAMIC TEMPLATE LITERALS WARNING
 ==================================================
 
-⚠️  Found 8 dynamic template literal(s) that need manual checking:
-   📄 components/Docking/StatefulDockEnd.tsx:36
+⚠️  Found 7 dynamic template literal(s) that need manual checking:
+   📄 components/Docking/StatefulDockEnd.tsx:31
       t(`${ translationKey }.trigger`)
-   📄 components/Docking/StatefulDockEnd.tsx:37
+   📄 components/Docking/StatefulDockEnd.tsx:32
       t(`${ translationKey }.tooltip`)
-   📄 components/Docking/StatefulDockStart.tsx:36
+   📄 components/Docking/StatefulDockStart.tsx:31
       t(`${ translationKey }.trigger`)
-   📄 components/Docking/StatefulDockStart.tsx:37
+   📄 components/Docking/StatefulDockStart.tsx:32
       t(`${ translationKey }.tooltip`)
-   📄 components/Docking/StatefulDockingWrapper.tsx:109
-      t(`reader.${ actionKey }.heading`)
    📄 components/Docking/StatefulDockingWrapper.tsx:111
       t(`reader.${ actionKey }.heading`)
    📄 components/Settings/Spacing/StatefulSpacingPresets.tsx:171

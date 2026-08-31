@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Eiti atgal",
             "goForward": "Eiti pirmyn",
+            "goToExtendedDescription": {
+                "compact": "Išplėstinis aprašymas"
+            },
             "goToNextChapter": {
                 "compact": "Kitas",
                 "descriptive": "Kitas skyrius"
@@ -320,9 +323,9 @@
                 "descriptive_other": "Liko {{ count }} pozicijų"
             },
             "positionsLeftInChapter": {
-                "compact_few": "Skyriuje lijo {{ count }}",
-                "compact_one": "Skyriuje lijo {{ count }}",
-                "compact_other": "Skyriuje lijo {{ count }}",
+                "compact_few": "Skyriuje liko {{ count }}",
+                "compact_one": "Skyriuje liko {{ count }}",
+                "compact_other": "Skyriuje liko {{ count }}",
                 "descriptive_few": "Skyriuje liko {{ count }} pozicijos",
                 "descriptive_one": "Skyriuje liko {{ count }} pozicija",
                 "descriptive_other": "Skyriuje liko {{ count }} pozicijų"
