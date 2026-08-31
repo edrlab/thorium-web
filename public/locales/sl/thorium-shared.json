@@ -1,0 +1,380 @@
+{
+    "common": {
+        "actions": {
+            "cancel": "Prekliči",
+            "clear": "Počisti",
+            "close": "Zapri",
+            "collapse": "Skrij",
+            "collapseAll": "Skrij vse",
+            "decrease": "Zmanjšaj",
+            "disable": "Onemogoči",
+            "enable": "Omogoči",
+            "exit": "Izhod",
+            "expand": "Razširi",
+            "expandAll": "Razširi vse",
+            "filter": "Filtriraj",
+            "hide": "Skrij",
+            "hideAll": "Skrij vse",
+            "increase": "Povečaj",
+            "open": "Odpri",
+            "reset": "Ponastavi",
+            "search": "Išči",
+            "show": "Prikaži",
+            "showAll": "Prikaži vse",
+            "sortBy": "Razvrsti po",
+            "toggle": "Preklopi"
+        }
+    },
+    "reader": {
+        "actions": {
+            "goBackward": "Nazaj",
+            "goForward": "Naprej",
+            "goToExtendedDescription": {
+                "compact": "Razširjen opis"
+            },
+            "goToNextChapter": {
+                "compact": "Naslednja",
+                "descriptive": "Naslednje poglavje"
+            },
+            "goToNextPage": {
+                "compact": "Naslednja",
+                "descriptive": "Naslednja stran"
+            },
+            "goToNextResource": {
+                "compact": "Naslednji",
+                "descriptive": "Naslednji vir"
+            },
+            "goToNextSentence": {
+                "compact": "Naslednja",
+                "descriptive": "Naslednja poved"
+            },
+            "goToPosition": {
+                "compact": "Pojdi na …",
+                "descriptive": "Pojdi na položaj"
+            },
+            "goToPreviousChapter": {
+                "compact": "Prejšnja",
+                "descriptive": "Prejšnje poglavje"
+            },
+            "goToPreviousPage": {
+                "compact": "Prejšnja",
+                "descriptive": "Prejšnja stran"
+            },
+            "goToPreviousResource": {
+                "compact": "Prejšnji",
+                "descriptive": "Prejšnji vir"
+            },
+            "goToPreviousSentence": {
+                "compact": "Prejšnja",
+                "descriptive": "Prejšnja poved"
+            },
+            "readAloud": {
+                "compact": "Beri na glas"
+            }
+        },
+        "annotations": {
+            "actions": {
+                "editNote": {
+                    "compact": "Uredi zaznamek"
+                }
+            },
+            "bookmarks": {
+                "actions": {
+                    "add": {
+                        "compact": "Dodaj zaznamek"
+                    },
+                    "delete": {
+                        "compact": "Izbriši zaznamek",
+                        "confirmation": "Ali ste prepričani, da želite izbrisati zaznamek?"
+                    }
+                },
+                "emptyState": {
+                    "description": "Zaznamki, ki jih dodate med branjem, se bodo prikazali na tem seznamu.",
+                    "title": "Ni zaznamkov"
+                },
+                "title": "Zaznamki"
+            },
+            "note": {
+                "title": "Opomba"
+            },
+            "sort": {
+                "lastAdded": {
+                    "compact": "Nazadnje dodano"
+                },
+                "lastEdited": {
+                    "compact": "Nazadnje urejano"
+                },
+                "progression": {
+                    "compact": "Napredek"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "Začasno ustavi",
+                "play": "Predvajaj",
+                "skipBackward": {
+                    "compact": "Prevrti nazaj",
+                    "descriptive": "Preskoči nazaj"
+                },
+                "skipForward": {
+                    "compact": "Preskoči",
+                    "descriptive": "Preskoči naprej"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "Interval preskoka nazaj",
+                    "skipForwardInterval": "Interval preskoka naprej",
+                    "skipInterval": "Interval preskoka",
+                    "title": "Avdio nastavitve",
+                    "volume": "Glasnost"
+                },
+                "autoPlay": {
+                    "label": "Predvajaj neprekinjeno",
+                    "title": "Samodejno predvajanje"
+                },
+                "playbackRate": {
+                    "compact": "Hitrost",
+                    "descriptive": "Hitrost predvajanja"
+                },
+                "sleepTimer": {
+                    "compact": "Časovnik",
+                    "descriptive": "Časovnik za spanje",
+                    "presets": {
+                        "endOfChapter": "Konec poglavja",
+                        "endOfResource": "Konec vira"
+                    }
+                }
+            }
+        },
+        "preferences": {
+            "brightness": "Svetlost",
+            "columns": {
+                "auto": "Auto",
+                "dual": {
+                    "compact": "2 stolpca",
+                    "descriptive": "Dva stolpca"
+                },
+                "single": {
+                    "compact": "1 stolpec",
+                    "descriptive": "En stolpec"
+                },
+                "title": "Stolpci"
+            },
+            "fit": {
+                "auto": {
+                    "compact": "Auto"
+                },
+                "page": {
+                    "compact": "Stran"
+                },
+                "title": "Prilagoditev",
+                "width": {
+                    "compact": "Širina"
+                }
+            },
+            "fontFamily": {
+                "humanist": {
+                    "compact": "Humanist",
+                    "descriptive": "Humanist sans-serif"
+                },
+                "modern": {
+                    "compact": "Modern",
+                    "descriptive": "Modern serif"
+                },
+                "monospace": "Monospace",
+                "oldStyle": {
+                    "compact": "Old style",
+                    "descriptive": "Old style serif"
+                },
+                "publisher": "Pisava založnika",
+                "sans": "Sans-serif",
+                "title": "Pisave"
+            },
+            "fontSize": "Velikost pisave",
+            "fontWeight": {
+                "bold": "Krepko",
+                "normal": "Običajno",
+                "title": "Debelina tiska"
+            },
+            "hyphens": {
+                "label": "Omogoči deljenje besed",
+                "title": "Deljenje"
+            },
+            "layout": {
+                "paginated": "Po straneh",
+                "scrolled": "Možnost pomikanja",
+                "title": "Postavitev"
+            },
+            "letterSpacing": "Razmik med črkami",
+            "ligatures": {
+                "label": "Omogoči ligature",
+                "title": "Ligature"
+            },
+            "lineHeight": {
+                "default": "Privzeta",
+                "large": "Večji razmik",
+                "medium": "Uravnotežena",
+                "small": "Manjši razmik",
+                "title": "Višina vrstic"
+            },
+            "noRuby": {
+                "label": "Skrij ruby opombe",
+                "title": "Ruby opombe"
+            },
+            "offsetFirstPage": "Prikaži prvo stran posebej",
+            "paragraphIndent": "Zamik odstavka",
+            "paragraphSpacing": "Razmik med odstavki",
+            "publisherStyles": {
+                "label": "Uporabi izvirno oblikovanje",
+                "title": "Stili založnika"
+            },
+            "readingDirection": {
+                "default": {
+                    "compact": "Privzeto",
+                    "descriptive": "Uporabi izvirno smer branja"
+                },
+                "ltr": {
+                    "compact": "Desno",
+                    "descriptive": "Od leve proti desni"
+                },
+                "rtl": {
+                    "compact": "Levo",
+                    "descriptive": "Od desne proti levi"
+                },
+                "title": "Smer branja"
+            },
+            "spacing": {
+                "presets": {
+                    "accessible": "Dostopno",
+                    "balanced": "Uravnoteženo",
+                    "custom": "Po meri",
+                    "default": "Privzeto",
+                    "loose": "Večji razmik",
+                    "tight": "Manjši razmik",
+                    "title": "Prednastavitve"
+                },
+                "title": "Razmik"
+            },
+            "spread": {
+                "always": {
+                    "compact": "Dvostransko"
+                },
+                "auto": {
+                    "compact": "Auto"
+                },
+                "never": {
+                    "compact": "Enostransko"
+                },
+                "title": "Razporeditev"
+            },
+            "text": "Besedilo",
+            "textAlign": {
+                "default": "Privzeto",
+                "justify": "Obojestranska",
+                "left": "Leva",
+                "right": "Desna",
+                "title": "Poravnava besedila"
+            },
+            "textNormalization": {
+                "label": "Odstrani oblikovanje besedila",
+                "title": "Normalizacija besedila"
+            },
+            "themes": {
+                "auto": "Auto",
+                "contrast1": "Kontrast 1",
+                "contrast2": "Kontrast 2",
+                "contrast3": "Kontrast 3",
+                "dark": "Temna",
+                "gray": "Siva",
+                "light": "Svetla",
+                "paper": "Papir",
+                "sepia": "Sepija",
+                "title": "Teme"
+            },
+            "title": "Nastavitve prikaza",
+            "wordSpacing": "Razmik med besedami",
+            "zoom": "Približaj"
+        },
+        "progression": {
+            "pagesLeft": {
+                "descriptive_few": "še {{ count }} strani",
+                "descriptive_one": "še {{ count }} stran",
+                "descriptive_other": "še {{ count }} strani",
+                "descriptive_two": "še {{ count }} strani"
+            },
+            "pagesLeftInChapter": {
+                "descriptive_few": "še {{ count }} strani v poglavju",
+                "descriptive_one": "še {{ count }} stran v poglavju",
+                "descriptive_other": "še {{ count }} strani v poglavju",
+                "descriptive_two": "še {{ count }} strani v poglavju"
+            },
+            "pagesLeftInPublication": {
+                "descriptive_few": "še {{ count }} strani v publikaciji",
+                "descriptive_one": "še {{ count }} stran v publikaciji",
+                "descriptive_other": "še {{ count }} strani v publikaciji",
+                "descriptive_two": "še {{ count }} strani v publikaciji"
+            },
+            "percentage": "{{ percentage }} %",
+            "positionsLeft": {
+                "compact_few": "še {{ count }}",
+                "compact_one": "še {{ count }}",
+                "compact_other": "še {{ count }}",
+                "compact_two": "še {{ count }}",
+                "descriptive_few": "še {{ count }} položaji",
+                "descriptive_one": "še {{ count }} položaj",
+                "descriptive_other": "še {{ count }} položajev",
+                "descriptive_two": "še {{ count }} položaja"
+            },
+            "positionsLeftInChapter": {
+                "compact_few": "še {{ count }} v poglavju",
+                "compact_one": "še {{ count }} v poglavju",
+                "compact_other": "še {{ count }} v poglavju",
+                "compact_two": "še {{ count }} v poglavju",
+                "descriptive_few": "še {{ count }} položaji v publikaciji",
+                "descriptive_one": "še {{ count }} položaj v publikaciji",
+                "descriptive_other": "še {{ count }} položajev v publikaciji",
+                "descriptive_two": "še {{ count }} položaja v publikaciji"
+            },
+            "positionsLeftInPublication": {
+                "compact_few": "še {{ count }} v publikaciji",
+                "compact_one": "še {{ count }} v publikaciji",
+                "compact_other": "še {{ count }} v publikaciji",
+                "compact_two": "še {{ count }} v publikaciji",
+                "descriptive_few": "še {{ count }} položaji v publikaciji",
+                "descriptive_one": "še {{ count }} položaj v publikaciji",
+                "descriptive_other": "še {{ count }} položajev v publikaciji",
+                "descriptive_two": "še {{ count }} položaja v publikaciji"
+            },
+            "range": "{{ start }}–{{ end }}",
+            "xOfY": {
+                "compact": "{{ x }} od {{ y }}",
+                "descriptive": "{{ x }} od {{ y }} ({{ z }})"
+            }
+        },
+        "search": {
+            "actions": {
+                "next": {
+                    "compact": "Naslednji zadetek"
+                },
+                "previous": {
+                    "compact": "Prejšnji zadetek"
+                }
+            },
+            "placeholder": "Išči ključne besede ali fraze",
+            "result_few": "{{ current }} od {{ count }} zadetkov",
+            "result_one": "{{ current }} od {{ count }} zadetek",
+            "result_other": "{{ current }} od {{ count }} zadetkov",
+            "result_two": "{{ current }} od {{ count }} zadetkov",
+            "title": "Iskanje"
+        },
+        "tableOfContents": {
+            "emptyState": {
+                "description": "Avtor ni dodal kazala.",
+                "title": "Ni kazala"
+            },
+            "title": "Kazalo"
+        }
+    }
+}

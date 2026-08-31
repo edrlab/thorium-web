@@ -4,14 +4,14 @@
             "cancel": "إلغاء",
             "clear": "مسح",
             "close": "إغلاق",
-            "collapse": "طيّ",
-            "collapseAll": "طيّ الكل",
+            "collapse": "إخفاء",
+            "collapseAll": "إغلاق الكل",
             "decrease": "تقليل",
             "disable": "تعطيل",
             "enable": "تفعيل",
             "exit": "خروج",
-            "expand": "توسيع",
-            "expandAll": "توسيع الكل",
+            "expand": "إظهار",
+            "expandAll": "فتح الكل",
             "filter": "تصفية",
             "hide": "إخفاء",
             "hideAll": "إخفاء الكل",
@@ -21,7 +21,7 @@
             "search": "بحث",
             "show": "عرض",
             "showAll": "عرض الكل",
-            "sortBy": "الفرز حسب",
+            "sortBy": "الترتيب بـ",
             "toggle": "تبديل"
         }
     },
@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "الرجوع للخلف",
             "goForward": "التقدم للأمام",
+            "goToExtendedDescription": {
+                "compact": "وصف مفصَّل"
+            },
             "goToNextChapter": {
                 "compact": "التالي",
                 "descriptive": "الفصل التالي"
@@ -64,6 +67,9 @@
             "goToPreviousSentence": {
                 "compact": "السابق",
                 "descriptive": "العبارة السابقة"
+            },
+            "readAloud": {
+                "compact": "إقرأ بصوت عال"
             }
         },
         "annotations": {
@@ -94,6 +100,51 @@
             "sort": {
                 "lastAdded": {
                     "compact": "المضاف حديثًا"
+                },
+                "lastEdited": {
+                    "compact": "تم تعديله مؤخرا"
+                },
+                "progression": {
+                    "compact": "التقدم"
+                }
+            }
+        },
+        "playback": {
+            "actions": {
+                "pause": "إيقاف",
+                "play": "تشغيل",
+                "skipBackward": {
+                    "compact": "ترجيع",
+                    "descriptive": "ترجيع سريع"
+                },
+                "skipForward": {
+                    "compact": "تقديم",
+                    "descriptive": "تقديم سريع"
+                }
+            },
+            "preferences": {
+                "audio": {
+                    "skipBackwardInterval": "حد الترجيع السريع",
+                    "skipForwardInterval": "حد التقديم السريع",
+                    "skipInterval": "حد التجاوز",
+                    "title": "إعدادات الصوت",
+                    "volume": "الصوت"
+                },
+                "autoPlay": {
+                    "label": "التشغيل المتواصل",
+                    "title": "التشغيل التلقائي"
+                },
+                "playbackRate": {
+                    "compact": "السرعة",
+                    "descriptive": "سرعة التشغيل"
+                },
+                "sleepTimer": {
+                    "compact": "المؤقت",
+                    "descriptive": "مؤقت النوم",
+                    "presets": {
+                        "endOfChapter": "نهاية الفصل",
+                        "endOfResource": "نهاية الموارد"
+                    }
                 }
             }
         },
@@ -125,20 +176,20 @@
             },
             "fontFamily": {
                 "humanist": {
-                    "compact": "Humanist",
-                    "descriptive": "Humanist sans-serif"
+                    "compact": "هيومانست (Humanist)",
+                    "descriptive": "هيومانست سانس سيريف (Humanist sans-serif)"
                 },
                 "modern": {
                     "compact": "Modern",
-                    "descriptive": "Modern serif"
+                    "descriptive": "مودرن سيريف (Modern serif)"
                 },
-                "monospace": "Monospace",
+                "monospace": "مونوسبيس (Monospace)",
                 "oldStyle": {
                     "compact": "Old style",
-                    "descriptive": "Old style serif"
+                    "descriptive": "أولد ستايل سيريف (Old style serif)"
                 },
-                "publisher": "Publisher's font",
-                "sans": "Sans-serif",
+                "publisher": "الخط الرسمي من ناشر الكتاب (Publisher's font)",
+                "sans": "سانس-سيريف (Sans-serif)",
                 "title": "عائلة الخط"
             },
             "fontSize": "حجم الخط",
@@ -157,12 +208,20 @@
                 "title": "تخطيط"
             },
             "letterSpacing": "تباعد الأحرف",
+            "ligatures": {
+                "label": "تشغيل الروابط الحرفية",
+                "title": "الروابط الحرفية"
+            },
             "lineHeight": {
                 "default": "افتراضي",
                 "large": "واسع",
                 "medium": "متوازن",
                 "small": "ضيق",
                 "title": "ارتفاع السطر"
+            },
+            "noRuby": {
+                "label": "إخفاء الشروح",
+                "title": "الشروح"
             },
             "offsetFirstPage": "عرض الصفحة الأولى بمفردها",
             "paragraphIndent": "مسافة البادئة للفقرات",
@@ -174,7 +233,7 @@
             "readingDirection": {
                 "default": {
                     "compact": "افتراضي",
-                    "descriptive": "ستخدام اتجاه القراءة الأصلي"
+                    "descriptive": "استخدام اتجاه القراءة الأصلي"
                 },
                 "ltr": {
                     "compact": "يمين",
@@ -265,6 +324,12 @@
             },
             "percentage": "{{ percentage }}%",
             "positionsLeft": {
+                "compact_few": "تبقى {{ count }} مواضع",
+                "compact_many": "تبقى {{ count }} موضعًا",
+                "compact_one": "تبقى موضع واحد",
+                "compact_other": "تبقى {{ count }} موضع",
+                "compact_two": "تبقى موضعان",
+                "compact_zero": "انتهى",
                 "descriptive_few": "تبقى{{ count }} مواضع",
                 "descriptive_many": "تبقى{{ count }} موضع",
                 "descriptive_one": "تبقى موضع واحد",
@@ -273,6 +338,12 @@
                 "descriptive_zero": "لا توجد مواضع متبقية"
             },
             "positionsLeftInChapter": {
+                "compact_few": "{{ count }} صفحات متبقية",
+                "compact_many": "{{ count }} صفحة متبقية",
+                "compact_one": "صفحة واحدة متبقية",
+                "compact_other": "{{ count }} صفحة متبقية",
+                "compact_two": "صفحتان متبقيتان",
+                "compact_zero": "إنتهى",
                 "descriptive_few": "تبقى {{ count }}مواضع الفصل",
                 "descriptive_many": "تبقى {{ count }}موضع الفصل",
                 "descriptive_one": "تبقى موضع واحد في الفصل",
@@ -281,6 +352,12 @@
                 "descriptive_zero": "لا توجد مواضع متبقية في الفصل"
             },
             "positionsLeftInPublication": {
+                "compact_few": "{{ count }} صفحات حتى النهاية",
+                "compact_many": "{{ count }} صفحة حتى النهاية",
+                "compact_one": "صفحة واحدة حتى النهاية",
+                "compact_other": "{{ count }} صفحة حتى النهاية",
+                "compact_two": "صفحتان حتى النهاية",
+                "compact_zero": "انتهى الكتاب",
                 "descriptive_few": "تبقى{{ count }} مواضع في المنشور",
                 "descriptive_many": "تبقى{{ count }} موضع في المنشور",
                 "descriptive_one": "تبقى موضع واحد في المنشور",
@@ -294,9 +371,27 @@
                 "descriptive": "{{ x }} من{{ y }} ({{ z }})"
             }
         },
+        "search": {
+            "actions": {
+                "next": {
+                    "compact": "النتيجة التالية"
+                },
+                "previous": {
+                    "compact": "النتيجة السابقة"
+                }
+            },
+            "placeholder": "ابحث عن كلمات أو جمل",
+            "result_few": "النتيجة {{ current }} من {{ count }} نتائج",
+            "result_many": "النتيجة {{ current }} من {{ count }} نتيجة",
+            "result_one": "نتيجة واحدة",
+            "result_other": "النتيجة {{ current }} من {{ count }} نتيجة",
+            "result_two": "النتيجة {{ current }} من نتيجتين",
+            "result_zero": "انتهت النتائج",
+            "title": "صفحة البحث"
+        },
         "tableOfContents": {
             "emptyState": {
-                "description": "لم يتم توفير جدول المحتويات لهذا المنشور.",
+                "description": "لم يوفر المؤلف جدول محتويات لهذا الكتاب.",
                 "title": "لا يوجد جدول محتويات"
             },
             "title": "جدول محتويات"

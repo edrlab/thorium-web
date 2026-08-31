@@ -150,7 +150,7 @@
             "columns": {
                 "auto": "Automático",
                 "dual": {
-                    "compact": "2 cols.",
+                    "compact": "2 col.",
                     "descriptive": "2 columnas"
                 },
                 "single": {
@@ -196,7 +196,7 @@
                 "title": "Peso de fuente"
             },
             "hyphens": {
-                "label": "Habilitar",
+                "label": "Habilitar guiones",
                 "title": "Guiones automáticos"
             },
             "layout": {

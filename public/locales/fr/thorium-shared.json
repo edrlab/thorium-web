@@ -323,7 +323,7 @@
                 "compact_many": "{{ count }} restantes dans le chapitre",
                 "compact_one": "{{ count }} restante dans le chapitre",
                 "compact_other": "{{ count }} restantes dans le chapitre",
-                "descriptive_many": "",
+                "descriptive_many": "{{ count }} positions restantes dans le chapitre",
                 "descriptive_one": "{{ count }} position restante dans le chapitre",
                 "descriptive_other": "{{ count }} positions restantes dans le chapitre"
             },

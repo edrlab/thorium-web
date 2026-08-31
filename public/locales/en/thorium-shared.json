@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Go backward",
             "goForward": "Go forward",
+            "goToExtendedDescription": {
+                "compact": "Extended description"
+            },
             "goToNextChapter": {
                 "compact": "Next",
                 "descriptive": "Next chapter"

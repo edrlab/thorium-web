@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Mine tagasi",
             "goForward": "Mine edasi",
+            "goToExtendedDescription": {
+                "compact": "Täiendav kirjeldus"
+            },
             "goToNextChapter": {
                 "compact": "Edasi",
                 "descriptive": "Järgmine peatükk"

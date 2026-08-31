@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Do tyłu",
             "goForward": "Do przodu",
+            "goToExtendedDescription": {
+                "compact": "Opis rozszerzony"
+            },
             "goToNextChapter": {
                 "compact": "Następny",
                 "descriptive": "Następny rozdział"
@@ -64,6 +67,9 @@
             "goToPreviousSentence": {
                 "compact": "Poprzednie",
                 "descriptive": "Poprzednie zdanie"
+            },
+            "readAloud": {
+                "compact": "Czytaj na głos"
             }
         },
         "annotations": {
