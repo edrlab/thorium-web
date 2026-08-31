@@ -2,7 +2,7 @@
     "reader": {
         "app": {
             "loading": "Laddar",
-            "publicationWrapper": "Du är nu i publikationen.",
+            "publicationWrapper": "Du är nu i boken.",
             "docking": {
                 "dockingLeft": "Dockad panel till vänster",
                 "dockingRight": "Dockad panel till höger",
@@ -53,7 +53,7 @@
             "errors": {
                 "title": "Fel",
                 "notFound": "Ingen bok hittades.",
-                "accessDenied": "Access nekas.",
+                "accessDenied": "Tillgång nekas.",
                 "network": "Servern kan inte nås – försök igen senare.",
                 "serverError": "Serverfel – försök igen senare.",
                 "clientError": "Ogiltig begäran.",
