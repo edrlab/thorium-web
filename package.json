@@ -86,7 +86,7 @@
     "react-i18next": "^16.5.4",
     "react-modal-sheet": "5.2.1",
     "react-redux": "^9.2.0",
-    "react-resizable-panels": "^3.0.6",
+    "react-resizable-panels": "^4.12.3",
     "react-stately": "^3.44.0"
   },
   "dependencies": {
@@ -110,7 +110,7 @@
     "react-i18next": "^16.5.4",
     "react-modal-sheet": "5.2.1",
     "react-redux": "^9.2.0",
-    "react-resizable-panels": "^3.0.6",
+    "react-resizable-panels": "^4.12.3",
     "react-stately": "^3.47.0"
   },
   "devDependencies": {

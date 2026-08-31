@@ -53,7 +53,7 @@ Object `layout` allows to configure:
 - the border `radius` of button icons and sheets/containers (in `px`);
 - the `spacing` of components (in `px`) when applicable e.g. padding and spacing of sheets/containers;
 - `defaults` for:
-  - `dockingWidth` or the size of dock panels by default (in `px`);
+  - `dockingWidth` or the size of dock panels by default – accepts a `ThDockingSizeValue`: a plain `number` (`px`), a unitless string (percentage), or a string with an explicit CSS unit (`px`, `%`, `em`, `rem`, `vh`, `vw`);
   - `scrim` or the CSS-valid string value for the bottom sheet’s underlay `background` – is overridable in each action’s `snapped` preference.
 - `constraints` for some components:
   - the `max-width` of the bottom sheet component – is overridable in each action’s `snapped` preference;

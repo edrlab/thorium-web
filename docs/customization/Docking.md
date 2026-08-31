@@ -51,12 +51,20 @@ See [dedicated doc](./Collapsibility.md).
 Each action with a sheet/container can have an optional `docked` configuration with the following properties:
 
 - `dockable`: the docking options (in `ThDockingTypes` enum) to display to the user for this specific action (required);
+- `reserved`: reserves the action’s dock slot(s) so it can’t be popped out by the user and can’t be evicted from its slot by other actions (default is `false`, see [Reserved actions](#reserved-actions));
+- `reopenOnLoad`: the default open/closed state the *first* time the action is docked with no remembered choice yet (default is `false`, see [Reopening on load](#reopening-on-load));
 - `dragIndicator`: enable/disable the drag indicator if the actions’ container is resizable (default is `false`);
-- `width`: the initial/default width of the container when docked in `px`;
-- `minWidth`: the minimum width of the container when docked in `px`;
-- `maxWidth`: the maximum width of the container when docked in `px`.
+- `width`: the initial/default width of the container when docked;
+- `minWidth`: the minimum width of the container when docked;
+- `maxWidth`: the maximum width of the container when docked.
 
-For instance, if you want to Table of Contents to be dockable in both panels, with a drag handle, and make it resizable, you would configure:
+`width`, `minWidth`, and `maxWidth` accept a `ThDockingSizeValue`:
+
+- a plain `number`, interpreted as `px` (e.g. `360`);
+- a unitless string, interpreted as a percentage of the docking group’s width (e.g. `"30"`);
+- a string with an explicit CSS unit: `px`, `%`, `em`, `rem`, `vh`, or `vw` (e.g. `"30%"`, `"20rem"`, `"40vw"`).
+
+For instance, if you want the Table of Contents to be dockable in both panels, with a drag handle, and make it resizable, you would configure:
 
 ```
 [ThActionKeys.toc]: {
@@ -71,15 +79,15 @@ For instance, if you want to Table of Contents to be dockable in both panels, wi
 }
 ```
 
-Resizability is inferred from `width`, `minWidth`, and `maxWidth` and their values have to meet the requirement of an ascending range of values. 
+Resizability is inferred from `width`, `minWidth`, and `maxWidth` and their values have to meet the requirement of an ascending range of values. This ascending-range check only applies when all three are plain numbers (`px`); if you mix in a unit string, they are used as configured without this validation.
 
 If no width-related property is set at all, then the `default` set in `theming` will be used.
 
-Note the panels are also collapsible, and will try to keep the width the user has previously set on open/expand.
+Note the panels can be dragged shut, which closes the action they contain, and dragged back out to reopen it. Either way they will try to keep the width the user has previously set.
 
 ## Docked Sheets
 
-You can set the action’s container as docked using `ThSheetTypes.dockedStart` and `ThSheetTypes.dockedEnd` in the action’s `sheet` object, but it can’t be a `defaultSheet`, it can only be used in `breakpoints`. 
+You can set the action’s container as docked using `ThSheetTypes.dockedStart` and `ThSheetTypes.dockedEnd` in the action’s `sheet` object, either as the `defaultSheet` itself or per-breakpoint in `breakpoints`.
 
 For instance, if you want to have the Table of Contents docked by default on larger screens but as a popover otherwise:
 
@@ -95,11 +103,89 @@ For instance, if you want to have the Table of Contents docked by default on lar
 }
 ```
 
+Or, if you want it docked by default at every breakpoint where a dock slot is available:
+
+```
+[ThActionKeys.toc]: {
+  ...
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
 This preference must also meet the following requirements:
 
 - be compatible with `docking.dock` for its breakpoint;
 - be compatible with `docked.dockable` in its own configuration.
 
-This should dock and open the container on load if applicable. 
+This should dock the container on load if applicable. Whether it also opens
+is a separate decision made by `docked.reopenOnLoad` — see
+[Reopening on load](#reopening-on-load).
 
 Note the user’s customization will override this preference.
+
+### `fallbackSheet`
+
+When `defaultSheet` (or a breakpoint’s resolved sheet) is `dockedStart`/`dockedEnd` but no dock slot is actually available — no breakpoint match in `docking.dock`, `docked.dockable` doesn’t allow the slot, or the slot is currently held by a [reserved](#reserved-actions) action — the container falls back to `fallbackSheet` instead. This only happens when the user opens the action; it’s never used to auto-pop a sheet open on its own.
+
+`fallbackSheet` accepts any `ThSheetTypes` value except `dockedStart`/`dockedEnd`. Primary-zone audio actions (`actions.primary.keys`) additionally exclude `popover` (they use `compactPopover` instead); every other action — reader actions and secondary-zone audio actions (`actions.secondary.keys`) alike — additionally excludes `compactPopover`. It defaults to `ThSheetTypes.modal` if not set.
+
+## Reserved actions
+
+`docked.reserved` only takes effect when the action’s own `sheet.defaultSheet` is `dockedStart` or `dockedEnd` — i.e. it lives in the dock by default. Otherwise it is ignored entirely, as if unset: the action docks only when the user chooses to, and behaves like any other dockable action, undock control included.
+
+With that satisfied, setting `docked.reserved` to `true` reserves the action’s dock slot(s) so that:
+
+- the user can’t pop it out to a popover/fullscreen/modal — no undock control is shown in its docker;
+- it can still be moved by the user between its own allowed slots (start/end) if `dockable` is `ThDockingTypes.both`;
+- no other, non-reserved action can evict it from a slot it currently occupies. That other action’s own docker button for that slot is disabled while the reserved action holds it, and becomes usable again once the reserved action releases it by moving to its other slot — closing it does not release the slot, it stays reserved and occupied.
+- it still falls back to breakpoints, then `fallbackSheet` (or modal if undefined) when the user opens it and no dock slot is available at all.
+
+```
+[ThActionKeys.toc]: {
+  ...
+  docked: {
+    dockable: ThDockingTypes.both,
+    reserved: true,
+    width: 360,
+    minWidth: 320,
+    maxWidth: 450
+  },
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
+Configuring two reserved actions with overlapping `dockable` slots (e.g. both `both`, or both `start`) is a misconfiguration with undefined resolution — the last one to dock wins. Give reserved actions non-overlapping `dockable` values (e.g. one `start`, the other `end`) instead.
+
+## Reopening on load
+
+`docked.reopenOnLoad` only decides the open/closed state the *first* time an action is docked with no remembered choice — an action that's never been docked before, or one whose transient state became stale after being reserved. It defaults to `false`, so a docked action starts closed the first time around.
+
+Once the user opens or closes the action themselves, that choice is what persists — across reloads and profile switches alike. `reopenOnLoad` never overrides it; there's no "always force open/closed" mode.
+
+If you want a GitBook-style Table of Contents that's open the first time it's docked:
+
+```
+[ThActionKeys.toc]: {
+  ...
+  docked: {
+    dockable: ThDockingTypes.both,
+    reserved: true,
+    reopenOnLoad: true,
+    width: 360,
+    minWidth: 320,
+    maxWidth: 450
+  },
+  sheet: {
+    defaultSheet: ThSheetTypes.dockedStart,
+    fallbackSheet: ThSheetTypes.modal
+  }
+}
+```
+
+One exception: if the action was docked and left open on a wider viewport, then the app is reloaded on a breakpoint where docking isn’t available at all, it starts closed instead of popping open immediately as a fallback sheet (popover/modal/bottomSheet/fullscreen). This only applies to a cold load — resizing the window down during an active session leaves an already-open docked action open, now rendered as its fallback sheet instead.

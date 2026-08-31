@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
-import { BreakpointsMap } from "@/core/Hooks/useBreakpoints";
 import { ThDockingTypes, ThDockingKeys, ThSheetTypes } from "@/preferences/models";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -10,11 +9,10 @@ import { makeBreakpointsMap } from "@/core/Helpers/breakpointsMap";
 import { dockAction, setActionOpen } from "@/lib/actionsReducer";
 
 import { usePrevious } from "@/core/Hooks/usePrevious";
-import { useActions } from "@/core/Components/Actions/hooks/useActions";
-import { useActionComponentStatus } from "../../Actions/hooks/useActionComponentStatus";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
+import { useDockReservation } from "./useDockReservation";
 
-let dockingMap: Required<BreakpointsMap<ThDockingTypes>> | null = null;
+const isDockedType = (type: ThSheetTypes) => type === ThSheetTypes.dockedStart || type === ThSheetTypes.dockedEnd;
 
 export const useDocking = <T extends string>(key: T) => {
   const preferences = useActionsPreferences();
@@ -22,49 +20,45 @@ export const useDocking = <T extends string>(key: T) => {
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actionState = actionsMap?.[key];
-  const dock = useAppSelector(state => profile ? state.actions.dock[profile] : undefined);
+  const { dock, reserved, isSlotLockedByOther } = useDockReservation(key);
   const dispatch = useAppDispatch();
 
-  const actions = useActions(actionsMap || {});
-  
-  // Check if docked actions still exist in plugin registry
-  const startActionKey = dock?.[ThDockingKeys.start]?.actionKey;
-  const endActionKey = dock?.[ThDockingKeys.end]?.actionKey;
-  const startStatus = useActionComponentStatus({ actionKey: startActionKey || "" });
-  const endStatus = useActionComponentStatus({ actionKey: endActionKey || "" });
-
-  if (!dockingMap) {
-    dockingMap = makeBreakpointsMap<ThDockingTypes>({
-      defaultValue: ThDockingTypes.both, 
-      fromEnum: ThDockingTypes, 
-      pref: preferences.docking.dock, 
-      disabledValue: ThDockingTypes.none 
-    });
-  }
+  const dockingPref = preferences.docking.dock;
+  const dockingMap = useMemo(() => makeBreakpointsMap<ThDockingTypes>({
+    defaultValue: ThDockingTypes.both,
+    fromEnum: ThDockingTypes,
+    pref: dockingPref,
+    disabledValue: ThDockingTypes.none
+  }), [dockingPref]);
   const currentDockConfig = breakpoint && dockingMap[breakpoint];
-  
+
   // Use type assertion to tell TypeScript that the key is valid
-  const dockablePref = (preferences.actionsKeys[key as keyof typeof preferences.actionsKeys])?.docked?.dockable || ThDockingTypes.none;
+  const actionPref = preferences.actionsKeys[key as keyof typeof preferences.actionsKeys];
+  const dockablePref = actionPref?.docked?.dockable || ThDockingTypes.none;
+  const reopenOnLoadPref = !!actionPref?.docked?.reopenOnLoad;
 
-  const defaultSheet = (preferences.actionsKeys[key as keyof typeof preferences.actionsKeys])?.sheet?.defaultSheet || ThSheetTypes.popover;
+  const defaultSheet = actionPref?.sheet?.defaultSheet || ThSheetTypes.popover;
+  const fallbackSheet = actionPref?.sheet?.fallbackSheet || ThSheetTypes.modal;
+  // defaultSheet may itself be dockedStart/dockedEnd; safeDefaultSheet is always
+  // renderable and is what every "docking isn't available" fallback should use
+  const safeDefaultSheet = isDockedType(defaultSheet) ? fallbackSheet : defaultSheet;
 
-  const sheetMap = makeBreakpointsMap<ThSheetTypes>({
-    defaultValue: (preferences.actionsKeys[key as keyof typeof preferences.actionsKeys])?.sheet?.defaultSheet || ThSheetTypes.popover,
+  const sheetBreakpointsPref = actionPref?.sheet?.breakpoints;
+  const sheetMap = useMemo(() => makeBreakpointsMap<ThSheetTypes>({
+    defaultValue: defaultSheet,
     fromEnum: ThSheetTypes,
-    pref: (preferences.actionsKeys[key as keyof typeof preferences.actionsKeys])?.sheet?.breakpoints
-  });
+    pref: sheetBreakpointsPref
+  }), [defaultSheet, sheetBreakpointsPref]);
   const sheetPref = breakpoint && sheetMap[breakpoint] || defaultSheet;
-
-  const [sheetType, setSheetType] = useState<ThSheetTypes>(defaultSheet);
-  const previousSheetType = usePrevious(sheetType);
 
   // Checks whether the action can be docked: its pref should match the docking pref
   const canBeDocked = useCallback((slot: ThDockingTypes.start | ThDockingTypes.end) => {
-      return (currentDockConfig === slot || currentDockConfig === ThDockingTypes.both) 
-          && (dockablePref === slot || dockablePref === ThDockingTypes.both);
-  }, [currentDockConfig, dockablePref]);
+      return (currentDockConfig === slot || currentDockConfig === ThDockingTypes.both)
+          && (dockablePref === slot || dockablePref === ThDockingTypes.both)
+          && !isSlotLockedByOther(slot === ThDockingTypes.start ? ThDockingKeys.start : ThDockingKeys.end);
+  }, [currentDockConfig, dockablePref, isSlotLockedByOther]);
 
-  // Checks whether the sheet pref is of Dock type 
+  // Checks whether the sheet pref is of Dock type
   const isDockedSheetPref = useCallback((type?: ThSheetTypes.dockedStart | ThSheetTypes.dockedEnd) => {
     if (type) {
       return sheetPref === type;
@@ -72,7 +66,108 @@ export const useDocking = <T extends string>(key: T) => {
       return sheetPref === ThSheetTypes.dockedStart || sheetPref === ThSheetTypes.dockedEnd
     }
   }, [sheetPref]);
-  
+
+  // The pref can itself point at a dock slot the action can’t have, leaving it
+  // with no panel to portal into. Branches below each check only the one slot
+  // they know about, so validate against both here
+  const usableSheetPref = useCallback((): ThSheetTypes => {
+    if (sheetPref === ThSheetTypes.dockedStart && !canBeDocked(ThDockingTypes.start)) return safeDefaultSheet;
+    if (sheetPref === ThSheetTypes.dockedEnd && !canBeDocked(ThDockingTypes.end)) return safeDefaultSheet;
+    return sheetPref;
+  }, [sheetPref, canBeDocked, safeDefaultSheet]);
+
+  // A "transient" persisted before the action became reserved is a state the
+  // action can no longer leave on its own: reserved actions expose no undock
+  // control, so nothing can move it back to a slot. Treated as unclaimed
+  // everywhere below, and written back to a real slot by the effect that
+  // claims it — leaving it would render a docked sheet with no slot to
+  // portal into, which no trigger can then open
+  const hasStaleTransient = actionState?.docking === ThDockingKeys.transient && reserved;
+  const effectiveDocking = hasStaleTransient ? undefined : actionState?.docking;
+
+  // sheetPref once it's known to name a slot other than the one actually
+  // being resolved: a non-docked value is a deliberate per-breakpoint choice
+  // and used as-is, a docked one carries no usable slot information here
+  const nonDockedSheetPref = isDockedType(sheetPref) ? safeDefaultSheet : sheetPref;
+
+  // Derived, never stored: held in state it lags a render behind the values it
+  // comes from, and the effects below then dispatch against a stale sheet type
+  const sheetType: ThSheetTypes = useMemo(() => {
+    // Protect against null breakpoint during initialization
+    if (!breakpoint) {
+      return safeDefaultSheet;
+    }
+
+    // First check the dockable pref is none to return early
+    if (dockablePref === ThDockingTypes.none) {
+      // Sheet is of docked type, we return the safe fallback
+      if (isDockedSheetPref()) {
+        return safeDefaultSheet;
+      } else {
+        // Sheet pref is not of docked type, we can return it
+        return usableSheetPref();
+      }
+    };
+
+    // We now need to check whether the user has docked the action themselves
+    // ActionsReducer should has made sure there is no conflict to handle here
+    // by updating states of actions on docking
+    switch (effectiveDocking) {
+
+      // if action.docking is transient we need to check the pref,
+      // it can be docked and in that case we need to pick the default
+      case ThDockingKeys.transient:
+        if (isDockedSheetPref()) {
+          return safeDefaultSheet;
+        } else {
+          return usableSheetPref();
+        }
+
+      // The chosen slot may not be the one the static pref names, so
+      // usableSheetPref (keyed to sheetPref's own slot) can't be reused here.
+      // Unavailable: an explicit per-breakpoint non-docked sheet wins,
+      // otherwise fall to fallbackSheet
+      case ThDockingKeys.start:
+        if (canBeDocked(ThDockingTypes.start)) {
+          return ThSheetTypes.dockedStart;
+        } else {
+          return nonDockedSheetPref;
+        }
+
+      case ThDockingKeys.end:
+        if (canBeDocked(ThDockingTypes.end)) {
+          return ThSheetTypes.dockedEnd;
+        } else {
+          return nonDockedSheetPref;
+        }
+
+      // If action.docking is null or undefined then we rely on pref
+      // as it means the user did not pick another option
+      case null:
+      case undefined:
+        // We have to check sheetPref is compatible with docking prefs
+        if (isDockedSheetPref(ThSheetTypes.dockedStart)) {
+          if (canBeDocked(ThDockingTypes.start)) {
+            return ThSheetTypes.dockedStart;
+          } else {
+            return safeDefaultSheet;
+          }
+        } else if (isDockedSheetPref(ThSheetTypes.dockedEnd)) {
+          if (canBeDocked(ThDockingTypes.end)) {
+            return ThSheetTypes.dockedEnd;
+          } else {
+            return safeDefaultSheet;
+          }
+        } else {
+          return usableSheetPref();
+        }
+      default:
+        return safeDefaultSheet;
+    }
+  }, [dockablePref, safeDefaultSheet, effectiveDocking, canBeDocked, isDockedSheetPref, usableSheetPref, nonDockedSheetPref, breakpoint]);
+
+  const previousSheetType = usePrevious(sheetType);
+
   // Builds the docker for the action based on all preferences
   const getDocker = useCallback((): ThDockingKeys[] => {
     // First let’s handle the cases where docker shouldn’t be used
@@ -90,8 +185,10 @@ export const useDocking = <T extends string>(key: T) => {
     preferences.docking.displayOrder.forEach((dockingKey: ThDockingKeys) => {
       switch(dockingKey) {
         case ThDockingKeys.transient:
-          // We already handled both cases for none 
-          dockerKeys.push(dockingKey);
+          // Reserved actions never expose an undock control
+          if (!reserved) {
+            dockerKeys.push(dockingKey);
+          }
           break;
         case ThDockingKeys.start:
           if (canBeDocked(ThDockingTypes.start)) {
@@ -112,241 +209,133 @@ export const useDocking = <T extends string>(key: T) => {
     if (dockerKeys.length === 1 && dockerKeys[0] === ThDockingKeys.transient) return [];
 
     return dockerKeys;
-  }, [preferences.docking.displayOrder, currentDockConfig, sheetPref, dockablePref, canBeDocked]);
+  }, [preferences.docking.displayOrder, currentDockConfig, sheetPref, dockablePref, reserved, canBeDocked]);
 
-  const getSheetType = useCallback(() => {
-    // Protect against null breakpoint during initialization
-    if (!breakpoint) {
-      return sheetType;
-    }
-    
-    // First check the dockable pref is none to return early
-    if (dockablePref === ThDockingTypes.none) {
-      // Sheet is of docked type, we return the default
-      if (isDockedSheetPref()) {
-        return defaultSheet;
-      } else {
-        // Sheet pref is not of docked type, we can return it
-        return sheetPref;
-      }
-    };
-
-    // We now need to check whether the user has docked the action themselves
-    // ActionsReducer should has made sure there is no conflict to handle here 
-    // by updating states of actions on docking
-    switch (actionState?.docking) {
-      
-      // if action.docking is transient we need to check the pref, 
-      // it can be docked and in that case we need to pick the default
-      case ThDockingKeys.transient:
-        if (isDockedSheetPref()) {
-          return defaultSheet;
-        } else {
-          return sheetPref;
-        }
-      
-      // If action.docking is set to start/end then we check the docking slot is available
-      case ThDockingKeys.start:
-        if (canBeDocked(ThDockingTypes.start)) {
-          return ThSheetTypes.dockedStart;
-        } else {
-          // if the pref is not docked start, return the pref 
-          // else return the default
-          if (!isDockedSheetPref(ThSheetTypes.dockedStart)) {
-            return sheetPref;
-          } else {
-            return defaultSheet;
-          }
-        }
-
-      case ThDockingKeys.end:
-        if (canBeDocked(ThDockingTypes.end)) {
-          return ThSheetTypes.dockedEnd;
-        } else {
-          // if the pref is not docked end, return the pref 
-          // else return the default
-          if (!isDockedSheetPref(ThSheetTypes.dockedEnd)) {
-            return sheetPref;
-          } else {
-            return defaultSheet;
-          }
-        }
-      
-      // If action.docking is null or undefined then we rely on pref 
-      // as it means the user did not pick another option
-      case null:
-      case undefined:
-        // We have to check sheetPref is compatible with docking prefs
-        if (isDockedSheetPref(ThSheetTypes.dockedStart)) {
-          if (canBeDocked(ThDockingTypes.start)) {
-            return ThSheetTypes.dockedStart;
-          } else {
-            return defaultSheet;
-          }
-        } else if (isDockedSheetPref(ThSheetTypes.dockedEnd)) {
-          if (canBeDocked(ThDockingTypes.end)) {
-            return ThSheetTypes.dockedEnd;
-          } else {
-            return defaultSheet;
-          }
-        } else {
-          return sheetPref;
-        }
-      default:
-        return defaultSheet;
-    }
-  }, [dockablePref, sheetPref, defaultSheet, actionState?.docking, canBeDocked, isDockedSheetPref, breakpoint, sheetType]);
-
-  // When docking or breakpoints-related prefs change, get the correct sheet type
+  // Two independent gaps to fill once the breakpoint says this action is docked.
+  // Both guards are cleared by their own dispatch, so each is one-shot
   useEffect(() => {
-    setSheetType(getSheetType());
-  }, [sheetPref, currentDockConfig, actionState?.docking, getSheetType]);
+    if (!profile) return;
 
-  // Dismiss/Close when sheetType has changed from docked to transient
+    if (!isDockedType(sheetType)) {
+      // Docking isn't available at this breakpoint. A remembered `isOpen:
+      // true` from a wider viewport shouldn't leak into whatever fallback
+      // sheet this action renders as on a cold load — the "dismiss when
+      // sheet stops being docked" effect below can't catch this itself,
+      // since `usePrevious` has nothing to compare against on first render.
+      // Gated to that one-shot case: previousSheetType is only null on
+      // mount, so a later deliberate reopen isn't clobbered right back shut
+      if (previousSheetType == null && (actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: false,
+          profile
+        }));
+      }
+      return;
+    }
+
+    // The slot was never claimed: docking comes from prefs, or the action was
+    // opened at a breakpoint where it rendered as another sheet type.
+    // Displacing a non-reserved occupant is allowed — dockAction is the one
+    // place that arbitrates reservation
+    if (effectiveDocking == null) {
+      dispatch(dockAction({
+        key: key,
+        dockingKey: sheetType === ThSheetTypes.dockedStart ? ThDockingKeys.start : ThDockingKeys.end,
+        profile: profile,
+        reserved
+      }));
+    }
+
+    // isOpen is only undetermined here for an action that's never been
+    // docked before (nothing to remember), or a stale transient whose
+    // persisted `false` belonged to a sheet type it no longer has. Both
+    // fall back to `docked.reopenOnLoad`; any other persisted value is the
+    // user's own choice and is left untouched
+    if (actionState?.isOpen == null || hasStaleTransient) {
+      dispatch(setActionOpen({
+        key: key,
+        isOpen: reopenOnLoadPref,
+        profile
+      }));
+    }
+  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, previousSheetType, key, dispatch, profile, reserved, reopenOnLoadPref]);
+
+  // Dismiss when the sheet stops being docked. `docking` is left pointing at
+  // the slot, so it is reclaimed for free once the slot comes back
   useEffect(() => {
     // This was not dismissed on breakpoint change, but by the user
-    if (actionState?.docking === ThDockingKeys.transient) return;
+    if (effectiveDocking === ThDockingKeys.transient) return;
 
-    if (sheetType !== ThSheetTypes.dockedStart && sheetType !== ThSheetTypes.dockedEnd) {
-      if (previousSheetType === ThSheetTypes.dockedStart || previousSheetType === ThSheetTypes.dockedEnd) {
-        if (profile) {
-          dispatch(setActionOpen({
-            key: key,
-            isOpen: false,
-            profile
-          }));
-        }
-      }
-    }
-  }, [dispatch, key, sheetType, previousSheetType, actionState?.docking, profile]);
+    // What the user docked has the upper hand: losing the slot to a breakpoint
+    // falls back to the sheet pref but stays open. Only a reserved occupant
+    // overrides that choice, since it can’t be displaced
+    if (effectiveDocking === ThDockingKeys.start && !isSlotLockedByOther(ThDockingKeys.start)) return;
+    if (effectiveDocking === ThDockingKeys.end && !isSlotLockedByOther(ThDockingKeys.end)) return;
 
-  // on mount, check whether we should update states for docked sheets from pref
-  useEffect(() => {
-    if (actionState?.isOpen == null && profile) {
-      if (sheetType === ThSheetTypes.dockedStart) {
-        dispatch(dockAction({
-          key: key,
-          dockingKey: ThDockingKeys.start,
-          profile: profile
-        }));
-        dispatch(setActionOpen({
-          key: key,
-          isOpen: true,
-          profile
-        }));
-      } else if (sheetType === ThSheetTypes.dockedEnd) {
-        dispatch(dockAction({
-          key: key,
-          dockingKey: ThDockingKeys.end,
-          profile: profile
-        }));
-        dispatch(setActionOpen({
-          key: key,
-          isOpen: true,
-          profile
-        }));
-      }
-    }
-  }, [actionState?.isOpen, sheetType, key, dispatch, profile]);
+    if (!previousSheetType || !isDockedType(previousSheetType) || isDockedType(sheetType)) return;
+    if (!breakpoint || !profile) return;
 
-  // Edge case where the sheet has been opened/closed and
-  // is of dockable type, but the dock panel is not populated
-  // e.g. action was mounted as a different type of sheet (breakpoint),
-  // and opened/closed. If the user resizes the window (another breakpoint) 
-  // but we don’t dispatch docking, then it can’t be displayed 
-  // since the docking slot has never been populated.
-  useEffect(() => {
-    // Action has been opened/closed by user
-    // but it’s not been manually docked, 
-    // which means the pref is used but 
-    // has not be instantiated yet, and 
-    // couldn’t be on first mount because
-    // a different type was used in prefs
-    if (actionState?.isOpen != null && actionState?.docking == null && profile) {
-      if (sheetType === ThSheetTypes.dockedStart) {
-        // Check if the action is docked in practice
-        // if it isn’t dispatch docking of the action
-        const dockingKey = actions.whichDocked(key);
-        if (dockingKey !== ThDockingKeys.start) {
-          dispatch(dockAction({
-            key: key,
-            dockingKey: ThDockingKeys.start,
-            profile: profile
-          }));
-        }
-      } else if (sheetType === ThSheetTypes.dockedEnd) {
-        // Check if the action is docked in practice
-        // if it isn’t dispatch docking of the action
-        const dockingKey = actions.whichDocked(key);
-        if (dockingKey !== ThDockingKeys.end) {
-          dispatch(dockAction({
-            key: key,
-            dockingKey: ThDockingKeys.end,
-            profile: profile
-          }));
-        }
-      }
-    }
-  }, [dispatch, key, sheetType, actionState?.isOpen, actionState?.docking, actions, profile]);
+    dispatch(setActionOpen({
+      key: key,
+      isOpen: false,
+      profile
+    }));
+  }, [dispatch, key, sheetType, previousSheetType, breakpoint, profile, effectiveDocking, isSlotLockedByOther]);
 
-  // Sync action docking property with profile dock state when profile changes
-  useEffect(() => {
-    if (profile && dock) {
-      const isDockedInStart = dock[ThDockingKeys.start]?.actionKey === key;
-      const isDockedInEnd = dock[ThDockingKeys.end]?.actionKey === key;
-      
-      if (isDockedInStart && actionState?.docking !== ThDockingKeys.start) {
-        dispatch(dockAction({
-          key: key,
-          dockingKey: ThDockingKeys.start,
-          profile: profile
-        }));
-        // Restore isOpen state if action was docked
-        if (actionState?.isOpen === false) {
-          dispatch(setActionOpen({
-            key: key,
-            isOpen: true,
-            profile
-          }));
-        }
-      } else if (isDockedInEnd && actionState?.docking !== ThDockingKeys.end) {
-        dispatch(dockAction({
-          key: key,
-          dockingKey: ThDockingKeys.end,
-          profile: profile
-        }));
-        // Restore isOpen state if action was docked
-        if (actionState?.isOpen === false) {
-          dispatch(setActionOpen({
-            key: key,
-            isOpen: true,
-            profile
-          }));
-        }
-      }
-    }
-  }, [profile, dock, actionState?.docking, actionState?.isOpen, key, dispatch]);
-
-  // Clean up stale docked actions that no longer exist in plugin registry
+  // Sync action docking property with profile dock state when profile changes.
+  // The slot is authoritative here: it can already name this action while the
+  // action's own `docking` still belongs to the profile we came from
   useEffect(() => {
     if (!profile || !dock) return;
 
-    if (startActionKey && !startStatus.isComponentRegistered) {
-      dispatch(dockAction({
-        key: startActionKey,
-        dockingKey: ThDockingKeys.transient,
-        profile
-      }));
-    }
+    const startSlot = dock[ThDockingKeys.start];
+    const endSlot = dock[ThDockingKeys.end];
+    const isDockedInStart = startSlot?.actionKey === key;
+    const isDockedInEnd = endSlot?.actionKey === key;
+    const wasAlreadyDockedInStart = actionState?.docking === ThDockingKeys.start;
+    const wasAlreadyDockedInEnd = actionState?.docking === ThDockingKeys.end;
 
-    if (endActionKey && !endStatus.isComponentRegistered) {
+    // Re-dispatch whenever the slot assignment changes, or when it doesn't
+    // but the persisted `reserved` flag has drifted from the current pref
+    // (e.g. `docked.reserved` was toggled in config for an action that's
+    // already sitting in its slot)
+    if (isDockedInStart && (!wasAlreadyDockedInStart || startSlot?.reserved !== reserved)) {
       dispatch(dockAction({
-        key: endActionKey,
-        dockingKey: ThDockingKeys.transient,
-        profile
+        key: key,
+        dockingKey: ThDockingKeys.start,
+        profile: profile,
+        reserved
       }));
+      // isOpen is only undetermined here for an action that's never been
+      // docked before in this profile; anything else (true or false) is
+      // the user's own choice and stays untouched
+      if (!wasAlreadyDockedInStart && actionState?.isOpen == null && reopenOnLoadPref) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: true,
+          profile
+        }));
+      }
+    } else if (isDockedInEnd && (!wasAlreadyDockedInEnd || endSlot?.reserved !== reserved)) {
+      dispatch(dockAction({
+        key: key,
+        dockingKey: ThDockingKeys.end,
+        profile: profile,
+        reserved
+      }));
+      // isOpen is only undetermined here for an action that's never been
+      // docked before in this profile; anything else (true or false) is
+      // the user's own choice and stays untouched
+      if (!wasAlreadyDockedInEnd && actionState?.isOpen == null && reopenOnLoadPref) {
+        dispatch(setActionOpen({
+          key: key,
+          isOpen: true,
+          profile
+        }));
+      }
     }
-  }, [profile, dock, startActionKey, endActionKey, startStatus.isComponentRegistered, endStatus.isComponentRegistered, dispatch]);
+  }, [profile, dock, actionState?.docking, actionState?.isOpen, key, dispatch, reserved, reopenOnLoadPref]);
 
   return {
     getDocker,
