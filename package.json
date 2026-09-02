@@ -131,6 +131,7 @@
     "glob": "^13.0.6",
     "immer": "11.1.2",
     "tsup": "^8.5.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^4.127.1"
   }
 }
