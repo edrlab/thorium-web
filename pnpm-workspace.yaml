@@ -10,5 +10,11 @@ trustPolicy: no-downgrade
 # undici's 5.x maintenance line was never wired into npm provenance attestation,
 # unlike its 6.x/7.x mainline releases from the same maintainer (matteo.collina) -
 # a publish-pipeline gap, not a trust downgrade.
+# eslint-import-resolver-typescript's 3.x line (still the resolved dep of
+# eslint-config-next) predates its 4.x provenance adoption - same pattern.
+# semver's 6.x line (last published 2021, pre-dates npm provenance entirely)
+# vs. its 7.x line, which has it - same pattern, flagged via eslint-plugin-import.
 trustPolicyExclude:
   - "undici"
+  - "eslint-import-resolver-typescript"
+  - "semver"

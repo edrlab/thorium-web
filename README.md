@@ -80,7 +80,7 @@ This will create a production-ready build of the reader and deploy it to the spe
 This repository is using the following configuration:
 
 - Go-Toolkit on Google Cloud Run
-- Thorium Web App on CloudFlare Workers
+- Thorium Web App on Cloudflare Workers
 - Assets e.g. demo EPUBs stored on Google Cloud Storage
 
 To deploy, the following script is run: 
