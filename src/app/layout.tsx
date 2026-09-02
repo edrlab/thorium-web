@@ -6,8 +6,6 @@ import { ThGlobalPreferencesProvider } from "@/preferences/ThGlobalPreferencesPr
 
 import "./reset.css";
 
-export const runtime = "edge";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
