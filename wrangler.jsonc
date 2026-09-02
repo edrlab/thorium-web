@@ -9,8 +9,5 @@
 	},
 	"images": {
 		"binding": "IMAGES"
-	},
-	"vars": {
-		"PNPM_VERSION": "11.1.0"
 	}
 }

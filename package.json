@@ -22,6 +22,7 @@
   },
   "version": "1.6.0",
   "private": false,
+  "packageManager": "pnpm@11.1.0",
   "files": [
     "./dist"
   ],
