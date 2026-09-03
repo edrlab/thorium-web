@@ -102,6 +102,13 @@ const webPublications = [
     cover: "/images/readium-css.jpg",
     url: "/read/readium-css",
     rendition: "Web Publication"
+  },
+  {
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    cover: "/images/PrideAndPrejudice.jpg",
+    url: "/read/pride-and-prejudice",
+    rendition: "Web Publication"
   }
 ];
 
