@@ -13,8 +13,20 @@ export async function GET(request: Request) {
     );
   }
 
+  // Same-origin manifests (e.g. locally-hosted publications under /public) are
+  // always trusted, regardless of MANIFEST_ALLOWED_DOMAINS — they're served by
+  // this app itself, not a third party, and the allowed origin changes with
+  // every deployment (preview branches, production).
+  try {
+    if (new URL(manifestUrl).origin === new URL(request.url).origin) {
+      return NextResponse.json({ allowed: true, url: manifestUrl });
+    }
+  } catch {
+    // Fall through to the regular validation, which will report the invalid URL
+  }
+
   const result = verifyManifestUrlFromEnv(manifestUrl);
-  
+
   if (!result.allowed) {
     return NextResponse.json(
       { error: result.error || "Domain not allowed" },
