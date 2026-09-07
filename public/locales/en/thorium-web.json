@@ -1,4 +1,12 @@
 {
+  "home": {
+    "title": "Welcome to Thorium Web",
+    "description": [
+      "Thorium Web is an open-source ebook, audiobook and comics Web Reader that anyone can deploy.",
+      "This instance is designed to support reading for public domain and open-access publications on the Web and will provide an API specifically for them in the future.",
+      "In the meantime, we're publishing a number of test publications to explore what it's capable of."
+    ]
+  },
   "reader": {
     "app": {
       "loading": "Loading",
