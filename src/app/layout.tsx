@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Thorium Web",
-  description: "Play with the capabilities of the Readium Web Toolkit",
+  description: "An open-source ebook, audiobook and comics Web Reader that anyone can deploy. Explore public domain and open-access publications on the Web.",
 };
 
 export default function RootLayout({
