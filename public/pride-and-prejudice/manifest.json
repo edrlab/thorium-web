@@ -1,0 +1,2273 @@
+{
+  "@context": "https://readium.org/webpub-manifest/context.jsonld",
+  "metadata": {
+    "@type": "http://schema.org/Book",
+    "conformsTo": "https://readium.org/webpub-manifest/profiles/epub",
+    "title": "Pride and Prejudice",
+    "author": "Jane Austen",
+    "identifier": "https://www.gutenberg.org/ebooks/1342",
+    "language": "en"
+  },
+  "links": [
+    {
+      "href": "positions.json",
+      "type": "application/vnd.readium.position-list+json"
+    }
+  ],
+  "readingOrder": [
+    {
+      "href": "pg1342-images.html",
+      "type": "text/html",
+      "title": "Pride and Prejudice"
+    }
+  ],
+  "resources": [
+    {
+      "rel": "cover",
+      "href": "images/cover.jpg",
+      "type": "image/jpeg",
+      "height": 2114,
+      "width": 1500
+    }
+  ],
+  "toc": [
+    {
+      "href": "pg1342-images.html#PREFACE",
+      "title": "Preface"
+    },
+    {
+      "href": "pg1342-images.html#LIST_OF_ILLUSTRATIONS",
+      "title": "List of Illustrations"
+    },
+    {
+      "href": "pg1342-images.html#Chapter_I",
+      "title": "Chapter 1"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_II",
+      "title": "Chapter 2"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_III",
+      "title": "Chapter 3"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_IV",
+      "title": "Chapter 4"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_V",
+      "title": "Chapter 5"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_VI",
+      "title": "Chapter 6"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_VII",
+      "title": "Chapter 7"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_VIII",
+      "title": "Chapter 8"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_IX",
+      "title": "Chapter 9"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_X",
+      "title": "Chapter 10"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XI",
+      "title": "Chapter 11"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XII",
+      "title": "Chapter 12"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XIII",
+      "title": "Chapter 13"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XIV",
+      "title": "Chapter 14"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XV",
+      "title": "Chapter 15"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XVI",
+      "title": "Chapter 16"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XVII",
+      "title": "Chapter 17"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XVIII",
+      "title": "Chapter 18"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XIX",
+      "title": "Chapter 19"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XX",
+      "title": "Chapter 20"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXI",
+      "title": "Chapter 21"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXII",
+      "title": "Chapter 22"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXIII",
+      "title": "Chapter 23"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXIV",
+      "title": "Chapter 24"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXV",
+      "title": "Chapter 25"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXVI",
+      "title": "Chapter 26"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXVII",
+      "title": "Chapter 27"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXVIII",
+      "title": "Chapter 28"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXIX",
+      "title": "Chapter 29"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXX",
+      "title": "Chapter 30"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXI",
+      "title": "Chapter 31"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXII",
+      "title": "Chapter 32"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXIII",
+      "title": "Chapter 33"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXIV",
+      "title": "Chapter 34"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXV",
+      "title": "Chapter 35"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXVI",
+      "title": "Chapter 36"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXVII",
+      "title": "Chapter 37"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXVIII",
+      "title": "Chapter 38"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XXXIX",
+      "title": "Chapter 39"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XL",
+      "title": "Chapter 40"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLI",
+      "title": "Chapter 41"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLII",
+      "title": "Chapter 42"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLIII",
+      "title": "Chapter 43"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLIV",
+      "title": "Chapter 44"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLV",
+      "title": "Chapter 45"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLVI",
+      "title": "Chapter 46"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLVII",
+      "title": "Chapter 47"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLVIII",
+      "title": "Chapter 48"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_XLIX",
+      "title": "Chapter 49"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_L",
+      "title": "Chapter 50"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LI",
+      "title": "Chapter 51"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LII",
+      "title": "Chapter 52"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LIII",
+      "title": "Chapter 53"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LIV",
+      "title": "Chapter 54"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LV",
+      "title": "Chapter 55"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LVI",
+      "title": "Chapter 56"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LVII",
+      "title": "Chapter 57"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LVIII",
+      "title": "Chapter 58"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LIX",
+      "title": "Chapter 59"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LX",
+      "title": "Chapter 60"
+    },
+    {
+      "href": "pg1342-images.html#CHAPTER_LXI",
+      "title": "Chapter 61"
+    }
+  ],
+  "pageList": [
+    {
+      "href": "pg1342-images.html#page_iv",
+      "title": "iv"
+    },
+    {
+      "href": "pg1342-images.html#page_v",
+      "title": "v"
+    },
+    {
+      "href": "pg1342-images.html#page_vii",
+      "title": "vii"
+    },
+    {
+      "href": "pg1342-images.html#page_ix",
+      "title": "ix"
+    },
+    {
+      "href": "pg1342-images.html#page_x",
+      "title": "x"
+    },
+    {
+      "href": "pg1342-images.html#page_xi",
+      "title": "xi"
+    },
+    {
+      "href": "pg1342-images.html#page_xii",
+      "title": "xii"
+    },
+    {
+      "href": "pg1342-images.html#page_xiii",
+      "title": "xiii"
+    },
+    {
+      "href": "pg1342-images.html#page_xiv",
+      "title": "xiv"
+    },
+    {
+      "href": "pg1342-images.html#page_xv",
+      "title": "xv"
+    },
+    {
+      "href": "pg1342-images.html#page_xvi",
+      "title": "xvi"
+    },
+    {
+      "href": "pg1342-images.html#page_xvii",
+      "title": "xvii"
+    },
+    {
+      "href": "pg1342-images.html#page_xviii",
+      "title": "xviii"
+    },
+    {
+      "href": "pg1342-images.html#page_xix",
+      "title": "xix"
+    },
+    {
+      "href": "pg1342-images.html#page_xx",
+      "title": "xx"
+    },
+    {
+      "href": "pg1342-images.html#page_xxi",
+      "title": "xxi"
+    },
+    {
+      "href": "pg1342-images.html#page_xxii",
+      "title": "xxii"
+    },
+    {
+      "href": "pg1342-images.html#page_xxiii",
+      "title": "xxiii"
+    },
+    {
+      "href": "pg1342-images.html#page_xxiv",
+      "title": "xxiv"
+    },
+    {
+      "href": "pg1342-images.html#page_xxv",
+      "title": "xxv"
+    },
+    {
+      "href": "pg1342-images.html#page_1",
+      "title": "1"
+    },
+    {
+      "href": "pg1342-images.html#page_2",
+      "title": "2"
+    },
+    {
+      "href": "pg1342-images.html#page_3",
+      "title": "3"
+    },
+    {
+      "href": "pg1342-images.html#page_4",
+      "title": "4"
+    },
+    {
+      "href": "pg1342-images.html#page_5",
+      "title": "5"
+    },
+    {
+      "href": "pg1342-images.html#page_6",
+      "title": "6"
+    },
+    {
+      "href": "pg1342-images.html#page_7",
+      "title": "7"
+    },
+    {
+      "href": "pg1342-images.html#page_8",
+      "title": "8"
+    },
+    {
+      "href": "pg1342-images.html#page_9",
+      "title": "9"
+    },
+    {
+      "href": "pg1342-images.html#page_10",
+      "title": "10"
+    },
+    {
+      "href": "pg1342-images.html#page_11",
+      "title": "11"
+    },
+    {
+      "href": "pg1342-images.html#page_12",
+      "title": "12"
+    },
+    {
+      "href": "pg1342-images.html#page_13",
+      "title": "13"
+    },
+    {
+      "href": "pg1342-images.html#page_14",
+      "title": "14"
+    },
+    {
+      "href": "pg1342-images.html#page_15",
+      "title": "15"
+    },
+    {
+      "href": "pg1342-images.html#page_16",
+      "title": "16"
+    },
+    {
+      "href": "pg1342-images.html#page_17",
+      "title": "17"
+    },
+    {
+      "href": "pg1342-images.html#page_18",
+      "title": "18"
+    },
+    {
+      "href": "pg1342-images.html#page_19",
+      "title": "19"
+    },
+    {
+      "href": "pg1342-images.html#page_20",
+      "title": "20"
+    },
+    {
+      "href": "pg1342-images.html#page_21",
+      "title": "21"
+    },
+    {
+      "href": "pg1342-images.html#page_22",
+      "title": "22"
+    },
+    {
+      "href": "pg1342-images.html#page_23",
+      "title": "23"
+    },
+    {
+      "href": "pg1342-images.html#page_24",
+      "title": "24"
+    },
+    {
+      "href": "pg1342-images.html#page_25",
+      "title": "25"
+    },
+    {
+      "href": "pg1342-images.html#page_26",
+      "title": "26"
+    },
+    {
+      "href": "pg1342-images.html#page_27",
+      "title": "27"
+    },
+    {
+      "href": "pg1342-images.html#page_28",
+      "title": "28"
+    },
+    {
+      "href": "pg1342-images.html#page_29",
+      "title": "29"
+    },
+    {
+      "href": "pg1342-images.html#page_30",
+      "title": "30"
+    },
+    {
+      "href": "pg1342-images.html#page_31",
+      "title": "31"
+    },
+    {
+      "href": "pg1342-images.html#page_32",
+      "title": "32"
+    },
+    {
+      "href": "pg1342-images.html#page_33",
+      "title": "33"
+    },
+    {
+      "href": "pg1342-images.html#page_34",
+      "title": "34"
+    },
+    {
+      "href": "pg1342-images.html#page_35",
+      "title": "35"
+    },
+    {
+      "href": "pg1342-images.html#page_36",
+      "title": "36"
+    },
+    {
+      "href": "pg1342-images.html#page_37",
+      "title": "37"
+    },
+    {
+      "href": "pg1342-images.html#page_38",
+      "title": "38"
+    },
+    {
+      "href": "pg1342-images.html#page_39",
+      "title": "39"
+    },
+    {
+      "href": "pg1342-images.html#page_40",
+      "title": "40"
+    },
+    {
+      "href": "pg1342-images.html#page_41",
+      "title": "41"
+    },
+    {
+      "href": "pg1342-images.html#page_42",
+      "title": "42"
+    },
+    {
+      "href": "pg1342-images.html#page_43",
+      "title": "43"
+    },
+    {
+      "href": "pg1342-images.html#page_44",
+      "title": "44"
+    },
+    {
+      "href": "pg1342-images.html#page_45",
+      "title": "45"
+    },
+    {
+      "href": "pg1342-images.html#page_46",
+      "title": "46"
+    },
+    {
+      "href": "pg1342-images.html#page_47",
+      "title": "47"
+    },
+    {
+      "href": "pg1342-images.html#page_48",
+      "title": "48"
+    },
+    {
+      "href": "pg1342-images.html#page_49",
+      "title": "49"
+    },
+    {
+      "href": "pg1342-images.html#page_50",
+      "title": "50"
+    },
+    {
+      "href": "pg1342-images.html#page_51",
+      "title": "51"
+    },
+    {
+      "href": "pg1342-images.html#page_52",
+      "title": "52"
+    },
+    {
+      "href": "pg1342-images.html#page_53",
+      "title": "53"
+    },
+    {
+      "href": "pg1342-images.html#page_54",
+      "title": "54"
+    },
+    {
+      "href": "pg1342-images.html#page_55",
+      "title": "55"
+    },
+    {
+      "href": "pg1342-images.html#page_56",
+      "title": "56"
+    },
+    {
+      "href": "pg1342-images.html#page_57",
+      "title": "57"
+    },
+    {
+      "href": "pg1342-images.html#page_58",
+      "title": "58"
+    },
+    {
+      "href": "pg1342-images.html#page_59",
+      "title": "59"
+    },
+    {
+      "href": "pg1342-images.html#page_60",
+      "title": "60"
+    },
+    {
+      "href": "pg1342-images.html#page_61",
+      "title": "61"
+    },
+    {
+      "href": "pg1342-images.html#page_62",
+      "title": "62"
+    },
+    {
+      "href": "pg1342-images.html#page_63",
+      "title": "63"
+    },
+    {
+      "href": "pg1342-images.html#page_64",
+      "title": "64"
+    },
+    {
+      "href": "pg1342-images.html#page_65",
+      "title": "65"
+    },
+    {
+      "href": "pg1342-images.html#page_66",
+      "title": "66"
+    },
+    {
+      "href": "pg1342-images.html#page_67",
+      "title": "67"
+    },
+    {
+      "href": "pg1342-images.html#page_68",
+      "title": "68"
+    },
+    {
+      "href": "pg1342-images.html#page_69",
+      "title": "69"
+    },
+    {
+      "href": "pg1342-images.html#page_70",
+      "title": "70"
+    },
+    {
+      "href": "pg1342-images.html#page_71",
+      "title": "71"
+    },
+    {
+      "href": "pg1342-images.html#page_72",
+      "title": "72"
+    },
+    {
+      "href": "pg1342-images.html#page_73",
+      "title": "73"
+    },
+    {
+      "href": "pg1342-images.html#page_74",
+      "title": "74"
+    },
+    {
+      "href": "pg1342-images.html#page_75",
+      "title": "75"
+    },
+    {
+      "href": "pg1342-images.html#page_76",
+      "title": "76"
+    },
+    {
+      "href": "pg1342-images.html#page_77",
+      "title": "77"
+    },
+    {
+      "href": "pg1342-images.html#page_78",
+      "title": "78"
+    },
+    {
+      "href": "pg1342-images.html#page_79",
+      "title": "79"
+    },
+    {
+      "href": "pg1342-images.html#page_80",
+      "title": "80"
+    },
+    {
+      "href": "pg1342-images.html#page_81",
+      "title": "81"
+    },
+    {
+      "href": "pg1342-images.html#page_82",
+      "title": "82"
+    },
+    {
+      "href": "pg1342-images.html#page_83",
+      "title": "83"
+    },
+    {
+      "href": "pg1342-images.html#page_84",
+      "title": "84"
+    },
+    {
+      "href": "pg1342-images.html#page_85",
+      "title": "85"
+    },
+    {
+      "href": "pg1342-images.html#page_86",
+      "title": "86"
+    },
+    {
+      "href": "pg1342-images.html#page_87",
+      "title": "87"
+    },
+    {
+      "href": "pg1342-images.html#page_88",
+      "title": "88"
+    },
+    {
+      "href": "pg1342-images.html#page_89",
+      "title": "89"
+    },
+    {
+      "href": "pg1342-images.html#page_90",
+      "title": "90"
+    },
+    {
+      "href": "pg1342-images.html#page_91",
+      "title": "91"
+    },
+    {
+      "href": "pg1342-images.html#page_92",
+      "title": "92"
+    },
+    {
+      "href": "pg1342-images.html#page_93",
+      "title": "93"
+    },
+    {
+      "href": "pg1342-images.html#page_94",
+      "title": "94"
+    },
+    {
+      "href": "pg1342-images.html#page_95",
+      "title": "95"
+    },
+    {
+      "href": "pg1342-images.html#page_96",
+      "title": "96"
+    },
+    {
+      "href": "pg1342-images.html#page_97",
+      "title": "97"
+    },
+    {
+      "href": "pg1342-images.html#page_98",
+      "title": "98"
+    },
+    {
+      "href": "pg1342-images.html#page_99",
+      "title": "99"
+    },
+    {
+      "href": "pg1342-images.html#page_100",
+      "title": "100"
+    },
+    {
+      "href": "pg1342-images.html#page_101",
+      "title": "101"
+    },
+    {
+      "href": "pg1342-images.html#page_102",
+      "title": "102"
+    },
+    {
+      "href": "pg1342-images.html#page_103",
+      "title": "103"
+    },
+    {
+      "href": "pg1342-images.html#page_104",
+      "title": "104"
+    },
+    {
+      "href": "pg1342-images.html#page_105",
+      "title": "105"
+    },
+    {
+      "href": "pg1342-images.html#page_106",
+      "title": "106"
+    },
+    {
+      "href": "pg1342-images.html#page_107",
+      "title": "107"
+    },
+    {
+      "href": "pg1342-images.html#page_108",
+      "title": "108"
+    },
+    {
+      "href": "pg1342-images.html#page_109",
+      "title": "109"
+    },
+    {
+      "href": "pg1342-images.html#page_110",
+      "title": "110"
+    },
+    {
+      "href": "pg1342-images.html#page_111",
+      "title": "111"
+    },
+    {
+      "href": "pg1342-images.html#page_112",
+      "title": "112"
+    },
+    {
+      "href": "pg1342-images.html#page_113",
+      "title": "113"
+    },
+    {
+      "href": "pg1342-images.html#page_114",
+      "title": "114"
+    },
+    {
+      "href": "pg1342-images.html#page_115",
+      "title": "115"
+    },
+    {
+      "href": "pg1342-images.html#page_116",
+      "title": "116"
+    },
+    {
+      "href": "pg1342-images.html#page_117",
+      "title": "117"
+    },
+    {
+      "href": "pg1342-images.html#page_118",
+      "title": "118"
+    },
+    {
+      "href": "pg1342-images.html#page_119",
+      "title": "119"
+    },
+    {
+      "href": "pg1342-images.html#page_120",
+      "title": "120"
+    },
+    {
+      "href": "pg1342-images.html#page_121",
+      "title": "121"
+    },
+    {
+      "href": "pg1342-images.html#page_122",
+      "title": "122"
+    },
+    {
+      "href": "pg1342-images.html#page_123",
+      "title": "123"
+    },
+    {
+      "href": "pg1342-images.html#page_124",
+      "title": "124"
+    },
+    {
+      "href": "pg1342-images.html#page_125",
+      "title": "125"
+    },
+    {
+      "href": "pg1342-images.html#page_126",
+      "title": "126"
+    },
+    {
+      "href": "pg1342-images.html#page_127",
+      "title": "127"
+    },
+    {
+      "href": "pg1342-images.html#page_128",
+      "title": "128"
+    },
+    {
+      "href": "pg1342-images.html#page_129",
+      "title": "129"
+    },
+    {
+      "href": "pg1342-images.html#page_130",
+      "title": "130"
+    },
+    {
+      "href": "pg1342-images.html#page_131",
+      "title": "131"
+    },
+    {
+      "href": "pg1342-images.html#page_132",
+      "title": "132"
+    },
+    {
+      "href": "pg1342-images.html#page_133",
+      "title": "133"
+    },
+    {
+      "href": "pg1342-images.html#page_134",
+      "title": "134"
+    },
+    {
+      "href": "pg1342-images.html#page_135",
+      "title": "135"
+    },
+    {
+      "href": "pg1342-images.html#page_136",
+      "title": "136"
+    },
+    {
+      "href": "pg1342-images.html#page_137",
+      "title": "137"
+    },
+    {
+      "href": "pg1342-images.html#page_138",
+      "title": "138"
+    },
+    {
+      "href": "pg1342-images.html#page_139",
+      "title": "139"
+    },
+    {
+      "href": "pg1342-images.html#page_140",
+      "title": "140"
+    },
+    {
+      "href": "pg1342-images.html#page_141",
+      "title": "141"
+    },
+    {
+      "href": "pg1342-images.html#page_142",
+      "title": "142"
+    },
+    {
+      "href": "pg1342-images.html#page_143",
+      "title": "143"
+    },
+    {
+      "href": "pg1342-images.html#page_144",
+      "title": "144"
+    },
+    {
+      "href": "pg1342-images.html#page_145",
+      "title": "145"
+    },
+    {
+      "href": "pg1342-images.html#page_146",
+      "title": "146"
+    },
+    {
+      "href": "pg1342-images.html#page_147",
+      "title": "147"
+    },
+    {
+      "href": "pg1342-images.html#page_148",
+      "title": "148"
+    },
+    {
+      "href": "pg1342-images.html#page_149",
+      "title": "149"
+    },
+    {
+      "href": "pg1342-images.html#page_150",
+      "title": "150"
+    },
+    {
+      "href": "pg1342-images.html#page_151",
+      "title": "151"
+    },
+    {
+      "href": "pg1342-images.html#page_152",
+      "title": "152"
+    },
+    {
+      "href": "pg1342-images.html#page_153",
+      "title": "153"
+    },
+    {
+      "href": "pg1342-images.html#page_154",
+      "title": "154"
+    },
+    {
+      "href": "pg1342-images.html#page_155",
+      "title": "155"
+    },
+    {
+      "href": "pg1342-images.html#page_156",
+      "title": "156"
+    },
+    {
+      "href": "pg1342-images.html#page_157",
+      "title": "157"
+    },
+    {
+      "href": "pg1342-images.html#page_158",
+      "title": "158"
+    },
+    {
+      "href": "pg1342-images.html#page_159",
+      "title": "159"
+    },
+    {
+      "href": "pg1342-images.html#page_160",
+      "title": "160"
+    },
+    {
+      "href": "pg1342-images.html#page_161",
+      "title": "161"
+    },
+    {
+      "href": "pg1342-images.html#page_162",
+      "title": "162"
+    },
+    {
+      "href": "pg1342-images.html#page_163",
+      "title": "163"
+    },
+    {
+      "href": "pg1342-images.html#page_164",
+      "title": "164"
+    },
+    {
+      "href": "pg1342-images.html#page_165",
+      "title": "165"
+    },
+    {
+      "href": "pg1342-images.html#page_166",
+      "title": "166"
+    },
+    {
+      "href": "pg1342-images.html#page_167",
+      "title": "167"
+    },
+    {
+      "href": "pg1342-images.html#page_168",
+      "title": "168"
+    },
+    {
+      "href": "pg1342-images.html#page_169",
+      "title": "169"
+    },
+    {
+      "href": "pg1342-images.html#page_170",
+      "title": "170"
+    },
+    {
+      "href": "pg1342-images.html#page_171",
+      "title": "171"
+    },
+    {
+      "href": "pg1342-images.html#page_172",
+      "title": "172"
+    },
+    {
+      "href": "pg1342-images.html#page_173",
+      "title": "173"
+    },
+    {
+      "href": "pg1342-images.html#page_174",
+      "title": "174"
+    },
+    {
+      "href": "pg1342-images.html#page_175",
+      "title": "175"
+    },
+    {
+      "href": "pg1342-images.html#page_176",
+      "title": "176"
+    },
+    {
+      "href": "pg1342-images.html#page_177",
+      "title": "177"
+    },
+    {
+      "href": "pg1342-images.html#page_178",
+      "title": "178"
+    },
+    {
+      "href": "pg1342-images.html#page_179",
+      "title": "179"
+    },
+    {
+      "href": "pg1342-images.html#page_180",
+      "title": "180"
+    },
+    {
+      "href": "pg1342-images.html#page_181",
+      "title": "181"
+    },
+    {
+      "href": "pg1342-images.html#page_182",
+      "title": "182"
+    },
+    {
+      "href": "pg1342-images.html#page_183",
+      "title": "183"
+    },
+    {
+      "href": "pg1342-images.html#page_184",
+      "title": "184"
+    },
+    {
+      "href": "pg1342-images.html#page_185",
+      "title": "185"
+    },
+    {
+      "href": "pg1342-images.html#page_186",
+      "title": "186"
+    },
+    {
+      "href": "pg1342-images.html#page_187",
+      "title": "187"
+    },
+    {
+      "href": "pg1342-images.html#page_188",
+      "title": "188"
+    },
+    {
+      "href": "pg1342-images.html#page_189",
+      "title": "189"
+    },
+    {
+      "href": "pg1342-images.html#page_190",
+      "title": "190"
+    },
+    {
+      "href": "pg1342-images.html#page_191",
+      "title": "191"
+    },
+    {
+      "href": "pg1342-images.html#page_192",
+      "title": "192"
+    },
+    {
+      "href": "pg1342-images.html#page_193",
+      "title": "193"
+    },
+    {
+      "href": "pg1342-images.html#page_194",
+      "title": "194"
+    },
+    {
+      "href": "pg1342-images.html#page_195",
+      "title": "195"
+    },
+    {
+      "href": "pg1342-images.html#page_196",
+      "title": "196"
+    },
+    {
+      "href": "pg1342-images.html#page_197",
+      "title": "197"
+    },
+    {
+      "href": "pg1342-images.html#page_198",
+      "title": "198"
+    },
+    {
+      "href": "pg1342-images.html#page_199",
+      "title": "199"
+    },
+    {
+      "href": "pg1342-images.html#page_200",
+      "title": "200"
+    },
+    {
+      "href": "pg1342-images.html#page_201",
+      "title": "201"
+    },
+    {
+      "href": "pg1342-images.html#page_202",
+      "title": "202"
+    },
+    {
+      "href": "pg1342-images.html#page_203",
+      "title": "203"
+    },
+    {
+      "href": "pg1342-images.html#page_204",
+      "title": "204"
+    },
+    {
+      "href": "pg1342-images.html#page_205",
+      "title": "205"
+    },
+    {
+      "href": "pg1342-images.html#page_206",
+      "title": "206"
+    },
+    {
+      "href": "pg1342-images.html#page_207",
+      "title": "207"
+    },
+    {
+      "href": "pg1342-images.html#page_208",
+      "title": "208"
+    },
+    {
+      "href": "pg1342-images.html#page_209",
+      "title": "209"
+    },
+    {
+      "href": "pg1342-images.html#page_210",
+      "title": "210"
+    },
+    {
+      "href": "pg1342-images.html#page_211",
+      "title": "211"
+    },
+    {
+      "href": "pg1342-images.html#page_212",
+      "title": "212"
+    },
+    {
+      "href": "pg1342-images.html#page_213",
+      "title": "213"
+    },
+    {
+      "href": "pg1342-images.html#page_214",
+      "title": "214"
+    },
+    {
+      "href": "pg1342-images.html#page_215",
+      "title": "215"
+    },
+    {
+      "href": "pg1342-images.html#page_216",
+      "title": "216"
+    },
+    {
+      "href": "pg1342-images.html#page_217",
+      "title": "217"
+    },
+    {
+      "href": "pg1342-images.html#page_218",
+      "title": "218"
+    },
+    {
+      "href": "pg1342-images.html#page_219",
+      "title": "219"
+    },
+    {
+      "href": "pg1342-images.html#page_220",
+      "title": "220"
+    },
+    {
+      "href": "pg1342-images.html#page_221",
+      "title": "221"
+    },
+    {
+      "href": "pg1342-images.html#page_222",
+      "title": "222"
+    },
+    {
+      "href": "pg1342-images.html#page_223",
+      "title": "223"
+    },
+    {
+      "href": "pg1342-images.html#page_224",
+      "title": "224"
+    },
+    {
+      "href": "pg1342-images.html#page_225",
+      "title": "225"
+    },
+    {
+      "href": "pg1342-images.html#page_226",
+      "title": "226"
+    },
+    {
+      "href": "pg1342-images.html#page_227",
+      "title": "227"
+    },
+    {
+      "href": "pg1342-images.html#page_228",
+      "title": "228"
+    },
+    {
+      "href": "pg1342-images.html#page_229",
+      "title": "229"
+    },
+    {
+      "href": "pg1342-images.html#page_230",
+      "title": "230"
+    },
+    {
+      "href": "pg1342-images.html#page_231",
+      "title": "231"
+    },
+    {
+      "href": "pg1342-images.html#page_232",
+      "title": "232"
+    },
+    {
+      "href": "pg1342-images.html#page_233",
+      "title": "233"
+    },
+    {
+      "href": "pg1342-images.html#page_234",
+      "title": "234"
+    },
+    {
+      "href": "pg1342-images.html#page_235",
+      "title": "235"
+    },
+    {
+      "href": "pg1342-images.html#page_236",
+      "title": "236"
+    },
+    {
+      "href": "pg1342-images.html#page_237",
+      "title": "237"
+    },
+    {
+      "href": "pg1342-images.html#page_238",
+      "title": "238"
+    },
+    {
+      "href": "pg1342-images.html#page_239",
+      "title": "239"
+    },
+    {
+      "href": "pg1342-images.html#page_240",
+      "title": "240"
+    },
+    {
+      "href": "pg1342-images.html#page_241",
+      "title": "241"
+    },
+    {
+      "href": "pg1342-images.html#page_242",
+      "title": "242"
+    },
+    {
+      "href": "pg1342-images.html#page_243",
+      "title": "243"
+    },
+    {
+      "href": "pg1342-images.html#page_244",
+      "title": "244"
+    },
+    {
+      "href": "pg1342-images.html#page_245",
+      "title": "245"
+    },
+    {
+      "href": "pg1342-images.html#page_246",
+      "title": "246"
+    },
+    {
+      "href": "pg1342-images.html#page_247",
+      "title": "247"
+    },
+    {
+      "href": "pg1342-images.html#page_248",
+      "title": "248"
+    },
+    {
+      "href": "pg1342-images.html#page_249",
+      "title": "249"
+    },
+    {
+      "href": "pg1342-images.html#page_250",
+      "title": "250"
+    },
+    {
+      "href": "pg1342-images.html#page_251",
+      "title": "251"
+    },
+    {
+      "href": "pg1342-images.html#page_252",
+      "title": "252"
+    },
+    {
+      "href": "pg1342-images.html#page_253",
+      "title": "253"
+    },
+    {
+      "href": "pg1342-images.html#page_254",
+      "title": "254"
+    },
+    {
+      "href": "pg1342-images.html#page_255",
+      "title": "255"
+    },
+    {
+      "href": "pg1342-images.html#page_256",
+      "title": "256"
+    },
+    {
+      "href": "pg1342-images.html#page_257",
+      "title": "257"
+    },
+    {
+      "href": "pg1342-images.html#page_258",
+      "title": "258"
+    },
+    {
+      "href": "pg1342-images.html#page_259",
+      "title": "259"
+    },
+    {
+      "href": "pg1342-images.html#page_260",
+      "title": "260"
+    },
+    {
+      "href": "pg1342-images.html#page_261",
+      "title": "261"
+    },
+    {
+      "href": "pg1342-images.html#page_262",
+      "title": "262"
+    },
+    {
+      "href": "pg1342-images.html#page_263",
+      "title": "263"
+    },
+    {
+      "href": "pg1342-images.html#page_264",
+      "title": "264"
+    },
+    {
+      "href": "pg1342-images.html#page_265",
+      "title": "265"
+    },
+    {
+      "href": "pg1342-images.html#page_266",
+      "title": "266"
+    },
+    {
+      "href": "pg1342-images.html#page_267",
+      "title": "267"
+    },
+    {
+      "href": "pg1342-images.html#page_268",
+      "title": "268"
+    },
+    {
+      "href": "pg1342-images.html#page_269",
+      "title": "269"
+    },
+    {
+      "href": "pg1342-images.html#page_270",
+      "title": "270"
+    },
+    {
+      "href": "pg1342-images.html#page_271",
+      "title": "271"
+    },
+    {
+      "href": "pg1342-images.html#page_272",
+      "title": "272"
+    },
+    {
+      "href": "pg1342-images.html#page_273",
+      "title": "273"
+    },
+    {
+      "href": "pg1342-images.html#page_274",
+      "title": "274"
+    },
+    {
+      "href": "pg1342-images.html#page_275",
+      "title": "275"
+    },
+    {
+      "href": "pg1342-images.html#page_276",
+      "title": "276"
+    },
+    {
+      "href": "pg1342-images.html#page_277",
+      "title": "277"
+    },
+    {
+      "href": "pg1342-images.html#page_278",
+      "title": "278"
+    },
+    {
+      "href": "pg1342-images.html#page_279",
+      "title": "279"
+    },
+    {
+      "href": "pg1342-images.html#page_280",
+      "title": "280"
+    },
+    {
+      "href": "pg1342-images.html#page_281",
+      "title": "281"
+    },
+    {
+      "href": "pg1342-images.html#page_282",
+      "title": "282"
+    },
+    {
+      "href": "pg1342-images.html#page_283",
+      "title": "283"
+    },
+    {
+      "href": "pg1342-images.html#page_284",
+      "title": "284"
+    },
+    {
+      "href": "pg1342-images.html#page_285",
+      "title": "285"
+    },
+    {
+      "href": "pg1342-images.html#page_286",
+      "title": "286"
+    },
+    {
+      "href": "pg1342-images.html#page_287",
+      "title": "287"
+    },
+    {
+      "href": "pg1342-images.html#page_288",
+      "title": "288"
+    },
+    {
+      "href": "pg1342-images.html#page_289",
+      "title": "289"
+    },
+    {
+      "href": "pg1342-images.html#page_290",
+      "title": "290"
+    },
+    {
+      "href": "pg1342-images.html#page_291",
+      "title": "291"
+    },
+    {
+      "href": "pg1342-images.html#page_292",
+      "title": "292"
+    },
+    {
+      "href": "pg1342-images.html#page_293",
+      "title": "293"
+    },
+    {
+      "href": "pg1342-images.html#page_294",
+      "title": "294"
+    },
+    {
+      "href": "pg1342-images.html#page_295",
+      "title": "295"
+    },
+    {
+      "href": "pg1342-images.html#page_296",
+      "title": "296"
+    },
+    {
+      "href": "pg1342-images.html#page_297",
+      "title": "297"
+    },
+    {
+      "href": "pg1342-images.html#page_298",
+      "title": "298"
+    },
+    {
+      "href": "pg1342-images.html#page_299",
+      "title": "299"
+    },
+    {
+      "href": "pg1342-images.html#page_300",
+      "title": "300"
+    },
+    {
+      "href": "pg1342-images.html#page_301",
+      "title": "301"
+    },
+    {
+      "href": "pg1342-images.html#page_302",
+      "title": "302"
+    },
+    {
+      "href": "pg1342-images.html#page_303",
+      "title": "303"
+    },
+    {
+      "href": "pg1342-images.html#page_304",
+      "title": "304"
+    },
+    {
+      "href": "pg1342-images.html#page_305",
+      "title": "305"
+    },
+    {
+      "href": "pg1342-images.html#page_306",
+      "title": "306"
+    },
+    {
+      "href": "pg1342-images.html#page_307",
+      "title": "307"
+    },
+    {
+      "href": "pg1342-images.html#page_308",
+      "title": "308"
+    },
+    {
+      "href": "pg1342-images.html#page_309",
+      "title": "309"
+    },
+    {
+      "href": "pg1342-images.html#page_310",
+      "title": "310"
+    },
+    {
+      "href": "pg1342-images.html#page_311",
+      "title": "311"
+    },
+    {
+      "href": "pg1342-images.html#page_312",
+      "title": "312"
+    },
+    {
+      "href": "pg1342-images.html#page_313",
+      "title": "313"
+    },
+    {
+      "href": "pg1342-images.html#page_314",
+      "title": "314"
+    },
+    {
+      "href": "pg1342-images.html#page_315",
+      "title": "315"
+    },
+    {
+      "href": "pg1342-images.html#page_316",
+      "title": "316"
+    },
+    {
+      "href": "pg1342-images.html#page_317",
+      "title": "317"
+    },
+    {
+      "href": "pg1342-images.html#page_318",
+      "title": "318"
+    },
+    {
+      "href": "pg1342-images.html#page_319",
+      "title": "319"
+    },
+    {
+      "href": "pg1342-images.html#page_320",
+      "title": "320"
+    },
+    {
+      "href": "pg1342-images.html#page_321",
+      "title": "321"
+    },
+    {
+      "href": "pg1342-images.html#page_322",
+      "title": "322"
+    },
+    {
+      "href": "pg1342-images.html#page_323",
+      "title": "323"
+    },
+    {
+      "href": "pg1342-images.html#page_324",
+      "title": "324"
+    },
+    {
+      "href": "pg1342-images.html#page_325",
+      "title": "325"
+    },
+    {
+      "href": "pg1342-images.html#page_326",
+      "title": "326"
+    },
+    {
+      "href": "pg1342-images.html#page_327",
+      "title": "327"
+    },
+    {
+      "href": "pg1342-images.html#page_328",
+      "title": "328"
+    },
+    {
+      "href": "pg1342-images.html#page_329",
+      "title": "329"
+    },
+    {
+      "href": "pg1342-images.html#page_330",
+      "title": "330"
+    },
+    {
+      "href": "pg1342-images.html#page_331",
+      "title": "331"
+    },
+    {
+      "href": "pg1342-images.html#page_332",
+      "title": "332"
+    },
+    {
+      "href": "pg1342-images.html#page_333",
+      "title": "333"
+    },
+    {
+      "href": "pg1342-images.html#page_334",
+      "title": "334"
+    },
+    {
+      "href": "pg1342-images.html#page_335",
+      "title": "335"
+    },
+    {
+      "href": "pg1342-images.html#page_336",
+      "title": "336"
+    },
+    {
+      "href": "pg1342-images.html#page_337",
+      "title": "337"
+    },
+    {
+      "href": "pg1342-images.html#page_338",
+      "title": "338"
+    },
+    {
+      "href": "pg1342-images.html#page_339",
+      "title": "339"
+    },
+    {
+      "href": "pg1342-images.html#page_340",
+      "title": "340"
+    },
+    {
+      "href": "pg1342-images.html#page_341",
+      "title": "341"
+    },
+    {
+      "href": "pg1342-images.html#page_342",
+      "title": "342"
+    },
+    {
+      "href": "pg1342-images.html#page_343",
+      "title": "343"
+    },
+    {
+      "href": "pg1342-images.html#page_344",
+      "title": "344"
+    },
+    {
+      "href": "pg1342-images.html#page_345",
+      "title": "345"
+    },
+    {
+      "href": "pg1342-images.html#page_346",
+      "title": "346"
+    },
+    {
+      "href": "pg1342-images.html#page_347",
+      "title": "347"
+    },
+    {
+      "href": "pg1342-images.html#page_348",
+      "title": "348"
+    },
+    {
+      "href": "pg1342-images.html#page_349",
+      "title": "349"
+    },
+    {
+      "href": "pg1342-images.html#page_350",
+      "title": "350"
+    },
+    {
+      "href": "pg1342-images.html#page_351",
+      "title": "351"
+    },
+    {
+      "href": "pg1342-images.html#page_352",
+      "title": "352"
+    },
+    {
+      "href": "pg1342-images.html#page_353",
+      "title": "353"
+    },
+    {
+      "href": "pg1342-images.html#page_354",
+      "title": "354"
+    },
+    {
+      "href": "pg1342-images.html#page_355",
+      "title": "355"
+    },
+    {
+      "href": "pg1342-images.html#page_356",
+      "title": "356"
+    },
+    {
+      "href": "pg1342-images.html#page_357",
+      "title": "357"
+    },
+    {
+      "href": "pg1342-images.html#page_358",
+      "title": "358"
+    },
+    {
+      "href": "pg1342-images.html#page_359",
+      "title": "359"
+    },
+    {
+      "href": "pg1342-images.html#page_360",
+      "title": "360"
+    },
+    {
+      "href": "pg1342-images.html#page_361",
+      "title": "361"
+    },
+    {
+      "href": "pg1342-images.html#page_362",
+      "title": "362"
+    },
+    {
+      "href": "pg1342-images.html#page_363",
+      "title": "363"
+    },
+    {
+      "href": "pg1342-images.html#page_364",
+      "title": "364"
+    },
+    {
+      "href": "pg1342-images.html#page_365",
+      "title": "365"
+    },
+    {
+      "href": "pg1342-images.html#page_366",
+      "title": "366"
+    },
+    {
+      "href": "pg1342-images.html#page_367",
+      "title": "367"
+    },
+    {
+      "href": "pg1342-images.html#page_368",
+      "title": "368"
+    },
+    {
+      "href": "pg1342-images.html#page_369",
+      "title": "369"
+    },
+    {
+      "href": "pg1342-images.html#page_370",
+      "title": "370"
+    },
+    {
+      "href": "pg1342-images.html#page_371",
+      "title": "371"
+    },
+    {
+      "href": "pg1342-images.html#page_372",
+      "title": "372"
+    },
+    {
+      "href": "pg1342-images.html#page_373",
+      "title": "373"
+    },
+    {
+      "href": "pg1342-images.html#page_374",
+      "title": "374"
+    },
+    {
+      "href": "pg1342-images.html#page_375",
+      "title": "375"
+    },
+    {
+      "href": "pg1342-images.html#page_376",
+      "title": "376"
+    },
+    {
+      "href": "pg1342-images.html#page_377",
+      "title": "377"
+    },
+    {
+      "href": "pg1342-images.html#page_378",
+      "title": "378"
+    },
+    {
+      "href": "pg1342-images.html#page_379",
+      "title": "379"
+    },
+    {
+      "href": "pg1342-images.html#page_380",
+      "title": "380"
+    },
+    {
+      "href": "pg1342-images.html#page_381",
+      "title": "381"
+    },
+    {
+      "href": "pg1342-images.html#page_382",
+      "title": "382"
+    },
+    {
+      "href": "pg1342-images.html#page_383",
+      "title": "383"
+    },
+    {
+      "href": "pg1342-images.html#page_384",
+      "title": "384"
+    },
+    {
+      "href": "pg1342-images.html#page_385",
+      "title": "385"
+    },
+    {
+      "href": "pg1342-images.html#page_386",
+      "title": "386"
+    },
+    {
+      "href": "pg1342-images.html#page_387",
+      "title": "387"
+    },
+    {
+      "href": "pg1342-images.html#page_388",
+      "title": "388"
+    },
+    {
+      "href": "pg1342-images.html#page_389",
+      "title": "389"
+    },
+    {
+      "href": "pg1342-images.html#page_390",
+      "title": "390"
+    },
+    {
+      "href": "pg1342-images.html#page_391",
+      "title": "391"
+    },
+    {
+      "href": "pg1342-images.html#page_392",
+      "title": "392"
+    },
+    {
+      "href": "pg1342-images.html#page_393",
+      "title": "393"
+    },
+    {
+      "href": "pg1342-images.html#page_394",
+      "title": "394"
+    },
+    {
+      "href": "pg1342-images.html#page_395",
+      "title": "395"
+    },
+    {
+      "href": "pg1342-images.html#page_396",
+      "title": "396"
+    },
+    {
+      "href": "pg1342-images.html#page_397",
+      "title": "397"
+    },
+    {
+      "href": "pg1342-images.html#page_398",
+      "title": "398"
+    },
+    {
+      "href": "pg1342-images.html#page_399",
+      "title": "399"
+    },
+    {
+      "href": "pg1342-images.html#page_400",
+      "title": "400"
+    },
+    {
+      "href": "pg1342-images.html#page_401",
+      "title": "401"
+    },
+    {
+      "href": "pg1342-images.html#page_402",
+      "title": "402"
+    },
+    {
+      "href": "pg1342-images.html#page_403",
+      "title": "403"
+    },
+    {
+      "href": "pg1342-images.html#page_404",
+      "title": "404"
+    },
+    {
+      "href": "pg1342-images.html#page_405",
+      "title": "405"
+    },
+    {
+      "href": "pg1342-images.html#page_406",
+      "title": "406"
+    },
+    {
+      "href": "pg1342-images.html#page_407",
+      "title": "407"
+    },
+    {
+      "href": "pg1342-images.html#page_408",
+      "title": "408"
+    },
+    {
+      "href": "pg1342-images.html#page_409",
+      "title": "409"
+    },
+    {
+      "href": "pg1342-images.html#page_410",
+      "title": "410"
+    },
+    {
+      "href": "pg1342-images.html#page_411",
+      "title": "411"
+    },
+    {
+      "href": "pg1342-images.html#page_412",
+      "title": "412"
+    },
+    {
+      "href": "pg1342-images.html#page_413",
+      "title": "413"
+    },
+    {
+      "href": "pg1342-images.html#page_414",
+      "title": "414"
+    },
+    {
+      "href": "pg1342-images.html#page_415",
+      "title": "415"
+    },
+    {
+      "href": "pg1342-images.html#page_416",
+      "title": "416"
+    },
+    {
+      "href": "pg1342-images.html#page_417",
+      "title": "417"
+    },
+    {
+      "href": "pg1342-images.html#page_418",
+      "title": "418"
+    },
+    {
+      "href": "pg1342-images.html#page_419",
+      "title": "419"
+    },
+    {
+      "href": "pg1342-images.html#page_420",
+      "title": "420"
+    },
+    {
+      "href": "pg1342-images.html#page_421",
+      "title": "421"
+    },
+    {
+      "href": "pg1342-images.html#page_422",
+      "title": "422"
+    },
+    {
+      "href": "pg1342-images.html#page_423",
+      "title": "423"
+    },
+    {
+      "href": "pg1342-images.html#page_424",
+      "title": "424"
+    },
+    {
+      "href": "pg1342-images.html#page_425",
+      "title": "425"
+    },
+    {
+      "href": "pg1342-images.html#page_426",
+      "title": "426"
+    },
+    {
+      "href": "pg1342-images.html#page_427",
+      "title": "427"
+    },
+    {
+      "href": "pg1342-images.html#page_428",
+      "title": "428"
+    },
+    {
+      "href": "pg1342-images.html#page_429",
+      "title": "429"
+    },
+    {
+      "href": "pg1342-images.html#page_430",
+      "title": "430"
+    },
+    {
+      "href": "pg1342-images.html#page_431",
+      "title": "431"
+    },
+    {
+      "href": "pg1342-images.html#page_432",
+      "title": "432"
+    },
+    {
+      "href": "pg1342-images.html#page_433",
+      "title": "433"
+    },
+    {
+      "href": "pg1342-images.html#page_434",
+      "title": "434"
+    },
+    {
+      "href": "pg1342-images.html#page_435",
+      "title": "435"
+    },
+    {
+      "href": "pg1342-images.html#page_436",
+      "title": "436"
+    },
+    {
+      "href": "pg1342-images.html#page_437",
+      "title": "437"
+    },
+    {
+      "href": "pg1342-images.html#page_438",
+      "title": "438"
+    },
+    {
+      "href": "pg1342-images.html#page_439",
+      "title": "439"
+    },
+    {
+      "href": "pg1342-images.html#page_440",
+      "title": "440"
+    },
+    {
+      "href": "pg1342-images.html#page_441",
+      "title": "441"
+    },
+    {
+      "href": "pg1342-images.html#page_442",
+      "title": "442"
+    },
+    {
+      "href": "pg1342-images.html#page_443",
+      "title": "443"
+    },
+    {
+      "href": "pg1342-images.html#page_444",
+      "title": "444"
+    },
+    {
+      "href": "pg1342-images.html#page_445",
+      "title": "445"
+    },
+    {
+      "href": "pg1342-images.html#page_446",
+      "title": "446"
+    },
+    {
+      "href": "pg1342-images.html#page_447",
+      "title": "447"
+    },
+    {
+      "href": "pg1342-images.html#page_448",
+      "title": "448"
+    },
+    {
+      "href": "pg1342-images.html#page_449",
+      "title": "449"
+    },
+    {
+      "href": "pg1342-images.html#page_450",
+      "title": "450"
+    },
+    {
+      "href": "pg1342-images.html#page_451",
+      "title": "451"
+    },
+    {
+      "href": "pg1342-images.html#page_452",
+      "title": "452"
+    },
+    {
+      "href": "pg1342-images.html#page_453",
+      "title": "453"
+    },
+    {
+      "href": "pg1342-images.html#page_454",
+      "title": "454"
+    },
+    {
+      "href": "pg1342-images.html#page_455",
+      "title": "455"
+    },
+    {
+      "href": "pg1342-images.html#page_456",
+      "title": "456"
+    },
+    {
+      "href": "pg1342-images.html#page_457",
+      "title": "457"
+    },
+    {
+      "href": "pg1342-images.html#page_458",
+      "title": "458"
+    },
+    {
+      "href": "pg1342-images.html#page_459",
+      "title": "459"
+    },
+    {
+      "href": "pg1342-images.html#page_460",
+      "title": "460"
+    },
+    {
+      "href": "pg1342-images.html#page_461",
+      "title": "461"
+    },
+    {
+      "href": "pg1342-images.html#page_462",
+      "title": "462"
+    },
+    {
+      "href": "pg1342-images.html#page_463",
+      "title": "463"
+    },
+    {
+      "href": "pg1342-images.html#page_464",
+      "title": "464"
+    },
+    {
+      "href": "pg1342-images.html#page_465",
+      "title": "465"
+    },
+    {
+      "href": "pg1342-images.html#page_466",
+      "title": "466"
+    },
+    {
+      "href": "pg1342-images.html#page_467",
+      "title": "467"
+    },
+    {
+      "href": "pg1342-images.html#page_468",
+      "title": "468"
+    },
+    {
+      "href": "pg1342-images.html#page_469",
+      "title": "469"
+    },
+    {
+      "href": "pg1342-images.html#page_470",
+      "title": "470"
+    },
+    {
+      "href": "pg1342-images.html#page_471",
+      "title": "471"
+    },
+    {
+      "href": "pg1342-images.html#page_472",
+      "title": "472"
+    },
+    {
+      "href": "pg1342-images.html#page_473",
+      "title": "473"
+    },
+    {
+      "href": "pg1342-images.html#page_474",
+      "title": "474"
+    },
+    {
+      "href": "pg1342-images.html#page_475",
+      "title": "475"
+    },
+    {
+      "href": "pg1342-images.html#page_476",
+      "title": "476"
+    }
+  ]
+}

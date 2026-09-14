@@ -14,6 +14,7 @@ export const PUBLICATION_MANIFESTS = {
   // Additional experimental web publications
   "readium-css": "https://readium.org/css/docs/manifest.json",
   "moby-dick-webpub": "https://readium.org/webpub-manifest/examples/MobyDick/manifest.json",
+  "pride-and-prejudice": "/pride-and-prejudice/manifest.json",
   "molly-hopper": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9tb2xseS1ob3BwZXItdjEuMS53ZWJwdWI/manifest.json",
   // Audiobooks
   "flatland": "https://readium.org/webpub-manifest/examples/Flatland/manifest.json",
