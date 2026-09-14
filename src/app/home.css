@@ -18,7 +18,7 @@
   object-fit: contain;
 }
 
-h1 {
+#home h1 {
   font-size: 2rem;
   margin: 2rem 0;
   color: var(--th-color-text);
@@ -29,14 +29,14 @@ h1 {
   color: var(--th-color-text-secondary);
   max-width: 800px;
   margin: 0 auto 1rem;
-  text-align: left;
+  text-align: start;
 }
 
 .description:last-child {
   margin-bottom: 0;
 }
 
-h2 {
+#home h2 {
   font-size: 1.25rem;
   margin-top: 3rem;
 }
