@@ -20,15 +20,20 @@
 
 h1 {
   font-size: 2rem;
-  margin: 0 0 1rem;
+  margin: 2rem 0;
   color: var(--th-color-text);
 }
 
-.subtitle {
+.description {
   font-size: 1.25rem;
   color: var(--th-color-text-secondary);
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 1rem;
+  text-align: left;
+}
+
+.description:last-child {
+  margin-bottom: 0;
 }
 
 h2 {
