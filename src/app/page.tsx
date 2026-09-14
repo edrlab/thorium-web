@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useI18n } from "@/i18n";
 import { PublicationGrid } from "@/components/Misc/PublicationGrid";
 import Image from "next/image";
 
@@ -123,6 +124,7 @@ const audiobooks = [
 ]
 
 export default function Home() {
+  const { t } = useI18n();
   const [isManifestEnabled, setIsManifestEnabled] = useState<boolean>(true);
 
   useEffect(() => {
@@ -142,9 +144,11 @@ export default function Home() {
   return (
     <main id="home">
       <header className="header">
-        <h1>Welcome to Thorium Web</h1>
+        <h1>{ t("home.title") }</h1>
 
-        <p className="subtitle">An open-source ebook/audiobook/comics Web Reader</p>
+        { (t("home.description", { returnObjects: true }) as unknown as string[]).map((paragraph, index) => (
+          <p key={ index } className="description">{ paragraph }</p>
+        )) }
       </header>
 
       <h2>Our selection</h2>
