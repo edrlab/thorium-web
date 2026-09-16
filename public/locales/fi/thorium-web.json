@@ -126,5 +126,8 @@
                 "remaining": "Keskeytyy {{ remaining }} kuluttua"
             }
         }
+    },
+    "home": {
+        "title": "Tervetuloa Thorium Webiin"
     }
 }
