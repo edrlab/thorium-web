@@ -128,6 +128,11 @@
         }
     },
     "home": {
-        "title": "Tervetuloa Thorium Webiin"
+        "title": "Tervetuloa Thorium Webiin",
+        "description": [
+            "Thorium Web on selaimessa toimiva ohjelma, jolla voi lukea e-kirjoja, äänikirjoja ja sarjakuvia. Kuka tahansa voi ottaa sen käyttöön.",
+            "Tämä sovellus on suunniteltu erityisesti tekijänoikeusvapaiden ja open access -julkaisujen lukemiseen verkossa, ja se tarjoaa tulevaisuudessa niitä varten tarkoitetun rajapinnan (API).",
+            "Sillä välin julkaisemme joukon testijulkaisuja, joiden avulla voit tutkia, mihin ohjelma pystyy."
+        ]
     }
 }
