@@ -126,5 +126,8 @@
                 "start": "Starta sömntimer"
             }
         }
+    },
+    "home": {
+        "title": "Välkommen till Thorium Web"
     }
 }
