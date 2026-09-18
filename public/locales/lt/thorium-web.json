@@ -126,5 +126,8 @@
             "trigger": "Nuotolinė perklausa",
             "connected": "Prisijungta nuotoliniu būdu"
         }
+    },
+    "home": {
+        "title": "Jus sveikina Thorium Reader"
     }
 }
