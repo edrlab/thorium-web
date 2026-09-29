@@ -211,14 +211,14 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@readium/navigator':
-        specifier: ^2.8.0
-        version: 2.8.0
+        specifier: ^2.11.0
+        version: 2.11.0
       '@readium/navigator-html-injectables':
-        specifier: ^2.6.3
-        version: 2.6.3
+        specifier: ^2.8.4
+        version: 2.8.4
       '@readium/shared':
-        specifier: ^2.4.0
-        version: 2.4.0
+        specifier: ^2.6.0
+        version: 2.6.0
       '@reduxjs/toolkit':
         specifier: ^2.11.2
         version: 2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)
@@ -2206,32 +2206,24 @@ packages:
   '@readium/css@2.0.5':
     resolution: {integrity: sha512-rQWeDFSS9UfRTFFdWIhlko0jtkL9dOfNTqFjgMumlguromsyHC9/lGmbWDde7deEeE5ns+yBOSGKixMU0wqZ4A==}
 
-  '@readium/decorator@1.0.1':
-    resolution: {integrity: sha512-7b4JRWggPP349saSxJJei2WLJaicF7JaxkP290TOnOitrCBtuYpD98Ftx2ZD+fHEOxOgWTh1ROoCe4r/lPLt9Q==}
+  '@readium/decorator@1.2.4':
+    resolution: {integrity: sha512-1/H4g+NUfzN1k4Bptwxpyv2ovzE7Rc/8Yp2TZGhRwilm4TE67rPOVS0GcylPXezSF6LZJtRFfFFf0gcwC8SWcA==}
     engines: {node: '>=18'}
 
-  '@readium/helpers@1.0.0':
-    resolution: {integrity: sha512-7q1ZZhY6/drlSyJvcNweWZlbqv4yfr5fLgM+UF4sf1qa7EJJ+yPmVcuhui1ntPbiS3Wae0mh0kL4AFsyOXyrbQ==}
+  '@readium/helpers@1.1.1':
+    resolution: {integrity: sha512-dCtHBmbJrXcarz8Yf0W6V5BJUsZU+UquTRLINHR1AjM/HTXPzs0U6/1daB7Urs7qWBpZEFuH3aQfXLSeTJObdg==}
     engines: {node: '>=18'}
 
-  '@readium/navigator-html-injectables@2.6.1':
-    resolution: {integrity: sha512-MA4viLVeYB18dEe0EQE8WaE90Azg3R91d21+Cyi8XF5Bj+FHXjLHVb9h+T8MXBa9wKriw0xdobJJ9yMDZ4O49Q==}
+  '@readium/navigator-html-injectables@2.8.4':
+    resolution: {integrity: sha512-DC/M5Si4yz8j8s5C6ReQOkq8pukvoCJjLfzi4tJScjF1dESxuwjBKEIAtK1jE8tWlJh/XhewBUCQcMm8yhkiEg==}
     engines: {node: '>=18'}
 
-  '@readium/navigator-html-injectables@2.6.3':
-    resolution: {integrity: sha512-9txUqqQ2pJ6UJvnVFFrCsxCf9qujAi99sP6DeyCGBF3WIKVP2UGC63El35A8im68aDMbFOmeGLY+HXCOaxvviw==}
+  '@readium/navigator@2.11.0':
+    resolution: {integrity: sha512-UCtAiUXhepcK+CKu/7TU7GDoa6nLQ8P2ubU0OWIXkDjipRq1m/pteUhFlBJjMZrNDOBZV7dEEuolYn0C7l7Xaw==}
     engines: {node: '>=18'}
 
-  '@readium/navigator@2.8.0':
-    resolution: {integrity: sha512-b8mm1MIrWbceWsmWB7j3zjWV+b/6mijLYKtd4qZVxJre817v8vl+xwEi75cd/tN16x5oIfnJ03swyc13ZfNuHg==}
-    engines: {node: '>=18'}
-
-  '@readium/shared@2.3.0':
-    resolution: {integrity: sha512-svrkfzOuYVzBsBQc4WlClkVbexdhxNCtmxhVEG3O49BnlF6tDQvT6tV8FKDnCvrivuVtv/rhN2hoFkB/vRdX+Q==}
-    engines: {node: '>=18'}
-
-  '@readium/shared@2.4.0':
-    resolution: {integrity: sha512-j3N2dqCuFja5ToksYr+G4uKg5vnzNVSLlZy9C071jSkQeRUSIIdREPYo5Gx/XOptkvPwip9O28oaG/JXCW4Z1g==}
+  '@readium/shared@2.6.0':
+    resolution: {integrity: sha512-9hYDK/IIVsmrJtofecw6y1awRITu6z9i4BO80iqIzGHNwba0izCgg8ylYEDcDvnKZNHu9Ho6BIZC1wKbxHyydw==}
     engines: {node: '>=18'}
 
   '@reduxjs/toolkit@2.11.2':
@@ -7251,35 +7243,30 @@ snapshots:
 
   '@readium/css@2.0.5': {}
 
-  '@readium/decorator@1.0.1':
+  '@readium/decorator@1.2.4':
     dependencies:
-      '@readium/navigator-html-injectables': 2.6.1
-      '@readium/shared': 2.3.0
+      '@readium/navigator-html-injectables': 2.8.4
+      '@readium/shared': 2.6.0
 
-  '@readium/helpers@1.0.0':
+  '@readium/helpers@1.1.1':
     dependencies:
       user-agent-data-types: 0.4.3
 
-  '@readium/navigator-html-injectables@2.6.1':
+  '@readium/navigator-html-injectables@2.8.4':
     dependencies:
-      '@readium/helpers': 1.0.0
-      '@readium/shared': 2.3.0
+      '@readium/helpers': 1.1.1
+      '@readium/shared': 2.6.0
 
-  '@readium/navigator-html-injectables@2.6.3':
+  '@readium/navigator@2.11.0':
     dependencies:
-      '@readium/helpers': 1.0.0
-      '@readium/shared': 2.4.0
+      '@readium/decorator': 1.2.4
+      '@readium/helpers': 1.1.1
+      '@readium/navigator-html-injectables': 2.8.4
+      '@readium/shared': 2.6.0
 
-  '@readium/navigator@2.8.0':
+  '@readium/shared@2.6.0':
     dependencies:
-      '@readium/decorator': 1.0.1
-      '@readium/helpers': 1.0.0
-      '@readium/navigator-html-injectables': 2.6.3
-      '@readium/shared': 2.4.0
-
-  '@readium/shared@2.3.0': {}
-
-  '@readium/shared@2.4.0': {}
+      '@readium/helpers': 1.1.1
 
   '@reduxjs/toolkit@2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)':
     dependencies:
@@ -8592,7 +8579,7 @@ snapshots:
       eslint: 9.39.2
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2))(eslint@9.39.2)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2))(eslint@9.39.2))(eslint@9.39.2)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.2)
       eslint-plugin-react: 7.37.5(eslint@9.39.2)
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.2)
@@ -8625,7 +8612,7 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2))(eslint@9.39.2))(eslint@9.39.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -8640,7 +8627,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2))(eslint@9.39.2))(eslint@9.39.2):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
