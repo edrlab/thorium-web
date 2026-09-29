@@ -126,5 +126,13 @@
             "trigger": "Nuotolinė perklausa",
             "connected": "Prisijungta nuotoliniu būdu"
         }
+    },
+    "home": {
+        "title": "Jus sveikina Thorium Web",
+        "description": [
+            "Thorium Web yra atvirojo kodo žiniatinklio skaitytuvė, skirta elektroninėms ir garsinėms knygoms bei komiksams; ją įsidiegti gali bet kas.",
+            "Ši sistema skirta viešojo naudojimo ir atvirosios prieigos leidinių skaitymui žiniatinklyje; ateityje jai bus sukurta speciali API sąsaja.",
+            "Tuo tarpu paviešinome keletą bandomųjų leidinių, skirtų įvertinti, ką ši skaitytuvė geba."
+        ]
     }
 }

@@ -126,5 +126,13 @@
                 "start": "Starta sömntimer"
             }
         }
+    },
+    "home": {
+        "title": "Välkommen till Thorium Web",
+        "description": [
+            "Thorium Web är en webbaserad läsare för e-böcker, ljudböcker och serier, som bygger på öppen källkod och som vem som helst kan använda.",
+            "Den här instansen är designad för att stödja läsning av böcker som är fritt tillgängliga på webben och publikationer med öppen tillgång, och kommer erbjuda ett API specifikt för detta i framtiden.",
+            "Tills dess publicerar vi ett urval av testböcker för att utforska vad Thorium klarar."
+        ]
     }
 }
