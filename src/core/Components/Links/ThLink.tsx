@@ -1,8 +1,10 @@
 "use client";
 
-import { Link, LinkProps, Tooltip, TooltipProps, TooltipTrigger } from "react-aria-components";
+import { Link, LinkProps, TooltipProps, TooltipTrigger } from "react-aria-components";
 import { WithRef } from "../customTypes";
 import { TooltipTriggerProps } from "react-aria";
+
+import { ThTooltip } from "../Tooltips/ThTooltip";
 
 export interface ThLinkProps extends LinkProps {
   ref?: React.ForwardedRef<HTMLAnchorElement>;
@@ -47,12 +49,12 @@ export const ThLink = ({
         >
           { children }
         </Link>
-        <Tooltip
+        <ThTooltip
           arrowBoundaryOffset={ 0 }
           { ...compounds.tooltip }
         >
           { compounds.label }
-        </Tooltip>
+        </ThTooltip>
       </TooltipTrigger>
     );
   } else {

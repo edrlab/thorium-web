@@ -54,6 +54,7 @@ The Core package provides various UI components organized into categories:
 - `Menu`: Components for creating menus and menus items.
 - `Reader`: Components for the general interface of the reader.
 - `Settings`: Components for settings (switche, slider, numberfield, etc.).
+- `Tooltips`: Components for tooltips.
 
 
 ## Audio Components
@@ -342,6 +343,23 @@ TBD.
 The package also contains a wrapper component that can be used to create a group/collection of settings, `<ThSettingsWrapper>`. It accepts an `items` prop to build entries of the settings list dynamically.
 
 TBD.
+
+## Tooltips Components
+
+Components for creating tooltips:
+
+```tsx
+import { ThTooltip } from "@edrlab/thorium-web/core/components";
+```
+
+`<ThTooltip>` replaces the Tooltip component from react-aria-components inside a `TooltipTrigger`. It adds two things:
+
+- Pressing Escape while the tooltip is open also removes focus from its trigger.
+- Tooltips no longer get stuck in the top-left corner of the viewport after you move quickly from one trigger to another.
+
+`ThActionButton` and `ThLink` already use it for their tooltips.
+
+Please refer to the [Tooltips Components API documentation](./API/Components/Tooltips.md) for more information.
 
 ## Misc Components
 
