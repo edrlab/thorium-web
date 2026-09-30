@@ -211,8 +211,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@readium/navigator':
-        specifier: ^2.11.0
-        version: 2.11.0
+        specifier: ^2.11.1
+        version: 2.11.1
       '@readium/navigator-html-injectables':
         specifier: ^2.8.4
         version: 2.8.4
@@ -2072,8 +2072,8 @@ packages:
     resolution: {integrity: sha512-DC/M5Si4yz8j8s5C6ReQOkq8pukvoCJjLfzi4tJScjF1dESxuwjBKEIAtK1jE8tWlJh/XhewBUCQcMm8yhkiEg==}
     engines: {node: '>=18'}
 
-  '@readium/navigator@2.11.0':
-    resolution: {integrity: sha512-UCtAiUXhepcK+CKu/7TU7GDoa6nLQ8P2ubU0OWIXkDjipRq1m/pteUhFlBJjMZrNDOBZV7dEEuolYn0C7l7Xaw==}
+  '@readium/navigator@2.11.1':
+    resolution: {integrity: sha512-EQD9HfqWDTHrJQ1PKyKETdzxT2oDl4W46ckAWgCaMKgCyMfdsyaO5qAExeT0Fa4fvzRoKG9oIWNq70jNfZ9lHA==}
     engines: {node: '>=18'}
 
   '@readium/shared@2.6.0':
@@ -6985,7 +6985,7 @@ snapshots:
       '@readium/helpers': 1.1.1
       '@readium/shared': 2.6.0
 
-  '@readium/navigator@2.11.0':
+  '@readium/navigator@2.11.1':
     dependencies:
       '@readium/decorator': 1.2.4
       '@readium/helpers': 1.1.1
@@ -8301,7 +8301,7 @@ snapshots:
       eslint: 9.39.5
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5))(eslint@9.39.5)
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.5)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5))(eslint@9.39.5))(eslint@9.39.5)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.5)
       eslint-plugin-react: 7.37.5(eslint@9.39.5)
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.5)
@@ -8334,7 +8334,7 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.5)
+      eslint-plugin-import: 2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5))(eslint@9.39.5))(eslint@9.39.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -8349,7 +8349,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.5):
+  eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.53.0(eslint@9.39.5)(typescript@5.9.3))(eslint@9.39.5))(eslint@9.39.5))(eslint@9.39.5):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
