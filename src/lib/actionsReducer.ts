@@ -150,13 +150,11 @@ const initialState: ActionsReducerState = {
     divina: {
       [ThDockingKeys.start]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       },
       [ThDockingKeys.end]: {
         actionKey: null,
-        active: false,
-        collapsed: false
+        active: false
       }
     }
   },

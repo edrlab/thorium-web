@@ -32,7 +32,8 @@ import {
 import { DivinaNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
 import {
   Locator,
-  Publication
+  Publication,
+  TimelineItem
 } from "@readium/shared";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
@@ -47,7 +48,6 @@ import { useDivinaNavigator } from "@/core/Hooks/Divina/useDivinaNavigator";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
-import { useTimeline } from "@/core/Hooks/useTimeline";
 import { usePositionStorage } from "@/hooks";
 
 import { toggleActionOpen, dockAction } from "@/lib/actionsReducer";
@@ -69,9 +69,9 @@ import {
   setUserNavigated
 } from "@/lib/readerReducer";
 import {
-  setTimeline,
   setPublicationStart,
-  setPublicationEnd
+  setPublicationEnd,
+  setProgress
 } from "@/lib/publicationReducer";
 
 import classNames from "classnames";
@@ -82,6 +82,10 @@ import { NavPeripheralType, fromActionPeripheralType, fromDockingPeripheralType 
 import { getPlatformModifier } from "@/core/Helpers/keyboardUtilities";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
+import { usePublicationProgress } from "@/core/Hooks";
+import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
+import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
+import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 
 // We need to register plugins before hooks run
 // otherwise we can’t access the values of settings
@@ -187,18 +191,28 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     isScrollStart,
     isScrollEnd,
     getSetting,
-    submitPreferences
+    submitPreferences,
+    timeline: getNavigatorTimeline
   } = divinaNavigator;
 
   const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKey, positionStorage);
 
-  useTimeline({
+  const tocTree = useAppSelector(state => state.publication.toc?.tree);
+
+  const [currentTimelineItem, setCurrentTimelineItem] = useState<TimelineItem | undefined>(undefined);
+
+  const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
+  const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
+
+  usePublicationProgress({
     publication: publication,
+    getNavigatorTimeline,
+    currentTimelineItem,
     currentLocation: localData,
     currentPositions: currentPositions() || [],
     positionsList: positionsList,
-    onChange: (timeline) => {
-      dispatch(setTimeline(timeline));
+    onChange: (progress) => {
+      dispatch(setProgress(progress));
     }
   });
 
@@ -322,6 +336,18 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       }
       debouncedHandleProgression(locator);
     },
+    timelineItemChanged: function (item: TimelineItem | undefined): void {
+      setCurrentTimelineItem(item);
+
+      if (!item) {
+        clearAdjacentItems();
+        clearCurrentTocEntry();
+        return;
+      }
+
+      updateAdjacentItems(item);
+      updateCurrentTocEntry(item);
+    },
     // Return false so the navigator handles its built-in quarter zones:
     // left/right quarter turn the page, the middle zone fires miscPointer
     tap: function (_e: FrameClickEvent): boolean {
@@ -407,13 +433,13 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
           if (dockingKey) {
             const actionKey = getFocusedDockableKey(dockingKey as ThDockingKeys);
             if (actionKey) {
-              dispatch(dockAction({ key: actionKey, dockingKey: dockingKey as ThDockingKeys, profile: "divina" }));
+              dispatch(dockAction({ key: actionKey.key, dockingKey: dockingKey as ThDockingKeys, profile: "divina" }));
             }
           }
         }
       }
     },
-  }), [debouncedHandleProgression, toggleIsImmersive, activateImmersiveOnAction, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, dispatch, moveTo, goProgression, zoom, fs, getFocusedDockableKey]);
+  }), [debouncedHandleProgression, toggleIsImmersive, activateImmersiveOnAction, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, dispatch, moveTo, goProgression, zoom, fs, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
   const initialPosition = useMemo(() => getLocalData(), [getLocalData]);
 
@@ -428,6 +454,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       dispatch(setLoading(false));
     },
   });
+
+  useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
 
   // Keep the effective layout in sync with the navigator, including
   // natively scrolled publications (webtoons) that force scrolled mode
@@ -538,6 +566,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
             layout={ layoutUI }
             progressionFormatPref={ preferences.theming.progression?.format?.divina }
             progressionFormatFallback={ ThProgressionFormat.readingOrderIndex }
+            publication={publication}
           />
         </div>
       </StatefulDockingWrapper>

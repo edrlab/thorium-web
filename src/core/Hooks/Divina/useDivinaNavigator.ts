@@ -5,7 +5,8 @@ import { useCallback, useRef } from "react";
 import {
   Link,
   Locator,
-  Publication
+  Publication,
+  Timeline
 } from "@readium/shared";
 import {
   DivinaNavigator,
@@ -198,6 +199,10 @@ export const useDivinaNavigator = () => {
     return getScriptMode(metadata);
   }, []);
 
+  const timeline = useCallback((): Timeline | undefined => {
+    return navigatorInstance?.timeline;
+  }, []);
+
   return {
     DivinaNavigatorLoad,
     DivinaNavigatorDestroy,
@@ -224,6 +229,7 @@ export const useDivinaNavigator = () => {
     getSetting,
     submitPreferences,
     getCframes,
-    getScriptMode: currentScriptMode
+    getScriptMode: currentScriptMode,
+    timeline
   }
 }
