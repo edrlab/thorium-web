@@ -110,6 +110,20 @@
           "trigger": "More spacing options"
         }
       }
+    },
+    "preferences": {
+      "divinaSpreads": {
+        "title": "Spread",
+        "label": "Display two pages side-by-side"
+      },
+      "divinaStripWidth": "Strip width",
+      "divinaQuality": {
+        "title": "Image quality",
+        "auto": "Auto",
+        "low": "Low",
+        "high": "High",
+        "max": "Max"
+      }
     }
   },
   "audio": {

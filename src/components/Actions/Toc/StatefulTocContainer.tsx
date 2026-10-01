@@ -77,7 +77,9 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
           setOpen(false);
         };
 
-    goLink(link, true, cb);
+    // Divina jumps instantly: animating across the publication would sweep
+    // through (and needlessly load) every page in between
+    goLink(link, profile !== "divina", cb);
   };
 
   // Since React Aria components intercept keys and do not continue propagation

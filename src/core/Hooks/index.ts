@@ -17,5 +17,6 @@ export * from "./useReducedTransparency";
 export * from "./usePublicationProgress";
 export * from "./useTimelineAdjacency";
 export * from "./Audio";
+export * from "./Divina";
 export * from "./Epub";
 export * from "./WebPub";

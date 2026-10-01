@@ -15,6 +15,7 @@ import { StatefulRadioGroup } from "./StatefulRadioGroup";
 import { Radio } from "react-aria-components";
 
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useDivinaNavigator } from "@/core/Hooks/Divina/useDivinaNavigator";
 import { useI18n } from "@/i18n/useI18n";
 import { useGridNavigation } from "@/components/Settings/hooks/useGridNavigation";
 
@@ -28,7 +29,7 @@ import { buildThemeObject } from "@/preferences/helpers/buildThemeObject";
 export const StatefulTheme = () => {
   const profile = useAppSelector(state => state.reader.profile);
   const { theming } = useSharedPreferences();
-  const { systemThemes, keys: themeKeys, audioOrder: audioThemeOrder, reflowOrder: reflowThemeOrder, fxlOrder: fxlThemeOrder } = theming.themes;
+  const { systemThemes, keys: themeKeys, audioOrder: audioThemeOrder, reflowOrder: reflowThemeOrder, fxlOrder: fxlThemeOrder, divinaOrder: divinaThemeOrder } = theming.themes;
   const { t } = useI18n();
 
   const radioGroupRef = useRef<HTMLDivElement | null>(null);
@@ -40,12 +41,15 @@ export const StatefulTheme = () => {
 
   const themeArray: (ThemeKeyType | "auto")[] = profile === "audio"
     ? ((audioThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-    : (isFXL
-        ? ((fxlThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-        : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
+    : profile === "divina"
+      ? ((divinaThemeOrder ?? []) as (ThemeKeyType | "auto")[])
+      : (isFXL
+          ? ((fxlThemeOrder ?? []) as (ThemeKeyType | "auto")[])
+          : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
 
   const themeObject = useAppSelector(state => state.theming.theme);
-  const theme = profile === "audio" ? (themeObject.audio ?? "auto") : (isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
+  // Divina shares the fxl theme slot
+  const theme = profile === "audio" ? (themeObject.audio ?? "auto") : (isFXL || profile === "divina" ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const coverTheme = useAppSelector(state => state.publication.coverTheme);
 
@@ -87,6 +91,7 @@ export const StatefulTheme = () => {
   })
 
   const { submitPreferences } = useEpubNavigator();
+  const { submitPreferences: submitDivinaPreferences } = useDivinaNavigator();
 
   const updatePreference = useCallback(async (value: ThemeKeyType | "auto") => {
     const themeProps = buildThemeObject<typeof value>({
@@ -95,13 +100,18 @@ export const StatefulTheme = () => {
       systemThemes: systemThemes as { light: ThemeKeyType; dark: ThemeKeyType } | undefined,
       colorScheme
     })
-    await submitPreferences(themeProps);
+    if (profile === "divina") {
+      await submitDivinaPreferences(themeProps);
+    } else {
+      await submitPreferences(themeProps);
+    }
 
     dispatch(setTheme({
-      key: profile === "audio" ? "audio" : (isFXL ? "fxl" : "reflow"),
+      // Divina shares the fxl theme slot
+      key: profile === "audio" ? "audio" : (isFXL || profile === "divina" ? "fxl" : "reflow"),
       value: value
     }));
-  }, [isFXL, themeKeys, systemThemes, submitPreferences, dispatch, colorScheme, profile]);
+  }, [isFXL, themeKeys, systemThemes, submitPreferences, submitDivinaPreferences, dispatch, colorScheme, profile]);
 
   // It's easier to inline styles from preferences for these
   // than spamming the entire app with all custom properties right now

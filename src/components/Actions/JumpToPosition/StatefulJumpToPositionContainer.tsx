@@ -12,7 +12,7 @@ import { ThForm } from "@/core/Components/Form/ThForm";
 import { ThFormNumberField } from "@/core/Components/Form/Fields/ThFormNumberField";
 
 import { Locator } from "@readium/shared";
-import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useNavigator } from "@/core/Navigator";
 import { useDocking } from "../../Docking/hooks/useDocking";
 import { useI18n } from "@/i18n/useI18n";
 
@@ -38,9 +38,9 @@ export const StatefulJumpToPositionContainer = ({
   const docking = useDocking(ThActionsKeys.jumpToPosition);
   const sheetType = docking.sheetType;
 
-  const { go } = useEpubNavigator();
+  const { go } = useNavigator().unified;
 
-  // Component has to handle updates locally since EpubNavigator updates positions, 
+  // Component has to handle updates locally since the navigator updates positions, 
   // so we use these as an intermediary
   const [position, setPosition] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -104,8 +104,10 @@ export const StatefulJumpToPositionContainer = ({
       dispatch(setUserNavigated(true));
     };
 
-    go(locator, !reducedMotion, cb);
-  }, [position, positionsList, reducedMotion, t, positionInRange, go, setOpen, dispatch]);
+    // Divina jumps instantly: animating across the publication would sweep
+    // through (and needlessly load) every page in between
+    go(locator, !reducedMotion && profile !== "divina", cb);
+  }, [position, positionsList, reducedMotion, profile, t, positionInRange, go, setOpen, dispatch]);
 
   // Since we are using an intermediary local state, we must keep track when positionNumbers changes
   useEffect(() => {
