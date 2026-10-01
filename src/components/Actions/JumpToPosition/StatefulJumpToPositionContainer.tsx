@@ -12,7 +12,7 @@ import { ThForm } from "@/core/Components/Form/ThForm";
 import { ThFormNumberField } from "@/core/Components/Form/Fields/ThFormNumberField";
 
 import { Locator } from "@readium/shared";
-import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useNavigator } from "@/core/Navigator";
 import { useDocking } from "../../Docking/hooks/useDocking";
 import { useI18n } from "@/i18n/useI18n";
 
@@ -38,9 +38,9 @@ export const StatefulJumpToPositionContainer = ({
   const docking = useDocking(ThActionsKeys.jumpToPosition);
   const sheetType = docking.sheetType;
 
-  const { go } = useEpubNavigator();
+  const { go } = useNavigator().unified;
 
-  // Component has to handle updates locally since EpubNavigator updates positions, 
+  // Component has to handle updates locally since the navigator updates positions, 
   // so we use these as an intermediary
   const [position, setPosition] = useState(0);
   const [errorMessage, setErrorMessage] = useState<string>();
