@@ -104,8 +104,10 @@ export const StatefulJumpToPositionContainer = ({
       dispatch(setUserNavigated(true));
     };
 
-    go(locator, !reducedMotion, cb);
-  }, [position, positionsList, reducedMotion, t, positionInRange, go, setOpen, dispatch]);
+    // Divina jumps instantly: animating across the publication would sweep
+    // through (and needlessly load) every page in between
+    go(locator, !reducedMotion && profile !== "divina", cb);
+  }, [position, positionsList, reducedMotion, profile, t, positionInRange, go, setOpen, dispatch]);
 
   // Since we are using an intermediary local state, we must keep track when positionNumbers changes
   useEffect(() => {
