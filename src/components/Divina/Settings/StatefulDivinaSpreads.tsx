@@ -39,7 +39,7 @@ export const StatefulDivinaSpreads = () => {
     <>
     <StatefulSwitch
       standalone={ true }
-      heading={ t("reader.preferences.divinaSpreads.title") }
+      heading={ t("reader.preferences.spread.title") }
       label={ t("reader.preferences.divinaSpreads.label") }
       isSelected={ isSelected }
       onChange={ async (value: boolean) => await updatePreference(value) }

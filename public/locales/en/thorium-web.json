@@ -113,7 +113,6 @@
     },
     "preferences": {
       "divinaSpreads": {
-        "title": "Spread",
         "label": "Display two pages side-by-side"
       },
       "divinaStripWidth": "Strip width",
