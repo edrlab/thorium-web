@@ -38,6 +38,13 @@ const books = [
     cover: "/images/Bella.jpg",
     url: "/read/bella-the-dragon",
     rendition: "Fixed-Layout EPUB"
+  },
+  {
+    title: "Pepper & Carrot: Fresh Start",
+    author: "David Revoy",
+    cover: "/images/PepperCarrot.jpg",
+    url: "/read/pepper-carrot-fresh-start",
+    rendition: "Divina"
   }
 ];
 
