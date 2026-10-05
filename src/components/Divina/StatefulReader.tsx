@@ -318,7 +318,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       updatePublicationNavigationState();
     }, 250), [setLocalData, updatePublicationNavigationState]);
 
-  useEffect(() => () => debouncedHandleProgression.clear(), [debouncedHandleProgression]);
+  // Flush rather than clear so a position change right before unmount is still saved
+  useEffect(() => () => debouncedHandleProgression.flush(), [debouncedHandleProgression]);
 
   const listeners: Partial<DivinaNavigatorListeners> = useMemo(() => ({
     positionChanged: function (locator: Locator): void {
