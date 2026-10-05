@@ -13,7 +13,7 @@ export const useIsScroll = (): boolean => {
   const isManifestScrolled = useAppSelector(state => state.publication.isManifestScrolled);
   const scriptMode = useAppSelector(state => state.publication.scriptMode);
   const { isComponentUsed: isDivinaLayoutUsed } = useSettingsComponentStatus({
-    settingsKey: ThSettingsKeys.divinaLayout,
+    settingsKey: ThSettingsKeys.layout,
     publicationType: "divina",
   });
 

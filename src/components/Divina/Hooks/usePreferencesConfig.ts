@@ -14,7 +14,7 @@ export const useDivinaPreferencesConfig = () => {
   const stripWidth = useAppSelector(state => state.divinaSettings.stripWidth);
 
   const { isComponentUsed: isLayoutUsed } = useSettingsComponentStatus({
-    settingsKey: ThSettingsKeys.divinaLayout,
+    settingsKey: ThSettingsKeys.layout,
     publicationType: "divina",
   });
 

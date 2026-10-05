@@ -2,7 +2,6 @@ import { ThSettingsKeys } from "@/preferences/models";
 
 export const SETTINGS_KEY_TO_PREFERENCE = {
   [ThSettingsKeys.columns]: "columnCount",
-  [ThSettingsKeys.divinaLayout]: "scrolled",
   [ThSettingsKeys.divinaQuality]: "quality",
   [ThSettingsKeys.divinaSpreads]: "spreads",
   [ThSettingsKeys.divinaStripWidth]: "stripWidth",

@@ -405,7 +405,7 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     ],
     divinaOrder: [
       ThSettingsKeys.theme,
-      ThSettingsKeys.divinaLayout,
+      ThSettingsKeys.layout,
       ThSettingsKeys.divinaSpreads,
       ThSettingsKeys.divinaStripWidth,
       ThSettingsKeys.divinaQuality

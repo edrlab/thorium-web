@@ -35,7 +35,6 @@ export interface ThSettingsChoicesPref<T extends string> {
 
 export enum ThSettingsKeys {
   columns = "columns",
-  divinaLayout = "divinaLayout",
   divinaQuality = "divinaQuality",
   divinaSpreads = "divinaSpreads",
   divinaStripWidth = "divinaStripWidth",

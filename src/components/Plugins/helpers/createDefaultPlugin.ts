@@ -10,14 +10,13 @@ import { StatefulTocTrigger } from "../../Actions/Toc/StatefulTocTrigger";
 import { StatefulTocContainer } from "../../Actions/Toc/StatefulTocContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
-import { StatefulDivinaLayout } from "../../Divina/Settings/StatefulDivinaLayout";
 import { StatefulDivinaQuality } from "../../Divina/Settings/StatefulDivinaQuality";
 import { StatefulDivinaSpreads } from "../../Divina/Settings/StatefulDivinaSpreads";
 import { StatefulDivinaStripWidth } from "../../Divina/Settings/StatefulDivinaStripWidth";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
 import { UnstableStatefulFontWeight } from "../../Settings/Text/StatefulFontWeight";
 import { StatefulHyphens } from "../../Settings/Text/StatefulHyphens";
-import { StatefulLayout } from "../../Epub/Settings/StatefulLayout";
+import { StatefulLayout } from "../../Settings/StatefulLayout";
 import { StatefulLetterSpacing } from "../../Settings/Spacing/StatefulLetterSpacing";
 import { StatefulLineHeight } from "../../Settings/Spacing/StatefulLineHeight";
 import { StatefulParagraphIndent } from "../../Settings/Spacing/StatefulParagraphIndent";
@@ -61,9 +60,6 @@ export const createDefaultPlugin = (): ThPlugin => {
       settings: {
         [ThSettingsKeys.columns]: {
           Comp: StatefulColumns
-        },
-        [ThSettingsKeys.divinaLayout]: {
-          Comp: StatefulDivinaLayout
         },
         [ThSettingsKeys.divinaQuality]: {
           Comp: StatefulDivinaQuality
