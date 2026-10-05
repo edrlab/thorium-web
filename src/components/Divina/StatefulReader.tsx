@@ -15,7 +15,8 @@ import {
   ThDockingKeys,
   ThLayoutDirection,
   ThLayoutUI,
-  ThProgressionFormat
+  ThProgressionFormat,
+  ThSettingsKeys
 } from "../../preferences/models";
 
 import { ThPluginRegistry } from "../Plugins/PluginRegistry";
@@ -52,6 +53,8 @@ import { useI18n } from "@/i18n/useI18n";
 import { usePositionStorage } from "@/hooks";
 
 import { toggleActionOpen, dockAction } from "@/lib/actionsReducer";
+import { setDivinaScrolled } from "@/lib/divinaSettingsReducer";
+import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
 
@@ -485,6 +488,18 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     if (!navigatorReady) return;
     setIsScroll(getSetting("scrolled") ?? false);
   }, [navigatorReady, scrolledPref, getSetting]);
+
+  const { isComponentUsed: isLayoutUsed } = useSettingsComponentStatus({
+    settingsKey: ThSettingsKeys.layout,
+    publicationType: "divina",
+  });
+
+  // Without the layout setting the stored preference isn't submitted,
+  // so the store must reflect what the navigator actually applies
+  useEffect(() => {
+    if (!navigatorReady || isLayoutUsed) return;
+    dispatch(setDivinaScrolled(getSetting("scrolled")));
+  }, [navigatorReady, isLayoutUsed, getSetting, dispatch]);
 
   // Theme can also change on colorScheme change so
   // we have to handle this side-effect but we can’t

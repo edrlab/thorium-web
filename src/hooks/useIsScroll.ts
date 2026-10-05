@@ -1,8 +1,5 @@
 "use client";
 
-import { ThSettingsKeys } from "@/preferences/models";
-
-import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useAppSelector } from "@/lib/hooks";
 
 export const useIsScroll = (): boolean => {
@@ -12,14 +9,10 @@ export const useIsScroll = (): boolean => {
   const isFXL = useAppSelector(state => state.publication.isFXL);
   const isManifestScrolled = useAppSelector(state => state.publication.isManifestScrolled);
   const scriptMode = useAppSelector(state => state.publication.scriptMode);
-  const { isComponentUsed: isDivinaLayoutUsed } = useSettingsComponentStatus({
-    settingsKey: ThSettingsKeys.layout,
-    publicationType: "divina",
-  });
 
   if (profile === "webPub") return true;
-  // A webtoon is forced scrolled by the navigator, and the scrolled preference
-  // is only submitted when the layout setting is used (see usePreferencesConfig)
-  if (profile === "divina") return isManifestScrolled || (isDivinaLayoutUsed ? (divinaScrolled ?? false) : false);
+  // A natively scrolled divina (webtoon) is forced scrolled by the navigator,
+  // regardless of the user preference
+  if (profile === "divina") return isManifestScrolled || (divinaScrolled ?? false);
   return (scroll || scriptMode === "cjk-vertical" || scriptMode === "mongolian-vertical") && !isFXL;
 };
