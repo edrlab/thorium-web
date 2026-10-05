@@ -136,8 +136,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
   const themeObject = useAppSelector(state => state.theming.theme);
-  // Divina shares the fxl theme slot
-  const theme = themeObject.fxl;
+  const theme = themeObject.divina;
   const previousTheme = usePrevious(theme);
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
@@ -472,7 +471,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   useLayoutEffect(() => {
     if (!navigatorReady) return;
 
-    const theme = themeObject.fxl ?? "auto";
+    const theme = themeObject.divina ?? "auto";
 
     // Protecting against re-applying on theme change
     if (theme !== "auto" && previousTheme !== theme) return;
@@ -487,7 +486,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       });
       await submitPreferences(themeProps);
       dispatch(setTheme({
-        key: "fxl",
+        key: "divina",
         value: themeKey
       }));
     };

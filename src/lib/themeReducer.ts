@@ -8,12 +8,13 @@ export interface ThemeStateObject {
   reflow?: string;
   fxl?: string;
   audio?: string;
+  divina?: string;
 }
 
 export interface ThemeStateChangePayload {
   type: string;
   payload: {
-    key: "reflow" | "fxl" | "audio";
+    key: "reflow" | "fxl" | "audio" | "divina";
     value?: string;
   }
 }
@@ -36,7 +37,8 @@ const initialState: ThemeReducerState = {
   theme: {
     reflow: "auto",
     fxl: "auto",
-    audio: "auto"
+    audio: "auto",
+    divina: "auto"
   },
   prefersReducedMotion: false,
   prefersReducedTransparency: false, 

@@ -48,8 +48,11 @@ export const StatefulTheme = () => {
           : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
 
   const themeObject = useAppSelector(state => state.theming.theme);
-  // Divina shares the fxl theme slot
-  const theme = profile === "audio" ? (themeObject.audio ?? "auto") : (isFXL || profile === "divina" ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
+  const theme = profile === "audio"
+    ? (themeObject.audio ?? "auto")
+    : profile === "divina"
+      ? (themeObject.divina ?? "auto")
+      : (isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const coverTheme = useAppSelector(state => state.publication.coverTheme);
 
@@ -107,8 +110,7 @@ export const StatefulTheme = () => {
     }
 
     dispatch(setTheme({
-      // Divina shares the fxl theme slot
-      key: profile === "audio" ? "audio" : (isFXL || profile === "divina" ? "fxl" : "reflow"),
+      key: profile === "audio" ? "audio" : profile === "divina" ? "divina" : (isFXL ? "fxl" : "reflow"),
       value: value
     }));
   }, [isFXL, themeKeys, systemThemes, submitPreferences, submitDivinaPreferences, dispatch, colorScheme, profile]);

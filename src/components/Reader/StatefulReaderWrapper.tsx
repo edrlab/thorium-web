@@ -198,11 +198,10 @@ const StatefulReaderContent = ({ profile, publication, plugins, coverUrl, ...pro
   const { preferences, resolveFontLanguage } = usePreferences();
   const themeObject = useAppSelector(state => state.theming.theme);
   const isFXL = useAppSelector(state => state.publication.isFXL);
-  // Divina shares the fxl theme slot
   const theme = profile === "epub"
     ? (isFXL ? themeObject.fxl : themeObject.reflow)
     : profile === "divina"
-      ? themeObject.fxl
+      ? (themeObject.divina ?? "auto")
       : ThThemeKeys.light;
   const dispatch = useAppDispatch();
 
