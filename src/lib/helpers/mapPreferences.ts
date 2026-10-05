@@ -61,6 +61,9 @@ export const mapPreferencesToState = <T extends CustomizableKeys>(prefs: ThPrefe
       ),
       webPub: mapRenditionFormat<ThProgressionFormat | ThProgressionFormat[]>(
         prefs.theming?.progression?.format?.webPub
+      ),
+      divina: mapRenditionFormat<ThProgressionFormat | ThProgressionFormat[]>(
+        prefs.theming?.progression?.format?.divina
       )
     },
     runningHeadFormat: {
@@ -72,6 +75,9 @@ export const mapPreferencesToState = <T extends CustomizableKeys>(prefs: ThPrefe
       ),
       webPub: mapRenditionFormat<ThRunningHeadFormat>(
         prefs.theming?.header?.runningHead?.format?.webPub
+      ),
+      divina: mapRenditionFormat<ThRunningHeadFormat>(
+        prefs.theming?.header?.runningHead?.format?.divina
       )
     },
     ui: prefs.theming?.layout?.ui,
@@ -164,6 +170,12 @@ export const mapStateToPreferences = <T extends CustomizableKeys = CustomizableK
                 state.progressionFormat.webPub,
                 currentPrefs.theming.progression?.format?.webPub
               )
+            }),
+            ...(state.progressionFormat.divina !== undefined && {
+              divina: updateVariants(
+                state.progressionFormat.divina,
+                currentPrefs.theming.progression?.format?.divina
+              )
             })
           }
         }
@@ -191,6 +203,12 @@ export const mapStateToPreferences = <T extends CustomizableKeys = CustomizableK
                 webPub: updateVariants(
                   state.runningHeadFormat.webPub,
                   currentPrefs.theming.header?.runningHead?.format?.webPub
+                )
+              }),
+              ...(state.runningHeadFormat.divina !== undefined && {
+                divina: updateVariants(
+                  state.runningHeadFormat.divina,
+                  currentPrefs.theming.header?.runningHead?.format?.divina
                 )
               })
             }
