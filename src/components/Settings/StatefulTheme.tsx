@@ -14,8 +14,7 @@ import { ThActionsKeys, ThLayoutDirection } from "@/preferences/models";
 import { StatefulRadioGroup } from "./StatefulRadioGroup";
 import { Radio } from "react-aria-components";
 
-import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
-import { useDivinaNavigator } from "@/core/Hooks/Divina/useDivinaNavigator";
+import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 import { useGridNavigation } from "@/components/Settings/hooks/useGridNavigation";
 
@@ -93,8 +92,7 @@ export const StatefulTheme = () => {
     }
   })
 
-  const { submitPreferences } = useEpubNavigator();
-  const { submitPreferences: submitDivinaPreferences } = useDivinaNavigator();
+  const readerNavigator = useNavigator();
 
   const updatePreference = useCallback(async (value: ThemeKeyType | "auto") => {
     const themeProps = buildThemeObject<typeof value>({
@@ -103,17 +101,16 @@ export const StatefulTheme = () => {
       systemThemes: systemThemes as { light: ThemeKeyType; dark: ThemeKeyType } | undefined,
       colorScheme
     })
-    if (profile === "divina") {
-      await submitDivinaPreferences(themeProps);
-    } else {
-      await submitPreferences(themeProps);
+    // Audio has no visual navigator, its theme only lives in the store
+    if (profile !== "audio") {
+      await readerNavigator.visual.submitPreferences(themeProps);
     }
 
     dispatch(setTheme({
       key: profile === "audio" ? "audio" : profile === "divina" ? "divina" : (isFXL ? "fxl" : "reflow"),
       value: value
     }));
-  }, [isFXL, themeKeys, systemThemes, submitPreferences, submitDivinaPreferences, dispatch, colorScheme, profile]);
+  }, [isFXL, themeKeys, systemThemes, readerNavigator, dispatch, colorScheme, profile]);
 
   // It's easier to inline styles from preferences for these
   // than spamming the entire app with all custom properties right now
