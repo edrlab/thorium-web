@@ -121,7 +121,28 @@ const migrateDockStateToProfileKeyed = (state: ActionsReducerState): ActionsRedu
       };
     }
   }
-  return state;
+
+  if (!state.dock) {
+    return state;
+  }
+
+  const emptyProfileDock = () => ({
+    [ThDockingKeys.start]: { actionKey: null, active: false },
+    [ThDockingKeys.end]: { actionKey: null, active: false }
+  });
+
+  // Ensure all profile docks exist even if some are missing
+  const migratedDock: any = {
+    epub: state.dock.epub || emptyProfileDock(),
+    webPub: state.dock.webPub || emptyProfileDock(),
+    audio: state.dock.audio || emptyProfileDock(),
+    divina: state.dock.divina || emptyProfileDock()
+  };
+
+  return {
+    ...state,
+    dock: migratedDock
+  };
 };
 
 const migrateKeysStateToProfileKeyed = (state: ActionsReducerState): ActionsReducerState => {
