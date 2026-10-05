@@ -522,7 +522,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
           >
             <StatefulReaderHeader
               actionKeys={ divinaActionKeys }
-              actionsOrder={ preferences.actions.divinaOrder ?? preferences.actions.fxlOrder }
+              actionsOrder={ preferences.actions.divinaOrder }
               layout={ layoutUI }
               runningHeadFormatPref={ preferences.theming.header?.runningHead?.format?.divina }
             />
