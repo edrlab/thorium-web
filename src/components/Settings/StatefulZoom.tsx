@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys, ThSettingsRangeVariant } from "@/preferences";
-import { SETTINGS_KEY_TO_PREFERENCE } from "./helpers/settingsKeyMapping";
+import { getPreferenceKey } from "./helpers/settingsKeyMapping";
 
 import Decrease from "./assets/icons/text_decrease.svg";
 import Increase from "./assets/icons/text_increase.svg";
@@ -51,9 +51,7 @@ export const StatefulZoom = () => {
       ? (preferencesEditor as any)?.zoom 
       : (preferencesEditor as EpubPreferencesEditor)?.fontSize;
 
-  const prefKey = readerProfile === "webPub"
-    ? SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.zoom]
-    : "fontSize" as const;
+  const prefKey = getPreferenceKey(ThSettingsKeys.zoom, readerProfile);
 
   const updatePreference = useCallback(async (value: number | number[]) => {
     const normalizedValue = Array.isArray(value) ? value[0] : value;

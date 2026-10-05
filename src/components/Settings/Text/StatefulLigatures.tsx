@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../models/settings";
 
@@ -28,7 +28,7 @@ export const StatefulLigatures = ({ standalone = true }: StatefulSettingsItemPro
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.ligatures];
+  const prefKey = getPreferenceKey(ThSettingsKeys.ligatures);
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

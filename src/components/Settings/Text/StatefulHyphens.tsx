@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../models/settings";
 import { ThTextAlignOptions } from "@/preferences/models";
@@ -32,7 +32,7 @@ export const StatefulHyphens = ({ standalone = true }: StatefulSettingsItemProps
   
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.hyphens];
+  const prefKey = getPreferenceKey(ThSettingsKeys.hyphens);
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

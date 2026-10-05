@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSwitch } from "../../Settings/StatefulSwitch";
 
@@ -28,7 +28,7 @@ export const StatefulDivinaSpreads = () => {
   // Spreads are only effective in paged mode
   const isScrolled = getSetting("scrolled") ?? scrolledPref ?? false;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.divinaSpreads];
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaSpreads);
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

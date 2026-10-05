@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { DivinaPreferencesEditor } from "@readium/navigator";
 import { ThLayoutOptions, ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "./helpers/settingsKeyMapping";
+import { getPreferenceKey } from "./helpers/settingsKeyMapping";
 
 import ScrollableIcon from "./assets/icons/contract.svg";
 import PaginatedIcon from "./assets/icons/docs.svg";
@@ -49,9 +49,7 @@ export const StatefulLayout = () => {
     }
   ];
 
-  const prefKey = readerProfile === "divina"
-    ? "scrolled" as const
-    : SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.layout];
+  const prefKey = getPreferenceKey(ThSettingsKeys.layout, readerProfile);
 
   const updatePreference = useCallback(async (value: string) => {
     const derivedValue = value === ThLayoutOptions.scroll;

@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import DecreaseIcon from "../../Settings/assets/icons/zoom_out.svg";
 import IncreaseIcon from "../../Settings/assets/icons/zoom_in.svg";
@@ -32,7 +32,7 @@ export const StatefulDivinaStripWidth = () => {
   // Strip width is only effective in scrolled mode
   const isScrolled = getSetting("scrolled") ?? scrolledPref ?? false;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.divinaStripWidth];
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaStripWidth);
 
   const updatePreference = useCallback(async (newValue: number) => {
     await submitPreferences({ [prefKey]: newValue });

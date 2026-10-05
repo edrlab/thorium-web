@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { DivinaQuality } from "@readium/navigator";
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulRadioGroup } from "../../Settings/StatefulRadioGroup";
 
@@ -52,7 +52,7 @@ export const StatefulDivinaQuality = () => {
     // no such variants exist in its manifests)
   ].filter(item => preferences.settings.keys[ThSettingsKeys.divinaQuality].choices.includes(item.value));
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.divinaQuality];
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaQuality);
 
   const updatePreference = useCallback(async (value: string) => {
     await submitPreferences({ [prefKey]: value as DivinaQuality });

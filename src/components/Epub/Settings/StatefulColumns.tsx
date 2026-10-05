@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import AutoLayoutIcon from "./assets/icons/document_scanner.svg";
 import OneColIcon from "./assets/icons/article.svg";
@@ -47,7 +47,7 @@ export const StatefulColumns = () => {
 
   const { submitPreferences, getSetting } = useEpubNavigator();
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.columns];
+  const prefKey = getPreferenceKey(ThSettingsKeys.columns);
 
   const items = useMemo(() => [
     {
