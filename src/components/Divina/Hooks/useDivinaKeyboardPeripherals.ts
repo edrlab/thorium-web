@@ -1,15 +1,14 @@
 import { useMemo } from "react";
 
 import { IKeyboardPeripheralsConfig } from "@readium/navigator";
-import { ThActionsKeys, ThSettingsKeys } from "@/preferences/models";
+import { ThActionsKeys } from "@/preferences/models";
 
 import { useObservableCondition } from "@/core/Hooks/useObservableCondition";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { useFilteredPreferenceKeys } from "@/preferences/hooks/useFilteredPreferenceKeys";
 import { useActionComponentStatus } from "../../Actions/hooks/useActionComponentStatus";
-import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
-import { useAppSelector } from "@/lib/hooks";
+import { useIsScroll } from "@/hooks/useIsScroll";
 
 import {
   NavPeripheralType,
@@ -27,16 +26,7 @@ import {
 // the divina navigator implements its own smooth key-driven scrolling.
 // Zoom only applies to the paged presenter.
 export const useDivinaKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
-  // Mirror usePreferencesConfig's gating: the navigator only receives the
-  // scrolled preference when the layout setting is used, so a stale persisted
-  // value must not drive the zoom condition out of sync with the presenter
-  const isManifestScrolled = useAppSelector(state => state.publication.isManifestScrolled);
-  const divinaScrolled = useAppSelector(state => state.divinaSettings.scrolled);
-  const { isComponentUsed: isLayoutUsed } = useSettingsComponentStatus({
-    settingsKey: ThSettingsKeys.divinaLayout,
-    publicationType: "divina",
-  });
-  const isScroll = isManifestScrolled || (isLayoutUsed ? (divinaScrolled ?? false) : false);
+  const isScroll = useIsScroll();
   const zoomActive = useObservableCondition(!isScroll);
   const { actionsKeys, docking } = useActionsPreferences();
   const { isSupported: isFullscreenSupported } = useFullscreen();
