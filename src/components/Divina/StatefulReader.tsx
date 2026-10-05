@@ -44,6 +44,7 @@ import { PositionStorage, StatefulReaderProps } from "../Reader/StatefulReaderWr
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useDivinaReaderInit } from "./Hooks/useReaderInit";
+import { usePaginatedArrows } from "@/hooks/usePaginatedArrows";
 import { useDivinaNavigator } from "@/core/Hooks/Divina/useDivinaNavigator";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
@@ -127,10 +128,12 @@ export const StatefulDivinaReader = ({
 const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
   const { divinaActionKeys, divinaThemeKeys } = useFilteredPreferenceKeys();
   const { preferences } = usePreferences();
+  const { occupySpace: arrowsOccupySpace } = usePaginatedArrows();
   const { direction: uiDirection } = useLocale();
   const { t } = useI18n();
 
   const container = useRef<HTMLDivElement>(null);
+  const arrowsWidth = useRef(2 * ((preferences.theming.arrow.size || 40) + (preferences.theming.arrow.offset || 0)));
 
   const isRTL = useAppSelector(state => state.publication.isRTL);
   const positionsList = useAppSelector(state => state.publication.positionsList);
@@ -449,6 +452,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     publication,
     initialPosition,
     listeners,
+    arrowsOccupySpace,
+    arrowsWidth,
     contentProtectionConfig: resolveContentProtectionConfig(preferences.contentProtection, t),
     onNavigatorReady: () => {
       dispatch(setLoading(false));
@@ -456,6 +461,19 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
+
+  const applyConstraint = useCallback(async (value: number) => {
+    await submitPreferences({
+      constraint: value
+    })
+  }, [submitPreferences]);
+
+  useLayoutEffect(() => {
+    if (!navigatorReady) return;
+
+    applyConstraint(arrowsOccupySpace ? arrowsWidth.current : 0)
+      .catch(console.error);
+  }, [arrowsOccupySpace, applyConstraint, navigatorReady]);
 
   // Keep the effective layout in sync with the navigator, including
   // natively scrolled publications (webtoons) that force scrolled mode

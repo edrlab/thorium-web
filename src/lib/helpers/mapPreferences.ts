@@ -83,7 +83,8 @@ export const mapPreferencesToState = <T extends CustomizableKeys>(prefs: ThPrefe
     },
     paginatedAffordances: {
       reflow: mapPaginatedAffordance(prefs.affordances?.paginated?.reflow),
-      fxl: mapPaginatedAffordance(prefs.affordances?.paginated?.fxl)
+      fxl: mapPaginatedAffordance(prefs.affordances?.paginated?.fxl),
+      divina: mapPaginatedAffordance(prefs.affordances?.paginated?.divina)
     }
   };
 }
@@ -217,7 +218,8 @@ export const mapStateToPreferences = <T extends CustomizableKeys = CustomizableK
       ...(state.paginatedAffordances && {
         paginated: {
           reflow: updatePaginatedAffordance(state.paginatedAffordances.reflow, currentPrefs.affordances?.paginated?.reflow),
-          fxl: updatePaginatedAffordance(state.paginatedAffordances.fxl, currentPrefs.affordances?.paginated?.fxl)
+          fxl: updatePaginatedAffordance(state.paginatedAffordances.fxl, currentPrefs.affordances?.paginated?.fxl),
+          divina: updatePaginatedAffordance(state.paginatedAffordances.divina, currentPrefs.affordances?.paginated?.divina)
         }
       })
     }

@@ -316,6 +316,13 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
           discard: ["navigation"],
           hint: "none"
         }
+      },
+      divina: {
+        default: {
+          variant: ThArrowVariant.layered,
+          discard: ["navigation"],
+          hint: "none"
+        }
       }
     }
   },

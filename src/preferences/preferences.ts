@@ -242,6 +242,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     paginated: {
       reflow: ThPaginatedAffordancePref;
       fxl: ThPaginatedAffordancePref;
+      divina: ThPaginatedAffordancePref;
     }
   };
   actions: ThActionsPref<K>;

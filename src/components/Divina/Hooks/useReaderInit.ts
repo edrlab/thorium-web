@@ -14,6 +14,8 @@ interface UseDivinaReaderInitProps {
   publication: Publication | null;
   initialPosition: Locator | null;
   listeners: Partial<DivinaNavigatorListeners>;
+  arrowsOccupySpace: boolean;
+  arrowsWidth: React.RefObject<number>;
   contentProtectionConfig?: IContentProtectionConfig;
   onNavigatorReady?: () => void;
   onNavigatorLoaded?: () => void;
@@ -25,6 +27,8 @@ export const useDivinaReaderInit = ({
   publication,
   initialPosition,
   listeners,
+  arrowsOccupySpace,
+  arrowsWidth,
   contentProtectionConfig,
   onNavigatorReady,
   onNavigatorLoaded,
@@ -32,7 +36,7 @@ export const useDivinaReaderInit = ({
 }: UseDivinaReaderInitProps) => {
   const [navigatorReady, setNavigatorReady] = useState(false);
 
-  const { divinaPreferences } = useDivinaPreferencesConfig();
+  const { divinaPreferences } = useDivinaPreferencesConfig({ arrowsOccupySpace, arrowsWidth });
   const keyboardPeripherals = useDivinaKeyboardPeripherals();
 
   const { DivinaNavigatorLoad, DivinaNavigatorDestroy } = useDivinaNavigator();

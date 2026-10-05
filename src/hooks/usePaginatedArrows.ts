@@ -4,7 +4,6 @@ import { ThArrowVariant, ThPaginatedAffordancePrefValue } from "@/preferences/mo
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useReaderTransitions } from "./useReaderTransitions";
-import { useIsPageBased } from "./useIsPageBased";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -23,9 +22,8 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const { preferences } = usePreferences();
   const hasArrows = useAppSelector(state => state.reader.hasArrows);
   const isFXL = useAppSelector(state => state.publication.isFXL);
+  const profile = useAppSelector(state => state.reader.profile);
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
-
-  const isPageBased = useIsPageBased();
   
   // Get reader state transitions
   const {
@@ -42,10 +40,12 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
 
   // Memoize the prefs object to avoid recreating it on every render
   const prefs = useMemo(() =>
-    isPageBased
-      ? preferences.affordances.paginated.fxl
-      : preferences.affordances.paginated.reflow,
-    [isPageBased, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
+    profile === "divina"
+      ? preferences.affordances.paginated.divina
+      : isFXL
+        ? preferences.affordances.paginated.fxl
+        : preferences.affordances.paginated.reflow,
+    [profile, isFXL, preferences.affordances.paginated.divina, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
   );
 
   // Memoize the breakpoints map to avoid recreating it on every breakpoint change
@@ -67,7 +67,7 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
     // Force layered variant for FXL to prevent layout issues
     // FXL navigator is using the window width to calculate the layout
     // so we need to force the layered variant to prevent layout issues
-    if (isPageBased) {
+    if (isFXL) {
       return {
         ...result,
         variant: ThArrowVariant.layered
@@ -75,7 +75,7 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
     }
 
     return result;
-  }, [breakpoint, prefsMap, isPageBased, prefs.default]);
+  }, [breakpoint, prefsMap, isFXL, prefs.default]);
 
   // Track previous prefs
   const prevVariant = usePrevious(variant);

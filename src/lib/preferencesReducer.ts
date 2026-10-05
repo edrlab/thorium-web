@@ -52,12 +52,13 @@ export interface PaginatedAffordanceProperties {
 export interface PaginatedAffordanceObject {
   reflow?: PaginatedAffordanceProperties;
   fxl?: PaginatedAffordanceProperties;
+  divina?: PaginatedAffordanceProperties;
 }
 
 export interface PaginatedAffordancePayload {
   type: string;
   payload: {
-    key: "reflow" | "fxl";
+    key: "reflow" | "fxl" | "divina";
     value: ThPaginatedAffordancePrefValue;
     breakpoint?: ThBreakpoints;
   };

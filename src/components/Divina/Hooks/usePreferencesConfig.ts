@@ -7,7 +7,15 @@ import { ThSettingsKeys } from "@/preferences/models";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useAppSelector } from "@/lib/hooks";
 
-export const useDivinaPreferencesConfig = () => {
+interface UseDivinaPreferencesConfigProps {
+  arrowsOccupySpace: boolean;
+  arrowsWidth: React.RefObject<number>;
+}
+
+export const useDivinaPreferencesConfig = ({
+  arrowsOccupySpace,
+  arrowsWidth,
+}: UseDivinaPreferencesConfigProps) => {
   const quality = useAppSelector(state => state.divinaSettings.quality);
   const scrolled = useAppSelector(state => state.divinaSettings.scrolled);
   const spreads = useAppSelector(state => state.divinaSettings.spreads);
@@ -34,7 +42,9 @@ export const useDivinaPreferencesConfig = () => {
   });
 
   const divinaPreferences = useMemo(() => {
-    const preferences: IDivinaPreferences = {};
+    const preferences: IDivinaPreferences = {
+      constraint: arrowsOccupySpace ? arrowsWidth.current : 0
+    };
 
     if (isLayoutUsed) preferences.scrolled = scrolled;
     if (isQualityUsed) preferences.quality = quality as IDivinaPreferences["quality"];
@@ -43,6 +53,8 @@ export const useDivinaPreferencesConfig = () => {
 
     return preferences;
   }, [
+    arrowsOccupySpace,
+    arrowsWidth,
     quality,
     scrolled,
     spreads,
