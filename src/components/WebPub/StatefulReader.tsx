@@ -8,7 +8,6 @@ import { StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
 
 import {
   ThLayoutUI,
-  ThDocumentTitleFormat,
   ThProgressionFormat,
   ThSpacingSettingsKeys,
   ThSettingsKeys,
@@ -53,6 +52,7 @@ import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTrackin
 import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 import { usePositionStorage } from "@/hooks/usePositionStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
+import { resolveDocumentTitle } from "@/helpers/resolveDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
 import { useFonts } from "@/core/Hooks/fonts/useFonts";
 import { useZoomCallbacks } from "@/components/Settings/hooks/useZoomCallbacks";
@@ -205,40 +205,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     }
   });
 
-  const documentTitleFormat = preferences.metadata?.documentTitle?.format;
-
-  let documentTitle: string | undefined;
-
-  if (documentTitleFormat) {
-    if (typeof documentTitleFormat === "object" && "key" in documentTitleFormat) {
-      const translatedTitle = t(documentTitleFormat.key);
-      documentTitle = translatedTitle !== documentTitleFormat.key 
-        ? translatedTitle 
-        : documentTitleFormat.fallback;
-    } else {
-      switch (documentTitleFormat) {
-        case ThDocumentTitleFormat.title:
-          documentTitle = timeline?.title;
-          break;
-        case ThDocumentTitleFormat.chapter:
-          documentTitle = timeline?.progression?.currentChapter;
-          break;
-        case ThDocumentTitleFormat.titleAndChapter:
-          if (timeline?.title && timeline?.progression?.currentChapter) {
-            documentTitle = `${ timeline.title } – ${ timeline.progression.currentChapter }`;
-          }
-          break;
-        case ThDocumentTitleFormat.none:
-          documentTitle = undefined;
-          break;
-        default: 
-          documentTitle = documentTitleFormat;
-          break;
-      }
-    }
-  }
-
-  useDocumentTitle(documentTitle);
+  useDocumentTitle(resolveDocumentTitle(preferences.metadata?.documentTitle?.format, timeline, t));
 
   const toggleIsImmersive = useCallback(() => {
     // If tap/click in iframe, then header/footer no longer hoovering

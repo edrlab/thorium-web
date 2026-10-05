@@ -84,6 +84,8 @@ import { getPlatformModifier } from "@/core/Helpers/keyboardUtilities";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
 import { usePublicationProgress } from "@/core/Hooks";
+import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
+import { resolveDocumentTitle } from "@/helpers/resolveDocumentTitle";
 import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
 import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
 import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
@@ -206,7 +208,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const { updateAdjacentItems, clearAdjacentItems } = useTimelineAdjacency(getNavigatorTimeline);
   const { updateCurrentTocEntry, clearCurrentTocEntry } = useTocEntryTracking(getNavigatorTimeline, tocTree);
 
-  usePublicationProgress({
+  const timeline = usePublicationProgress({
     publication: publication,
     getNavigatorTimeline,
     currentTimelineItem,
@@ -217,6 +219,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       dispatch(setProgress(progress));
     }
   });
+
+  useDocumentTitle(resolveDocumentTitle(preferences.metadata?.documentTitle?.format, timeline, t));
 
   const activateImmersiveOnAction = useCallback(() => {
     if (!cache.current.isImmersive) dispatch(setImmersive(true));
