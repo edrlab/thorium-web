@@ -125,6 +125,11 @@ export const useNavigator = () => {
     return context.media;
   }, [context.media]);
 
+  // Loads asynchronously after the reader, so consumers must handle null instead of throwing
+  const readAloudMemo = useMemo(() => {
+    return context.readAloud?.isLoaded ? context.readAloud : null;
+  }, [context.readAloud]);
+
   return useMemo(() => ({
     get visual() {
       if (!visualMemo) throw new Error("Visual navigator not available");
@@ -134,8 +139,11 @@ export const useNavigator = () => {
       if (!mediaMemo) throw new Error("Media navigator not available");
       return mediaMemo;
     },
+    get readAloud() {
+      return readAloudMemo;
+    },
     get unified(): UnifiedNavigator {
       return unified;
     }
-  }), [visualMemo, mediaMemo, unified]);
+  }), [visualMemo, mediaMemo, readAloudMemo, unified]);
 };

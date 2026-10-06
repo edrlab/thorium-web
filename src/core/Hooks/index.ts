@@ -18,4 +18,5 @@ export * from "./usePublicationProgress";
 export * from "./useTimelineAdjacency";
 export * from "./Audio";
 export * from "./Epub";
+export * from "./ReadAloud";
 export * from "./WebPub";

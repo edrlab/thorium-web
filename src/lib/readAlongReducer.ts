@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ReadAloudState } from "@/core/Hooks/ReadAloud/models";
+import { ReadAloudState } from "@readium/navigator";
 
 export interface ReadAlongSleepTimerState {
   remainingSeconds: number | null;

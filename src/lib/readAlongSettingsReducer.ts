@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ReadAloudSettings } from "@/core/Hooks/ReadAloud/models";
+import { ReadAloudSettings } from "@readium/navigator";
 
 export interface ReadAlongSettingsReducerState {
   // Set on the navigator with setVoice() rather than as a preference
@@ -8,8 +8,8 @@ export interface ReadAlongSettingsReducerState {
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
-  skip: string[] | null;
-  contextualize: string[] | null;
+  skip: ReadAloudSettings["skip"] | null;
+  contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
   segmentation: ReadAloudSettings["segmentation"] | null;
   pauseDuration: number | null;

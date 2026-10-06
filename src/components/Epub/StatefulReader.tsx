@@ -51,6 +51,7 @@ import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSetti
 import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
@@ -239,6 +240,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const { handleFullscreen } = useFullscreen(onFsChange);
 
   const epubNavigator = useEpubNavigator();
+  const readAloudNavigator = useReadAloudNavigator();
   const {
     goLeft,
     goRight,
@@ -618,7 +620,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   return (
     <>
-    <NavigatorProvider visualNavigator={ epubNavigator }>
+    <NavigatorProvider
+      visualNavigator={ epubNavigator }
+      readAloudNavigator={ navigatorReady ? readAloudNavigator : undefined }
+    >
       <main className={ readerStyles.main }>
         <StatefulDockingWrapper>
           <div

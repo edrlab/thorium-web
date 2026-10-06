@@ -42,6 +42,7 @@ import { PositionStorage } from "../Reader/StatefulReaderWrapper";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useWebPubNavigator } from "@/core/Hooks/WebPub";
+import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
 import { useWebPubSettingsCache } from "@/core/Hooks/WebPub/useWebPubSettingsCache";
 import { useWebPubReaderInit } from "./Hooks/useReaderInit";
 import { useWebPubKeyboardPeripherals } from "./Hooks/useWebPubKeyboardPeripherals";
@@ -177,6 +178,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const { handleFullscreen } = useFullscreen(onFsChange);
 
   const webPubNavigator = useWebPubNavigator();
+  const readAloudNavigator = useReadAloudNavigator();
   const {
     currentPositions,
     canGoBackward,
@@ -369,7 +371,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   return (
     <>
-    <NavigatorProvider visualNavigator={ webPubNavigator }>
+    <NavigatorProvider
+      visualNavigator={ webPubNavigator }
+      readAloudNavigator={ navigatorReady ? readAloudNavigator : undefined }
+    >
       <main className={ readerStyles.main }>
         <StatefulDockingWrapper>
           <div
