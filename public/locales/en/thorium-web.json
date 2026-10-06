@@ -133,5 +133,13 @@
         "remaining": "Pausing in {{ remaining }}"
       }
     }
+  },
+  "_pendingThoriumLocales": {
+    "reader": {
+      "readAlong": {
+        "trigger": "Read aloud",
+        "close": "Stop reading aloud"
+      }
+    }
   }
 }

@@ -287,18 +287,21 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     reflowOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     fxlOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     webPubOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen
     ],
     collapse: true,

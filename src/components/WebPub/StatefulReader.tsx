@@ -43,6 +43,7 @@ import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useWebPubNavigator } from "@/core/Hooks/WebPub";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
+import { useReadAlongInit } from "@/components/ReadAlong/Hooks";
 import { useWebPubSettingsCache } from "@/core/Hooks/WebPub/useWebPubSettingsCache";
 import { useWebPubReaderInit } from "./Hooks/useReaderInit";
 import { useWebPubKeyboardPeripherals } from "./Hooks/useWebPubKeyboardPeripherals";
@@ -368,6 +369,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
+  useReadAlongInit({ navigatorReady, getVisualNavigator: webPubNavigator.getInstance });
 
   return (
     <>

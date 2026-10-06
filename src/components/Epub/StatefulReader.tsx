@@ -52,6 +52,7 @@ import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
+import { useReadAlongInit } from "@/components/ReadAlong/Hooks";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
@@ -563,6 +564,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
+  useReadAlongInit({ navigatorReady, getVisualNavigator: epubNavigator.getInstance });
 
   const applyConstraint = useCallback(async (value: number) => {
     await submitPreferences({
