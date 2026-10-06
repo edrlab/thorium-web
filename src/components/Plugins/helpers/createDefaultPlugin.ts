@@ -12,6 +12,8 @@ import { StatefulReadAlongTrigger } from "../../ReadAlong/StatefulReadAlongTrigg
 import { StatefulReadAlongContainer } from "../../ReadAlong/StatefulReadAlongContainer";
 import { StatefulAudioVolumeTrigger } from "../../Audio/actions/Volume/StatefulAudioVolumeTrigger";
 import { StatefulAudioVolumeContainer } from "../../Audio/actions/Volume/StatefulAudioVolumeContainer";
+import { StatefulAudioPlaybackRateTrigger } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateTrigger";
+import { StatefulAudioPlaybackRateContainer } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
@@ -66,6 +68,10 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThReadAlongActionKeys.volume]: {
           Trigger: StatefulAudioVolumeTrigger,
           Target: StatefulAudioVolumeContainer
+        },
+        [ThReadAlongActionKeys.rate]: {
+          Trigger: StatefulAudioPlaybackRateTrigger,
+          Target: StatefulAudioPlaybackRateContainer
         }
       },
       settings: {

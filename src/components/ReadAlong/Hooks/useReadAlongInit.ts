@@ -7,7 +7,7 @@ import { ReadAloudListeners } from "@readium/navigator";
 import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
 
 import { useAppDispatch, useAppStore } from "@/lib/hooks";
-import { resetReadAlongPlayer, setReadAlongStatus } from "@/lib/readAlongPlayerReducer";
+import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 
 interface UseReadAlongInitProps {
@@ -23,7 +23,7 @@ export const useReadAlongInit = ({
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
-  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice } = useReadAloudNavigator();
+  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, getCurrentVoice } = useReadAloudNavigator();
 
   useEffect(() => {
     if (!navigatorReady || !isActive) return;
@@ -37,20 +37,34 @@ export const useReadAlongInit = ({
     // Persisted with the player state, but only valid for the navigator they came from
     dispatch(resetReadAlongPlayer());
 
+    // The default voice is picked asynchronously by the engine, so it is only known once state changes
+    const syncVoiceControls = () => {
+      const controls = getCurrentVoice()?.controls;
+      const voiceControls = { boundary: controls?.boundary !== false, speed: controls?.speed !== false };
+      const current = store.getState().readAlongPlayer.voiceControls;
+      if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed) {
+        dispatch(setReadAlongVoiceControls(voiceControls));
+      }
+    };
+
     const listeners: ReadAloudListeners = {
-      stateChanged: (state) => dispatch(setReadAlongStatus(state)),
+      stateChanged: (state) => {
+        dispatch(setReadAlongStatus(state));
+        syncVoiceControls();
+      },
       error: (error) => console.warn("Read along:", error)
     };
 
     ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences }, () => {
       if (voice) setVoice(voice);
+      syncVoiceControls();
     });
 
     return () => {
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, getCurrentVoice]);
 
   // The keyboard shortcut toggles the action open, which activates read along when inactive
   useEffect(() => {

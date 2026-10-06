@@ -15,6 +15,11 @@ export interface ReadAlongMetadata {
   coverUrl?: string;
 }
 
+export interface ReadAlongVoiceControls {
+  boundary: boolean;
+  speed: boolean;
+}
+
 export type ReadAlongLayout = "mini" | "expanded";
 
 export interface ReadAlongPlayerReducerState {
@@ -22,7 +27,7 @@ export interface ReadAlongPlayerReducerState {
   layout: ReadAlongLayout;
   metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
-  hasWordBoundaries: boolean;
+  voiceControls: ReadAlongVoiceControls;
   sleepTimer: ReadAlongSleepTimerState;
 }
 
@@ -31,7 +36,7 @@ const initialState: ReadAlongPlayerReducerState = {
   layout: "mini",
   metadata: null,
   status: "idle",
-  hasWordBoundaries: true,
+  voiceControls: { boundary: true, speed: true },
   sleepTimer: { remainingSeconds: null, onChapterEnd: false, onUtteranceEnd: false }
 };
 
@@ -48,8 +53,8 @@ export const readAlongPlayerSlice = createSlice({
     setReadAlongStatus: (state, action: PayloadAction<ReadAloudState>) => {
       state.status = action.payload;
     },
-    setReadAlongWordBoundaries: (state, action: PayloadAction<boolean>) => {
-      state.hasWordBoundaries = action.payload;
+    setReadAlongVoiceControls: (state, action: PayloadAction<ReadAlongVoiceControls>) => {
+      state.voiceControls = action.payload;
     },
     setReadAlongSleepTimer: (state, action: PayloadAction<Partial<ReadAlongSleepTimerState>>) => {
       state.sleepTimer = { ...state.sleepTimer, ...action.payload };
@@ -65,7 +70,7 @@ export const {
   setReadAlongActive,
   setReadAlongLayout,
   setReadAlongStatus,
-  setReadAlongWordBoundaries,
+  setReadAlongVoiceControls,
   setReadAlongSleepTimer,
   setReadAlongMetadata,
   resetReadAlongPlayer
