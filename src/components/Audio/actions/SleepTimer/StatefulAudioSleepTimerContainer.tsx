@@ -1,40 +1,45 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Button } from "react-aria-components";
 import { FocusScope } from "react-aria";
 
-import { ThAudioActionKeys, ThAudioKeys, ThSettingsTimerVariant } from "@/preferences/models";
+import { ThSettingsTimerVariant } from "@/preferences/models";
 import { ThNumberField } from "@/core/Components/Settings/ThNumberField";
 import { ThRadioGroup } from "@/core/Components/Settings/ThRadioGroup";
 import { StatefulActionContainerProps } from "../../../Actions/models/actions";
 
 import timerStyles from "./assets/styles/thorium-web.sleepTimer.module.css";
 
-import { useNavigator } from "@/core/Navigator";
-import { useAudioPreferences } from "@/preferences/hooks/useAudioPreferences";
 import { useI18n } from "@/i18n/useI18n";
+import { useSleepTimerAction } from "./hooks/useSleepTimerAction";
 import { useDocking } from "../../../Docking/hooks/useDocking";
 import { StatefulSheetWrapper } from "@/components/Sheets/StatefulSheetWrapper";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
-import { setSleepTimerOnTrackEnd, setSleepTimerOnFragmentEnd, setSleepTimerRemainingSeconds } from "@/lib/playerReducer";
 
 export const StatefulAudioSleepTimerContainer = ({ triggerRef, placement = "top" }: StatefulActionContainerProps) => {
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
 
+  const {
+    actionKey,
+    config,
+    remainingSeconds,
+    onTrackEnd,
+    onFragmentEnd,
+    setRemainingSeconds,
+    setOnTrackEnd,
+    setOnFragmentEnd
+  } = useSleepTimerAction();
+
   const profile = useAppSelector(state => state.reader.profile);
   const isOpen = useAppSelector(state => {
     if (!profile || !state.actions.keys[profile]) return false;
-    return state.actions.keys[profile][ThAudioActionKeys.sleepTimer]?.isOpen ?? false;
+    return state.actions.keys[profile][actionKey]?.isOpen ?? false;
   });
-  const remainingSeconds = useAppSelector(state => state.player.sleepTimer.remainingSeconds);
-  const onTrackEnd = useAppSelector(state => state.player.sleepTimer.onTrackEnd);
-  const onFragmentEnd = useAppSelector(state => state.player.sleepTimer.onFragmentEnd);
-  const playerStatus = useAppSelector(state => state.player.status);
   const dispatch = useAppDispatch();
 
   const { t } = useI18n();
@@ -51,70 +56,52 @@ export const StatefulAudioSleepTimerContainer = ({ triggerRef, placement = "top"
     return `${ mm }${ min } ${ ss }${ sec }`;
   };
 
-  const { preferences } = useAudioPreferences();
-  const { pause } = useNavigator().media;
-
-  const config = preferences.settings.keys[ThAudioKeys.sleepTimer];
   const variant = config.variant;
 
-  useEffect(() => {
-    if (remainingSeconds === null) return;
-    if (remainingSeconds <= 0) {
-      pause();
-      dispatch(setSleepTimerRemainingSeconds(null));
-      return;
-    }
-    if (playerStatus !== "playing") return;
-    const id = setTimeout(() => {
-      dispatch(setSleepTimerRemainingSeconds(remainingSeconds - 1));
-    }, 1000);
-    return () => clearTimeout(id);
-  }, [remainingSeconds, playerStatus, pause, dispatch]);
-
   const handleCancel = useCallback(() => {
-    dispatch(setSleepTimerRemainingSeconds(null));
-    dispatch(setSleepTimerOnTrackEnd(false));
-    dispatch(setSleepTimerOnFragmentEnd(false));
+    setRemainingSeconds(null);
+    setOnTrackEnd(false);
+    setOnFragmentEnd(false);
     if (profile) {
-      dispatch(setActionOpen({ key: ThAudioActionKeys.sleepTimer, isOpen: false, profile }));
+      dispatch(setActionOpen({ key: actionKey, isOpen: false, profile }));
     }
-  }, [dispatch, profile]);
+  }, [setRemainingSeconds, setOnTrackEnd, setOnFragmentEnd, dispatch, profile, actionKey]);
 
   const handleStart = useCallback(() => {
     const totalSeconds = hours * 3600 + minutes * 60;
     if (totalSeconds <= 0) return;
-    dispatch(setSleepTimerRemainingSeconds(totalSeconds));
+    setRemainingSeconds(totalSeconds);
     if (profile) {
-      dispatch(setActionOpen({ key: ThAudioActionKeys.sleepTimer, isOpen: false, profile }));
+      dispatch(setActionOpen({ key: actionKey, isOpen: false, profile }));
     }
-  }, [hours, minutes, dispatch, profile]);
+  }, [hours, minutes, setRemainingSeconds, dispatch, profile, actionKey]);
 
   const handlePresetSelect = useCallback((value: string) => {
     if (value === "endOfResource") {
-      dispatch(setSleepTimerOnTrackEnd(true));
-      dispatch(setSleepTimerOnFragmentEnd(false));
-      dispatch(setSleepTimerRemainingSeconds(null));
+      setOnTrackEnd(true);
+      setOnFragmentEnd(false);
+      setRemainingSeconds(null);
     } else if (value === "endOfFragment") {
-      dispatch(setSleepTimerOnTrackEnd(false));
-      dispatch(setSleepTimerOnFragmentEnd(true));
-      dispatch(setSleepTimerRemainingSeconds(null));
+      setOnTrackEnd(false);
+      setOnFragmentEnd(true);
+      setRemainingSeconds(null);
     } else {
-      dispatch(setSleepTimerOnTrackEnd(false));
-      dispatch(setSleepTimerOnFragmentEnd(false));
-      dispatch(setSleepTimerRemainingSeconds(Number(value) * 60));
+      setOnTrackEnd(false);
+      setOnFragmentEnd(false);
+      setRemainingSeconds(Number(value) * 60);
     }
     if (profile) {
-      dispatch(setActionOpen({ key: ThAudioActionKeys.sleepTimer, isOpen: false, profile }));
+      dispatch(setActionOpen({ key: actionKey, isOpen: false, profile }));
     }
-  }, [dispatch, profile]);
+  }, [setRemainingSeconds, setOnTrackEnd, setOnFragmentEnd, dispatch, profile, actionKey]);
 
-  const docking = useDocking(ThAudioActionKeys.sleepTimer);
+  const docking = useDocking(actionKey);
 
   const setOpen = useCallback((open: boolean) => {
     if (profile) {
-      dispatch(setActionOpen({ key: ThAudioActionKeys.sleepTimer, isOpen: open, profile }));
+      dispatch(setActionOpen({ key: actionKey, isOpen: open, profile }));
     }
-  }, [dispatch, profile]);
+  }, [dispatch, profile, actionKey]);
 
   const isActive = remainingSeconds !== null || onTrackEnd || onFragmentEnd;
   const maxHours = (config.variant === ThSettingsTimerVariant.durationField ? config.maxHours : undefined) ?? 23;
@@ -242,7 +229,7 @@ export const StatefulAudioSleepTimerContainer = ({ triggerRef, placement = "top"
     <StatefulSheetWrapper
       sheetType={ docking.sheetType }
       sheetProps={ {
-        id: ThAudioActionKeys.sleepTimer,
+        id: actionKey,
         triggerRef,
         heading: t("reader.playback.preferences.sleepTimer.descriptive"),
         className: timerStyles.wrapper,

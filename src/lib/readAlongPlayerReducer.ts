@@ -4,8 +4,6 @@ import { ReadAloudState } from "@readium/navigator";
 
 export interface ReadAlongSleepTimerState {
   remainingSeconds: number | null;
-  onChapterEnd: boolean;
-  onUtteranceEnd: boolean;
 }
 
 export interface ReadAlongMetadata {
@@ -37,7 +35,7 @@ const initialState: ReadAlongPlayerReducerState = {
   metadata: null,
   status: "idle",
   voiceControls: { boundary: true, speed: true },
-  sleepTimer: { remainingSeconds: null, onChapterEnd: false, onUtteranceEnd: false }
+  sleepTimer: { remainingSeconds: null }
 };
 
 export const readAlongPlayerSlice = createSlice({

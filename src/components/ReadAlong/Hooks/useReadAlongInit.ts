@@ -9,6 +9,7 @@ import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks
 import { useAppDispatch, useAppStore } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
+import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
 
 interface UseReadAlongInitProps {
   navigatorReady: boolean;
@@ -24,6 +25,8 @@ export const useReadAlongInit = ({
   const dispatch = useAppDispatch();
 
   const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, getCurrentVoice } = useReadAloudNavigator();
+
+  useSleepTimerCountdown();
 
   useEffect(() => {
     if (!navigatorReady || !isActive) return;

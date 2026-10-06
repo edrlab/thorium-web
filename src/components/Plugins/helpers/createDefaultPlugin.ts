@@ -14,6 +14,8 @@ import { StatefulAudioVolumeTrigger } from "../../Audio/actions/Volume/StatefulA
 import { StatefulAudioVolumeContainer } from "../../Audio/actions/Volume/StatefulAudioVolumeContainer";
 import { StatefulAudioPlaybackRateTrigger } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateTrigger";
 import { StatefulAudioPlaybackRateContainer } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateContainer";
+import { StatefulAudioSleepTimerTrigger } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerTrigger";
+import { StatefulAudioSleepTimerContainer } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
@@ -72,6 +74,10 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThReadAlongActionKeys.rate]: {
           Trigger: StatefulAudioPlaybackRateTrigger,
           Target: StatefulAudioPlaybackRateContainer
+        },
+        [ThReadAlongActionKeys.sleepTimer]: {
+          Trigger: StatefulAudioSleepTimerTrigger,
+          Target: StatefulAudioSleepTimerContainer
         }
       },
       settings: {

@@ -168,7 +168,7 @@ export const defaultReadAlongWordStyle: ThReadAlongStylePref = {
 
 export const defaultReadAlongSleepTimer: ThSettingsTimerPref = {
   variant: ThSettingsTimerVariant.presetList,
-  presets: [15, 30, 45, 60, 90, "endOfFragment", "endOfResource"]
+  presets: [15, 30, 45, 60, 90]
 };
 
 export const defaultReadAlongPreferences = {
