@@ -137,7 +137,6 @@
   "_pendingThoriumLocales": {
     "reader": {
       "readAlong": {
-        "trigger": "Read aloud",
         "close": "Stop reading aloud"
       }
     }

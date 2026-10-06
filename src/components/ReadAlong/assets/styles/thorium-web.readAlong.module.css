@@ -1,0 +1,41 @@
+.miniPlayer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-inline-size: 0;
+}
+
+.miniPlayerMetadata {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+.miniPlayerHeading,
+.miniPlayerSubheading {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.miniPlayerHeading {
+  font-weight: bold;
+}
+
+.miniPlayerControls {
+  --th-icon-size: 18px;
+}
+
+.miniPlayerActions {
+  display: flex;
+  align-items: center;
+}
+
+.miniPlayerSheetBody {
+  padding: var(--th-layout-spacing);
+}
+
+.miniPlayerSheetBackdrop {
+  display: none;
+}

@@ -5,13 +5,15 @@ import { useCallback, useEffect, useRef } from "react";
 import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
+import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance, ThMiniPlayerTypes } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
 import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOverlay";
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
+import { StatefulReadAlongMiniPlayer } from "./ReadAlong/StatefulReadAlongMiniPlayer";
+import { StatefulReadAlongSheet } from "./ReadAlong/StatefulReadAlongSheet";
 
 import { Link, Publication } from "@readium/shared";
 
@@ -24,6 +26,7 @@ import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll } from "@/hooks";
 import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
+import { useReadAlongPlacement } from "./ReadAlong/Hooks/useReadAlongPlacement";
 
 import classNames from "classnames";
 
@@ -53,6 +56,9 @@ export const StatefulReaderFooter = ({
   const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
+  const isReadAlongActive = useAppSelector(state => state.readAlong.isActive);
+  const readAlongPlacement = useReadAlongPlacement();
+  const showReadAlong = isReadAlongActive && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
 
   const dispatch = useAppDispatch();
 
@@ -163,7 +169,9 @@ export const StatefulReaderFooter = ({
       onMouseLeave={ removeHover }
       { ...focusWithinProps }
     >
-      { (isScroll)
+      { showReadAlong
+        ? <StatefulReadAlongMiniPlayer />
+        : (isScroll)
         ? <StatefulReaderPagination
             aria-label={ t("reader.navigation.scroll.wrapper") }
             links={ updateLinks() }
@@ -193,6 +201,8 @@ export const StatefulReaderFooter = ({
             fallbackVariant={ progressionFormatFallback }
           /> }
     </ThFooter>
+
+    <StatefulReadAlongSheet isOpen={ isReadAlongActive && readAlongPlacement === ThMiniPlayerTypes.bottomSheet } />
     </>
   )
 }

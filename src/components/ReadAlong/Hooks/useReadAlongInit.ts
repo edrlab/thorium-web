@@ -22,7 +22,7 @@ export const useReadAlongInit = ({
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
-  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, play } = useReadAloudNavigator();
+  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice } = useReadAloudNavigator();
 
   useEffect(() => {
     if (!navigatorReady || !isActive) return;
@@ -40,14 +40,13 @@ export const useReadAlongInit = ({
 
     ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences }, () => {
       if (voice) setVoice(voice);
-      play();
     });
 
     return () => {
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlong());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, play]);
+  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice]);
 
   // Not persisted across readers, so the next publication doesn't start reading on its own
   useEffect(() => {
