@@ -9,6 +9,7 @@ interface ThPluginContextType {
   textSettingsComponentsMap: Record<string, SettingComponent>;
   spacingSettingsComponentsMap: Record<string, SettingComponent>;
   primaryAudioActionsMap: Record<string, ActionComponent>;
+  readAlongActionsMap: Record<string, ActionComponent>;
   registerPlugin: typeof ThPluginRegistry.register;
   unregisterPlugin: typeof ThPluginRegistry.unregister;
 }
@@ -19,6 +20,7 @@ const ThPluginContext = createContext<ThPluginContextType>({
   textSettingsComponentsMap: {} as Record<string, SettingComponent>,
   spacingSettingsComponentsMap: {} as Record<string, SettingComponent>,
   primaryAudioActionsMap: {} as Record<string, ActionComponent>,
+  readAlongActionsMap: {} as Record<string, ActionComponent>,
   registerPlugin: ThPluginRegistry.register.bind(ThPluginRegistry),
   unregisterPlugin: ThPluginRegistry.unregister.bind(ThPluginRegistry)
 });
@@ -32,6 +34,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
     textSettingsComponentsMap: Record<string, SettingComponent>;
     spacingSettingsComponentsMap: Record<string, SettingComponent>;
     primaryAudioActionsMap: Record<string, ActionComponent>;
+    readAlongActionsMap: Record<string, ActionComponent>;
   }>(() => {
     // Force a fresh retrieval of component maps
     const maps = ThPluginRegistry.getComponentMaps();

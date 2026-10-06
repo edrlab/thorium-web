@@ -7,19 +7,16 @@ import VolumeDownIcon from "./assets/icons/volume_down.svg";
 import VolumeMuteIcon from "./assets/icons/volume_mute.svg";
 import VolumeOffIcon from "./assets/icons/volume_off.svg";
 
-import { ThAudioKeys, ThAudioActionKeys } from "@/preferences/models";
 import { StatefulActionIcon } from "../../../Actions/Triggers/StatefulActionIcon";
 import { StatefulActionTriggerProps } from "../../../Actions/models/actions";
 
 import volumeStyles from "./assets/styles/thorium-web.volume.module.css";
 
-import { useAudioPreferences } from "@/preferences/hooks/useAudioPreferences";
 import { useI18n } from "@/i18n/useI18n";
-import { useEffectiveRange } from "../../../Settings/hooks/useEffectiveRange";
+import { useVolumeAction } from "./hooks/useVolumeAction";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleActionOpen } from "@/lib/actionsReducer";
-import { useNavigator } from "@/core/Navigator";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 
 import { isIOSish } from "@/core/Helpers/getPlatform";
@@ -27,21 +24,12 @@ import { isIOSish } from "@/core/Helpers/getPlatform";
 export const StatefulAudioVolumeTrigger = ({ ref }: StatefulActionTriggerProps) => {
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);
-  const { preferences } = useAudioPreferences();
   const { actionsKeys } = useActionsPreferences();
-  
-  const shortcut = actionsKeys[ThAudioActionKeys.volume]?.shortcut;
-  const { preferencesEditor } = useNavigator().media;
+  const { actionKey, range, volume, isDisabled } = useVolumeAction();
 
-  const volume = useAppSelector(state => state.audioSettings.volume);
-  const isTrackReady = useAppSelector(state => state.player.isTrackReady);
-  const isStalled = useAppSelector(state => state.player.isStalled);
-  const isDisabled = !isTrackReady || isStalled;
+  const shortcut = actionsKeys[actionKey]?.shortcut;
 
   const dispatch = useAppDispatch();
-
-  const config = preferences.settings.keys[ThAudioKeys.volume];
-  const { range } = useEffectiveRange(config.range, preferencesEditor?.volume?.supportedRange);
 
   const VolumeIcon = useMemo(() => {
     if (volume === 0) return VolumeOffIcon;
@@ -61,7 +49,7 @@ export const StatefulAudioVolumeTrigger = ({ ref }: StatefulActionTriggerProps) 
       placement="top"
       onPress={ () => {
         if (profile) {
-          dispatch(toggleActionOpen({ key: ThAudioActionKeys.volume, profile }));
+          dispatch(toggleActionOpen({ key: actionKey, profile }));
         }
       } }
       isDisabled={ isDisabled }

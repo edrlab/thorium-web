@@ -8,7 +8,6 @@ import { ThSettingsRangePrefRequired, ThSettingsRangeVariant, ThSettingsRangePla
 export enum ThReadAlongActionKeys {
   volume = "readAlong.volume",
   rate = "readAlong.rate",
-  toc = "readAlong.toc",
   sleepTimer = "readAlong.sleepTimer",
   settings = "readAlong.settings"
 }
@@ -96,19 +95,6 @@ export const defaultReadAlongRateAction: ThAudioActionsTokens = {
   docked: { dockable: ThDockingTypes.none }
 };
 
-export const defaultReadAlongTocAction: ThAudioActionsTokens = {
-  visibility: ThCollapsibilityVisibility.partially,
-  shortcut: null,
-  sheet: {
-    defaultSheet: ThSheetTypes.modal,
-    breakpoints: {
-      [ThBreakpoints.compact]: ThSheetTypes.fullscreen,
-      [ThBreakpoints.medium]: ThSheetTypes.fullscreen
-    }
-  },
-  docked: { dockable: ThDockingTypes.none }
-};
-
 export const defaultReadAlongSleepTimerAction: ThAudioActionsTokens = {
   visibility: ThCollapsibilityVisibility.partially,
   shortcut: null,
@@ -190,14 +176,12 @@ export const defaultReadAlongPreferences = {
     displayOrder: [
       ThReadAlongActionKeys.volume,
       ThReadAlongActionKeys.rate,
-      ThReadAlongActionKeys.toc,
       ThReadAlongActionKeys.sleepTimer,
       ThReadAlongActionKeys.settings
     ],
     keys: {
       [ThReadAlongActionKeys.volume]: defaultReadAlongVolumeAction,
       [ThReadAlongActionKeys.rate]: defaultReadAlongRateAction,
-      [ThReadAlongActionKeys.toc]: defaultReadAlongTocAction,
       [ThReadAlongActionKeys.sleepTimer]: defaultReadAlongSleepTimerAction,
       [ThReadAlongActionKeys.settings]: defaultReadAlongSettingsAction
     }

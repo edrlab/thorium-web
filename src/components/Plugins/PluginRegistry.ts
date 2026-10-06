@@ -22,6 +22,7 @@ export interface ThPlugin {
     actions?: Record<string, ActionComponent>;
     settings?: Record<string, SettingComponent>;
     primaryAudioActions?: Record<string, ActionComponent>;
+    readAlongActions?: Record<string, ActionComponent>;
   };
 }
 
@@ -55,6 +56,7 @@ class PluginRegistryClass {
     const actionsComponentsMap: Record<string, ActionComponent> = {} as Record<string, ActionComponent>;
     const settingsComponentsMap: Record<string, SettingComponent> = {} as Record<string, SettingComponent>;
     const primaryAudioActionsMap: Record<string, ActionComponent> = {} as Record<string, ActionComponent>;
+    const readAlongActionsMap: Record<string, ActionComponent> = {} as Record<string, ActionComponent>;
 
     // Process plugins in reverse order so later plugins override earlier ones
     [...pluginsStore].reverse().forEach(plugin => {
@@ -78,12 +80,20 @@ class PluginRegistryClass {
           primaryAudioActionsMap[key as string] = component;
         });
       }
+
+      // Merge read along action components
+      if (plugin.components.readAlongActions) {
+        Object.entries(plugin.components.readAlongActions).forEach(([key, component]) => {
+          readAlongActionsMap[key as string] = component;
+        });
+      }
     });
 
     return {
       actionsComponentsMap,
       settingsComponentsMap,
-      primaryAudioActionsMap
+      primaryAudioActionsMap,
+      readAlongActionsMap
     };
   }
 }

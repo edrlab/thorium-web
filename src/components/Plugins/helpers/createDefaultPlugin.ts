@@ -1,5 +1,5 @@
 import { ThPlugin } from "../PluginRegistry";
-import { ThActionsKeys, ThSettingsKeys } from "@/preferences/models";
+import { ThActionsKeys, ThReadAlongActionKeys, ThSettingsKeys } from "@/preferences/models";
 
 import { StatefulFullscreenTrigger } from "../../Actions/Fullscreen/StatefulFullscreenTrigger";
 import { StatefulJumpToPositionTrigger } from "../../Actions/JumpToPosition/StatefulJumpToPositionTrigger";
@@ -10,6 +10,8 @@ import { StatefulTocTrigger } from "../../Actions/Toc/StatefulTocTrigger";
 import { StatefulTocContainer } from "../../Actions/Toc/StatefulTocContainer";
 import { StatefulReadAlongTrigger } from "../../ReadAlong/StatefulReadAlongTrigger";
 import { StatefulReadAlongContainer } from "../../ReadAlong/StatefulReadAlongContainer";
+import { StatefulAudioVolumeTrigger } from "../../Audio/actions/Volume/StatefulAudioVolumeTrigger";
+import { StatefulAudioVolumeContainer } from "../../Audio/actions/Volume/StatefulAudioVolumeContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
@@ -58,6 +60,12 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThActionsKeys.readAlong]: {
           Trigger: StatefulReadAlongTrigger,
           Target: StatefulReadAlongContainer
+        }
+      },
+      readAlongActions: {
+        [ThReadAlongActionKeys.volume]: {
+          Trigger: StatefulAudioVolumeTrigger,
+          Target: StatefulAudioVolumeContainer
         }
       },
       settings: {

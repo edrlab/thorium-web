@@ -10,6 +10,7 @@ import { StatefulAudioCover } from "../Audio/StatefulAudioCover";
 import { StatefulSkipBackwardButton } from "../Audio/controls/StatefulSkipBackwardButton";
 import { StatefulPlayPauseButton } from "../Audio/controls/StatefulPlayPauseButton";
 import { StatefulSkipForwardButton } from "../Audio/controls/StatefulSkipForwardButton";
+import { StatefulReadAlongMediaActions } from "./StatefulReadAlongMediaActions";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
@@ -52,6 +53,7 @@ export const StatefulReadAlongPlayer = () => {
         playPause={ <StatefulPlayPauseButton isDisabled={ isDisabled } /> }
         skipForward={ <StatefulSkipForwardButton isDisabled={ isDisabled } /> }
       />
+      <StatefulReadAlongMediaActions />
     </div>
   );
 };
