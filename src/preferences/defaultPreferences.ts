@@ -27,6 +27,8 @@ import {
   defaultFullscreenAction,
   defaultTocAction,
   defaultJumpToPositionAction,
+  defaultReadAlongAction,
+  defaultReadAlongPreferences,
   defaultContentProtectionConfig,
   defaultFontCollection,
   defaultLetterSpacing,
@@ -305,8 +307,10 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       [ThActionsKeys.fullscreen]: defaultFullscreenAction,
       [ThActionsKeys.toc]: defaultTocAction,
       [ThActionsKeys.jumpToPosition]: defaultJumpToPositionAction,
+      [ThActionsKeys.readAlong]: defaultReadAlongAction,
     }
   },
+  readAlong: defaultReadAlongPreferences,
   docking: {
     displayOrder: [
       ThDockingKeys.transient,

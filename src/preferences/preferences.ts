@@ -29,6 +29,12 @@ import {
   ThDockingSizeValue,
   ThSettingsGroupPref,
   ValidatedLanguageCollection,
+  ThReadAlongActionTokens,
+  ThReadAlongActionKeys,
+  ThReadAlongKeys,
+  ThReadAlongStylePref,
+  ThAudioActionsTokens,
+  ThSettingsTimerPref,
 } from "./models";
 import { ExperimentKey } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
@@ -41,6 +47,8 @@ export type CustomizableKeys = {
   settings?: string;
   text?: string;
   spacing?: string;
+  readAlongAction?: string;
+  readAlong?: string;
 };
 
 // Default internal keys alias for convenience
@@ -50,6 +58,8 @@ export type DefaultKeys = {
   settings: ThSettingsKeys;
   text: ThTextSettingsKeys;
   spacing: ThSpacingSettingsKeys;
+  readAlongAction: ThReadAlongActionKeys;
+  readAlong: ThReadAlongKeys;
 };
 
 // Key types to better handle custom keys for external consumers
@@ -88,6 +98,20 @@ export type SpacingSettingsKey<K extends CustomizableKeys> =
       : ThSpacingSettingsKeys
     : ThSpacingSettingsKeys;
 
+export type ReadAlongActionKey<K extends CustomizableKeys> =
+  K extends { readAlongAction: infer A }
+    ? A extends string
+      ? ThReadAlongActionKeys | A
+      : ThReadAlongActionKeys
+    : ThReadAlongActionKeys;
+
+export type ReadAlongSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlong: infer R }
+    ? R extends string
+      ? ThReadAlongKeys | R
+      : ThReadAlongKeys
+    : ThReadAlongKeys;
+
 
 export interface ThSettingsSpacingPresets<K extends CustomizableKeys = DefaultKeys> {
   reflowOrder: Array<ThSpacingPresetKeys>;
@@ -116,8 +140,37 @@ export interface ThActionsPref<K extends CustomizableKeys> {
   fxlOrder: Array<ActionKey<K>>;
   webPubOrder: Array<ActionKey<K>>;
   collapse: ThCollapsibility;
-  keys: Record<ActionKey<K>, ThActionsTokens>;
+  keys: Record<ActionKey<K>, ThActionsTokens> & {
+    [ThActionsKeys.readAlong]: ThReadAlongActionTokens;
+  };
 };
+
+export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongKeys.rate]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pitch]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.volume]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pauseDuration]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.utteranceStyle]: ThReadAlongStylePref;
+  [ThReadAlongKeys.wordStyle]: ThReadAlongStylePref;
+  [ThReadAlongKeys.sleepTimer]: ThSettingsTimerPref;
+} & (
+  K extends { readAlong: infer R }
+    ? [R] extends [string]
+      ? { [key in Exclude<R, ThReadAlongKeys>]: ThSettingsRangePrefRequired }
+      : {}
+    : {}
+);
+
+export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
+  actions: {
+    displayOrder: Array<ReadAlongActionKey<K>>;
+    keys: Record<ReadAlongActionKey<K>, ThAudioActionsTokens>;
+  };
+  settings: {
+    order: Array<ReadAlongSettingsKey<K>>;
+    keys: ThReadAlongSettingsKeyTypes<K>;
+  };
+}
 
 export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
   [ThSettingsKeys.fontFamily]: ThFontFamilyPref;
@@ -238,6 +291,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     }
   };
   actions: ThActionsPref<K>;
+  readAlong: ThReadAlongPref<K>;
   shortcuts: ThShortcutsPref;
   docking: ThDockingPref<ThDockingKeys>;
   settings: {
@@ -268,6 +322,15 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
       ],
       params.actions.keys as Record<string, ThActionsTokens>,
       "actions"
+    );
+  }
+
+  // Validate read along actions
+  if (params.readAlong?.actions?.displayOrder && params.readAlong.actions.keys) {
+    validateObjectKeys<ReadAlongActionKey<K>, ThAudioActionsTokens>(
+      [params.readAlong.actions.displayOrder],
+      params.readAlong.actions.keys as Record<string, ThAudioActionsTokens>,
+      "readAlong.actions"
     );
   }
 
@@ -435,6 +498,12 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
   Object.entries(params.settings?.keys ?? {}).forEach(([key, pref]) => {
     if (pref && typeof pref === "object" && "variant" in pref) {
       validateRangePresets(pref as ThSettingsRangePrefRequired, `settings.keys.${ key }`);
+    }
+  });
+
+  Object.entries(params.readAlong?.settings?.keys ?? {}).forEach(([key, pref]) => {
+    if (pref && typeof pref === "object" && "variant" in pref && "range" in pref) {
+      validateRangePresets(pref as ThSettingsRangePrefRequired, `readAlong.settings.keys.${ key }`);
     }
   });
 

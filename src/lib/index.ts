@@ -15,3 +15,5 @@ export * from "./readerReducer";
 export * from "./webPubSettingsReducer";
 export * from "./audioSettingsReducer";
 export * from "./playerReducer";
+export * from "./readAlongReducer";
+export * from "./readAlongSettingsReducer";
