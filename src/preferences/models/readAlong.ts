@@ -145,7 +145,7 @@ export const defaultReadAlongSettingsAction: ThAudioActionsTokens = {
 export const defaultReadAlongRate: ThSettingsRangePrefRequired = {
   variant: ThSettingsRangeVariant.sliderWithPresets,
   range: [0.5, 3],
-  step: 0.1,
+  step: 0.05,
   placeholder: ThSettingsRangePlaceholder.range,
   presets: [0.75, 1, 1.25, 1.5, 2]
 };
