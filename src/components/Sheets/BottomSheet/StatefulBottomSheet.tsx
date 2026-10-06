@@ -1,13 +1,15 @@
 "use client";
 
-import React, { CSSProperties, KeyboardEvent, useCallback, useMemo, useRef } from "react";
+import React, { CSSProperties, useMemo, useRef } from "react";
 
 import { ThBottomSheetDetent, ThSheetHeaderVariant } from "@/preferences";
 
-import { StatefulSheet } from "./models/sheets";
+import { StatefulSheet } from "../models/sheets";
 
-import sheetStyles from "./assets/styles/thorium-web.sheets.module.css";
-import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
+import { useBottomSheetSnap } from "./hooks";
+
+import sheetStyles from "../assets/styles/thorium-web.sheets.module.css";
+import readerSharedUI from "../../assets/styles/thorium-web.button.module.css";
 
 import { SheetRef, SheetDetent } from "react-modal-sheet";
 
@@ -171,42 +173,11 @@ export const StatefulBottomSheet = ({
     return snapArray;
   }, [id, preferences]);
 
-  const snapIdx = useRef<number | null>(null);
-
-  const onDragPressCallback = useCallback(() => {
-    if (snapIdx.current !== null) {
-      // In [0, min, peek, max] order, cycle to next index but skip index 0
-      const nextIdx = snapIdx.current === snapArray.length - 1 ? 1 : snapIdx.current + 1;
-      sheetRef.current?.snapTo(nextIdx);
-    }
-  }, [snapArray]);
-
-  const onDragKeyCallback = useCallback((e: KeyboardEvent) => {
-    if (snapIdx.current !== null) {
-      switch(e.code) {
-        case "PageUp":
-          if (snapIdx.current === snapArray.length - 1) return;
-          sheetRef.current?.snapTo(snapArray.length - 1);
-          break;
-        case "ArrowUp":
-          if (snapIdx.current === snapArray.length - 1) return;
-          sheetRef.current?.snapTo(snapIdx.current + 1);
-          break;
-        case "PageDown":
-          onClosePress();
-          break;
-        case "ArrowDown":
-          if (snapIdx.current === 1) {
-            onClosePress();
-            break;
-          }
-          sheetRef.current?.snapTo(snapIdx.current - 1)
-          break;
-        default:
-          break;
-      }
-    }
-  }, [snapArray, onClosePress]);
+  const { onSnapCallback, onDragPressCallback, onDragKeyCallback } = useBottomSheetSnap({
+    sheetRef,
+    snapArray,
+    onClosePress
+  });
 
   const maxWidthPref = useMemo(() => {
     const maxWidth = preferences.actionsKeys[id].snapped?.maxWidth;
@@ -295,7 +266,7 @@ export const StatefulBottomSheet = ({
             detent: convertDetent(detent.current)
           }) 
         }
-        onSnap={ (index) => { snapIdx.current = index }}
+        onSnap={ onSnapCallback }
         prefersReducedMotion={ prefersReducedMotion }
         compounds={ {
           container: {

@@ -60,6 +60,7 @@ const ThBottomSheetContainer = ({
   sheetRef,
   sheetState,
   isDraggable, 
+  isDismissable,
   isKeyboardDismissDisabled,
   focusOptions,
   detent,
@@ -70,6 +71,7 @@ const ThBottomSheetContainer = ({
   sheetState: OverlayTriggerState;
   onFullHeight?: Omit<React.ComponentProps<typeof Sheet.Container>, "children">;
   isDraggable?: boolean;
+  isDismissable?: boolean;
   isKeyboardDismissDisabled?: boolean;
   focusOptions?: UseFirstFocusableProps;
   detent?: SheetDetent;
@@ -82,7 +84,7 @@ const ThBottomSheetContainer = ({
   const overlay = useOverlay({ 
     onClose: sheetState.close, 
     isOpen: true, 
-    isDismissable: true,
+    isDismissable: isDismissable,
     isKeyboardDismissDisabled: isKeyboardDismissDisabled
   }, containerRef);
   const [isFullHeight, setFullHeight] = useState<boolean>(false);
@@ -201,6 +203,7 @@ export const ThBottomSheet = ({
   onOpenChange,
   ref,
   focusOptions,
+  isDismissable = true,
   isKeyboardDismissDisabled,
   detent,
   snapPoints,
@@ -229,15 +232,16 @@ export const ThBottomSheet = ({
     >
       <OverlayProvider>
         <FocusScope 
-          contain={ true } 
+          contain={ isDismissable } 
           // If not set to true, focus is not contained on open
-          autoFocus={ true } 
+          autoFocus={ isDismissable } 
           restoreFocus={ true }
         >
           <ThBottomSheetContainer 
             sheetRef={ resolvedRef } 
             sheetState={ sheetState } 
             isDraggable= { isDraggable }
+            isDismissable={ isDismissable }
             isKeyboardDismissDisabled={ isKeyboardDismissDisabled }
             focusOptions={ focusOptions }
             detent={ detent }
