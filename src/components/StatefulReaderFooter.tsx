@@ -27,6 +27,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll } from "@/hooks";
 import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
 import { useReadAlongPlacement } from "./ReadAlong/Hooks/useReadAlongPlacement";
+import { useReadAlongState } from "./ReadAlong/Hooks/useReadAlongState";
 
 import classNames from "classnames";
 
@@ -56,9 +57,9 @@ export const StatefulReaderFooter = ({
   const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
-  const isReadAlongActive = useAppSelector(state => state.readAlong.isActive);
+  const { isActive: isReadAlongActive, isExpanded: isReadAlongExpanded } = useReadAlongState();
   const readAlongPlacement = useReadAlongPlacement();
-  const showReadAlong = isReadAlongActive && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
+  const showReadAlong = isReadAlongActive && !isReadAlongExpanded && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
 
   const dispatch = useAppDispatch();
 

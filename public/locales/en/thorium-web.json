@@ -137,7 +137,11 @@
   "_pendingThoriumLocales": {
     "reader": {
       "readAlong": {
-        "close": "Stop reading aloud"
+        "close": "Stop reading aloud",
+        "player": {
+          "expand": "Expand player",
+          "collapse": "Collapse player"
+        }
       }
     }
   }

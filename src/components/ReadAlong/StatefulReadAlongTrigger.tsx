@@ -12,21 +12,19 @@ import { StatefulActionIcon } from "../Actions/Triggers/StatefulActionIcon";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { useI18n } from "@/i18n/useI18n";
 
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { setReadAlongActive } from "@/lib/readAlongReducer";
+import { useReadAlongState } from "./Hooks/useReadAlongState";
 
 export const StatefulReadAlongTrigger = ({ variant }: StatefulActionTriggerProps) => {
   const preferences = useActionsPreferences();
   const { t } = useI18n();
-  const isActive = useAppSelector(state => state.readAlong.isActive);
-  const dispatch = useAppDispatch();
+  const { isActive, setActive } = useReadAlongState();
 
   const label = isActive
     ? t("_pendingThoriumLocales.reader.readAlong.close")
     : t("reader.actions.readAloud.compact");
 
   const toggle = () => {
-    dispatch(setReadAlongActive(!isActive));
+    setActive(!isActive);
   };
 
   return(

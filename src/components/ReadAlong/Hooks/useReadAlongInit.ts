@@ -6,8 +6,9 @@ import { ReadAloudListeners } from "@readium/navigator";
 
 import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
 
-import { useAppDispatch, useAppSelector, useAppStore } from "@/lib/hooks";
-import { resetReadAlong, setReadAlongActive, setReadAlongStatus } from "@/lib/readAlongReducer";
+import { useAppDispatch, useAppStore } from "@/lib/hooks";
+import { resetReadAlongPlayer, setReadAlongStatus } from "@/lib/readAlongPlayerReducer";
+import { useReadAlongState } from "./useReadAlongState";
 
 interface UseReadAlongInitProps {
   navigatorReady: boolean;
@@ -18,7 +19,7 @@ export const useReadAlongInit = ({
   navigatorReady,
   getVisualNavigator
 }: UseReadAlongInitProps) => {
-  const isActive = useAppSelector(state => state.readAlong.isActive);
+  const { isActive, isExpanded, setActive } = useReadAlongState();
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
@@ -33,6 +34,9 @@ export const useReadAlongInit = ({
     // Read at load time only: settings changes are submitted to the loaded navigator
     const { voice, ...preferences } = store.getState().readAlongSettings;
 
+    // Persisted with the player state, but only valid for the navigator they came from
+    dispatch(resetReadAlongPlayer());
+
     const listeners: ReadAloudListeners = {
       stateChanged: (state) => dispatch(setReadAlongStatus(state)),
       error: (error) => console.warn("Read along:", error)
@@ -44,14 +48,19 @@ export const useReadAlongInit = ({
 
     return () => {
       ReadAloudNavigatorDestroy();
-      dispatch(resetReadAlong());
+      dispatch(resetReadAlongPlayer());
     };
   }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice]);
 
-  // Not persisted across readers, so the next publication doesn't start reading on its own
+  // The keyboard shortcut toggles the action open, which activates read along when inactive
+  useEffect(() => {
+    if (!isActive && isExpanded) setActive(true);
+  }, [isActive, isExpanded, setActive]);
+
+  // So that the next publication doesn't start reading on its own
   useEffect(() => {
     return () => {
-      dispatch(setReadAlongActive(false));
+      setActive(false);
     };
-  }, [dispatch]);
+  }, [setActive]);
 };

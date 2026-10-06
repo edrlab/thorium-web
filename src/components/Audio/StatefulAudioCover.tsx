@@ -7,6 +7,7 @@ import SyncIcon from "./assets/icons/sync.svg";
 
 import { ThCover } from "@/core/Components/Audio/ThCover";
 
+import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppSelector } from "@/lib/hooks";
@@ -21,8 +22,11 @@ interface StatefulAudioCoverProps {
 
 export function StatefulAudioCover({ ref, coverUrl, title }: StatefulAudioCoverProps) {
   const { t } = useI18n();
-  const isTrackReady = useAppSelector(state => state.player.isTrackReady);
-  const isStalled = useAppSelector(state => state.player.isStalled);
+  const { readAloud } = useNavigator();
+  const isLoading = useAppSelector(state => readAloud
+    ? state.readAlongPlayer.status === "loading"
+    : !state.player.isTrackReady || state.player.isStalled
+  );
 
   return (
     <ThCover
@@ -30,7 +34,7 @@ export function StatefulAudioCover({ ref, coverUrl, title }: StatefulAudioCoverP
       className={ styles.audioCoverSection }
       src={ coverUrl ? proxyUrl(coverUrl) : undefined }
       alt={ title || t("audio.player.coverAlt") }
-      isLoading={ !isTrackReady || isStalled }
+      isLoading={ isLoading }
       placeholder={ <MusicNoteIcon /> }
       loadingIndicator={ <SyncIcon className={ styles.audioCoverSyncIcon } aria-hidden="true" /> }
       compounds={ {

@@ -40,6 +40,7 @@ export const StatefulPopoverSheet = ({
     onClosePress,
     placement,
     docker,
+    headerActions,
     children,
     resetFocus,
     focusWithinRef,
@@ -123,6 +124,7 @@ export const StatefulPopoverSheet = ({
                 keys={ docker || [] }
                 ref={ popoverCloseRef }
                 onClose={ onClosePress }
+                actions={ headerActions }
               />
           }
         </ThContainerHeader>

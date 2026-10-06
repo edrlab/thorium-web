@@ -49,6 +49,7 @@ export const StatefulBottomSheet = ({
   isOpen,
   onOpenChange, 
   onClosePress,
+  headerActions,
   children,
   resetFocus,
   focusWithinRef,
@@ -312,13 +313,16 @@ export const StatefulBottomSheet = ({
               className={ classNames(className, readerSharedUI.backButton) } 
               aria-label={ t("reader.app.back.trigger") }
               onPress={ onClosePress }
-            /> 
-            : <ThCloseButton
-              ref={ bottomSheetCloseRef }
-              className={ readerSharedUI.closeButton } 
-              aria-label={ t("common.actions.close") } 
-              onPress={ onClosePress }
             />
+            : <>
+              { headerActions }
+              <ThCloseButton
+                ref={ bottomSheetCloseRef }
+                className={ readerSharedUI.closeButton }
+                aria-label={ t("common.actions.close") }
+                onPress={ onClosePress }
+              />
+            </>
           }
         </ThContainerHeader>
         <ThContainerBody 

@@ -15,28 +15,35 @@ export interface ReadAlongMetadata {
   coverUrl?: string;
 }
 
-export interface ReadAlongReducerState {
-  metadata: ReadAlongMetadata | null;
+export type ReadAlongLayout = "mini" | "expanded";
+
+export interface ReadAlongPlayerReducerState {
   isActive: boolean;
+  layout: ReadAlongLayout;
+  metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
   hasWordBoundaries: boolean;
   sleepTimer: ReadAlongSleepTimerState;
 }
 
-const initialState: ReadAlongReducerState = {
-  metadata: null,
+const initialState: ReadAlongPlayerReducerState = {
   isActive: false,
+  layout: "mini",
+  metadata: null,
   status: "idle",
   hasWordBoundaries: true,
   sleepTimer: { remainingSeconds: null, onChapterEnd: false, onUtteranceEnd: false }
 };
 
-export const readAlongSlice = createSlice({
-  name: "readAlong",
+export const readAlongPlayerSlice = createSlice({
+  name: "readAlongPlayer",
   initialState,
   reducers: {
     setReadAlongActive: (state, action: PayloadAction<boolean>) => {
       state.isActive = action.payload;
+    },
+    setReadAlongLayout: (state, action: PayloadAction<ReadAlongLayout>) => {
+      state.layout = action.payload;
     },
     setReadAlongStatus: (state, action: PayloadAction<ReadAloudState>) => {
       state.status = action.payload;
@@ -50,17 +57,18 @@ export const readAlongSlice = createSlice({
     setReadAlongMetadata: (state, action: PayloadAction<ReadAlongMetadata | null>) => {
       state.metadata = action.payload;
     },
-    resetReadAlong: (state) => ({ ...initialState, metadata: state.metadata, isActive: state.isActive })
+    resetReadAlongPlayer: (state) => ({ ...initialState, isActive: state.isActive, layout: state.layout, metadata: state.metadata })
   }
 });
 
 export const {
   setReadAlongActive,
+  setReadAlongLayout,
   setReadAlongStatus,
   setReadAlongWordBoundaries,
   setReadAlongSleepTimer,
   setReadAlongMetadata,
-  resetReadAlong
-} = readAlongSlice.actions;
+  resetReadAlongPlayer
+} = readAlongPlayerSlice.actions;
 
-export default readAlongSlice.reducer;
+export default readAlongPlayerSlice.reducer;

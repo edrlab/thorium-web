@@ -17,7 +17,7 @@ export const StatefulPlayPauseButton = ({ isDisabled }: { isDisabled?: boolean }
   const { readAloud, playback } = useNavigator();
   const { play, pause } = playback;
   const isPlaying = useAppSelector(state => readAloud 
-    ? state.readAlong.status === "playing" 
+    ? state.readAlongPlayer.status === "playing"
     : state.player.status === "playing"
   );
 

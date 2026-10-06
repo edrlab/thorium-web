@@ -32,7 +32,8 @@ export const StatefulDockedSheet = ({
     className, 
     isOpen,
     onClosePress,
-    docker, 
+    docker,
+    headerActions,
     flow,
     children,
     resetFocus,
@@ -124,6 +125,7 @@ export const StatefulDockedSheet = ({
               keys={ docker || [] }
               ref={ dockedSheetCloseRef }
               onClose={ onClosePress }
+              actions={ headerActions }
             />
           } 
         </ThContainerHeader>

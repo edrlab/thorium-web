@@ -60,11 +60,12 @@ export const defaultReadAlongAction: ThReadAlongActionTokens = {
   },
   sheet: {
     defaultSheet: ThSheetTypes.dockedEnd,
-    fallbackSheet: ThSheetTypes.modal,
+    fallbackSheet: ThSheetTypes.popover,
     breakpoints: {}
   },
   docked: {
     dockable: ThDockingTypes.end,
+    reserved: true,
     dragIndicator: false,
     width: 360,
     minWidth: 320,

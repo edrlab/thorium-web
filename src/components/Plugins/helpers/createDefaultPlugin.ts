@@ -9,6 +9,7 @@ import { StatefulVisualSettingsContainer } from "../../Actions/Settings/Stateful
 import { StatefulTocTrigger } from "../../Actions/Toc/StatefulTocTrigger";
 import { StatefulTocContainer } from "../../Actions/Toc/StatefulTocContainer";
 import { StatefulReadAlongTrigger } from "../../ReadAlong/StatefulReadAlongTrigger";
+import { StatefulReadAlongContainer } from "../../ReadAlong/StatefulReadAlongContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
@@ -55,7 +56,8 @@ export const createDefaultPlugin = (): ThPlugin => {
           Target: StatefulTocContainer
         },
         [ThActionsKeys.readAlong]: {
-          Trigger: StatefulReadAlongTrigger
+          Trigger: StatefulReadAlongTrigger,
+          Target: StatefulReadAlongContainer
         }
       },
       settings: {

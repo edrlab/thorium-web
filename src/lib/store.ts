@@ -12,7 +12,7 @@ import globalPreferencesReducer, { GlobalPreferencesReducerState } from "./globa
 import webPubSettingsReducer, { WebPubSettingsReducerState } from "./webPubSettingsReducer";
 import audioSettingsReducer, { AudioSettingsState } from "./audioSettingsReducer";
 import playerReducer, { PlayerReducerState } from "./playerReducer";
-import readAlongReducer, { ReadAlongReducerState } from "./readAlongReducer";
+import readAlongPlayerReducer, { ReadAlongPlayerReducerState } from "./readAlongPlayerReducer";
 import readAlongSettingsReducer, { ReadAlongSettingsReducerState } from "./readAlongSettingsReducer";
 
 import debounce from "debounce";
@@ -34,7 +34,7 @@ export type RootState = {
   webPubSettings: WebPubSettingsReducerState;
   audioSettings: AudioSettingsState;
   player: PlayerReducerState;
-  readAlong: ReadAlongReducerState;
+  readAlongPlayer: ReadAlongPlayerReducerState;
   readAlongSettings: ReadAlongSettingsReducerState;
   [key: string]: any; // For external reducers
 };
@@ -177,6 +177,7 @@ const loadState = (storageKey: string = DEFAULT_STORAGE_KEY) => {
         globalPreferences: undefined,
         webPubSettings: undefined,
         audioSettings: undefined,
+        readAlongPlayer: undefined,
         readAlongSettings: undefined
       };
     }
@@ -233,6 +234,7 @@ const saveState = (state: any, storageKey?: string, externalReducers: Record<str
     if (state.globalPreferences) stateToPersist.globalPreferences = state.globalPreferences;
     if (state.webPubSettings) stateToPersist.webPubSettings = state.webPubSettings;
     if (state.audioSettings) stateToPersist.audioSettings = state.audioSettings;
+    if (state.readAlongPlayer) stateToPersist.readAlongPlayer = state.readAlongPlayer;
     if (state.readAlongSettings) stateToPersist.readAlongSettings = state.readAlongSettings;
     
     // External reducers to persist
@@ -262,7 +264,7 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
     webPubSettings: webPubSettingsReducer,
     audioSettings: audioSettingsReducer,
     player: playerReducer,
-    readAlong: readAlongReducer,
+    readAlongPlayer: readAlongPlayerReducer,
     readAlongSettings: readAlongSettingsReducer,
     ...Object.entries(externalReducers).reduce((acc, [key, config]) => ({
       ...acc,
@@ -282,6 +284,7 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
     globalPreferences: persistedState.globalPreferences,
     webPubSettings: persistedState.webPubSettings,
     audioSettings: persistedState.audioSettings,
+    readAlongPlayer: persistedState.readAlongPlayer,
     readAlongSettings: persistedState.readAlongSettings,
     // Include persisted state for external reducers that have it
     ...Object.entries(externalReducers).reduce((acc, [key, config]) => {
