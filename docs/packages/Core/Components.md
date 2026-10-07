@@ -40,7 +40,7 @@ const MySwitch = () => {
 }
 ```
 
-[Stateful components](../../src/components/) are making extensive use of this property if you need more complex examples.
+[Stateful components](../../../src/components/) are making extensive use of this property if you need more complex examples.
 
 ## Categories
 
@@ -59,13 +59,23 @@ The Core package provides various UI components organized into categories:
 
 ## Audio Components
 
-A core primitive for building audio player interfaces.
+Core primitives for building audio and read-along player interfaces.
 
 ```tsx
-import { ThAudioProgress } from "@edrlab/thorium-web/core/components";
+import {
+  ThAudioProgress,
+  ThCover,
+  ThMiniPlayer,
+  ThPlaybackControls,
+  ThPublicationMetadata
+} from "@edrlab/thorium-web/core/components";
 ```
 
 - `ThAudioProgress`: A seekable progress bar displaying elapsed time, remaining time, an optional chapter label, and seekable range overlays.
+- `ThCover`: A publication cover with a placeholder and an optional loading indicator.
+- `ThMiniPlayer`: A compact player with metadata, optionally a button expanding the player, and slots for controls and actions.
+- `ThPlaybackControls`: An actions bar laying out playback buttons in a fixed, left-to-right order.
+- `ThPublicationMetadata`: Title, subtitle and authors in a configurable order.
 
 Please refer to the [Audio Components API documentation](./API/Components/Audio.md) for more information.
 
@@ -328,6 +338,7 @@ These components are used for creating settings:
 
 ```tsx
 import {
+  ThColorSwatchPicker,
   ThDropdown,
   ThNumberField,
   ThRadioGroup,

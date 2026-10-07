@@ -52,6 +52,18 @@ The `useWebPubSettingsCache` hook provides a stateless cache for WebPub settings
 > [!IMPORTANT]
 > When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/webpub` package so that they all use the same one, not from `@edrlab/thorium-web/core`.
 
+## Read Aloud Support Hook
+
+```tsx
+import {
+  useReadAloudNavigator
+} from "@edrlab/thorium-web/core/hooks";
+```
+
+This hook exposes the Readium TS-Toolkit `ReadAloudNavigator`, which reads an EPUB or WebPub publication aloud on top of its loaded visual navigator. It provides methods to load and destroy it, control playback by utterance, pick a voice, and submit preferences.
+
+Unlike the other navigator hooks, it doesn’t throw: methods do nothing and return empty values until the navigator is loaded, and `isLoaded` tells you when it is.
+
 ## Responsive Design Hooks
 
 ```tsx

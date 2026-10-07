@@ -3,6 +3,7 @@
 export * from "./Actions";
 export * from "./Docking";
 export * from "./Plugins";
+export * from "./ReadAlong";
 export * from "./Settings";
 export * from "./Sheets";
 export * from "./StatefulPreferencesProvider";

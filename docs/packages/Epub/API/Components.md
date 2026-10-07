@@ -8,6 +8,7 @@ This document provides detailed API documentation for all components in the EPUB
 - [Docking](#docking)
 - [Settings](#settings)
 - [Sheets](#sheets)
+- [Read Along](#read-along)
 - [Reader UI](#reader-ui)
 - [Plugins](#plugins)
 
@@ -24,6 +25,7 @@ The Actions components provide functionality for user interactions and controls:
 - **Jump to Position**: Navigate to specific positions (`StatefulJumpToPositionTrigger`)
 - **Settings**: Configure reader settings (`StatefulVisualSettingsContainer`, `StatefulSettingsTrigger`)
 - **Table of Contents**: Navigate book structure (`StatefulTocContainer`, `StatefulTocTrigger`)
+- **Read Along**: Read the publication aloud (`StatefulReadAlongContainer`, `StatefulReadAlongTrigger`), see [Read Along](#read-along)
 
 ### Action Triggers
 - `StatefulActionIcon`: Base component for action icons
@@ -73,6 +75,7 @@ Settings components provide user configuration options:
 
 ### Base Components
 - `StatefulGroupWrapper`: Wrapper for settings groups
+- `StatefulColorSwatchPicker`: Color picker limited to preset swatches
 - `StatefulDropdown`: Dropdown menu with selectable options
 - `StatefulNumberField`: Numeric input field
 - `StatefulRadioGroup`: Radio button group
@@ -88,6 +91,17 @@ Sheet components provide different types of overlays and panels:
 - `StatefulFullScreenSheet`: Fullscreen overlay
 - `StatefulPopoverSheet`: Floating popover
 - `StatefulSheetWrapper`: Base wrapper for sheets
+- `useBottomSheetSnap`: Snapping and drag indicator behavior of the bottom sheet, for sheets built on `ThBottomSheet`
+
+## Read Along
+
+Read-along components read the publication aloud, highlight what is read, and provide a mini player and an expanded player:
+
+- `StatefulReadAlongMiniPlayer`, `StatefulReadAlongPlayer`, `StatefulReadAlongSheet`: the players
+- `StatefulReadAlongMediaActions` and `StatefulReadAlongSettingsTrigger` / `StatefulReadAlongSettingsContainer`: the player’s actions
+- `StatefulReadAlongVoice`, `StatefulReadAlongRate`, `StatefulReadAlongHighlightGroup`, etc.: its settings
+
+See the [Read Along API Reference](./ReadAlong.md) for more details.
 
 ## Reader UI
 
@@ -113,6 +127,13 @@ Plugin system components:
 - `PluginProvider`: Context provider for plugins
 - `PluginRegistry`: Plugin registration and management
 - `createDefaultPlugin`: Helper for creating default plugins
+
+A plugin’s `components` can provide:
+
+- `actions`: reader actions, as Trigger/Target pairs;
+- `settings`: settings components. Their `type` adds them to a group: `"text"`, `"spacing"`, or `"readAlongHighlight"` for the read-along highlight submenu;
+- `primaryAudioActions`: actions of the audio player’s media bar;
+- `readAlongActions`: actions of the read-along players, as Trigger/Target pairs.
 
 ## Common Features
 

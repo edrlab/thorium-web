@@ -365,6 +365,12 @@ Settings can be set and or nested in a specific order for both reflowable and Fi
 
 See [Settings doc](./Settings.md) for more details.
 
+## Read Along
+
+Read along reads EPUB and WebPub publications aloud. Its action, players, actions and settings are configured in `actions.keys.readAlong` and `readAlong`.
+
+See [Read Along doc](./ReadAlong.md) for more details.
+
 ## Content Protection
 
 Contents can be protected in several ways, including:

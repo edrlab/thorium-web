@@ -158,6 +158,8 @@ const epubPlugins = async (): Promise<ThPlugin[]> => {
 />
 ```
 
+Besides `actions` and `settings`, `components` accepts `primaryAudioActions` for the audio player’s media bar, and `readAlongActions` for the read-along players. Read-along actions are Trigger/Target pairs like reader actions, keyed by the `readAlongAction` custom key (see [Read Along](../../customization/ReadAlong.md#extending-read-along)).
+
 The wrapper will not mount the reader until the factory has resolved, ensuring the plugin registry is initialised with the correct plugins from the start. Only the factory matching the active profile is called — unused factories are never loaded.
 
 ### ReaderPlugins Interface

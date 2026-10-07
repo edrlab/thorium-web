@@ -33,7 +33,7 @@ Spacing settings rely on presets by default, but can also be used with the Publi
 
 #### Presets
 
-- presets are defined in Preferences, with default values in [models/const.ts](../../src/preferences/models/const.ts)
+- presets are defined in Preferences, with default values in [models/settings.ts](../../src/preferences/models/settings.ts)
 - spacing Presets impact the following components and states:
   - line-height
   - paragraph spacing
@@ -42,7 +42,7 @@ Spacing settings rely on presets by default, but can also be used with the Publi
   - word-spacing
 - when you change a value in a preset via one of these components, we automatically switch to `custom` preset, and make the value of this component resettable (value `null`)
 - custom preset values are stored, until the users selects and customizes another one – this interaction effectively acts as a reset
-- the ranges and increments we use by default can be found in [models/const.ts](../../src/preferences/models/const.ts)
+- the ranges and increments we use by default can be found in [models/settings.ts](../../src/preferences/models/settings.ts)
 
 #### Publisher Styles toggle
 
