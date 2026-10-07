@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
+import readAlongStyles from "./ReadAlong/assets/styles/thorium-web.readAlong.module.css";
 
 import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance, ThMiniPlayerTypes } from "@/preferences/models";
 
@@ -145,26 +146,27 @@ export const StatefulReaderFooter = ({
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode
-    if (isImmersive) {
+    // The mini player stays visible in immersive mode, so it keeps focus
+    if (isImmersive && !showReadAlong) {
       const focusElement = document.activeElement;
       if (focusElement && footerRef.current?.contains(focusElement)) {
         (focusElement as HTMLElement).blur();
       }
     }
-  }, [isImmersive]);
+  }, [isImmersive, showReadAlong]);
 
   return(
     <>
     <ThInteractiveOverlay
       className={ classNames(readerStyles.barOverlay, readerStyles.footerOverlay) }
-      isActive={ layout === ThLayoutUI.layered && isImmersive && !isHovering }
+      isActive={ layout === ThLayoutUI.layered && isImmersive && !isHovering && !showReadAlong }
       onMouseEnter={ setHover }
       onMouseLeave={ removeHover }
     />
 
     <ThFooter
       ref={ footerRef }
-      className={ readerStyles.bottomBar }
+      className={ classNames(readerStyles.bottomBar, showReadAlong && readAlongStyles.pinnedBottomBar) }
       aria-label={ t("reader.app.footer.label") }
       onMouseEnter={ setHover }
       onMouseLeave={ removeHover }

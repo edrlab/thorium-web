@@ -60,6 +60,16 @@
   border-top-right-radius: 0;
 }
 
+/* The bottom bar holding the mini player stays visible in immersive mode, doubled class to win over the reader's rules */
+:global(.thorium_web_layeredUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  transform: translateY(0);
+  box-shadow: var(--th-theme-elevate);
+}
+
+:global(.thorium_web_stackedUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  opacity: 1;
+}
+
 .miniPlayerSheetBody {
   padding: 0 var(--th-layout-spacing) var(--th-layout-spacing);
 }
