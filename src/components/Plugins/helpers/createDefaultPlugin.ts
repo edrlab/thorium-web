@@ -42,6 +42,10 @@ import { StatefulReadAlongRate } from "../../ReadAlong/Settings/StatefulReadAlon
 import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
 import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
 import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/StatefulReadAlongPauseDuration";
+import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/StatefulReadAlongAutoPause";
+import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/StatefulReadAlongVerbosity";
+import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/StatefulReadAlongLanguage";
+import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/StatefulReadAlongInlineContextualization";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -174,6 +178,18 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThReadAlongKeys.pauseDuration]: {
           Comp: StatefulReadAlongPauseDuration
+        },
+        [ThReadAlongKeys.autoPause]: {
+          Comp: StatefulReadAlongAutoPause
+        },
+        [ThReadAlongKeys.verbosity]: {
+          Comp: StatefulReadAlongVerbosity
+        },
+        [ThReadAlongKeys.language]: {
+          Comp: StatefulReadAlongLanguage
+        },
+        [ThReadAlongKeys.inlineContextualization]: {
+          Comp: StatefulReadAlongInlineContextualization
         }
       }
     }

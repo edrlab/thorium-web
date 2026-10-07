@@ -145,7 +145,38 @@
         "preferences": {
           "voice": "Voice",
           "pitch": "Pitch",
-          "pauseDuration": "Pause between sentences"
+          "pauseDuration": "Pause between sentences",
+          "autoPause": {
+            "title": "Pause automatically",
+            "values": {
+              "none": "Off",
+              "utterance": "After each sentence",
+              "block": "After each paragraph",
+              "page": "After each page",
+              "spread": "After each spread"
+            }
+          },
+          "verbosity": {
+            "title": "Announcements",
+            "values": {
+              "none": "None",
+              "few": "Few",
+              "some": "Some",
+              "most": "Most"
+            }
+          },
+          "language": {
+            "title": "Switch voice for other languages",
+            "values": {
+              "none": "Never",
+              "block-level": "For passages in another language",
+              "always": "Always, including inline phrases"
+            }
+          },
+          "inlineContextualization": {
+            "title": "Notes and page breaks",
+            "label": "Read them where they appear in a sentence"
+          }
         }
       }
     }
