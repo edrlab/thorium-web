@@ -4,7 +4,7 @@ Settings can be customized extensively, and even nested in advanced components. 
 
 ## Display Order
 
-You can customize the order of the actions in the `reflowOrder` or `fxlOrder` arrays, and remove them as well if you don’t want to expose some. 
+You can customize the order of the settings in the `reflowOrder`, `fxlOrder`, `webPubOrder`, or `divinaOrder` arrays, and remove them as well if you don’t want to expose some. 
 
 Enum `ThSettingsKeys` is provided to keep things consistent across the entire codebase.
 
@@ -25,6 +25,11 @@ settings: {
     ThSettingsKeys.zoom,
     ThSettingsKeys.theme,
     ThSettingsKeys.columns
+  ],
+  divinaOrder: [
+    ThSettingsKeys.theme,
+    ThSettingsKeys.layout,
+    ThSettingsKeys.divinaSpreads
   ]
 }
 ```
@@ -57,11 +62,14 @@ Settings that are not applicable to the current publication's script mode are au
 | `mongolian-vertical` | Same as CJK-vertical |
 
 ```tsx
-import { useFilteredPreferenceKeys } from "@edrlab/thorium-web/preferences";
+import { useFilteredPreferenceKeys } from "@edrlab/thorium-web/core/preferences";
 
 const keys = useFilteredPreferenceKeys();
 // keys.reflowSettingsKeys — already filtered for the current script mode
 ```
+
+> [!NOTE]
+> `divinaOrder` is not filtered, since Divina publications are image-based and do not use text settings.
 
 ---
 
@@ -77,7 +85,8 @@ The `keys` object is used to configure settings:
 - `paragraphIndent`;
 - `paragraphSpacing`;
 - `wordSpacing`;
-- `zoom`.
+- `zoom`;
+- `divinaQuality`.
 
 ### FontFamily
 
@@ -90,6 +99,18 @@ See [Custom Fonts](CustomFonts.md).
 ### NoRuby
 
 `ThSettingsKeys.noRuby` is a boolean toggle that suppresses ruby annotations. Disabled by default. Only shown for CJK publications (`scriptMode: "cjk-horizontal"` or `"cjk-vertical"`).
+
+### DivinaQuality
+
+`ThSettingsKeys.divinaQuality` accepts a `ThSettingsChoicesPref` object, whose `choices` array restricts the image qualities offered to users (`DivinaQuality` from `@readium/navigator`):
+
+```typescript
+[ThSettingsKeys.divinaQuality]: {
+  choices: [DivinaQuality.auto, DivinaQuality.low, DivinaQuality.high, DivinaQuality.max]
+}
+```
+
+This is useful if your platform does not serve every quality, e.g. no `max` variants in its manifests.
 
 ### LineHeight
 
@@ -156,6 +177,19 @@ settings: {
   fxlOrder: [
     ThSettingsKeys.theme,
     ThSettingsKeys.columns
+  ],
+  webPubOrder: [
+    ThSettingsKeys.zoom,
+    ThSettingsKeys.textGroup,
+    ThSettingsKeys.theme,
+    ThSettingsKeys.spacingGroup
+  ],
+  divinaOrder: [
+    ThSettingsKeys.theme,
+    ThSettingsKeys.layout,
+    ThSettingsKeys.divinaSpreads,
+    ThSettingsKeys.divinaStripWidth,
+    ThSettingsKeys.divinaQuality
   ],
   keys: {
     ...,

@@ -147,24 +147,6 @@ interface StatefulColumnsProps {}
 <StatefulColumns />
 ```
 
-#### StatefulLayout
-
-```typescript
-interface StatefulLayoutProps {}
-```
-
-**Features:**
-- Toggles between paginated and scrolled layouts
-- Handles scroll affordances automatically
-- Visual indicators for layout modes
-- Maintains state across reader sessions
-- Accessibility support with ARIA labels
-
-**Example:**
-```typescript
-<StatefulLayout />
-```
-
 #### StatefulZoom
 
 ```typescript
@@ -440,6 +422,25 @@ interface StatefulParagraphIndentProps extends StatefulSettingsItemProps {
 
 ### Misc Settings
 
+#### StatefulLayout
+
+```typescript
+interface StatefulLayoutProps {}
+```
+
+**Features:**
+- Toggles between paginated and scrolled layouts, for both EPUB and [Divina](../../Divina/API/Settings.md)
+- Handles scroll affordances automatically
+- Disabled for natively scrolled Divina publications (webtoons)
+- Visual indicators for layout modes
+- Maintains state across reader sessions
+- Accessibility support with ARIA labels
+
+**Example:**
+```typescript
+<StatefulLayout />
+```
+
 #### StatefulTheme
 
 ```typescript
@@ -625,7 +626,7 @@ function useSettingsComponentStatus(options: UseSettingsComponentStatusOptions):
 
 interface UseSettingsComponentStatusOptions {
   settingsKey: ThSettingsKeys | ThTextSettingsKeys | ThSpacingSettingsKeys;
-  publicationType?: "reflow" | "fxl" | "webpub";
+  publicationType?: "reflow" | "fxl" | "webpub" | "divina";
   additionalCondition?: boolean;
 }
 

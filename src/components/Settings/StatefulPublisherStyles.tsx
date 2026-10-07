@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThLineHeightOptions, ThSpacingSettingsKeys, ThSettingsKeys } from "@/preferences";
-import { SETTINGS_KEY_TO_PREFERENCE } from "./helpers/settingsKeyMapping";
+import { getPreferenceKey } from "./helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "./models/settings";
 
@@ -55,11 +55,11 @@ export const StatefulPublisherStyles = ({ standalone = true }: StatefulSettingsI
 
   const { submitPreferences } = useNavigator().visual;
 
-  const lineHeightPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.lineHeight];
-  const paragraphIndentPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.paragraphIndent];
-  const paragraphSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.paragraphSpacing];
-  const letterSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.letterSpacing];
-  const wordSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.wordSpacing];
+  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
+  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent);
+  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing);
+  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing);
+  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing);
 
   const updatePreference = useCallback(async (isSelected: boolean) => {
     const values: any = {};

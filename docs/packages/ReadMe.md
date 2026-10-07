@@ -8,8 +8,9 @@ The Thorium Web package is organized into several sub-packages:
 
 - **[Core](./Core/)**: Low-level hooks, components, and utilities for building custom readers
 - **[Audio](./Audio/)**: Audio player with plugins system for UI customization, Redux state management, and built-in preferences
+- **[Divina](./Divina/)**: Divina reader for image-based publications (comics, manga, webtoons), sharing the EPUB reader’s plugins system, Redux state management, and preferences
 - **[Epub](./Epub/)**: EPUB reader with plugins system for UI customization, Redux state management, and built-in preferences
-- **[Reader](./Reader/)**: Universal reader wrapper that automatically routes to appropriate format-specific readers (EPUB/WebPub/Audio) based on publication profile
+- **[Reader](./Reader/)**: Universal reader wrapper that automatically routes to appropriate format-specific readers (EPUB/WebPub/Divina/Audio) based on publication profile
 
 ## Usage
 

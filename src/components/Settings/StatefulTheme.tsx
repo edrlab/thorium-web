@@ -14,7 +14,7 @@ import { ThActionsKeys, ThLayoutDirection } from "@/preferences/models";
 import { StatefulRadioGroup } from "./StatefulRadioGroup";
 import { Radio } from "react-aria-components";
 
-import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 import { useGridNavigation } from "@/components/Settings/hooks/useGridNavigation";
 
@@ -38,14 +38,19 @@ export const StatefulTheme = () => {
   const direction = useAppSelector(state => state.reader.direction);
   const isRTL = direction === ThLayoutDirection.rtl;
 
+  // Divina shares the fxl theme order and slot
+  const usesFXLTheme = isFXL || profile === "divina";
+
   const themeArray: (ThemeKeyType | "auto")[] = profile === "audio"
     ? ((audioThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-    : (isFXL
+    : (usesFXLTheme
         ? ((fxlThemeOrder ?? []) as (ThemeKeyType | "auto")[])
         : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
 
   const themeObject = useAppSelector(state => state.theming.theme);
-  const theme = profile === "audio" ? (themeObject.audio ?? "auto") : (isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
+  const theme = profile === "audio"
+    ? (themeObject.audio ?? "auto")
+    : (usesFXLTheme ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const coverTheme = useAppSelector(state => state.publication.coverTheme);
 
@@ -86,7 +91,7 @@ export const StatefulTheme = () => {
     }
   })
 
-  const { submitPreferences } = useEpubNavigator();
+  const readerNavigator = useNavigator();
 
   const updatePreference = useCallback(async (value: ThemeKeyType | "auto") => {
     const themeProps = buildThemeObject<typeof value>({
@@ -95,13 +100,16 @@ export const StatefulTheme = () => {
       systemThemes: systemThemes as { light: ThemeKeyType; dark: ThemeKeyType } | undefined,
       colorScheme
     })
-    await submitPreferences(themeProps);
+    // Audio has no visual navigator, its theme only lives in the store
+    if (profile !== "audio") {
+      await readerNavigator.visual.submitPreferences(themeProps);
+    }
 
     dispatch(setTheme({
-      key: profile === "audio" ? "audio" : (isFXL ? "fxl" : "reflow"),
+      key: profile === "audio" ? "audio" : (usesFXLTheme ? "fxl" : "reflow"),
       value: value
     }));
-  }, [isFXL, themeKeys, systemThemes, submitPreferences, dispatch, colorScheme, profile]);
+  }, [usesFXLTheme, themeKeys, systemThemes, readerNavigator, dispatch, colorScheme, profile]);
 
   // It's easier to inline styles from preferences for these
   // than spamming the entire app with all custom properties right now

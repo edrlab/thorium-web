@@ -22,7 +22,7 @@ import { usePreferences } from "@/preferences/hooks/usePreferences";
 
 import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useIsScroll } from "@/hooks";
+import { useIsScroll, useIsPageBased } from "@/hooks";
 import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
 
 import classNames from "classnames";
@@ -45,8 +45,8 @@ export const StatefulReaderFooter = ({
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const hasScrollAffordance = useAppSelector(state => state.reader.hasScrollAffordance);
   const isRTL = useAppSelector(state => state.publication.isRTL);
-  const isFXL = useAppSelector(state => state.publication.isFXL);
   const isScroll = useIsScroll();
+  const isPageBased = useIsPageBased();
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
@@ -106,8 +106,8 @@ export const StatefulReaderFooter = ({
     const previousLink: ThPaginationLinkProps | undefined = previous ? {
       node: buildNode(
         previous.title,
-        isFXL ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
-        isFXL ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
+        isPageBased ? "reader.actions.goToPreviousPage.compact" : "reader.actions.goToPreviousChapter.compact",
+        isPageBased ? "reader.actions.goToPreviousPage.descriptive" : "reader.actions.goToPreviousChapter.descriptive"
       ),
       onPress: () => goLink(new Link({ href: previous.href }), !reducedMotion, () => {})
     } : undefined;
@@ -115,8 +115,8 @@ export const StatefulReaderFooter = ({
     const nextLink: ThPaginationLinkProps | undefined = next ? {
       node: buildNode(
         next.title,
-        isFXL ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
-        isFXL ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
+        isPageBased ? "reader.actions.goToNextPage.compact" : "reader.actions.goToNextChapter.compact",
+        isPageBased ? "reader.actions.goToNextPage.descriptive" : "reader.actions.goToNextChapter.descriptive"
       ),
       onPress: () => goLink(new Link({ href: next.href }), !reducedMotion, () => {})
     } : undefined;
@@ -132,7 +132,7 @@ export const StatefulReaderFooter = ({
     previousReadingOrderItem,
     nextReadingOrderItem,
     reducedMotion,
-    isFXL,
+    isPageBased,
     isRTL
   ]);
 

@@ -224,6 +224,27 @@ const cssVars = propsToCSSVars({
 // }
 ```
 
+### `prefixString`
+
+Prefixes a string with Thorium Web’s namespace. Use it with `propsToCSSVars` to generate the CSS custom properties the built-in components expect (e.g. `--th-arrow-*`, `--th-icon-*`, `--th-layout-*`).
+
+```typescript
+import { prefixString } from "@edrlab/thorium-web/core/helpers";
+
+function prefixString(
+  str: string,
+  variant?: "short" | "full" // default: "short"
+): string
+```
+
+**Examples:**
+```typescript
+prefixString("arrow");          // "th-arrow"
+prefixString("arrow", "full");  // "thorium_web-arrow"
+
+const cssVars = propsToCSSVars(preferences.theming.arrow, { prefix: prefixString("arrow") });
+```
+
 ## Progression Format Utilities
 
 Utilities for determining supported progression formats based on timeline data.

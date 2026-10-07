@@ -3,7 +3,7 @@
 import { useCallback, useMemo } from "react";
 
 import { ThLineHeightOptions, ThSpacingSettingsKeys, ThSettingsKeys } from "@/preferences";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../models/settings";
 
@@ -35,7 +35,7 @@ export const StatefulLineHeight = ({ standalone = true }: StatefulSettingsItemPr
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.lineHeight];
+  const prefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
 
   const { getEffectiveSpacingValue, setLineHeight } = useSpacingPresets();
 

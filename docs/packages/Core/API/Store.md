@@ -88,7 +88,7 @@ Manages state for action-related features.
 ```typescript
 interface ActionsReducerState {
   keys: {
-    // Profile-keyed: `epub`, `webPub`, `audio`
+    // Profile-keyed: `epub`, `webPub`, `audio`, `divina`
     [profile: string]: {
       [key in ActionsStateKeys]?: {
         isOpen?: boolean | null;
@@ -120,6 +120,7 @@ interface DockStateObject {
 ```
 
 **Actions:**
+- `ensureProfileActions`: Create the `dock` and `keys` buckets of a profile if missing. `usePublication` dispatches it for the detected profile, to heal persisted states that predate a profile
 - `dockAction`: Dock/undock an action. Takes the requester’s `reserved` flag, and arbitrates on it: a reserved occupant can’t be evicted by a non-reserved action
 - `setActionOpen`: Set action state open/closed
 - `toggleActionOpen`: Toggle action state
@@ -137,6 +138,7 @@ Manages state for EPUB publication data.
 interface PublicationReducerState {
   fontLanguage: string;
   isFXL: boolean;
+  isManifestScrolled: boolean; // Divina manifest declares layout: "scrolled" (webtoons)
   isRTL: boolean;
   scriptMode: ScriptMode; // "ltr" | "rtl" | "cjk-horizontal" | "cjk-vertical"
   hasDisplayTransformability: boolean;
@@ -155,6 +157,7 @@ interface PublicationReducerState {
 **Actions:**
 - `setFontLanguage`: Set font language
 - `setFXL`: Set publication as fixed layout
+- `setManifestScrolled`: Set publication as natively scrolled (Divina only)
 - `setRTL`: Set publication as right-to-left
 - `setScriptMode`: Set the publication's script mode (`ScriptMode` from `@readium/navigator`)
 - `setHasDisplayTransformability`: Set display transformability flag
@@ -177,7 +180,7 @@ Manages state for reader functionality.
 **State Interface:**
 ```typescript
 interface ReaderReducerState {
-  profile: "epub" | "webPub" | undefined;
+  profile: "epub" | "webPub" | "audio" | "divina" | undefined;
   direction: ThLayoutDirection;
   isLoading: boolean;
   isImmersive: boolean;
@@ -192,7 +195,7 @@ interface ReaderReducerState {
 ```
 
 **Actions:**
-- `setReaderProfile`: Set reader profile (epub or webPub)
+- `setReaderProfile`: Set reader profile (epub, webPub, audio, or divina)
 - `setDirection`: Set layout direction
 - `setLoading`: Set loading state
 - `setPlatformModifier`: Set platform modifier
@@ -297,6 +300,7 @@ interface PreferencesReducerState {
     reflow?: ThLayoutUI;
     fxl?: ThLayoutUI;
     webPub?: ThLayoutUI;
+    divina?: ThLayoutUI;
   };
   scrollAffordances?: {
     hintInImmersive?: boolean;
@@ -333,6 +337,26 @@ interface GlobalPreferencesReducerState {
 - `setLocale`: Set the UI locale (`string | undefined`). Unsupported locales should be validated by `createGlobalPreferences` before dispatching.
 
 The locale is persisted to `localStorage` alongside the rest of the app state. Use `StatefulGlobalPreferencesProvider` to wire it automatically, or dispatch `setLocale` directly.
+
+### DivinaSettings Reducer
+
+Manages state for Divina-specific reader settings. Values are `null` until set, in which case the navigator’s defaults apply.
+
+**State Interface:**
+```typescript
+interface DivinaSettingsReducerState {
+  quality: string | null;     // DivinaQuality: "auto" | "low" | "high" | "max"
+  scrolled: boolean | null;
+  spreads: boolean | null;
+  stripWidth: number | null;
+}
+```
+
+**Actions:**
+- `setDivinaQuality`: Set image quality
+- `setDivinaScrolled`: Set scrolled or paged layout
+- `setDivinaSpreads`: Set spreads (two pages side by side) for paged layout
+- `setDivinaStripWidth`: Set strip width for scrolled layout
 
 ### WebPubSettings Reducer
 

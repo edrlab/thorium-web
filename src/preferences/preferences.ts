@@ -20,6 +20,7 @@ import {
   ThSettingsRangePrefRequired,
   ThSettingsRangeVariant,
   ThSettingsRadioPref,
+  ThSettingsChoicesPref,
   I18nValue,
   ThBackLinkPref,
   ThFormatPref,
@@ -30,7 +31,7 @@ import {
   ThSettingsGroupPref,
   ValidatedLanguageCollection,
 } from "./models";
-import { ExperimentKey } from "@readium/navigator";
+import { DivinaQuality, ExperimentKey } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { ContentProtectionConfig } from "./models/protection";
 import { validateObjectKeys } from "./helpers";
@@ -115,6 +116,7 @@ export interface ThActionsPref<K extends CustomizableKeys> {
   reflowOrder: Array<ActionKey<K>>;
   fxlOrder: Array<ActionKey<K>>;
   webPubOrder: Array<ActionKey<K>>;
+  divinaOrder: Array<ActionKey<K>>;
   collapse: ThCollapsibility;
   keys: Record<ActionKey<K>, ThActionsTokens>;
 };
@@ -127,6 +129,7 @@ export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
   [ThSettingsKeys.paragraphSpacing]: ThSettingsRangePrefRequired;
   [ThSettingsKeys.wordSpacing]: ThSettingsRangePrefRequired;
   [ThSettingsKeys.zoom]: ThSettingsRangePrefRequired;
+  [ThSettingsKeys.divinaQuality]: ThSettingsChoicesPref<DivinaQuality>;
 } & (
   K extends { settings: infer S } 
     ? S extends string 
@@ -182,6 +185,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
           reflow?: ThFormatPref<ThRunningHeadFormat>;
           fxl?: ThFormatPref<ThRunningHeadFormat>;
           webPub?: ThFormatPref<ThRunningHeadFormat>;
+          divina?: ThFormatPref<ThRunningHeadFormat>;
         }
       }
     };
@@ -190,6 +194,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
         reflow?: ThFormatPref<ThProgressionFormat | Array<ThProgressionFormat>>;
         fxl?: ThFormatPref<ThProgressionFormat | Array<ThProgressionFormat>>;
         webPub?: ThFormatPref<ThProgressionFormat | Array<ThProgressionFormat>>;
+        divina?: ThFormatPref<ThProgressionFormat | Array<ThProgressionFormat>>;
       };
     };
     arrow: {
@@ -203,6 +208,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
         reflow?: ThLayoutUI,
         fxl?: ThLayoutUI,
         webPub?: ThLayoutUI,
+        divina?: ThLayoutUI,
       };
       radius: number;
       spacing: number;
@@ -235,6 +241,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     paginated: {
       reflow: ThPaginatedAffordancePref;
       fxl: ThPaginatedAffordancePref;
+      divina: ThPaginatedAffordancePref;
     }
   };
   actions: ThActionsPref<K>;
@@ -244,6 +251,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     reflowOrder: Array<SettingsKey<K>>;
     fxlOrder: Array<SettingsKey<K>>;
     webPubOrder: Array<SettingsKey<K>>;
+    divinaOrder: Array<SettingsKey<K>>;
     keys: ThSettingsKeyTypes<K>;
     text: ThSettingsGroupPref<TextSettingsKey<K>>;
     spacing: ThSettingsGroupPref<SpacingSettingsKey<K>> & { presets?: ThSettingsSpacingPresets<K> };
@@ -265,6 +273,7 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
         params.actions.reflowOrder as Array<ActionKey<K>>,
         params.actions.fxlOrder as Array<ActionKey<K>>,
         params.actions.webPubOrder as Array<ActionKey<K>>,
+        params.actions.divinaOrder as Array<ActionKey<K>>,
       ],
       params.actions.keys as Record<string, ThActionsTokens>,
       "actions"
@@ -274,7 +283,10 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
   // Validate themes
   if (params.theming?.themes) {
     validateObjectKeys<ThemeKey<K> | "auto", ThemeTokens>(
-      [params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">, params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">],
+      [
+        params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
+        params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
+      ],
       params.theming.themes.keys as Record<string, ThemeTokens>,
       "theming.themes",
       "auto" // Special case for themes

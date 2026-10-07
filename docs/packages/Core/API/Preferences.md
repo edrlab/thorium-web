@@ -23,7 +23,7 @@ interface Props {
 - Validates the locale via `createGlobalPreferences` (unsupported locales fall back to browser default)
 
 ```tsx
-import { ThGlobalPreferencesProvider } from "@edrlab/thorium-web/preferences";
+import { ThGlobalPreferencesProvider } from "@edrlab/thorium-web/core/preferences";
 
 <ThStoreProvider>
   <ThGlobalPreferencesProvider initialPreferences={{ locale: "ar" }}>
@@ -37,7 +37,7 @@ import { ThGlobalPreferencesProvider } from "@edrlab/thorium-web/preferences";
 Redux-backed wrapper around `ThGlobalPreferencesProvider`. Reads and writes locale through `globalPreferencesReducer` so it is persisted to `localStorage` automatically.
 
 ```tsx
-import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/components";
+import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/reader";
 
 <ThStoreProvider>
   <StatefulGlobalPreferencesProvider initialPreferences={{ locale: "fr" }}>
@@ -51,7 +51,7 @@ import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/component
 Server-safe factory that validates the locale and returns a `ThGlobalPreferences` object. Unsupported locales are silently discarded.
 
 ```typescript
-import { createGlobalPreferences } from "@edrlab/thorium-web/preferences";
+import { createGlobalPreferences } from "@edrlab/thorium-web/core/preferences";
 
 const prefs = createGlobalPreferences({ locale: "ar" });
 ```
@@ -63,7 +63,7 @@ Can be called in Next.js Server Components and `layout.tsx` directly (no `"use c
 Hook to read and update global preferences.
 
 ```typescript
-import { useGlobalPreferences } from "@edrlab/thorium-web/preferences";
+import { useGlobalPreferences } from "@edrlab/thorium-web/core/preferences";
 
 const { preferences, updatePreferences } = useGlobalPreferences();
 // preferences.locale — current locale string or undefined
@@ -230,11 +230,13 @@ function usePreferenceKeys(): {
   reflowActionKeys: string[];
   fxlActionKeys: string[];
   webPubActionKeys: string[];
+  divinaActionKeys: string[];
   reflowThemeKeys: string[];
   fxlThemeKeys: string[];
   reflowSettingsKeys: string[];
   fxlSettingsKeys: string[];
   webPubSettingsKeys: string[];
+  divinaSettingsKeys: string[];
   mainTextSettingsKeys: string[];
   subPanelTextSettingsKeys: string[];
   mainSpacingSettingsKeys: string[];
@@ -251,19 +253,20 @@ function usePreferenceKeys(): {
 - Provides access to both reflowable and fixed-layout (FXL) keys
 - Custom key support
 - Helper functions for type assertion
-- Includes WebPub-specific keys
+- Includes WebPub- and Divina-specific keys
 
 ### useFilteredPreferenceKeys
 
 Drop-in replacement for `usePreferenceKeys` that additionally filters out settings keys not applicable to the current publication's script mode (`state.publication.scriptMode`). Use this wherever settings UI is rendered to avoid showing irrelevant controls (e.g. text-align in CJK, ruby toggle in Latin).
 
 ```typescript
-import { useFilteredPreferenceKeys } from "@edrlab/thorium-web/preferences";
+import { useFilteredPreferenceKeys } from "@edrlab/thorium-web/core/preferences";
 
 function usePreferenceKeys(): {
   reflowSettingsKeys: string[];
   fxlSettingsKeys: string[];
   webPubSettingsKeys: string[];
+  divinaSettingsKeys: string[]; // Not filtered, script modes only affect text settings
   mainTextSettingsKeys: string[];
   subPanelTextSettingsKeys: string[];
   mainSpacingSettingsKeys: string[];
@@ -273,22 +276,6 @@ function usePreferenceKeys(): {
 ```
 
 Must be used within a `ThPreferencesProvider` and a `ThStoreProvider` (reads `scriptMode` and `isFXL` from the store).
-
----
-
-## Helpers
-
-### SETTINGS_KEY_TO_PREFERENCE
-
-A record mapping every `ThSettingsKeys` value to the corresponding preference property name. Useful when building generic settings components that need to map a key to its underlying preference.
-
-```typescript
-import { SETTINGS_KEY_TO_PREFERENCE } from "@edrlab/thorium-web/preferences";
-
-// Example: ThSettingsKeys.ligatures → "ligatures"
-// Example: ThSettingsKeys.layout    → "scroll"
-const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.layout]; // "scroll"
-```
 
 ---
 

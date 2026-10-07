@@ -23,12 +23,13 @@ export interface RenditionObject<T extends string | Array<string>> {
   reflow?: RenditionProperties<T>;
   fxl?: RenditionProperties<T>;
   webPub?: RenditionProperties<T>;
+  divina?: RenditionProperties<T>;
 }
 
 export interface RenditionChangePayload<T extends string | Array<string>> {
   type: string;
   payload: {
-    key: "reflow" | "fxl" | "webPub";
+    key: "reflow" | "fxl" | "webPub" | "divina";
     value?: T;
     breakpoint?: ThBreakpoints;
   }
@@ -37,7 +38,7 @@ export interface RenditionChangePayload<T extends string | Array<string>> {
 export interface UIChangePayload {
   type: string;
   payload: {
-    key: "reflow" | "fxl" | "webPub";
+    key: "reflow" | "fxl" | "webPub" | "divina";
     value?: ThLayoutUI;
   }
 }
@@ -52,12 +53,13 @@ export interface PaginatedAffordanceProperties {
 export interface PaginatedAffordanceObject {
   reflow?: PaginatedAffordanceProperties;
   fxl?: PaginatedAffordanceProperties;
+  divina?: PaginatedAffordanceProperties;
 }
 
 export interface PaginatedAffordancePayload {
   type: string;
   payload: {
-    key: "reflow" | "fxl";
+    key: "reflow" | "fxl" | "divina";
     value: ThPaginatedAffordancePrefValue;
     breakpoint?: ThBreakpoints;
   };
@@ -71,6 +73,7 @@ export interface PreferencesReducerState {
     reflow?: ThLayoutUI;
     fxl?: ThLayoutUI;
     webPub?: ThLayoutUI;
+    divina?: ThLayoutUI;
   };
   scrollAffordances?: {
     hintInImmersive?: boolean;

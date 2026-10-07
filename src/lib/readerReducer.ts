@@ -4,7 +4,7 @@ import { defaultPlatformModifier, UnstablePlatformModifier } from "@/core/Helper
 import { ThSettingsContainerKeys, ThLayoutDirection } from "@/preferences/models";
 
 // Export the profile type for use in other components
-export type ReaderProfile = "epub" | "webPub" | "audio" | undefined;
+export type ReaderProfile = "epub" | "webPub" | "audio" | "divina" | undefined;
 
 export interface ReaderReducerState {
   profile: ReaderProfile;

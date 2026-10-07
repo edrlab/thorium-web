@@ -19,7 +19,7 @@ const App = () => {
 ```
 
 > [!IMPORTANT]
-> When using stateful components from `@edrlab/thorium-web/epub`, you must use the `<ThStoreProvider>` from that package, not from `@edrlab/thorium-web/core`. Otherwise, your app and components will use a different store.
+> When using stateful components from `@edrlab/thorium-web/epub`, you must use the `<ThStoreProvider>` from that package, not from `@edrlab/thorium-web/core/lib`. Otherwise, your app and components will use a different store.
 
 It accepts two optional props:
 
@@ -32,6 +32,7 @@ The Core package comes with a list of slices offering multiple reducers:
 
 - `actionsReducer`: manages the actions of the application (opening a menu, opening a modal, etc.);
 - `audioSettingsReducer`: manages audio playback settings (volume, playback rate, skip intervals, etc.);
+- `divinaSettingsReducer`: manages Divina-specific settings (quality, scrolled, spreads, strip width);
 - `playerReducer`: manages audio player state (playback status, seeking, stalled, seekable ranges);
 - `preferencesReducer`: manages persisted preferences state via Redux;
 - `publicationReducer`: manages data related to the publication (direction, title, etc.);
@@ -47,7 +48,7 @@ These are used to build the default store if none is provided through the `store
 You can extend the default store with your own Redux Toolkit slices. Here"s how to create a custom slice that follows the same pattern as the built-in reducers.
 
 > [!IMPORTANT]
-> When using stateful components from `@edrlab/thorium-web/epub`, you must import from that same package, not from `@edrlab/thorium-web/core`. Otherwise, your app and components will use a different store.
+> When using stateful components from `@edrlab/thorium-web/epub`, you must import from that same package, not from `@edrlab/thorium-web/core/lib`. Otherwise, your app and components will use a different store.
 
 First create your reducer, e.g. a redux slice:
 
@@ -180,4 +181,4 @@ const MyHelper = () => {
 }
 
 > [!IMPORTANT]
-> When using stateful components from `@edrlab/thorium-web/epub`, you must use the hooks from that package, not from `@edrlab/thorium-web/core`. Otherwise, your app and components will use a different store.
+> When using stateful components from `@edrlab/thorium-web/epub`, you must use the hooks from that package, not from `@edrlab/thorium-web/core/lib`. Otherwise, your app and components will use a different store.

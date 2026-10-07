@@ -7,7 +7,7 @@ interface UseSettingsComponentStatusOptions {
   /** The settings key to check (e.g., ThSettingsKeys.spacingPresets) */
   settingsKey: ThSettingsKeys | ThTextSettingsKeys | ThSpacingSettingsKeys;
   /** The publication type to determine which order array to check */
-  publicationType?: "reflow" | "fxl" | "webpub";
+  publicationType?: "reflow" | "fxl" | "webpub" | "divina";
   /** Optional additional condition that must be true for the component to be considered displayed */
   additionalCondition?: boolean;
 }
@@ -36,7 +36,7 @@ export function useSettingsComponentStatus(options: UseSettingsComponentStatusOp
   const { settingsKey, publicationType, additionalCondition = true } = options;
   
   const { spacingSettingsComponentsMap, textSettingsComponentsMap, settingsComponentsMap } = usePlugins();
-  const { reflowSettingsKeys, fxlSettingsKeys, webPubSettingsKeys, mainTextSettingsKeys, subPanelTextSettingsKeys, mainSpacingSettingsKeys, subPanelSpacingSettingsKeys } = useFilteredPreferenceKeys();
+  const { reflowSettingsKeys, fxlSettingsKeys, webPubSettingsKeys, divinaSettingsKeys, mainTextSettingsKeys, subPanelTextSettingsKeys, mainSpacingSettingsKeys, subPanelSpacingSettingsKeys } = useFilteredPreferenceKeys();
 
   return useMemo(() => {
     // 1. Check if component is registered in any of the component maps
@@ -57,6 +57,9 @@ export function useSettingsComponentStatus(options: UseSettingsComponentStatusOp
         break;
       case "webpub":
         isInOrder = webPubSettingsKeys.includes(settingsKey as ThSettingsKeys) || false;
+        break;
+      case "divina":
+        isInOrder = divinaSettingsKeys.includes(settingsKey as ThSettingsKeys) || false;
         break;
     }
     
@@ -90,6 +93,7 @@ export function useSettingsComponentStatus(options: UseSettingsComponentStatusOp
     reflowSettingsKeys,
     fxlSettingsKeys,
     webPubSettingsKeys,
+    divinaSettingsKeys,
     mainTextSettingsKeys,
     subPanelTextSettingsKeys,
     mainSpacingSettingsKeys,

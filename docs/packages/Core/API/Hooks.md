@@ -51,7 +51,7 @@ function useAudioNavigator(): {
 - Preferences and settings management
 
 > [!IMPORTANT]
-> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/audio` package so that they all share the same instance, not from `@edrlab/thorium-web/core`.
+> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/audio` package so that they all share the same instance, not from `@edrlab/thorium-web/core/hooks`.
 
 ## Audio Settings Cache Hook
 
@@ -213,6 +213,59 @@ function useWebPubNavigator(): {
 - Layout detection and preferences
 - Position tracking and locator management
 - Frame management for fixed and reflowable layouts
+
+## Divina Navigator Hook
+
+Manages Divina navigation and rendering. Divina images are rendered in the host DOM, so there are no frames to observe.
+
+```typescript
+interface DivinaNavigatorLoadProps {
+  container: HTMLDivElement | null;
+  publication: Publication;
+  listeners: Partial<DivinaNavigatorListeners>;
+  initialPosition?: Locator;
+  preferences?: IDivinaPreferences;
+  defaults?: IDivinaDefaults;
+  contentProtection?: IContentProtectionConfig;
+  keyboardPeripherals?: IKeyboardPeripheralsConfig;
+}
+
+function useDivinaNavigator(): {
+  DivinaNavigatorLoad: (config: DivinaNavigatorLoadProps, cb: Function) => void;
+  DivinaNavigatorDestroy: (cb: Function) => void;
+  goRight: (animated: boolean, callback: (ok: boolean) => void) => void;
+  goLeft: (animated: boolean, callback: (ok: boolean) => void) => void;
+  goBackward: (animated: boolean, callback: (ok: boolean) => void) => void;
+  goForward: (animated: boolean, callback: (ok: boolean) => void) => void;
+  scrollBy: (px: number, animated: boolean, callback: (ok: boolean) => void) => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  zoomReset: () => void;
+  goLink: (link: Link, animated: boolean, callback: (ok: boolean) => void) => void;
+  go: (locator: Locator, animated: boolean, callback: (ok: boolean) => void) => void;
+  navLayout: () => Layout | undefined;
+  currentLocator: () => Locator | undefined;
+  previousLocator: () => Locator | null | undefined;
+  nextLocator: () => Locator | null | undefined;
+  currentPositions: () => number[] | null | undefined;
+  canGoBackward: () => boolean | undefined;
+  canGoForward: () => boolean | undefined;
+  isScrollStart: () => boolean | undefined;
+  isScrollEnd: () => boolean | undefined;
+  preferencesEditor: DivinaPreferencesEditor | undefined;
+  getSetting: <K extends keyof DivinaSettings>(settingKey: K) => DivinaSettings[K];
+  submitPreferences: (preferences: IDivinaPreferences) => Promise<void>;
+  getCframes: () => [];
+  getScriptMode: () => ScriptMode | undefined;
+  timeline: () => Timeline | undefined;
+}
+```
+
+**Features:**
+- Divina navigation (forward, backward, by link, by locator, etc.), paged or scrolled
+- Zoom in paged mode, and pixel scrolling in scrolled mode
+- Preferences: `scrolled`, `spreads`, `stripWidth`, `quality`, `constraint`, and `backgroundColor` (set by themes)
+- Position tracking and locator management – the navigator synthesizes its own positions
 
 ## Media Query Hooks
 

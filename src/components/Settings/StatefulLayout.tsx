@@ -2,28 +2,37 @@
 
 import { useCallback } from "react";
 
+import { DivinaPreferencesEditor } from "@readium/navigator";
 import { ThLayoutOptions, ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "./helpers/settingsKeyMapping";
 
 import ScrollableIcon from "./assets/icons/contract.svg";
 import PaginatedIcon from "./assets/icons/docs.svg";
 
-import { StatefulRadioGroup } from "../../Settings/StatefulRadioGroup";
+import { StatefulRadioGroup } from "./StatefulRadioGroup";
 
-import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setScroll } from "@/lib/settingsReducer";
+import { setDivinaScrolled } from "@/lib/divinaSettingsReducer";
 import { useIsScroll } from "@/hooks";
 
 export const StatefulLayout = () => {
   const { t } = useI18n();
   const isScroll = useIsScroll();
 
+  const readerProfile = useAppSelector(state => state.reader.profile);
+
   const dispatch = useAppDispatch();
 
-  const { getSetting, submitPreferences } = useEpubNavigator();
+  const { getSetting, submitPreferences, preferencesEditor } = useNavigator().visual;
+
+  // Natively scrolled publications (webtoons) can't be switched to paged mode
+  const isForcedScrolled = readerProfile === "divina" && preferencesEditor
+    ? !(preferencesEditor as DivinaPreferencesEditor).scrolled.isEffective
+    : false;
 
   const items = [
     {
@@ -40,13 +49,17 @@ export const StatefulLayout = () => {
     }
   ];
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.layout];
+  const prefKey = getPreferenceKey(ThSettingsKeys.layout, readerProfile);
 
   const updatePreference = useCallback(async (value: string) => {
     const derivedValue = value === ThLayoutOptions.scroll;
     await submitPreferences({ [prefKey]: derivedValue });
-    dispatch(setScroll(getSetting(prefKey)));
-  }, [prefKey, submitPreferences, getSetting, dispatch]);
+    if (readerProfile === "divina") {
+      dispatch(setDivinaScrolled(getSetting(prefKey)));
+    } else {
+      dispatch(setScroll(getSetting(prefKey)));
+    }
+  }, [readerProfile, prefKey, submitPreferences, getSetting, dispatch]);
 
   return (
     <>
@@ -56,6 +69,7 @@ export const StatefulLayout = () => {
       orientation="horizontal"
       value={ isScroll ? ThLayoutOptions.scroll : ThLayoutOptions.paginated }
       onChange={ async (val: string) => await updatePreference(val) }
+      isDisabled={ isForcedScrolled }
       items={ items }
     />
     </>
