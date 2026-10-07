@@ -32,7 +32,7 @@ export const useReadAlongInit = ({
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
-  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, getCurrentVoice } = useReadAloudNavigator();
+  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
 
   useSleepTimerCountdown();
 
@@ -73,16 +73,24 @@ export const useReadAlongInit = ({
       error: (error) => console.warn("Read along:", error)
     };
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults }, () => {
-      if (voice) setVoice(voice);
+    let cancelled = false;
+
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults }, async () => {
+      // The engine loads its voices asynchronously, and a voice name set before then is not found
+      if (voice) {
+        const stored = (await getVoices()).find((item) => item.name === voice);
+        if (cancelled) return;
+        if (stored) setVoice(stored);
+      }
       syncVoiceControls();
     });
 
     return () => {
+      cancelled = true;
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice]);
 
   // The keyboard shortcut toggles the action open, which activates read along when inactive
   useEffect(() => {
