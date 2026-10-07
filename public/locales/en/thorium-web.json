@@ -143,6 +143,7 @@
           "collapse": "Collapse player"
         },
         "preferences": {
+          "voice": "Voice",
           "pitch": "Pitch",
           "pauseDuration": "Pause between sentences"
         }

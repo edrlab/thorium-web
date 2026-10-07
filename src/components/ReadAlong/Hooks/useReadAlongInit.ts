@@ -10,6 +10,7 @@ import { useAppDispatch, useAppStore } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
+import { getVoiceControls } from "../helpers/getVoiceControls";
 
 interface UseReadAlongInitProps {
   navigatorReady: boolean;
@@ -42,8 +43,7 @@ export const useReadAlongInit = ({
 
     // The default voice is picked asynchronously by the engine, so it is only known once state changes
     const syncVoiceControls = () => {
-      const controls = getCurrentVoice()?.controls;
-      const voiceControls = { boundary: controls?.boundary !== false, speed: controls?.speed !== false };
+      const voiceControls = getVoiceControls(getCurrentVoice());
       const current = store.getState().readAlongPlayer.voiceControls;
       if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed) {
         dispatch(setReadAlongVoiceControls(voiceControls));

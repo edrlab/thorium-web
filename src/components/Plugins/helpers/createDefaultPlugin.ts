@@ -37,6 +37,7 @@ import { StatefulNoRuby } from "../../Settings/Text/StatefulNoRuby";
 import { StatefulTheme } from "../../Settings/StatefulTheme";
 import { StatefulWordSpacing } from "../../Settings/Spacing/StatefulWordSpacing";
 import { StatefulZoom } from "../../Settings/StatefulZoom";
+import { StatefulReadAlongVoice } from "../../ReadAlong/Settings/StatefulReadAlongVoice";
 import { StatefulReadAlongRate } from "../../ReadAlong/Settings/StatefulReadAlongRate";
 import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
 import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
@@ -158,6 +159,9 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThSettingsKeys.zoom]: {
           Comp: StatefulZoom
+        },
+        [ThReadAlongKeys.voice]: {
+          Comp: StatefulReadAlongVoice
         },
         [ThReadAlongKeys.rate]: {
           Comp: StatefulReadAlongRate

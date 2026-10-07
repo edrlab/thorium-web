@@ -11,6 +11,7 @@ export interface ReadAlongMetadata {
   subtitle?: string;
   authors?: string[];
   coverUrl?: string;
+  language?: string;
 }
 
 export interface ReadAlongVoiceControls {

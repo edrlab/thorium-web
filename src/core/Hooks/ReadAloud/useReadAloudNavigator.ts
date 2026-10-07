@@ -11,6 +11,7 @@ import {
   ReadAloudPreferences,
   ReadAloudSettings,
   ReadAloudState,
+  ReadAloudVoicesOptions,
   ReadiumSpeechPlaybackEngine,
   ReadiumSpeechVoice
 } from "@readium/navigator";
@@ -126,8 +127,8 @@ export const useReadAloudNavigator = () => {
     return navigatorInstance?.state ?? "idle";
   }, []);
 
-  const getVoices = useCallback(async (): Promise<ReadiumSpeechVoice[]> => {
-    return await navigatorInstance?.getVoices().catch((error) => {
+  const getVoices = useCallback(async (options?: ReadAloudVoicesOptions): Promise<ReadiumSpeechVoice[]> => {
+    return await navigatorInstance?.getVoices(options).catch((error) => {
       warn(error);
       return [];
     }) ?? [];
