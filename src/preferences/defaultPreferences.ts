@@ -262,11 +262,6 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
         ThThemeKeys.light,
         ThThemeKeys.dark
       ],
-      divinaOrder: [
-        "auto",
-        ThThemeKeys.light,
-        ThThemeKeys.dark
-      ],
       systemThemes: {
         light: ThThemeKeys.light,
         dark: ThThemeKeys.dark

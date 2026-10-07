@@ -131,7 +131,7 @@ export const StatefulDivinaReader = ({
 };
 
 const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
-  const { divinaActionKeys, divinaThemeKeys } = useFilteredPreferenceKeys();
+  const { divinaActionKeys, fxlThemeKeys } = useFilteredPreferenceKeys();
   const { preferences } = usePreferences();
   const { occupySpace: arrowsOccupySpace } = usePaginatedArrows();
   const { direction: uiDirection } = useLocale();
@@ -144,7 +144,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
   const themeObject = useAppSelector(state => state.theming.theme);
-  const theme = themeObject.divina;
+  // Divina shares the fxl theme slot
+  const theme = themeObject.fxl;
   const previousTheme = usePrevious(theme);
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
@@ -508,13 +509,13 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   useLayoutEffect(() => {
     if (!navigatorReady) return;
 
-    const theme = themeObject.divina ?? "auto";
+    const theme = themeObject.fxl ?? "auto";
 
     // Protecting against re-applying on theme change
     if (theme !== "auto" && previousTheme !== theme) return;
 
     const applyCurrentTheme = async () => {
-      const themeKey = divinaThemeKeys.includes(theme as any) ? theme : "auto";
+      const themeKey = fxlThemeKeys.includes(theme as any) ? theme : "auto";
       const themeProps = buildThemeObject<ThemeKeyType>({
         theme: themeKey,
         themeKeys: preferences.theming.themes.keys,
@@ -523,14 +524,14 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       });
       await submitPreferences(themeProps);
       dispatch(setTheme({
-        key: "divina",
+        key: "fxl",
         value: themeKey
       }));
     };
 
     applyCurrentTheme()
       .catch(console.error);
-  }, [themeObject, previousTheme, preferences.theming.themes, divinaThemeKeys, colorScheme, submitPreferences, dispatch, navigatorReady]);
+  }, [themeObject, previousTheme, preferences.theming.themes, fxlThemeKeys, colorScheme, submitPreferences, dispatch, navigatorReady]);
 
   useLayoutEffect(() => {
     dispatch(setDirection(uiDirection as ThLayoutDirection));

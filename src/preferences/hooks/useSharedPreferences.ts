@@ -22,7 +22,6 @@ export interface SharedPreferences {
       audioOrder?: Array<string>;
       reflowOrder?: Array<string>;
       fxlOrder?: Array<string>;
-      divinaOrder?: Array<string>;
     };
     layout: {
       defaults: ThLayoutDefaultsPref;
@@ -60,7 +59,6 @@ export const useSharedPreferences = (): SharedPreferences => {
         audioOrder: audioCtx?.preferences.theming.themes.audioOrder as Array<string> | undefined,
         reflowOrder: readerCtx?.preferences.theming.themes.reflowOrder as Array<string> | undefined,
         fxlOrder: readerCtx?.preferences.theming.themes.fxlOrder as Array<string> | undefined,
-        divinaOrder: readerCtx?.preferences.theming.themes.divinaOrder as Array<string> | undefined,
       },
       layout: {
         defaults: prefs.theming.layout.defaults,

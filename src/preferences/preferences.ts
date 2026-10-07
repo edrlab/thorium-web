@@ -221,7 +221,6 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     themes: {
       reflowOrder: Array<ThemeKey<K> | "auto">;
       fxlOrder: Array<ThemeKey<K> | "auto">;
-      divinaOrder: Array<ThemeKey<K> | "auto">;
       systemThemes?: {
         light: ThemeKey<K>;
         dark: ThemeKey<K>;
@@ -287,7 +286,6 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
       [
         params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
         params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
-        params.theming.themes.divinaOrder as Array<ThemeKey<K> | "auto">,
       ],
       params.theming.themes.keys as Record<string, ThemeTokens>,
       "theming.themes",

@@ -28,7 +28,7 @@ import { buildThemeObject } from "@/preferences/helpers/buildThemeObject";
 export const StatefulTheme = () => {
   const profile = useAppSelector(state => state.reader.profile);
   const { theming } = useSharedPreferences();
-  const { systemThemes, keys: themeKeys, audioOrder: audioThemeOrder, reflowOrder: reflowThemeOrder, fxlOrder: fxlThemeOrder, divinaOrder: divinaThemeOrder } = theming.themes;
+  const { systemThemes, keys: themeKeys, audioOrder: audioThemeOrder, reflowOrder: reflowThemeOrder, fxlOrder: fxlThemeOrder } = theming.themes;
   const { t } = useI18n();
 
   const radioGroupRef = useRef<HTMLDivElement | null>(null);
@@ -38,20 +38,19 @@ export const StatefulTheme = () => {
   const direction = useAppSelector(state => state.reader.direction);
   const isRTL = direction === ThLayoutDirection.rtl;
 
+  // Divina shares the fxl theme order and slot
+  const usesFXLTheme = isFXL || profile === "divina";
+
   const themeArray: (ThemeKeyType | "auto")[] = profile === "audio"
     ? ((audioThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-    : profile === "divina"
-      ? ((divinaThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-      : (isFXL
-          ? ((fxlThemeOrder ?? []) as (ThemeKeyType | "auto")[])
-          : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
+    : (usesFXLTheme
+        ? ((fxlThemeOrder ?? []) as (ThemeKeyType | "auto")[])
+        : ((reflowThemeOrder ?? []) as (ThemeKeyType | "auto")[]));
 
   const themeObject = useAppSelector(state => state.theming.theme);
   const theme = profile === "audio"
     ? (themeObject.audio ?? "auto")
-    : profile === "divina"
-      ? (themeObject.divina ?? "auto")
-      : (isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
+    : (usesFXLTheme ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto"));
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const coverTheme = useAppSelector(state => state.publication.coverTheme);
 
@@ -107,10 +106,10 @@ export const StatefulTheme = () => {
     }
 
     dispatch(setTheme({
-      key: profile === "audio" ? "audio" : profile === "divina" ? "divina" : (isFXL ? "fxl" : "reflow"),
+      key: profile === "audio" ? "audio" : (usesFXLTheme ? "fxl" : "reflow"),
       value: value
     }));
-  }, [isFXL, themeKeys, systemThemes, readerNavigator, dispatch, colorScheme, profile]);
+  }, [usesFXLTheme, themeKeys, systemThemes, readerNavigator, dispatch, colorScheme, profile]);
 
   // It's easier to inline styles from preferences for these
   // than spamming the entire app with all custom properties right now

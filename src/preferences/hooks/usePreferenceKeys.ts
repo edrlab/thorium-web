@@ -21,7 +21,6 @@ export const usePreferenceKeys = () => {
 
   const reflowThemeKeys = preferences.theming.themes.reflowOrder;
   const fxlThemeKeys = preferences.theming.themes.fxlOrder;
-  const divinaThemeKeys = preferences.theming.themes.divinaOrder;
 
   const reflowSettingsKeys = preferences.settings.reflowOrder;
   const fxlSettingsKeys = preferences.settings.fxlOrder;
@@ -44,7 +43,6 @@ export const usePreferenceKeys = () => {
     divinaActionKeys,
     reflowThemeKeys,
     fxlThemeKeys,
-    divinaThemeKeys,
     reflowSettingsKeys,
     fxlSettingsKeys,
     webPubSettingsKeys,
