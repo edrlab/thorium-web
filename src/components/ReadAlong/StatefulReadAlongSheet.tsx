@@ -44,6 +44,8 @@ export const StatefulReadAlongSheet = ({ isOpen }: { isOpen: boolean }) => {
 
   const [collapsedHeight, setCollapsedHeight] = useState(FALLBACK_COLLAPSED_HEIGHT);
   const [isDragging, setDragging] = useState(false);
+  // Snap points are only computed once the sheet is measured, and opening already snaps to initialSnap
+  const [hasOpened, setHasOpened] = useState(false);
 
   // Values above 1 are pixels: the collapsed point fits the mini player
   const snapArray = useMemo(() => [0, collapsedHeight, 1], [collapsedHeight]);
@@ -78,9 +80,9 @@ export const StatefulReadAlongSheet = ({ isOpen }: { isOpen: boolean }) => {
 
   // Expanding or collapsing without dragging (shortcut, buttons, breakpoint change) must move the sheet too
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !hasOpened) return;
     sheetRef.current?.snapTo(isExpanded ? 2 : 1);
-  }, [isOpen, isExpanded, collapsedHeight]);
+  }, [isOpen, hasOpened, isExpanded, collapsedHeight]);
 
   return (
     <ThBottomSheet
@@ -94,6 +96,8 @@ export const StatefulReadAlongSheet = ({ isOpen }: { isOpen: boolean }) => {
       snapPoints={ snapArray }
       initialSnap={ isExpanded ? 2 : 1 }
       onSnap={ onSnapCallback }
+      onOpenEnd={ () => setHasOpened(true) }
+      onCloseStart={ () => setHasOpened(false) }
       onDragStart={ () => { if (!isExpanded) setDragging(true); } }
       disableScrollLocking={ !isExpanded }
       prefersReducedMotion={ prefersReducedMotion }
