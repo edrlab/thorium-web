@@ -103,6 +103,19 @@
                     "trigger": "Daugiau išretinimo parinkčių"
                 }
             }
+        },
+        "preferences": {
+            "divinaQuality": {
+                "title": "Paveikslėlių kokybė",
+                "auto": "Automatinė",
+                "low": "Žema",
+                "high": "Aukšta",
+                "max": "Maksimali"
+            },
+            "divinaSpreads": {
+                "label": "Atvaizduoti du puslapius greta"
+            },
+            "divinaStripWidth": "Juostos plotis"
         }
     },
     "audio": {
