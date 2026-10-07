@@ -1,5 +1,5 @@
 import { ThPlugin } from "../PluginRegistry";
-import { ThActionsKeys, ThReadAlongActionKeys, ThSettingsKeys } from "@/preferences/models";
+import { ThActionsKeys, ThReadAlongActionKeys, ThReadAlongKeys, ThSettingsKeys } from "@/preferences/models";
 
 import { StatefulFullscreenTrigger } from "../../Actions/Fullscreen/StatefulFullscreenTrigger";
 import { StatefulJumpToPositionTrigger } from "../../Actions/JumpToPosition/StatefulJumpToPositionTrigger";
@@ -37,6 +37,10 @@ import { StatefulNoRuby } from "../../Settings/Text/StatefulNoRuby";
 import { StatefulTheme } from "../../Settings/StatefulTheme";
 import { StatefulWordSpacing } from "../../Settings/Spacing/StatefulWordSpacing";
 import { StatefulZoom } from "../../Settings/StatefulZoom";
+import { StatefulReadAlongRate } from "../../ReadAlong/Settings/StatefulReadAlongRate";
+import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
+import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
+import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/StatefulReadAlongPauseDuration";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -154,6 +158,18 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThSettingsKeys.zoom]: {
           Comp: StatefulZoom
+        },
+        [ThReadAlongKeys.rate]: {
+          Comp: StatefulReadAlongRate
+        },
+        [ThReadAlongKeys.pitch]: {
+          Comp: StatefulReadAlongPitch
+        },
+        [ThReadAlongKeys.volume]: {
+          Comp: StatefulReadAlongVolume
+        },
+        [ThReadAlongKeys.pauseDuration]: {
+          Comp: StatefulReadAlongPauseDuration
         }
       }
     }

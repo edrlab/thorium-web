@@ -141,6 +141,10 @@
         "player": {
           "expand": "Expand player",
           "collapse": "Collapse player"
+        },
+        "preferences": {
+          "pitch": "Pitch",
+          "pauseDuration": "Pause between sentences"
         }
       }
     }

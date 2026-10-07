@@ -8,3 +8,4 @@ export * from "./StatefulReadAlongSheet";
 export * from "./StatefulReadAlongTrigger";
 
 export * from "./Hooks";
+export * from "./Settings";
