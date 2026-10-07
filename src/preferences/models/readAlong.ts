@@ -46,6 +46,7 @@ export enum ThReadAlongHighlightKeys {
 }
 
 export enum ThReadAlongHighlightPresetKeys {
+  none = "none",
   sentenceAndWord = "sentenceAndWord",
   word = "word",
   mask = "mask",
@@ -81,8 +82,9 @@ export interface ThReadAlongHighlightPreset {
 
 export interface ThReadAlongHighlightPresets {
   order: ThReadAlongHighlightPresetKeys[];
+  // None and custom are not included as they are special cases
   keys: {
-    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset;
+    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset;
   };
 }
 
@@ -224,6 +226,7 @@ export const defaultReadAlongHighlightSubpanel = [
 
 export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
   order: [
+    ThReadAlongHighlightPresetKeys.none,
     ThReadAlongHighlightPresetKeys.sentenceAndWord,
     ThReadAlongHighlightPresetKeys.word,
     ThReadAlongHighlightPresetKeys.mask,

@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { ThReadAlongHighlightPresetKeys } from "@/preferences/models";
 
+import NoneIcon from "./assets/icons/format_color_reset.svg";
 import HighlighterIcon from "./assets/icons/ink_highlighter.svg";
 import WordIcon from "./assets/icons/match_word.svg";
 import MaskIcon from "./assets/icons/filter_center_focus.svg";
@@ -18,6 +19,7 @@ import { useI18n } from "@/i18n/useI18n";
 import { useHighlightPresets } from "./hooks/useHighlightPresets";
 
 const iconMap = {
+  [ThReadAlongHighlightPresetKeys.none]: NoneIcon,
   [ThReadAlongHighlightPresetKeys.sentenceAndWord]: HighlighterIcon,
   [ThReadAlongHighlightPresetKeys.word]: WordIcon,
   [ThReadAlongHighlightPresetKeys.mask]: MaskIcon,

@@ -186,6 +186,7 @@ readAlong: {
 
 Presets only set which styles apply, using enum `ThReadAlongHighlightPresetKeys`:
 
+- `none`: highlights nothing. It isn’t configured in `keys`, but can be ordered or removed like the others;
 - `sentenceAndWord`: highlights the sentence and the word;
 - `word`: highlights the word only;
 - `mask`: dims everything but the sentence, and highlights the word. It is labelled “Focus”;
@@ -204,6 +205,7 @@ readAlong: {
       ],
       presets: {
         order: [
+          ThReadAlongHighlightPresetKeys.none,
           ThReadAlongHighlightPresetKeys.sentenceAndWord,
           ThReadAlongHighlightPresetKeys.word,
           ThReadAlongHighlightPresetKeys.mask,
@@ -240,7 +242,7 @@ The presets are only applied when `highlightGroup` is in `order` and `highlightP
 `createPreferences` warns, without throwing, when:
 
 - a key in either `displayOrder` has no entry in `readAlong.actions.keys`;
-- a preset in `highlight.presets.order` has no entry in its `keys`, except `custom`;
+- a preset in `highlight.presets.order` has no entry in its `keys`, except `none` and `custom`;
 - a range preset can’t be reached with its `range` and `step`.
 
 ## Extending Read Along

@@ -186,6 +186,7 @@
             },
             "presets": {
               "title": "Highlight presets",
+              "none": "None",
               "sentenceAndWord": "Sentence and word",
               "word": "Word",
               "mask": "Focus",

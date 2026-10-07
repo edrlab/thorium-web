@@ -371,7 +371,7 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
       [params.readAlong.settings.highlight.presets.order],
       params.readAlong.settings.highlight.presets.keys as Record<string, ThReadAlongHighlightPreset>,
       "readAlong.settings.highlight.presets",
-      ["custom"]
+      ["none", "custom"]
     );
   }
 

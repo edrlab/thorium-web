@@ -98,6 +98,13 @@ export const useHighlightPresets = () => {
       return highlight?.custom ?? {};
     }
 
+    if (presetKey === ThReadAlongHighlightPresetKeys.none) {
+      return {
+        [ThReadAlongHighlightKeys.utteranceStyle]: false,
+        [ThReadAlongHighlightKeys.wordStyle]: false
+      };
+    }
+
     const presetValues = presets.keys[presetKey];
     if (!presetValues) return {};
 
