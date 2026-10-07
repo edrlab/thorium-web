@@ -16,7 +16,7 @@ import {
 `useAudioSettingsCache` provides a stateless cache for audio settings that maps React state to mutable refs — useful for settings that need to persist across re-renders without triggering navigator re-initialization.
 
 > [!IMPORTANT]
-> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/audio` package so that they all share the same instance, not from `@edrlab/thorium-web/core`.
+> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/audio` package so that they all share the same instance, not from `@edrlab/thorium-web/core/hooks`.
 
 ## EPUB Support Hook
 
@@ -34,7 +34,7 @@ It is the most important hook of the Core package, as it provides the foundation
 The `useEpubSettingsCache` hook provides a stateless cache for EPUB settings that maps React state to mutable refs. It's useful for storing settings that need to persist across component re-renders without causing navigator re-initialization, and the cached values never go stale.
 
 > [!IMPORTANT]
-> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/epub` package so that they all use the same one, not from `@edrlab/thorium-web/core`.
+> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/epub` package so that they all use the same one, not from `@edrlab/thorium-web/core/hooks`.
 
 ## WebPub Support Hook
 
@@ -50,7 +50,18 @@ Similar to the EPUB navigator hook, this hook provides navigation functionality 
 The `useWebPubSettingsCache` hook provides a stateless cache for WebPub settings that maps React state to mutable refs. It's useful for storing settings that need to persist across component re-renders without causing navigator re-initialization, and the cached values never go stale.
 
 > [!IMPORTANT]
-> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/webpub` package so that they all use the same one, not from `@edrlab/thorium-web/core`.
+> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/webpub` package so that they all use the same one, not from `@edrlab/thorium-web/core/hooks`.
+
+## Divina Support Hook
+
+```tsx
+import { useDivinaNavigator } from "@edrlab/thorium-web/core/hooks";
+```
+
+This hook provides navigation functionality for Divina publications – image-based publications such as comics and webtoons – using the Readium TS-Toolkit `DivinaNavigator`. On top of navigation, it exposes zoom (`zoomIn`, `zoomOut`, `zoomReset`) and scroll (`scrollBy`) controls.
+
+> [!IMPORTANT]
+> When using Stateful Components, you must use the hook from the `@edrlab/thorium-web/divina` package so that they all use the same one, not from `@edrlab/thorium-web/core/hooks`.
 
 ## Read Aloud Support Hook
 

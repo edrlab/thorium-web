@@ -36,6 +36,7 @@ export const StatefulVisualSettingsContainer = ({
   triggerRef
 }: StatefulActionContainerProps) => {
   const {
+    divinaSettingsKeys,
     fxlSettingsKeys,
     mainSpacingSettingsKeys,
     mainTextSettingsKeys,
@@ -56,10 +57,12 @@ export const StatefulVisualSettingsContainer = ({
   const settingItems = useMemo(() => {
     return profile === "webPub"
       ? webPubSettingsKeys
-      : isFXL
-        ? fxlSettingsKeys
-        : reflowSettingsKeys
-  }, [profile, isFXL, fxlSettingsKeys, reflowSettingsKeys, webPubSettingsKeys]);
+      : profile === "divina"
+        ? divinaSettingsKeys
+        : isFXL
+          ? fxlSettingsKeys
+          : reflowSettingsKeys
+  }, [profile, isFXL, divinaSettingsKeys, fxlSettingsKeys, reflowSettingsKeys, webPubSettingsKeys]);
 
   const setInitial = useCallback(() => {
     dispatch(setSettingsContainer(ThSettingsContainerKeys.initial));

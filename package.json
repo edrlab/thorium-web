@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/edrlab/thorium-web/issues"
   },
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": false,
   "packageManager": "pnpm@11.1.0",
   "files": [
@@ -38,6 +38,8 @@
     "./core/preferences": "./dist/preferences/index.mjs",
     "./audio": "./dist/components/Audio/index.mjs",
     "./audio/styles": "./dist/components/Audio/index.css",
+    "./divina": "./dist/components/Divina/index.mjs",
+    "./divina/styles": "./dist/components/Divina/index.css",
     "./epub": "./dist/components/Epub/index.mjs",
     "./epub/styles": "./dist/components/Epub/index.css",
     "./misc": "./dist/components/Misc/index.mjs",
@@ -124,6 +126,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "cpx2": "^8.0.2",
+    "esbuild": "0.27.2",
     "esbuild-plugin-svgr": "^3.1.1",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.3.6",

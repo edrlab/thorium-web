@@ -3,7 +3,7 @@
 import { CSSProperties, Key, useCallback, useRef } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../models/settings";
 
@@ -80,7 +80,7 @@ export const StatefulFontFamily = ({ standalone = true }: StatefulSettingsItemPr
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.fontFamily];
+  const prefKey = getPreferenceKey(ThSettingsKeys.fontFamily);
 
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!key || key === fontFamily) return;

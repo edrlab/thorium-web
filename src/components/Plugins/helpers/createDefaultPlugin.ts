@@ -20,10 +20,13 @@ import { StatefulReadAlongSettingsTrigger } from "../../ReadAlong/actions/Settin
 import { StatefulReadAlongSettingsContainer } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
+import { StatefulDivinaQuality } from "../../Divina/Settings/StatefulDivinaQuality";
+import { StatefulDivinaSpreads } from "../../Divina/Settings/StatefulDivinaSpreads";
+import { StatefulDivinaStripWidth } from "../../Divina/Settings/StatefulDivinaStripWidth";
 import { StatefulFontFamily } from "../../Settings/Text/StatefulFontFamily";
 import { UnstableStatefulFontWeight } from "../../Settings/Text/StatefulFontWeight";
 import { StatefulHyphens } from "../../Settings/Text/StatefulHyphens";
-import { StatefulLayout } from "../../Epub/Settings/StatefulLayout";
+import { StatefulLayout } from "../../Settings/StatefulLayout";
 import { StatefulLetterSpacing } from "../../Settings/Spacing/StatefulLetterSpacing";
 import { StatefulLineHeight } from "../../Settings/Spacing/StatefulLineHeight";
 import { StatefulParagraphIndent } from "../../Settings/Spacing/StatefulParagraphIndent";
@@ -58,7 +61,7 @@ export const createDefaultPlugin = (): ThPlugin => {
     id: "core",
     name: "Core Components",
     description: "Default components for Thorium Web Epub StatefulReader",
-    version: "1.6.0",
+    version: "1.7.0",
     components: {
       actions: {
         [ThActionsKeys.fullscreen]: {
@@ -102,6 +105,15 @@ export const createDefaultPlugin = (): ThPlugin => {
       settings: {
         [ThSettingsKeys.columns]: {
           Comp: StatefulColumns
+        },
+        [ThSettingsKeys.divinaQuality]: {
+          Comp: StatefulDivinaQuality
+        },
+        [ThSettingsKeys.divinaSpreads]: {
+          Comp: StatefulDivinaSpreads
+        },
+        [ThSettingsKeys.divinaStripWidth]: {
+          Comp: StatefulDivinaStripWidth
         },
         [ThSettingsKeys.fontFamily]: {
           Comp: StatefulFontFamily,

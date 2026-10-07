@@ -15,6 +15,7 @@ export const PUBLICATION_MANIFESTS = {
   "readium-css": "https://readium.org/css/docs/manifest.json",
   "moby-dick-webpub": "https://readium.org/webpub-manifest/examples/MobyDick/manifest.json",
   "molly-hopper": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9tb2xseS1ob3BwZXItdjEuMS53ZWJwdWI/manifest.json",
+  "pepper-carrot-fresh-start": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9DYXJyb3QtUGVwcGVyLUZyZXNoLXN0YXJ0LmRpdmluYQ/manifest.json",
   // Audiobooks
   "flatland": "https://readium.org/webpub-manifest/examples/Flatland/manifest.json",
   "art-of-letters": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9hcnRfbGV0dGVycy56YWI%2Fmanifest.json",

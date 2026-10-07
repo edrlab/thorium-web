@@ -6,7 +6,7 @@ import {
   ThSpacingSettingsKeys,
   ThSettingsKeys,
 } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import BookIcon from "../assets/icons/book.svg";
 import SmallIcon from "./assets/icons/density_small.svg";
@@ -56,11 +56,11 @@ export const StatefulSpacingPresets = ({ standalone }: StatefulSettingsItemProps
 
   const { submitPreferences } = useNavigator().visual;
 
-  const letterSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.letterSpacing];
-  const lineHeightPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.lineHeight];
-  const paragraphIndentPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.paragraphIndent];
-  const paragraphSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.paragraphSpacing];
-  const wordSpacingPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.wordSpacing];
+  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing);
+  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
+  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent);
+  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing);
+  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing);
 
   const { values: lineHeightOptions, compensate: compensateLineHeight } = useLineHeight();
 

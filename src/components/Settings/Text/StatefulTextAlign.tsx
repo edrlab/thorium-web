@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { ThTextAlignOptions, ThTextSettingsKeys, ThSettingsKeys } from "@/preferences/models";
 import { StatefulSettingsItemProps } from "../models/settings";
 import { TextAlignment } from "@readium/navigator";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import BookIcon from "../assets/icons/book.svg";
 import LeftAlignIcon from "./assets/icons/format_align_left.svg";
@@ -36,8 +36,8 @@ export const StatefulTextAlign = ({ standalone = true }: StatefulSettingsItemPro
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const hyphensPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.hyphens];
-  const textAlignPrefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.textAlign];
+  const hyphensPrefKey = getPreferenceKey(ThSettingsKeys.hyphens);
+  const textAlignPrefKey = getPreferenceKey(ThSettingsKeys.textAlign);
 
   // Check if hyphens plugin is being used
   const publicationType = isWebPub ? "webpub" : "reflow";

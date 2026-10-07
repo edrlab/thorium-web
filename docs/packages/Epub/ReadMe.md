@@ -42,9 +42,8 @@ import {
   setReducedMotion, 
   setReducedTransparency 
 } from "@edrlab/thorium-web/epub";
-import { useTheming } from "@edrlab/thorium-web/preferences";
-import { propsToCSSVars } from "@edrlab/thorium-web/core";
-import { prefixString } from "@edrlab/thorium-web/core";
+import { useTheming } from "@edrlab/thorium-web/core/preferences";
+import { propsToCSSVars, prefixString } from "@edrlab/thorium-web/core/helpers";
 
 const ReaderWithTheming = ({ publication, localDataKey }) => {
   const { preferences } = usePreferences();
@@ -264,9 +263,8 @@ import {
   setReducedMotion, 
   setReducedTransparency 
 } from "@edrlab/thorium-web/epub";
-import { useTheming } from "@edrlab/thorium-web/preferences";
-import { propsToCSSVars } from "@edrlab/thorium-web/core";
-import { prefixString } from "@edrlab/thorium-web/core";
+import { useTheming } from "@edrlab/thorium-web/core/preferences";
+import { propsToCSSVars, prefixString } from "@edrlab/thorium-web/core/helpers";
 import { MyActionTrigger } from "./Actions/MyActionTrigger";
 import { MyActionContainer } from "./Actions/MyActionContainer";
 import { MyScrollSwitch } from "./Settings/MyScrollSwitch";
@@ -360,7 +358,7 @@ Then in your app:
 
 ```tsx
 import { MyCustomReader } from "./MyCustomReader";
-import { usePublication } from "@edrlab/thorium-web/hooks";
+import { usePublication } from "@edrlab/thorium-web/epub";
 
 const App = ({ manifestUrl }) => {
   const { publication, localDataKey, isLoading, error } = usePublication({
@@ -396,7 +394,7 @@ The `<StatefulReader>` Component will then register these components but will no
 To add your custom components to the Reader Component, you need to configure the preferences.
 
 ```tsx
-import { createPreferences, ThPreferences } from "@edrlab/thorium-web/core";
+import { createPreferences, ThPreferences } from "@edrlab/thorium-web/core/preferences";
 
 // Define your custom keys
 type YourCustomKeys = {

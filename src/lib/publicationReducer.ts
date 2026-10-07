@@ -14,6 +14,8 @@ export interface TimelineItemRef {
 export interface PublicationReducerState {
   fontLanguage: string;
   isFXL: boolean;
+  /** The manifest itself declares layout: scrolled (e.g. webtoon divina) */
+  isManifestScrolled: boolean;
   isRTL: boolean;
   scriptMode: ScriptMode;
   hasDisplayTransformability: boolean;
@@ -35,6 +37,7 @@ export interface PublicationReducerState {
 const initialState: PublicationReducerState = {
   fontLanguage: "default",
   isFXL: false,
+  isManifestScrolled: false,
   isRTL: false,
   scriptMode: "ltr",
   hasDisplayTransformability: false,
@@ -56,6 +59,9 @@ export const publicationSlice = createSlice({
     },
     setFXL: (state: PublicationReducerState, action) => {
       state.isFXL = action.payload
+    },
+    setManifestScrolled: (state: PublicationReducerState, action) => {
+      state.isManifestScrolled = action.payload
     },
     setRTL: (state: PublicationReducerState, action) => {
       state.isRTL = action.payload
@@ -97,6 +103,7 @@ export const publicationSlice = createSlice({
 export const {
   setFontLanguage,
   setFXL,
+  setManifestScrolled,
   setRTL,
   setScriptMode,
   setHasDisplayTransformability,

@@ -103,7 +103,7 @@ The `scroll` object can be used to set the following properties:
 For instance:
 
 ```typescript
-import { ThNavigationAffordance } from "@edrlab/thorium-web/preferences";
+import { ThNavigationAffordance } from "@edrlab/thorium-web/core/preferences";
 
 affordances: {
   scroll: {
@@ -121,12 +121,13 @@ affordances: {
 
 ### Pagination
 
-The `pagination` object configures the behavior of pagination arrows in the reader. It has two main configurations:
+The `pagination` object configures the behavior of pagination arrows in the reader. It has three main configurations, all required:
 
 1. `reflow`: Settings for reflowable content (standard EPUB)
 2. `fxl`: Settings for fixed-layout content (FXL)
+3. `divina`: Settings for Divina publications
 
-Each configuration (`reflow` and `fxl`) accepts the following properties:
+Each configuration (`reflow`, `fxl`, and `divina`) accepts the following properties:
 
 - `default`: the default configuration for the pagination arrows
 - `breakpoints`: the breakpoints configuration for the pagination arrows
@@ -228,7 +229,12 @@ Action Components can be a simple trigger (e.g. fullscreen), or a combination of
 
 ### Display Order
 
-You can customize the order of the actions in the `displayOrder` array, and remove them as well if you don’t want to expose some. 
+You can customize the order of the actions for each format/rendition the Reader supports, and remove them as well if you don’t want to expose some:
+
+- `reflowOrder` for reflowable EPUB;
+- `fxlOrder` for Fixed-Layout EPUB;
+- `webPubOrder` for WebPub;
+- `divinaOrder` for Divina.
 
 Enum `ThActionKeys` is provided to keep things consistent across the entire codebase.
 
@@ -237,10 +243,16 @@ For instance:
 ```
 actions: {
   ...
-  displayOrder: [
+  reflowOrder: [
     ThActionKeys.settings,
     ThActionKeys.toc,
     ThActionKeys.fullscreen
+  ],
+  divinaOrder: [
+    ThActionKeys.settings,
+    ThActionKeys.toc,
+    ThActionKeys.fullscreen,
+    ThActionKeys.jumpToPosition
   ]
 }
 ```
@@ -283,7 +295,7 @@ This means a bottom sheet will be used when the breakpoint is `compact`, and a p
 You can configure a shortcut for each action by setting property `shortcut` to a `ThShortcutConfig` object, or `null` to disable it.
 
 ```typescript
-import type { ThShortcutConfig } from "@edrlab/thorium-web/preferences";
+import type { ThShortcutConfig } from "@edrlab/thorium-web/core/preferences";
 import type { KeyCombo } from "@readium/navigator-html-injectables";
 ```
 
@@ -308,7 +320,7 @@ interface KeyCombo {
 
 Be cautious with your key combinations. Some modifier+letter combinations produce special characters on certain systems — for instance, Option+letter on macOS yields characters like ∏, †, ∆. If your shortcut could conflict with character input, use `suppressOnInteractiveElement` to prevent it from firing when the user is typing.
 
-`suppressOnInteractiveElement` accepts `true` (suppress on all interactive elements) or an array of CSS selectors for finer control. The built-in shortcuts use `TEXT_INPUT_SELECTORS` (exported from `@edrlab/thorium-web/preferences`), which targets text inputs, textareas, and contenteditable elements — but the right value depends on your combination and your content.
+`suppressOnInteractiveElement` accepts `true` (suppress on all interactive elements) or an array of CSS selectors for finer control. The built-in shortcuts use `TEXT_INPUT_SELECTORS` (exported from `@edrlab/thorium-web/core/preferences`), which targets text inputs, textareas, and contenteditable elements — but the right value depends on your combination and your content.
 
 **Example — single cross-platform combo:**
 

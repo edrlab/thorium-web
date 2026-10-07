@@ -49,7 +49,7 @@ Settings components provide user configuration options:
 
 ### Layout Settings
 - `StatefulColumns`: Column layout configuration
-- `StatefulLayout`: Overall layout settings
+- `StatefulLayout`: Paginated or scrolled layout, shared with Divina
 - `StatefulZoom`: Zoom level control
 
 ### Text Settings

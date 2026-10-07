@@ -295,9 +295,12 @@ importers:
       cpx2:
         specifier: ^8.0.2
         version: 8.0.2
+      esbuild:
+        specifier: 0.27.2
+        version: 0.27.2
       esbuild-plugin-svgr:
         specifier: ^3.1.1
-        version: 3.1.1(esbuild@0.28.1)(typescript@5.9.3)
+        version: 3.1.1(esbuild@0.27.2)(typescript@5.9.3)
       eslint:
         specifier: ^9.39.5
         version: 9.39.5
@@ -8194,11 +8197,11 @@ snapshots:
       is-date-object: 1.1.0
       is-symbol: 1.1.1
 
-  esbuild-plugin-svgr@3.1.1(esbuild@0.28.1)(typescript@5.9.3):
+  esbuild-plugin-svgr@3.1.1(esbuild@0.27.2)(typescript@5.9.3):
     dependencies:
       '@svgr/core': 8.1.0(typescript@5.9.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.9.3))
-      esbuild: 0.28.1
+      esbuild: 0.27.2
     transitivePeerDependencies:
       - supports-color
       - typescript

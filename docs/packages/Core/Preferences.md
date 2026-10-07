@@ -33,7 +33,7 @@ const App = () => {
 - `children`: Your application components
 
 > [!IMPORTANT]
-> When using stateful components from `@edrlab/thorium-web/epub`, you must use the `<ThPreferencesProvider>` from that package, not from `@edrlab/thorium-web/core`. Otherwise, your app and components will use different preferences.
+> When using stateful components from `@edrlab/thorium-web/epub`, you must use the `<ThPreferencesProvider>` from that package, not from `@edrlab/thorium-web/core/preferences`. Otherwise, your app and components will use different preferences.
 
 ## Helpers
 
@@ -97,8 +97,7 @@ The Core package exposes several hooks specific to preferences management:
 For instance, if your component needs to access the preferences, you can use the `usePreferences` hook:
 
 ```tsx
-import { usePreferences } from "@edrlab/thorium-web/core/preferences";
-import { ThLayoutDirection } from "@edrlab/thorium-web/core/preferences/models/enums";
+import { usePreferences, ThLayoutDirection } from "@edrlab/thorium-web/core/preferences";
 
 const MyPreferencesComponent = () => {
   const { preferences } = usePreferences<YourCustomKeys>();
@@ -130,7 +129,7 @@ The `useTheming` hook is typically used once, to set up responsive breakpoints b
 TBD.
 
 > [!IMPORTANT]
-> When using stateful components from `@edrlab/thorium-web/epub`, you must use the hooks from that package, not from `@edrlab/thorium-web/core`. Otherwise, your app and components will use different preferences.
+> When using stateful components from `@edrlab/thorium-web/epub`, you must use the hooks from that package, not from `@edrlab/thorium-web/core/preferences`. Otherwise, your app and components will use different preferences.
 
 ## Models
 

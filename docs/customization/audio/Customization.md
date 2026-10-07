@@ -28,7 +28,7 @@ Configure component order for each layout type using `ThAudioPlayerComponent`:
 - `mediaActions`: the primary actions bar (volume, playback rate, and other primary actions)
 
 ```typescript
-import { ThAudioPlayerComponent } from "@edrlab/thorium-web/preferences";
+import { ThAudioPlayerComponent } from "@edrlab/thorium-web/core/preferences";
 
 theming: {
   layout: {
@@ -61,7 +61,7 @@ theming: {
 Configure the order and visibility of publication metadata components (title, subtitle, authors) using `publicationMetadata.order`:
 
 ```typescript
-import { ThAudioPublicationMetadataComponent } from "@edrlab/thorium-web/preferences";
+import { ThAudioPublicationMetadataComponent } from "@edrlab/thorium-web/core/preferences";
 
 theming: {
   layout: {
@@ -137,7 +137,7 @@ See the main [Customization doc](../Customization.md#actions) for the shared act
 Configure navigation behavior for previous/next track buttons using the `affordances` property:
 
 ```typescript
-import { ThAudioAffordance } from "@edrlab/thorium-web/preferences";
+import { ThAudioAffordance } from "@edrlab/thorium-web/core/preferences";
 
 // In your createAudioPreferences call:
 affordances: {

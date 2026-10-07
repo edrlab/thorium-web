@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { ThSettingsKeys } from "@/preferences/models";
-import { SETTINGS_KEY_TO_PREFERENCE } from "../helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../models/settings";
 
@@ -29,7 +29,7 @@ export const StatefulTextNormalize = ({ standalone = true }: StatefulSettingsIte
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = SETTINGS_KEY_TO_PREFERENCE[ThSettingsKeys.textNormalize];
+  const prefKey = getPreferenceKey(ThSettingsKeys.textNormalize);
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

@@ -1,3 +1,4 @@
+import { DivinaQuality } from "@readium/navigator";
 import { ShortcutRepresentation } from "@/core/Helpers/keyboardUtilities";
 import { ThCollapsibilityVisibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import {
@@ -114,6 +115,20 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
               displayInImmersive: true,
               displayInFullscreen: true
             }
+          },
+          divina: {
+            default: {
+              variants: ThRunningHeadFormat.title,
+              displayInImmersive: true,
+              displayInFullscreen: true
+            },
+            breakpoints: {
+              [ThBreakpoints.compact]: {
+                variants: ThRunningHeadFormat.title,
+                displayInImmersive: false,
+                displayInFullscreen: true
+              }
+            }
           }
         }
       }
@@ -165,11 +180,33 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
         webPub: {
           default: {
             variants: [
-              ThProgressionFormat.readingOrderIndex, 
+              ThProgressionFormat.readingOrderIndex,
               ThProgressionFormat.none
             ],
             displayInImmersive: true,
             displayInFullscreen: true
+          }
+        },
+        divina: {
+          default: {
+            variants: [
+              ThProgressionFormat.positionsOfTotal,
+              ThProgressionFormat.overallProgression,
+              ThProgressionFormat.none
+            ],
+            displayInImmersive: true,
+            displayInFullscreen: true
+          },
+          breakpoints: {
+            [ThBreakpoints.compact]: {
+              variants: [
+                ThProgressionFormat.positions,
+                ThProgressionFormat.overallProgression,
+                ThProgressionFormat.none
+              ],
+              displayInImmersive: false,
+              displayInFullscreen: true
+            }
           }
         }
       }
@@ -187,6 +224,7 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
         reflow: ThLayoutUI.layered,
         fxl: ThLayoutUI.layered,
         webPub: ThLayoutUI.stacked,
+        divina: ThLayoutUI.layered,
       },
       radius: 5, // border-radius of containers
       spacing: 20, // padding of containers/sheets
@@ -275,6 +313,13 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
           discard: ["navigation"],
           hint: "none"
         }
+      },
+      divina: {
+        default: {
+          variant: ThArrowVariant.layered,
+          discard: ["navigation"],
+          hint: "none"
+        }
       }
     }
   },
@@ -303,6 +348,12 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       ThActionsKeys.toc,
       ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen
+    ],
+    divinaOrder: [
+      ThActionsKeys.settings,
+      ThActionsKeys.toc,
+      ThActionsKeys.fullscreen,
+      ThActionsKeys.jumpToPosition
     ],
     collapse: true,
     keys: {
@@ -361,6 +412,13 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       ThSettingsKeys.textGroup,
       ThSettingsKeys.spacingGroup
     ],
+    divinaOrder: [
+      ThSettingsKeys.theme,
+      ThSettingsKeys.layout,
+      ThSettingsKeys.divinaSpreads,
+      ThSettingsKeys.divinaStripWidth,
+      ThSettingsKeys.divinaQuality
+    ],
     keys: {
       [ThSettingsKeys.fontFamily]: {
         default: defaultFontCollection,
@@ -381,7 +439,10 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       [ThSettingsKeys.paragraphIndent]: defaultParagraphIndent,
       [ThSettingsKeys.paragraphSpacing]: defaultParagraphSpacing,
       [ThSettingsKeys.wordSpacing]: defaultWordSpacing,
-      [ThSettingsKeys.zoom]: defaultZoom
+      [ThSettingsKeys.zoom]: defaultZoom,
+      [ThSettingsKeys.divinaQuality]: {
+        choices: [DivinaQuality.auto, DivinaQuality.low, DivinaQuality.high, DivinaQuality.max]
+      }
     },
     text: {
       header: ThSheetHeaderVariant.previous,

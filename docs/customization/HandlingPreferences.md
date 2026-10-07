@@ -14,7 +14,7 @@ Thorium Web has two preference layers:
 `ThGlobalPreferencesProvider` must wrap your entire application, outside of any reader. It provides React Aria's `I18nProvider` internally so that `useLocale()` is available everywhere, and keeps `document.documentElement.dir` in sync with the locale.
 
 ```tsx
-import { createGlobalPreferences, ThGlobalPreferencesProvider } from "@edrlab/thorium-web/preferences";
+import { createGlobalPreferences, ThGlobalPreferencesProvider } from "@edrlab/thorium-web/core/preferences";
 
 const globalPrefs = createGlobalPreferences({ locale: "ar" });
 
@@ -38,7 +38,7 @@ Unsupported locales are silently discarded and the UI falls back to browser lang
 Use `StatefulGlobalPreferencesProvider` to persist the locale to `localStorage` via Redux:
 
 ```tsx
-import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/components";
+import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/reader";
 
 <ThStoreProvider>
   <StatefulGlobalPreferencesProvider initialPreferences={ globalPrefs }>
@@ -50,7 +50,7 @@ import { StatefulGlobalPreferencesProvider } from "@edrlab/thorium-web/component
 ### Reading and updating global preferences
 
 ```tsx
-import { useGlobalPreferences } from "@edrlab/thorium-web/preferences";
+import { useGlobalPreferences } from "@edrlab/thorium-web/core/preferences";
 
 function LocaleSwitcher() {
   const { preferences, updatePreferences } = useGlobalPreferences();
@@ -88,7 +88,7 @@ function MyComponent() {
 Implement `ThGlobalPreferencesAdapter` to plug in your own storage:
 
 ```ts
-import { ThGlobalPreferencesAdapter, ThGlobalPreferences } from "@edrlab/thorium-web/preferences";
+import { ThGlobalPreferencesAdapter, ThGlobalPreferences } from "@edrlab/thorium-web/core/preferences";
 
 class MyGlobalAdapter implements ThGlobalPreferencesAdapter {
   getPreferences(): ThGlobalPreferences { /* ... */ }
@@ -117,7 +117,7 @@ The `createPreferences` helper allows you to create a new preferences object wit
 #### Basic Usage
 
 ```typescript
-import { createPreferences, ThSettingsKeys, ThActionsKeys, ThDocumentTitleFormat } from "@edrlab/thorium-web/preferences";
+import { createPreferences, ThSettingsKeys, ThActionsKeys, ThDocumentTitleFormat } from "@edrlab/thorium-web/core/preferences";
 
 const prefs = createPreferences({
   metadata: {
@@ -133,12 +133,14 @@ const prefs = createPreferences({
     reflowOrder: [ThSettingsKeys.theme, ThSettingsKeys.textGroup, ThSettingsKeys.layout],
     fxlOrder: [ThSettingsKeys.theme],
     webPubOrder: [ThSettingsKeys.theme, ThSettingsKeys.textGroup],
+    divinaOrder: [ThSettingsKeys.theme, ThSettingsKeys.layout],
     // keys, text, spacing…
   },
   actions: {
     reflowOrder: [ThActionsKeys.toc, ThActionsKeys.settings],
     fxlOrder: [ThActionsKeys.toc, ThActionsKeys.settings],
     webPubOrder: [ThActionsKeys.toc, ThActionsKeys.settings],
+    divinaOrder: [ThActionsKeys.toc, ThActionsKeys.settings],
     // keys, collapse…
   },
   // theming, affordances, shortcuts, docking…
@@ -159,8 +161,7 @@ Let's imagine you need to add a custom action key to the preferences. You can do
 3. Create preferences with your custom keys type
 
 ```typescript
-import { createPreferences, CustomizableKeys } from "@edrlab/thorium-web/preferences";
-import { ThActionsKeys } from "@edrlab/thorium-web/preferences/models/enums";
+import { createPreferences, CustomizableKeys, ThActionsKeys } from "@edrlab/thorium-web/core/preferences";
 
 // 1. Define your action keys
 enum MyActions {
@@ -205,7 +206,7 @@ See the [Read Along doc](./ReadAlong.md) for more details.
 The `ThPreferencesProvider` component provides a React context for accessing Thorium Web preferences throughout your application. It serves as the central point for managing and distributing preference settings to all components.
 
 ```typescript
-import { ThPreferencesProvider } from "@edrlab/thorium-web/preferences";
+import { ThPreferencesProvider } from "@edrlab/thorium-web/core/preferences";
 
 function App() {
   return (
@@ -230,7 +231,7 @@ function App() {
 ### Accessing Preferences
 
 ```typescript
-import { usePreferences } from "@edrlab/thorium-web/preferences";
+import { usePreferences } from "@edrlab/thorium-web/core/preferences";
 
 function MyComponent() {
   const { preferences } = usePreferences<MyKeys>();
@@ -242,7 +243,7 @@ function MyComponent() {
 The `updatePreferences` function allows you to update preferences values. It expects a complete preferences object.
 
 ```typescript
-import { usePreferences } from "@edrlab/thorium-web/preferences";
+import { usePreferences } from "@edrlab/thorium-web/core/preferences";
 
 function MyComponent() {
   const { preferences, updatePreferences } = usePreferences<MyKeys>();
@@ -272,7 +273,7 @@ function MyComponent() {
 Implement `ThPreferencesAdapter` to plug in your own storage (e.g. a database, `AsyncStorage`, or a custom Redux slice):
 
 ```ts
-import { ThPreferencesAdapter, ThPreferences } from "@edrlab/thorium-web/preferences";
+import { ThPreferencesAdapter, ThPreferences } from "@edrlab/thorium-web/core/preferences";
 
 class MyAdapter<T extends CustomizableKeys> implements ThPreferencesAdapter<T> {
   getPreferences(): ThPreferences<T> { /* ... */ }
@@ -288,9 +289,8 @@ class MyAdapter<T extends CustomizableKeys> implements ThPreferencesAdapter<T> {
 
 ```tsx
 // layout.tsx — Server Component
-import { createGlobalPreferences } from "@edrlab/thorium-web/preferences";
-import { ThStoreProvider } from "@edrlab/thorium-web/lib";
-import { ThGlobalPreferencesProvider } from "@edrlab/thorium-web/preferences";
+import { createGlobalPreferences, ThGlobalPreferencesProvider } from "@edrlab/thorium-web/core/preferences";
+import { ThStoreProvider } from "@edrlab/thorium-web/core/lib";
 
 const globalPrefs = createGlobalPreferences({ locale: "fr" });
 
@@ -311,7 +311,7 @@ export default function RootLayout({ children }) {
 
 ```tsx
 // reader page — Client Component
-import { createPreferences } from "@edrlab/thorium-web/preferences";
+import { createPreferences } from "@edrlab/thorium-web/core/preferences";
 import { StatefulReaderWrapper } from "@edrlab/thorium-web/reader";
 
 const readerPrefs = createPreferences({ /* ... */ });

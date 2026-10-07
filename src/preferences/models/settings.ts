@@ -28,8 +28,16 @@ export interface ThSettingsRadioPref<T extends string> {
   };
 }
 
+/** Restricts which values a choice-based setting offers in its UI */
+export interface ThSettingsChoicesPref<T extends string> {
+  choices: T[];
+}
+
 export enum ThSettingsKeys {
   columns = "columns",
+  divinaQuality = "divinaQuality",
+  divinaSpreads = "divinaSpreads",
+  divinaStripWidth = "divinaStripWidth",
   fontFamily = "fontFamily",
   fontWeight = "fontWeight",
   hyphens = "hyphens",

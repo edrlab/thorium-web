@@ -22,6 +22,7 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const { preferences } = usePreferences();
   const hasArrows = useAppSelector(state => state.reader.hasArrows);
   const isFXL = useAppSelector(state => state.publication.isFXL);
+  const profile = useAppSelector(state => state.reader.profile);
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   
   // Get reader state transitions
@@ -38,11 +39,13 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const dispatch = useAppDispatch();
 
   // Memoize the prefs object to avoid recreating it on every render
-  const prefs = useMemo(() => 
-    isFXL 
-      ? preferences.affordances.paginated.fxl 
-      : preferences.affordances.paginated.reflow,
-    [isFXL, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
+  const prefs = useMemo(() =>
+    profile === "divina"
+      ? preferences.affordances.paginated.divina
+      : isFXL
+        ? preferences.affordances.paginated.fxl
+        : preferences.affordances.paginated.reflow,
+    [profile, isFXL, preferences.affordances.paginated.divina, preferences.affordances.paginated.fxl, preferences.affordances.paginated.reflow]
   );
 
   // Memoize the breakpoints map to avoid recreating it on every breakpoint change
@@ -70,7 +73,7 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
         variant: ThArrowVariant.layered
       };
     }
-    
+
     return result;
   }, [breakpoint, prefsMap, isFXL, prefs.default]);
 

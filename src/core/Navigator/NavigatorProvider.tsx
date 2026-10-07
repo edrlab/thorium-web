@@ -1,10 +1,11 @@
 import { createContext } from "react";
 import { useEpubNavigator } from "../Hooks/Epub/useEpubNavigator";
 import { useWebPubNavigator } from "../Hooks/WebPub/useWebPubNavigator";
+import { useDivinaNavigator } from "../Hooks/Divina/useDivinaNavigator";
 import { useAudioNavigator } from "../Hooks/Audio/useAudioNavigator";
 import { useReadAloudNavigator } from "../Hooks/ReadAloud/useReadAloudNavigator";
 
-type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator>;
+type VisualNavigator = ReturnType<typeof useEpubNavigator> | ReturnType<typeof useWebPubNavigator> | ReturnType<typeof useDivinaNavigator>;
 type MediaNavigator = ReturnType<typeof useAudioNavigator>;
 type ReadAloudNavigator = ReturnType<typeof useReadAloudNavigator>;
 
