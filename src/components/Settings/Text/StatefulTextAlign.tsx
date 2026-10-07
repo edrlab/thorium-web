@@ -36,8 +36,8 @@ export const StatefulTextAlign = ({ standalone = true }: StatefulSettingsItemPro
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const hyphensPrefKey = getPreferenceKey(ThSettingsKeys.hyphens);
-  const textAlignPrefKey = getPreferenceKey(ThSettingsKeys.textAlign);
+  const hyphensPrefKey = getPreferenceKey(ThSettingsKeys.hyphens, isWebPub ? "webPub" : "epub");
+  const textAlignPrefKey = getPreferenceKey(ThSettingsKeys.textAlign, isWebPub ? "webPub" : "epub");
 
   // Check if hyphens plugin is being used
   const publicationType = isWebPub ? "webpub" : "reflow";

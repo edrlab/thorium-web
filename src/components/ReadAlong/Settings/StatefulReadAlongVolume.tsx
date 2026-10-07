@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 
 import { ThReadAlongKeys, ThSettingsRangeVariant } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -39,14 +40,16 @@ export const StatefulReadAlongVolume = ({ standalone = true }: StatefulSettingsI
 
   const placeholderText = usePlaceholder(volumeRangeConfig.placeholder, volumeRangeConfig.range, "percent");
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.volume, "readAlong");
+
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     if (!readAloud) return;
     await readAloud.submitPreferences({
-      volume: Array.isArray(value) ? value[0] : value
+      [prefKey]: Array.isArray(value) ? value[0] : value
     });
 
-    dispatch(setReadAlongVolume(value === null ? null : readAloud.getSetting("volume")));
-  }, [readAloud, dispatch]);
+    dispatch(setReadAlongVolume(value === null ? null : readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <>
@@ -56,7 +59,7 @@ export const StatefulReadAlongVolume = ({ standalone = true }: StatefulSettingsI
         label={ t("reader.playback.preferences.audio.volume") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
-        value={ volume ?? readAloud?.getSetting("volume") }
+        value={ volume ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
         onReset={ volume !== null ? async() => await updatePreference(null) : undefined }
         range={ volumeRangeConfig.range }
@@ -75,7 +78,7 @@ export const StatefulReadAlongVolume = ({ standalone = true }: StatefulSettingsI
         label={ t("reader.playback.preferences.audio.volume") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
-        value={ volume ?? readAloud?.getSetting("volume") }
+        value={ volume ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
         onReset={ volume !== null ? async() => await updatePreference(null) : undefined }
         range={ volumeRangeConfig.range }

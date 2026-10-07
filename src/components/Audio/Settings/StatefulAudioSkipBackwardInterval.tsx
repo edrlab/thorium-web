@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { ThSettingsRangeVariant } from "@/preferences";
 
 import { ThActionsKeys, ThAudioKeys } from "@/preferences/models";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulNumberField } from "../../Settings/StatefulNumberField";
 import { StatefulSlider } from "../../Settings/StatefulSlider";
@@ -50,12 +51,14 @@ export const StatefulAudioSkipBackwardInterval = ({
 
   const placeholderText = usePlaceholder(skipBackwardIntervalRangeConfig.placeholder, skipBackwardIntervalRangeConfig.range);
 
+  const prefKey = getPreferenceKey(ThAudioKeys.skipBackwardInterval, "audio");
+
   const updatePreference = useCallback(async (value: number | number[]) => {
     const val = Array.isArray(value) ? value[0] : value;
-    await submitPreferences({ skipBackwardInterval: val });
-    const effectiveSkipBackwardInterval = getSetting("skipBackwardInterval");
+    await submitPreferences({ [prefKey]: val });
+    const effectiveSkipBackwardInterval = getSetting(prefKey);
     dispatch(setSkipBackwardInterval(effectiveSkipBackwardInterval));
-  }, [submitPreferences, getSetting, dispatch]);
+  }, [prefKey, submitPreferences, getSetting, dispatch]);
 
   if (skipBackwardIntervalRangeConfig.variant === ThSettingsRangeVariant.numberField) {
     return (

@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 
 import { ThReadAlongKeys, ThSettingsRangeVariant } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -39,14 +40,16 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
 
   const placeholderText = usePlaceholder(pitchRangeConfig.placeholder, pitchRangeConfig.range, "number");
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.pitch, "readAlong");
+
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     if (!readAloud) return;
     await readAloud.submitPreferences({
-      pitch: Array.isArray(value) ? value[0] : value
+      [prefKey]: Array.isArray(value) ? value[0] : value
     });
 
-    dispatch(setReadAlongPitch(value === null ? null : readAloud.getSetting("pitch")));
-  }, [readAloud, dispatch]);
+    dispatch(setReadAlongPitch(value === null ? null : readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <>
@@ -56,7 +59,7 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
         label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pitch") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
-        value={ pitch ?? readAloud?.getSetting("pitch") }
+        value={ pitch ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
         onReset={ pitch !== null ? async() => await updatePreference(null) : undefined }
         range={ pitchRangeConfig.range }
@@ -74,7 +77,7 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
         label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pitch") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
-        value={ pitch ?? readAloud?.getSetting("pitch") }
+        value={ pitch ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
         onReset={ pitch !== null ? async() => await updatePreference(null) : undefined }
         range={ pitchRangeConfig.range }

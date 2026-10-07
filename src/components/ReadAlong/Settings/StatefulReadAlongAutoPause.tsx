@@ -3,6 +3,8 @@
 import { Key, useCallback } from "react";
 
 import { ReadAloudAutoPause } from "@readium/navigator";
+import { ThReadAlongKeys } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -37,17 +39,19 @@ export const StatefulReadAlongAutoPause = ({ standalone = true }: StatefulSettin
   // There are no pages to pause at when scrolling
   const disabledKeys = isScroll ? [ReadAloudAutoPause.page] : [];
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.autoPause, "readAlong");
+
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!readAloud || !key) return;
-    await readAloud.submitPreferences({ autoPause: key as ReadAloudAutoPause });
-    dispatch(setReadAlongAutoPause(readAloud.getSetting("autoPause")));
-  }, [readAloud, dispatch]);
+    await readAloud.submitPreferences({ [prefKey]: key as ReadAloudAutoPause });
+    dispatch(setReadAlongAutoPause(readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <StatefulDropdown
       standalone={ standalone }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.autoPause.title") }
-      selectedKey={ autoPause ?? readAloud?.getSetting("autoPause") ?? ReadAloudAutoPause.none }
+      selectedKey={ autoPause ?? readAloud?.getSetting(prefKey) ?? ReadAloudAutoPause.none }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }
       compounds={ {

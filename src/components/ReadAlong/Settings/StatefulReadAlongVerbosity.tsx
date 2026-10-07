@@ -3,6 +3,8 @@
 import { Key, useCallback } from "react";
 
 import { VerbosityPreset } from "@readium/navigator";
+import { ThReadAlongKeys } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -34,17 +36,19 @@ export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettin
     label: t(`_pendingThoriumLocales.reader.readAlong.preferences.verbosity.values.${ value }`)
   }));
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.verbosity, "readAlong");
+
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!readAloud || !key) return;
-    await readAloud.submitPreferences({ verbosity: key as VerbosityPreset });
-    dispatch(setReadAlongVerbosity(readAloud.getSetting("verbosity")));
-  }, [readAloud, dispatch]);
+    await readAloud.submitPreferences({ [prefKey]: key as VerbosityPreset });
+    dispatch(setReadAlongVerbosity(readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <StatefulDropdown
       standalone={ standalone }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title") }
-      selectedKey={ verbosity ?? readAloud?.getSetting("verbosity") ?? null }
+      selectedKey={ verbosity ?? readAloud?.getSetting(prefKey) ?? null }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }
       compounds={ {

@@ -2,6 +2,9 @@
 
 import { useCallback } from "react";
 
+import { ThReadAlongKeys } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
+
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
 import { StatefulSwitch } from "../../Settings/StatefulSwitch";
@@ -20,11 +23,13 @@ export const StatefulReadAlongInlineContextualization = ({ standalone = true }: 
 
   const readAloud = useNavigator().readAloud;
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.inlineContextualization, "readAlong");
+
   const updatePreference = useCallback(async (value: boolean) => {
     if (!readAloud) return;
-    await readAloud.submitPreferences({ inlineContextualization: value });
-    dispatch(setReadAlongInlineContextualization(readAloud.getSetting("inlineContextualization")));
-  }, [readAloud, dispatch]);
+    await readAloud.submitPreferences({ [prefKey]: value });
+    dispatch(setReadAlongInlineContextualization(readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return(
     <>
@@ -33,7 +38,7 @@ export const StatefulReadAlongInlineContextualization = ({ standalone = true }: 
       heading={ t("_pendingThoriumLocales.reader.readAlong.preferences.inlineContextualization.title") }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.inlineContextualization.label") }
       onChange={ async (isSelected: boolean) => await updatePreference(isSelected) }
-      isSelected={ inlineContextualization ?? readAloud?.getSetting("inlineContextualization") ?? false }
+      isSelected={ inlineContextualization ?? readAloud?.getSetting(prefKey) ?? false }
       isDisabled={ !readAloud }
     />
     </>

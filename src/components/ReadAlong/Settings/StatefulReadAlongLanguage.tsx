@@ -3,6 +3,8 @@
 import { Key, useCallback } from "react";
 
 import { LanguageMode } from "@readium/navigator";
+import { ThReadAlongKeys } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -32,17 +34,19 @@ export const StatefulReadAlongLanguage = ({ standalone = true }: StatefulSetting
     label: t(`_pendingThoriumLocales.reader.readAlong.preferences.language.values.${ value }`)
   }));
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.language, "readAlong");
+
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!readAloud || !key) return;
-    await readAloud.submitPreferences({ language: key as LanguageMode });
-    dispatch(setReadAlongLanguage(readAloud.getSetting("language")));
-  }, [readAloud, dispatch]);
+    await readAloud.submitPreferences({ [prefKey]: key as LanguageMode });
+    dispatch(setReadAlongLanguage(readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <StatefulDropdown
       standalone={ standalone }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.language.title") }
-      selectedKey={ language ?? readAloud?.getSetting("language") ?? null }
+      selectedKey={ language ?? readAloud?.getSetting(prefKey) ?? null }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }
       compounds={ {

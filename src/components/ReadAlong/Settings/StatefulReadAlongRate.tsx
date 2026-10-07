@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 
 import { ThReadAlongKeys, ThSettingsRangeVariant } from "@/preferences";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../Settings/models/settings";
 
@@ -40,14 +41,16 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
 
   const placeholderText = usePlaceholder(rateRangeConfig.placeholder, rateRangeConfig.range, "multiplier");
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.rate, "readAlong");
+
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     if (!readAloud) return;
     await readAloud.submitPreferences({
-      rate: Array.isArray(value) ? value[0] : value
+      [prefKey]: Array.isArray(value) ? value[0] : value
     });
 
-    dispatch(setReadAlongRate(value === null ? null : readAloud.getSetting("rate")));
-  }, [readAloud, dispatch]);
+    dispatch(setReadAlongRate(value === null ? null : readAloud.getSetting(prefKey)));
+  }, [prefKey, readAloud, dispatch]);
 
   return (
     <>
@@ -57,7 +60,7 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
         label={ t("reader.playback.preferences.playbackRate.descriptive") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
-        value={ rate ?? readAloud?.getSetting("rate") }
+        value={ rate ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
         onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
         range={ rateRangeConfig.range }
@@ -76,7 +79,7 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
           placeholder={ placeholderText }
           presets={ presets || [] }
           formatValue={ (v) => `${ v }×` }
-          value={ rate ?? readAloud?.getSetting("rate") }
+          value={ rate ?? readAloud?.getSetting(prefKey) }
           onChange={ async(value) => await updatePreference(value as number) }
           onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
           range={ rateRangeConfig.range }
@@ -88,7 +91,7 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
           label={ t("reader.playback.preferences.playbackRate.descriptive") }
           placeholder={ placeholderText }
           defaultValue={ undefined }
-          value={ rate ?? readAloud?.getSetting("rate") }
+          value={ rate ?? readAloud?.getSetting(prefKey) }
           onChange={ async(value) => await updatePreference(value as number) }
           onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
           range={ rateRangeConfig.range }

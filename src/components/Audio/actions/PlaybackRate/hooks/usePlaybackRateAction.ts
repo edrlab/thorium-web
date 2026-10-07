@@ -5,6 +5,7 @@ import { useCallback, useContext } from "react";
 import { ThAudioActionKeys, ThAudioKeys, ThReadAlongActionKeys, ThReadAlongKeys, defaultReadAlongRate } from "@/preferences/models";
 import { ThAudioPreferencesContext } from "@/preferences/ThAudioPreferencesContext";
 import { ThPreferencesContext } from "@/preferences/ThPreferencesContext";
+import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMapping";
 
 import { useNavigator } from "@/core/Navigator";
 import { useEffectiveRange } from "../../../../Settings/hooks/useEffectiveRange";
@@ -40,19 +41,22 @@ export const usePlaybackRateAction = () => {
     : readAloud?.preferencesEditor?.rate?.supportedRange;
   const { range, presets } = useEffectiveRange(config.range, supportedRange, config.presets);
 
-  const playbackRate = isAudio ? audioRate : readAlongRate ?? readAloud?.getSetting("rate") ?? 1;
+  const audioPrefKey = getPreferenceKey(ThAudioKeys.playbackRate, "audio");
+  const readAlongPrefKey = getPreferenceKey(ThReadAlongKeys.rate, "readAlong");
+
+  const playbackRate = isAudio ? audioRate : readAlongRate ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
   const isDisabled = isAudio ? isAudioDisabled : !readAloud || isReadAlongLoading || !voiceSupportsRate;
 
   const updatePlaybackRate = useCallback(async (value: number) => {
     if (isAudio) {
       const { submitPreferences, getSetting } = navigator.media;
-      await submitPreferences({ playbackRate: value });
-      dispatch(setPlaybackRate(getSetting("playbackRate")));
+      await submitPreferences({ [audioPrefKey]: value });
+      dispatch(setPlaybackRate(getSetting(audioPrefKey)));
     } else if (readAloud) {
-      await readAloud.submitPreferences({ rate: value });
-      dispatch(setReadAlongRate(readAloud.getSetting("rate")));
+      await readAloud.submitPreferences({ [readAlongPrefKey]: value });
+      dispatch(setReadAlongRate(readAloud.getSetting(readAlongPrefKey)));
     }
-  }, [isAudio, navigator, readAloud, dispatch]);
+  }, [isAudio, navigator, readAloud, audioPrefKey, readAlongPrefKey, dispatch]);
 
   return { actionKey, config, range, presets, playbackRate, isDisabled, updatePlaybackRate };
 };

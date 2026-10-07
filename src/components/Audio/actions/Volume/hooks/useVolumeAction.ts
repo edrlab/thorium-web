@@ -5,6 +5,7 @@ import { useCallback, useContext } from "react";
 import { ThAudioActionKeys, ThAudioKeys, ThReadAlongActionKeys, ThReadAlongKeys, defaultReadAlongVolume } from "@/preferences/models";
 import { ThAudioPreferencesContext } from "@/preferences/ThAudioPreferencesContext";
 import { ThPreferencesContext } from "@/preferences/ThPreferencesContext";
+import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMapping";
 
 import { useNavigator } from "@/core/Navigator";
 import { useEffectiveRange } from "../../../../Settings/hooks/useEffectiveRange";
@@ -37,19 +38,22 @@ export const useVolumeAction = () => {
   const preferencesEditor = isAudio ? navigator.media.preferencesEditor : readAloud?.preferencesEditor;
   const { range } = useEffectiveRange(config.range, preferencesEditor?.volume?.supportedRange);
 
-  const volume = isAudio ? audioVolume : readAlongVolume ?? readAloud?.getSetting("volume") ?? 1;
+  const audioPrefKey = getPreferenceKey(ThAudioKeys.volume, "audio");
+  const readAlongPrefKey = getPreferenceKey(ThReadAlongKeys.volume, "readAlong");
+
+  const volume = isAudio ? audioVolume : readAlongVolume ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
   const isDisabled = isAudio ? isAudioDisabled : !readAloud || isReadAlongLoading;
 
   const updateVolume = useCallback(async (value: number) => {
     if (isAudio) {
       const { submitPreferences, getSetting } = navigator.media;
-      await submitPreferences({ volume: value });
-      dispatch(setVolume(getSetting("volume")));
+      await submitPreferences({ [audioPrefKey]: value });
+      dispatch(setVolume(getSetting(audioPrefKey)));
     } else if (readAloud) {
-      await readAloud.submitPreferences({ volume: value });
-      dispatch(setReadAlongVolume(readAloud.getSetting("volume")));
+      await readAloud.submitPreferences({ [readAlongPrefKey]: value });
+      dispatch(setReadAlongVolume(readAloud.getSetting(readAlongPrefKey)));
     }
-  }, [isAudio, navigator, readAloud, dispatch]);
+  }, [isAudio, navigator, readAloud, audioPrefKey, readAlongPrefKey, dispatch]);
 
   return { actionKey, config, range, volume, isDisabled, updateVolume };
 };

@@ -11,6 +11,7 @@ import {
   defaultReadAlongHighlightPresets
 } from "@/preferences/models";
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
+import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMapping";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
@@ -42,6 +43,9 @@ export const useHighlightPresets = () => {
   const highlight = useAppSelector(state => state.readAlongSettings.highlight);
 
   const dispatch = useAppDispatch();
+
+  const utteranceStylePrefKey = getPreferenceKey(ThReadAlongKeys.utteranceStyle, "readAlong");
+  const wordStylePrefKey = getPreferenceKey(ThReadAlongKeys.wordStyle, "readAlong");
 
   const highlightPrefs = preferences.readAlong.settings.highlight;
   const presets = highlightPrefs?.presets ?? defaultReadAlongHighlightPresets;
@@ -128,21 +132,25 @@ export const useHighlightPresets = () => {
       [ThReadAlongHighlightKeys.wordStyle]: resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle])
     };
 
-    await submitPreferences(effective);
+    await submitPreferences({
+      [utteranceStylePrefKey]: effective[ThReadAlongHighlightKeys.utteranceStyle],
+      [wordStylePrefKey]: effective[ThReadAlongHighlightKeys.wordStyle]
+    });
     dispatch(setReadAlongHighlightPreset({ preset: presetKey, values, effective }));
-  }, [getPresetValues, resolveStyle, submitPreferences, dispatch]);
+  }, [getPresetValues, resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
 
   const setStyle = useCallback(async (key: HighlightStateKey, value: ReadAloudDecorationStyle) => {
     const effective = resolveStyle(key, value);
-    await submitPreferences({ [key]: effective });
+    const isUtterance = key === ThReadAlongHighlightKeys.utteranceStyle;
+    await submitPreferences({ [isUtterance ? utteranceStylePrefKey : wordStylePrefKey]: effective });
 
     const payload = { value, effective, preset: shouldApplyPresets ? preset : undefined };
-    if (key === ThReadAlongHighlightKeys.utteranceStyle) {
+    if (isUtterance) {
       dispatch(setReadAlongUtteranceStyle(payload));
     } else {
       dispatch(setReadAlongWordStyle(payload));
     }
-  }, [resolveStyle, submitPreferences, shouldApplyPresets, preset, dispatch]);
+  }, [resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, shouldApplyPresets, preset, dispatch]);
 
   // Recolors the current styles, keeping the colors the user picked
   const applyTheme = useCallback(async () => {
@@ -154,9 +162,12 @@ export const useHighlightPresets = () => {
       [ThReadAlongHighlightKeys.wordStyle]: resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle])
     };
 
-    await submitPreferences(effective);
+    await submitPreferences({
+      [utteranceStylePrefKey]: effective[ThReadAlongHighlightKeys.utteranceStyle],
+      [wordStylePrefKey]: effective[ThReadAlongHighlightKeys.wordStyle]
+    });
     dispatch(setReadAlongHighlightEffective(effective));
-  }, [isLoaded, shouldApplyPresets, getPresetValues, preset, resolveStyle, submitPreferences, dispatch]);
+  }, [isLoaded, shouldApplyPresets, getPresetValues, preset, resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
 
   return {
     preset,
