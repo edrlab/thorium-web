@@ -1,8 +1,8 @@
 # Using the Reader package
 
-The Reader package provides a wrapper component that conditionally renders the appropriate reader based on the publication profile (EPUB, WebPub, or Audio).
+The Reader package provides a wrapper component that conditionally renders the appropriate reader based on the publication profile (EPUB, WebPub, Divina, or Audio).
 
-It automatically selects between EPUB, WebPub, and Audio readers while handling theme management, Redux integration, and accessibility features.
+It automatically selects between EPUB, WebPub, Divina, and Audio readers while handling theme management, Redux integration, and accessibility features.
 
 > [!Note]
 > Thorium Web's packages are still a work in progress, and will be improved and extended in the future. Any help is appreciated if you'd like a component or a feature, or simply make it easier to use, and want to help.
@@ -53,7 +53,7 @@ const App = ({ manifestUrl }) => {
 
 The Reader expects the following props:
 
-- `profile`: `"epub" | "webPub" | "audio" | undefined | null` — the publication profile to determine which reader to render
+- `profile`: `"epub" | "webPub" | "audio" | "divina" | undefined | null` — the publication profile to determine which reader to render
 - `publication`: `Publication` — the Readium Publication object
 - `localDataKey`: `string | null` — a unique key for storing local reading data (bookmarks, positions, etc.)
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
@@ -61,7 +61,7 @@ The Reader expects the following props:
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:
   - For `"audio"`: `{ initialPreferences?: ThAudioPreferences; adapter?: ThAudioPreferencesAdapter }`
-  - For `"epub"` / `"webPub"`: `{ initialPreferences?: ThPreferences; adapter?: ThPreferencesAdapter }`
+  - For `"epub"` / `"webPub"` / `"divina"`: `{ initialPreferences?: ThPreferences; adapter?: ThPreferencesAdapter }`
 
 ```tsx
 import { createAudioPreferences } from "@edrlab/thorium-web/audio";
@@ -169,6 +169,7 @@ interface ReaderPlugins {
   epub?: ThPluginFactory;
   webPub?: ThPluginFactory;
   audio?: ThPluginFactory;
+  divina?: ThPluginFactory;
 }
 ```
 
@@ -185,11 +186,12 @@ interface PositionStorage {
 
 - **"epub"**: Renders the EPUB StatefulReader with FXL or reflow rendition
 - **"webPub"**: Renders the WebPub ExperimentalStatefulReader
+- **"divina"**: Renders the [Divina](../Divina/ReadMe.md) StatefulDivinaReader, paged or scrolled
 - **"audio"**: Renders the audio StatefulPlayer
 
 ### Features
 
-- **Conditional Rendering**: Automatically renders EPUB, WebPub, or Audio readers based on profile
+- **Conditional Rendering**: Automatically renders EPUB, WebPub, Divina, or Audio readers based on profile
 - **Theme Management**: Initializes the theme system automatically
 - **Preferences Management**: Sets up preferences for each profile
 - **Redux State Management**: Integrates with Thorium's Redux store for theme, publication, and settings state

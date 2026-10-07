@@ -33,37 +33,16 @@ interface UsePublicationReturn {
   manifest: object | null;
   selfLink: string | null;
   localDataKey: string | null;
-  profile: "epub" | "webPub" | "audio" | null;
+  profile: "epub" | "webPub" | "audio" | "divina" | null;
   isRTL: boolean;
   isFXL: boolean;
   hasDisplayTransformability: boolean;
 }
 ```
 
-Profile is detected from `conformsTo` in the manifest metadata — `"audio"` for audiobooks, `"epub"` for EPUB, `"webPub"` for everything else.
+Profile is detected from `conformsTo` in the manifest metadata — `"audio"` for audiobooks, `"divina"` for Divina, `"epub"` for EPUB, `"webPub"` for everything else.
 
----
-
-## usePositionStorage
-
-Abstracts reading position persistence. Uses `localStorage` by default, or delegates to a custom `PositionStorage` implementation when provided.
-
-```typescript
-import { usePositionStorage } from "@edrlab/thorium-web/reader";
-
-const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKey, positionStorage);
-```
-
-**Parameters**
-
-- `key`: `string | null` — the localStorage key (used when no custom storage is provided)
-- `customStorage`: `PositionStorage` (optional) — a custom storage implementation
-
-**Returns**
-
-- `setLocalData`: `(locator: Locator | null) => void`
-- `getLocalData`: `() => Locator | null`
-- `localData`: `Locator | null` — the current stored position
+For `"divina"`, it also sets `isManifestScrolled` in the publication store when the manifest declares `layout: "scrolled"`, and synthesizes one position per reading order image when the manifest has no positions list.
 
 ---
 
@@ -107,13 +86,37 @@ interface ReaderTransitions {
 
 ---
 
-## usePaginatedArrows
+## Internal Hooks
 
-Computes the visibility and layout behaviour of pagination arrows based on preferences, breakpoint, FXL state, and reader transitions. Intended for use in custom arrow components.
+> [!NOTE]
+> These hooks are used by the built-in readers but are not exported from any entry point, so they cannot be imported. They are documented to explain the readers’ behaviour.
+
+### usePositionStorage
+
+Abstracts reading position persistence. Uses `localStorage` by default, or delegates to a custom `PositionStorage` implementation when provided.
 
 ```typescript
-import { usePaginatedArrows } from "@edrlab/thorium-web/reader";
+const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKey, positionStorage);
+```
 
+**Parameters**
+
+- `key`: `string | null` — the localStorage key (used when no custom storage is provided)
+- `customStorage`: `PositionStorage` (optional) — a custom storage implementation
+
+**Returns**
+
+- `setLocalData`: `(locator: Locator | null) => void`
+- `getLocalData`: `() => Locator | null`
+- `localData`: `Locator | null` — the current stored position
+
+---
+
+### usePaginatedArrows
+
+Computes the visibility and layout behaviour of pagination arrows based on preferences, breakpoint, FXL state, and reader transitions. Divina uses `affordances.paginated.divina`, EPUB uses `fxl` or `reflow`.
+
+```typescript
 const { isVisible, occupySpace, shouldTrackNavigation, supportsVariant } = usePaginatedArrows();
 ```
 
@@ -130,16 +133,15 @@ interface UsePaginatedArrowsReturn {
 
 ---
 
-## useIsScroll
+### useIsScroll
 
 Returns `true` when the reader is currently in scroll mode. This centralizes scroll detection across all publication profiles:
 
 - Always `true` for `webPub` profile (WebPub is always scroll)
 - For `epub`: `true` when the scroll setting is enabled, **or** when `scriptMode === "cjk-vertical"`, **and** the publication is not FXL
+- For `divina`: `true` when the publication is natively scrolled (`isManifestScrolled`), **or** when the `divinaSettings.scrolled` setting is enabled
 
 ```typescript
-import { useIsScroll } from "@edrlab/thorium-web/reader";
-
 const isScroll = useIsScroll();
 ```
 
@@ -150,13 +152,23 @@ const isScroll = useIsScroll();
 
 ---
 
-## useCoverBlobUrl
+### useIsPageBased
+
+Returns `true` when the publication resources are pages rather than reflowable documents, i.e. FXL EPUB and Divina. Used rather than `isFXL` alone for page-related UI, e.g. labelling footer links “previous/next page” instead of “previous/next chapter”.
+
+```typescript
+const isPageBased = useIsPageBased();
+```
+
+**Returns** `boolean`
+
+---
+
+### useCoverBlobUrl
 
 Fetches a cover image once and returns a stable blob URL. Both the theme extraction system and the cover image component receive the same URL, so the image is fetched exactly once and never reloaded on layout changes.
 
 ```typescript
-import { useCoverBlobUrl } from "@edrlab/thorium-web/reader";
-
 const { coverBlobUrl, coverReady } = useCoverBlobUrl(coverUrl);
 ```
 

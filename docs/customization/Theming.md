@@ -49,7 +49,7 @@ Most UI components — collapsibility (breakpoint mode), running head format, fo
 
 Object `layout` allows to configure:
 
-- `ui` for the layout of reflowable (scroll) and Fixed-Layout EPUBs;
+- `ui` for the layout of reflowable (scroll) and Fixed-Layout EPUBs, WebPub, and Divina;
 - the border `radius` of button icons and sheets/containers (in `px`);
 - the `spacing` of components (in `px`) when applicable e.g. padding and spacing of sheets/containers;
 - `defaults` for:
@@ -67,7 +67,8 @@ theming: {
   layout: {
     ui: {
       reflow: ThLayoutUI.layered,
-      fxl: ThLayoutUI.layered
+      fxl: ThLayoutUI.layered,
+      divina: ThLayoutUI.layered
     },
     radius: 0,
     spacing: 20,
@@ -86,6 +87,7 @@ This means:
 
 - reflowable EPUBs will use `stacked` layout for paginated contents – top bar, contents, and bottom bar are stacked on top of one another –, and `layered` for scrolled contents – contents occupy the full size of the viewport, nav bars are layered on top of it;
 - Fixed-Layout EPUBs will use `layered` layout;
+- Divina publications will use `layered` layout;
 - your actions’ triggers and containers won’t have any border radius;
 - they’ll use `20px` as a reference for padding and their sections’ margins;
 - the default for the docking width is `300px`;
@@ -158,8 +160,9 @@ The `runningHead` preference allows you to configure the running head format in 
 - `format`: Format of the running head, with properties for both reflowable and fixed-layout EPUBs:
   - `reflow`: Configuration for reflowable EPUBs
   - `fxl`: Configuration for Fixed-Layout EPUBs
+  - `divina`: Configuration for Divina publications
 
-Both `reflow` and `fxl` share the same structure:
+All share the same structure:
 - `default`: Default format configuration
   - `variants`: The format variant to use (e.g., `ThRunningHeadFormat.chapter` or `ThRunningHeadFormat.title`)
   - `displayInImmersive`: Whether to show in immersive mode (default: `true`)
@@ -214,8 +217,9 @@ The `progression` preference allows you to configure the progression display for
 - `format`: Format of the progression display, with properties for both reflowable and fixed-layout EPUBs:
   - `reflow`: Configuration for reflowable EPUBs
   - `fxl`: Configuration for Fixed-Layout EPUBs
+  - `divina`: Configuration for Divina publications
 
-Both `reflow` and `fxl` share the same structure:
+All share the same structure:
 - `default`: Default format configuration
   - `variants`: The format variant(s) to use (e.g., `ThProgressionFormat.positionsPercentOfTotal` or an array of formats)
   - `displayInImmersive`: Whether to show in immersive mode
@@ -320,7 +324,9 @@ TBD: document new way of customizing theme keys.
 You can set the display order of themes for formats/renditions the Reader supports:
 
 - `reflowOrder` for reflowable EPUB;
-- `fxlOrder` for Fixed-Layout EPUB.
+- `fxlOrder` for Fixed-Layout EPUB and Divina.
+
+Divina shares the Fixed-Layout theme order and the theme selected by users, since both render images or fixed pages.
 
 Note value `"auto"` is a special case that maps the theme to the OS’ preference (light or dark), it’s not a theme *per se.* It is **required** `systemThemes` is defined for it to work properly.
 

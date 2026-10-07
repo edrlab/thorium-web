@@ -140,7 +140,7 @@ For convenience, you can use the `createDefinitionsFromBunnyFonts` helper functi
 Example:
 
 ```typescript
-import { createDefinitionsFromBunnyFonts } from "@edrlab/thorium-web/preferences";
+import { createDefinitionsFromBunnyFonts } from "@edrlab/thorium-web/core/preferences";
 
 const bunnyFonts = createDefinitionsFromBunnyFonts({
   cssUrl: "https://fonts.bunny.net/css?family=roboto:300,300i,400,400i,500,500i,700,700i|open-sans:400, 400i, 700, 700i",
@@ -222,7 +222,7 @@ Derived `id` is the font family name in lowercase, with spaces replaced by hyphe
 Example:
 
 ```typescript
-import { createDefinitionsFromGoogleFonts } from "@edrlab/thorium-web/preferences";
+import { createDefinitionsFromGoogleFonts } from "@edrlab/thorium-web/core/preferences";
 
 const googleFonts = createDefinitionsFromGoogleFonts({
   cssUrl: "https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,300..700;1,300..700",
@@ -307,7 +307,7 @@ You can use local fonts, either static or variable, that are served from the sam
 #### Using the Helper for Static Fonts
 
 ```typescript
-import { createDefinitionFromStaticFonts } from "@edrlab/thorium-web/preferences";
+import { createDefinitionFromStaticFonts } from "@edrlab/thorium-web/core/preferences";
 
 const myCustomFont = createDefinitionFromStaticFonts({
   id: "my-custom-font",
