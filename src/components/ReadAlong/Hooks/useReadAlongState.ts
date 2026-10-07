@@ -35,10 +35,15 @@ export const useReadAlongState = () => {
     }
   }, [store, dispatch, setExpanded, profile]);
 
+  const toggleActive = useCallback(() => {
+    setActive(!store.getState().readAlongPlayer.isActive);
+  }, [store, setActive]);
+
   return {
     isActive,
     isExpanded,
     setActive,
-    setExpanded
+    setExpanded,
+    toggleActive
   };
 };

@@ -52,7 +52,7 @@ import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
-import { useReadAlongInit, useReadAlongMetadata } from "@/components/ReadAlong/Hooks";
+import { useReadAlongInit, useReadAlongMetadata, useReadAlongState } from "@/components/ReadAlong/Hooks";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
@@ -239,6 +239,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   }, [dispatch]);
   
   const { handleFullscreen } = useFullscreen(onFsChange);
+  const { toggleActive: toggleReadAlong } = useReadAlongState();
 
   const epubNavigator = useEpubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
@@ -508,6 +509,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
             return;
           }
 
+          // Starts or stops read along like its trigger, rather than expanding the player
+          if (actionKey === ThActionsKeys.readAlong) {
+            toggleReadAlong();
+            return;
+          }
+
           if (actionKey && profile) {
             dispatch(toggleActionOpen({ key: actionKey, profile }));
             return;
@@ -524,7 +531,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         }
       }
     },
-  }), [navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which

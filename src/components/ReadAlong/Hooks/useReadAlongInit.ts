@@ -28,7 +28,7 @@ export const useReadAlongInit = ({
   navigatorReady,
   getVisualNavigator
 }: UseReadAlongInitProps) => {
-  const { isActive, isExpanded, setActive } = useReadAlongState();
+  const { isActive, setActive } = useReadAlongState();
   const store = useAppStore();
   const dispatch = useAppDispatch();
 
@@ -91,11 +91,6 @@ export const useReadAlongInit = ({
       dispatch(resetReadAlongPlayer());
     };
   }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice]);
-
-  // The keyboard shortcut toggles the action open, which activates read along when inactive
-  useEffect(() => {
-    if (!isActive && isExpanded) setActive(true);
-  }, [isActive, isExpanded, setActive]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {

@@ -11,7 +11,7 @@ It is configured in two places:
 
 ## The Read Along Action
 
-`ThActionsKeys.readAlong` starts and stops read along. Add it to `reflowOrder`, `fxlOrder` and/or `webPubOrder` like any other action (see [Actions](./Customization.md#actions)). The default shortcut is `Shift + Alt + R`.
+`ThActionsKeys.readAlong` starts and stops read along. Add it to `reflowOrder`, `fxlOrder` and/or `webPubOrder` like any other action (see [Actions](./Customization.md#actions)). The default shortcut is `Shift + Alt + R`, which starts or stops read along like the action’s button.
 
 Once started, read along shows a mini player. Its tokens in `actions.keys.readAlong` extend the usual action tokens with `miniPlayer`:
 

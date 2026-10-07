@@ -140,7 +140,6 @@ function useReadAlongInit(props: {
 - Keeps `readAlongPlayer.status` and the current voice’s capabilities up to date
 - Runs the sleep timer countdown
 - Recolors the highlight when the reading theme changes
-- Activates read along when the action is opened while inactive, e.g. with the shortcut
 - Deactivates read along when the reader unmounts
 
 ### useReadAlongMetadata
@@ -159,6 +158,7 @@ function useReadAlongState(): {
   isExpanded: boolean;                // The expanded player is shown
   setActive: (value: boolean) => void;
   setExpanded: (value: boolean) => void;
+  toggleActive: () => void;           // Starts or stops read along, as its trigger and shortcut do
 }
 ```
 
