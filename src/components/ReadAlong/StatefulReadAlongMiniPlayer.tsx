@@ -13,10 +13,13 @@ import { ThCloseButton } from "@/core/Components/Buttons/ThCloseButton";
 import { StatefulSkipBackwardButton } from "../Audio/controls/StatefulSkipBackwardButton";
 import { StatefulPlayPauseButton } from "../Audio/controls/StatefulPlayPauseButton";
 import { StatefulSkipForwardButton } from "../Audio/controls/StatefulSkipForwardButton";
+import { AudioActionPair } from "../Audio/actions/StatefulAudioMediaActions";
 
 import { ThMiniPlayerTypes } from "@/preferences/models";
 
 import { useNavigator } from "@/core/Navigator";
+import { usePreferences } from "@/preferences/hooks/usePreferences";
+import { usePlugins } from "@/components/Plugins/PluginProvider";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
 import { useReadAlongPlacement } from "./Hooks/useReadAlongPlacement";
 import { useI18n } from "@/i18n/useI18n";
@@ -30,6 +33,10 @@ export const StatefulReadAlongMiniPlayer = () => {
   const isLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
   const { setActive, setExpanded } = useReadAlongState();
   const placement = useReadAlongPlacement();
+  const { preferences } = usePreferences();
+  const { readAlongActionsMap } = usePlugins();
+
+  const displayOrder = preferences.readAlong.actions.miniPlayer.displayOrder;
 
   const isDisabled = !readAloud || isLoading;
   const canExpand = placement === ThMiniPlayerTypes.bottomBar;
@@ -52,6 +59,11 @@ export const StatefulReadAlongMiniPlayer = () => {
       }
       actions={
         <>
+          { displayOrder.map(key => {
+            const action = readAlongActionsMap[key];
+            if (!action) return null;
+            return <AudioActionPair key={ key } action={ action } />;
+          }) }
           { canExpand &&
             <StatefulActionIcon
               aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }

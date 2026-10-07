@@ -168,8 +168,13 @@ export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys
 
 export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   actions: {
-    displayOrder: Array<ReadAlongActionKey<K>>;
-    keys: Record<ReadAlongActionKey<K>, ThAudioActionsTokens>;
+    miniPlayer: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+    };
+    expanded: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+    };
+    keys: Record<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>;
   };
   settings: {
     order: Array<ReadAlongSettingsKey<K>>;
@@ -339,10 +344,13 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
   }
 
   // Validate read along actions
-  if (params.readAlong?.actions?.displayOrder && params.readAlong.actions.keys) {
-    validateObjectKeys<ReadAlongActionKey<K>, ThAudioActionsTokens>(
-      [params.readAlong.actions.displayOrder],
-      params.readAlong.actions.keys as Record<string, ThAudioActionsTokens>,
+  if (params.readAlong?.actions?.keys) {
+    validateObjectKeys<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>(
+      [
+        params.readAlong.actions.miniPlayer.displayOrder,
+        params.readAlong.actions.expanded.displayOrder
+      ],
+      params.readAlong.actions.keys as Record<string, ThAudioActionsTokens | ThActionsTokens>,
       "readAlong.actions"
     );
   }

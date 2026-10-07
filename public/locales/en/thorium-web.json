@@ -143,6 +143,7 @@
           "collapse": "Collapse player"
         },
         "preferences": {
+          "title": "Read aloud settings",
           "voice": "Voice",
           "pitch": "Pitch",
           "pauseDuration": "Pause between sentences",

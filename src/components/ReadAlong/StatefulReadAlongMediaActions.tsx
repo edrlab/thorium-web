@@ -14,7 +14,7 @@ export const StatefulReadAlongMediaActions = () => {
   const { preferences } = usePreferences();
   const { readAlongActionsMap } = usePlugins();
 
-  const displayOrder = preferences.readAlong.actions.displayOrder;
+  const displayOrder = preferences.readAlong.actions.expanded.displayOrder;
 
   return (
     <ThActionsBar className={ audioStyles.wrapper } aria-label={ t("audio.player.mediaActions") }>

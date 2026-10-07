@@ -33,6 +33,12 @@ export enum ThReadAlongKeys {
   highlightPresets = "highlightPresets"
 }
 
+// Settings left out of the settings menu when their action is displayed in the player
+export const readAlongActionSettings: Partial<Record<ThReadAlongActionKeys, ThReadAlongKeys>> = {
+  [ThReadAlongActionKeys.rate]: ThReadAlongKeys.rate,
+  [ThReadAlongActionKeys.volume]: ThReadAlongKeys.volume
+};
+
 export enum ThReadAlongHighlightKeys {
   highlightPresets = "highlightPresets",
   utteranceStyle = "utteranceStyle",
@@ -146,14 +152,14 @@ export const defaultReadAlongSleepTimerAction: ThAudioActionsTokens = {
   docked: { dockable: ThDockingTypes.none }
 };
 
-export const defaultReadAlongSettingsAction: ThAudioActionsTokens = {
+// Popover rather than compact popover, its header holds the back button of the highlight submenu
+export const defaultReadAlongSettingsAction: ThActionsTokens = {
   visibility: ThCollapsibilityVisibility.partially,
   shortcut: null,
   sheet: {
-    defaultSheet: ThSheetTypes.modal,
+    defaultSheet: ThSheetTypes.popover,
     breakpoints: {
-      [ThBreakpoints.compact]: ThSheetTypes.bottomSheet,
-      [ThBreakpoints.medium]: ThSheetTypes.bottomSheet
+      [ThBreakpoints.compact]: ThSheetTypes.bottomSheet
     }
   },
   snapped: {
@@ -241,12 +247,19 @@ export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
 
 export const defaultReadAlongPreferences = {
   actions: {
-    displayOrder: [
-      ThReadAlongActionKeys.volume,
-      ThReadAlongActionKeys.rate,
-      ThReadAlongActionKeys.sleepTimer,
-      ThReadAlongActionKeys.settings
-    ],
+    miniPlayer: {
+      displayOrder: [
+        ThReadAlongActionKeys.settings
+      ]
+    },
+    expanded: {
+      displayOrder: [
+        ThReadAlongActionKeys.volume,
+        ThReadAlongActionKeys.rate,
+        ThReadAlongActionKeys.sleepTimer,
+        ThReadAlongActionKeys.settings
+      ]
+    },
     keys: {
       [ThReadAlongActionKeys.volume]: defaultReadAlongVolumeAction,
       [ThReadAlongActionKeys.rate]: defaultReadAlongRateAction,
