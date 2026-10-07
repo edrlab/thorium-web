@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/edrlab/thorium-web/issues"
   },
-  "version": "1.6.0",
+  "version": "1.7.0",
   "private": false,
   "packageManager": "pnpm@11.1.0",
   "files": [

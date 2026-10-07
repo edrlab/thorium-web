@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Atrás",
             "goForward": "Adelante",
+            "goToExtendedDescription": {
+                "compact": "Descripción detallada"
+            },
             "goToNextChapter": {
                 "compact": "Siguiente",
                 "descriptive": "Próximo capítulo"

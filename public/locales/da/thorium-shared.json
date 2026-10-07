@@ -29,6 +29,9 @@
         "actions": {
             "goBackward": "Naviger tilbage",
             "goForward": "Naviger frem",
+            "goToExtendedDescription": {
+                "compact": "Udvidet beskrivelse"
+            },
             "goToNextChapter": {
                 "compact": "Næste",
                 "descriptive": "Næste kapitel"

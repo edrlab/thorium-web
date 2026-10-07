@@ -318,7 +318,7 @@
                 "descriptive_other": "{{ count }} positioner kvar"
             },
             "positionsLeftInChapter": {
-                "compact_one": "{{ count }} kvar i kapitel",
+                "compact_one": "{{ count }} kvar i kapitlet",
                 "compact_other": "{{ count }} kvar i kapitel",
                 "descriptive_one": "{{ count }} position kvar i kapitlet",
                 "descriptive_other": "{{ count }} positioner kvar i nuvarande kapitel"
