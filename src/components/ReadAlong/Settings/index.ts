@@ -9,3 +9,5 @@ export * from "./StatefulReadAlongRate";
 export * from "./StatefulReadAlongVerbosity";
 export * from "./StatefulReadAlongVoice";
 export * from "./StatefulReadAlongVolume";
+
+export * from "./Highlight";

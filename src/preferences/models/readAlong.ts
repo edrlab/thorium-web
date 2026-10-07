@@ -1,9 +1,11 @@
 import { ThCollapsibilityVisibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { BreakpointsMap } from "@/core/Hooks/useBreakpoints";
-import { ThActionsTokens, ThAudioActionsTokens, ThDockingTypes, ThSheetTypes, TEXT_INPUT_SELECTORS } from "./actions";
+import { ThActionsTokens, ThAudioActionsTokens, ThDockingTypes, ThSheetHeaderVariant, ThSheetTypes, TEXT_INPUT_SELECTORS } from "./actions";
 import { ThSettingsTimerPref, ThSettingsTimerVariant } from "./audio";
 import { ThBreakpoints } from "./ui";
 import { ThSettingsRangePrefRequired, ThSettingsRangeVariant, ThSettingsRangePlaceholder } from "./settings";
+
+import { DecorationStyleType } from "@readium/navigator";
 
 export enum ThReadAlongActionKeys {
   volume = "readAlong.volume",
@@ -26,7 +28,27 @@ export enum ThReadAlongKeys {
   inlineContextualization = "inlineContextualization",
   utteranceStyle = "utteranceStyle",
   wordStyle = "wordStyle",
-  sleepTimer = "sleepTimer"
+  sleepTimer = "sleepTimer",
+  highlightGroup = "highlightGroup",
+  highlightPresets = "highlightPresets"
+}
+
+export enum ThReadAlongHighlightKeys {
+  highlightPresets = "highlightPresets",
+  utteranceStyle = "utteranceStyle",
+  wordStyle = "wordStyle"
+}
+
+export enum ThReadAlongHighlightPresetKeys {
+  sentenceAndWord = "sentenceAndWord",
+  word = "word",
+  mask = "mask",
+  custom = "custom"
+}
+
+export enum ThReadAlongSettingsContainerKeys {
+  initial = "initial",
+  highlight = "highlight"
 }
 
 export enum ThMiniPlayerTypes {
@@ -43,6 +65,19 @@ export interface ThReadAlongActionTokens extends ThActionsTokens {
 
 export interface ThReadAlongStylePref {
   swatches: string[];
+}
+
+// Only which styles apply: their colors come from the reading theme
+export interface ThReadAlongHighlightPreset {
+  [ThReadAlongHighlightKeys.utteranceStyle]: Exclude<DecorationStyleType, "template"> | false;
+  [ThReadAlongHighlightKeys.wordStyle]: Exclude<DecorationStyleType, "template" | "mask"> | false;
+}
+
+export interface ThReadAlongHighlightPresets {
+  order: ThReadAlongHighlightPresetKeys[];
+  keys: {
+    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset;
+  };
 }
 
 export const defaultReadAlongAction: ThReadAlongActionTokens = {
@@ -171,6 +206,39 @@ export const defaultReadAlongSleepTimer: ThSettingsTimerPref = {
   presets: [15, 30, 45, 60, 90]
 };
 
+export const defaultReadAlongHighlightMain = [
+  ThReadAlongHighlightKeys.highlightPresets
+];
+
+export const defaultReadAlongHighlightSubpanel = [
+  ThReadAlongHighlightKeys.highlightPresets,
+  ThReadAlongHighlightKeys.utteranceStyle,
+  ThReadAlongHighlightKeys.wordStyle
+];
+
+export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
+  order: [
+    ThReadAlongHighlightPresetKeys.sentenceAndWord,
+    ThReadAlongHighlightPresetKeys.word,
+    ThReadAlongHighlightPresetKeys.mask,
+    ThReadAlongHighlightPresetKeys.custom
+  ],
+  keys: {
+    [ThReadAlongHighlightPresetKeys.sentenceAndWord]: {
+      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Highlight,
+      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+    },
+    [ThReadAlongHighlightPresetKeys.word]: {
+      [ThReadAlongHighlightKeys.utteranceStyle]: false,
+      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+    },
+    [ThReadAlongHighlightPresetKeys.mask]: {
+      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Mask,
+      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+    }
+  }
+};
+
 export const defaultReadAlongPreferences = {
   actions: {
     displayOrder: [
@@ -192,8 +260,7 @@ export const defaultReadAlongPreferences = {
       ThReadAlongKeys.rate,
       ThReadAlongKeys.pitch,
       ThReadAlongKeys.volume,
-      ThReadAlongKeys.utteranceStyle,
-      ThReadAlongKeys.wordStyle,
+      ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.autoPause,
       ThReadAlongKeys.pauseDuration,
       ThReadAlongKeys.verbosity,
@@ -208,6 +275,12 @@ export const defaultReadAlongPreferences = {
       [ThReadAlongKeys.utteranceStyle]: defaultReadAlongUtteranceStyle,
       [ThReadAlongKeys.wordStyle]: defaultReadAlongWordStyle,
       [ThReadAlongKeys.sleepTimer]: defaultReadAlongSleepTimer
+    },
+    highlight: {
+      header: ThSheetHeaderVariant.previous,
+      main: defaultReadAlongHighlightMain,
+      subPanel: defaultReadAlongHighlightSubpanel,
+      presets: defaultReadAlongHighlightPresets
     }
   }
 };

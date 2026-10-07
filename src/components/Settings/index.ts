@@ -1,5 +1,6 @@
 "use client";
 
+export * from "./StatefulColorSwatchPicker";
 export * from "./StatefulGroupWrapper";
 export * from "./StatefulDropdown";
 export * from "./StatefulNumberField";

@@ -42,6 +42,10 @@ import { StatefulReadAlongRate } from "../../ReadAlong/Settings/StatefulReadAlon
 import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
 import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
 import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/StatefulReadAlongPauseDuration";
+import { StatefulReadAlongUtteranceStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongUtteranceStyle";
+import { StatefulReadAlongWordStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongWordStyle";
+import { StatefulReadAlongHighlightGroup } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightGroup";
+import { StatefulReadAlongHighlightPresets } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightPresets";
 import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/StatefulReadAlongAutoPause";
 import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/StatefulReadAlongVerbosity";
 import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/StatefulReadAlongLanguage";
@@ -178,6 +182,21 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThReadAlongKeys.pauseDuration]: {
           Comp: StatefulReadAlongPauseDuration
+        },
+        [ThReadAlongKeys.highlightGroup]: {
+          Comp: StatefulReadAlongHighlightGroup
+        },
+        [ThReadAlongKeys.highlightPresets]: {
+          Comp: StatefulReadAlongHighlightPresets,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.utteranceStyle]: {
+          Comp: StatefulReadAlongUtteranceStyle,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.wordStyle]: {
+          Comp: StatefulReadAlongWordStyle,
+          type: "readAlongHighlight"
         },
         [ThReadAlongKeys.autoPause]: {
           Comp: StatefulReadAlongAutoPause

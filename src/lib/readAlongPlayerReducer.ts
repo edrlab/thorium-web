@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { ReadAloudState } from "@readium/navigator";
+import { ThReadAlongSettingsContainerKeys } from "@/preferences/models";
 
 export interface ReadAlongSleepTimerState {
   remainingSeconds: number | null;
@@ -28,6 +29,7 @@ export interface ReadAlongPlayerReducerState {
   status: ReadAloudState;
   voiceControls: ReadAlongVoiceControls;
   sleepTimer: ReadAlongSleepTimerState;
+  settingsContainer: ThReadAlongSettingsContainerKeys;
 }
 
 const initialState: ReadAlongPlayerReducerState = {
@@ -36,7 +38,8 @@ const initialState: ReadAlongPlayerReducerState = {
   metadata: null,
   status: "idle",
   voiceControls: { boundary: true, speed: true },
-  sleepTimer: { remainingSeconds: null }
+  sleepTimer: { remainingSeconds: null },
+  settingsContainer: ThReadAlongSettingsContainerKeys.initial
 };
 
 export const readAlongPlayerSlice = createSlice({
@@ -61,6 +64,9 @@ export const readAlongPlayerSlice = createSlice({
     setReadAlongMetadata: (state, action: PayloadAction<ReadAlongMetadata | null>) => {
       state.metadata = action.payload;
     },
+    setReadAlongSettingsContainer: (state, action: PayloadAction<ThReadAlongSettingsContainerKeys>) => {
+      state.settingsContainer = action.payload;
+    },
     resetReadAlongPlayer: (state) => ({ ...initialState, isActive: state.isActive, layout: state.layout, metadata: state.metadata })
   }
 });
@@ -72,6 +78,7 @@ export const {
   setReadAlongVoiceControls,
   setReadAlongSleepTimer,
   setReadAlongMetadata,
+  setReadAlongSettingsContainer,
   resetReadAlongPlayer
 } = readAlongPlayerSlice.actions;
 

@@ -33,8 +33,13 @@ import {
   ThReadAlongActionKeys,
   ThReadAlongKeys,
   ThReadAlongStylePref,
+  ThReadAlongHighlightKeys,
+  ThReadAlongHighlightPresetKeys,
+  ThReadAlongHighlightPreset,
+  ThReadAlongHighlightPresets,
   ThAudioActionsTokens,
   ThSettingsTimerPref,
+  CSSColor,
 } from "./models";
 import { ExperimentKey } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
@@ -169,7 +174,15 @@ export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   settings: {
     order: Array<ReadAlongSettingsKey<K>>;
     keys: ThReadAlongSettingsKeyTypes<K>;
+    highlight: ThSettingsGroupPref<ThReadAlongHighlightKeys> & { presets: ThReadAlongHighlightPresets };
   };
+}
+
+// Read along colors are reader only, audio themes keep ThemeTokens
+export interface ThReaderThemeTokens extends ThemeTokens {
+  readAlongUtterance: CSSColor;
+  readAlongWord: CSSColor;
+  readAlongMask: CSSColor;
 }
 
 export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
@@ -273,7 +286,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
         dark: ThemeKey<K>;
       };
       // keys never includes "auto"
-      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThemeTokens>;
+      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThReaderThemeTokens>;
     };
   };
   contentProtection?: ContentProtectionConfig;
@@ -336,11 +349,21 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
 
   // Validate themes
   if (params.theming?.themes) {
-    validateObjectKeys<ThemeKey<K> | "auto", ThemeTokens>(
+    validateObjectKeys<ThemeKey<K> | "auto", ThReaderThemeTokens>(
       [params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">, params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">],
-      params.theming.themes.keys as Record<string, ThemeTokens>,
+      params.theming.themes.keys as Record<string, ThReaderThemeTokens>,
       "theming.themes",
       "auto" // Special case for themes
+    );
+  }
+
+  // Validate read along highlight presets
+  if (params.readAlong?.settings?.highlight?.presets) {
+    validateObjectKeys<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPreset>(
+      [params.readAlong.settings.highlight.presets.order],
+      params.readAlong.settings.highlight.presets.keys as Record<string, ThReadAlongHighlightPreset>,
+      "readAlong.settings.highlight.presets",
+      ["custom"]
     );
   }
 

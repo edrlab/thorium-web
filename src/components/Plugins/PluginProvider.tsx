@@ -8,6 +8,7 @@ interface ThPluginContextType {
   settingsComponentsMap: Record<string, SettingComponent>;
   textSettingsComponentsMap: Record<string, SettingComponent>;
   spacingSettingsComponentsMap: Record<string, SettingComponent>;
+  readAlongHighlightSettingsComponentsMap: Record<string, SettingComponent>;
   primaryAudioActionsMap: Record<string, ActionComponent>;
   readAlongActionsMap: Record<string, ActionComponent>;
   registerPlugin: typeof ThPluginRegistry.register;
@@ -19,6 +20,7 @@ const ThPluginContext = createContext<ThPluginContextType>({
   settingsComponentsMap: {} as Record<string, SettingComponent>,
   textSettingsComponentsMap: {} as Record<string, SettingComponent>,
   spacingSettingsComponentsMap: {} as Record<string, SettingComponent>,
+  readAlongHighlightSettingsComponentsMap: {} as Record<string, SettingComponent>,
   primaryAudioActionsMap: {} as Record<string, ActionComponent>,
   readAlongActionsMap: {} as Record<string, ActionComponent>,
   registerPlugin: ThPluginRegistry.register.bind(ThPluginRegistry),
@@ -33,6 +35,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
     settingsComponentsMap: Record<string, SettingComponent>;
     textSettingsComponentsMap: Record<string, SettingComponent>;
     spacingSettingsComponentsMap: Record<string, SettingComponent>;
+    readAlongHighlightSettingsComponentsMap: Record<string, SettingComponent>;
     primaryAudioActionsMap: Record<string, ActionComponent>;
     readAlongActionsMap: Record<string, ActionComponent>;
   }>(() => {
@@ -41,14 +44,15 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
     return {
       ...maps,
       textSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "text"),
-      spacingSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "spacing")
+      spacingSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "spacing"),
+      readAlongHighlightSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongHighlight")
     };
   });
-  
+
   // Helper function to filter settings components by type
   function getTypedSettingsComponents(
     componentsMap: Record<string, SettingComponent>,
-    type: "text" | "spacing"
+    type: NonNullable<SettingComponent["type"]>
   ): Record<string, SettingComponent> {
     return Object.entries(componentsMap)
       .filter(([_, component]) => component.type === type)
@@ -66,6 +70,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
         ...maps,
         textSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "text"),
         spacingSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "spacing"),
+        readAlongHighlightSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongHighlight"),
       });
     };
         

@@ -176,6 +176,35 @@
           "inlineContextualization": {
             "title": "Notes and page breaks",
             "label": "Read them where they appear in a sentence"
+          },
+          "highlight": {
+            "title": "Highlight",
+            "advanced": {
+              "trigger": "Customize",
+              "tooltip": "Customize highlight styles and colors"
+            },
+            "presets": {
+              "title": "Highlight presets",
+              "sentenceAndWord": "Sentence and word",
+              "word": "Word",
+              "mask": "Focus",
+              "custom": "Custom"
+            }
+          },
+          "decoration": {
+            "utterance": "Sentence highlight",
+            "word": "Word highlight",
+            "color": "Color",
+            "styles": {
+              "none": "None",
+              "highlight": "Highlight",
+              "highlightUnderline": "Highlight and underline",
+              "underline": "Underline",
+              "strikethrough": "Strikethrough",
+              "outline": "Outline",
+              "textColor": "Text color",
+              "mask": "Dim the rest"
+            }
           }
         }
       }

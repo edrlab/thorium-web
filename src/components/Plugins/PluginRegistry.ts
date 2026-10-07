@@ -9,7 +9,7 @@ export enum ThPluginType {
 export type ActionComponent = StatefulActionsMapObject;
 
 export interface SettingComponent extends ThSettingsEntry {
-  type?: "text" | "spacing";
+  type?: "text" | "spacing" | "readAlongHighlight";
   props?: any;
 }
 

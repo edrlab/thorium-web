@@ -1,6 +1,60 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { ReadAloudSettings } from "@readium/navigator";
+import { ReadAloudDecorationStyle, ReadAloudSettings } from "@readium/navigator";
+import { ThReadAlongHighlightKeys, ThReadAlongHighlightPresetKeys } from "@/preferences/models";
+
+export type HighlightStateKey = ThReadAlongHighlightKeys.utteranceStyle | ThReadAlongHighlightKeys.wordStyle;
+
+// A style without tint takes the reading theme's color
+export interface HighlightStateObject {
+  preset: ThReadAlongHighlightPresetKeys;
+  custom: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
+  baseline: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
+}
+
+export interface SetHighlightStylePayload {
+  type: string;
+  payload: {
+    value: ReadAloudDecorationStyle;
+    effective: ReadAloudDecorationStyle | null;
+    preset?: ThReadAlongHighlightPresetKeys;
+  }
+}
+
+export interface SetHighlightPresetPayload {
+  type: string;
+  payload: {
+    preset: ThReadAlongHighlightPresetKeys;
+    values: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
+    effective: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle | null>>;
+  }
+}
+
+const initialHighlightState: HighlightStateObject = {
+  preset: ThReadAlongHighlightPresetKeys.sentenceAndWord,
+  custom: {},
+  baseline: {}
+};
+
+const handleHighlightStyle = (state: ReadAlongSettingsReducerState, action: SetHighlightStylePayload, key: HighlightStateKey) => {
+  const { value, effective, preset } = action.payload;
+
+  state[key] = effective;
+
+  if (!preset) return;
+
+  // Persisted before highlight existed
+  if (!state.highlight) {
+    state.highlight = { ...initialHighlightState };
+  }
+
+  if (state.highlight.preset !== ThReadAlongHighlightPresetKeys.custom) {
+    state.highlight.preset = ThReadAlongHighlightPresetKeys.custom;
+    state.highlight.custom = state.highlight.baseline;
+  }
+
+  state.highlight.custom[key] = value;
+};
 
 export interface ReadAlongSettingsReducerState {
   // Set on the navigator with setVoice() rather than as a preference
@@ -19,6 +73,7 @@ export interface ReadAlongSettingsReducerState {
   volume: number | null;
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
+  highlight: HighlightStateObject;
 }
 
 const initialState: ReadAlongSettingsReducerState = {
@@ -36,7 +91,8 @@ const initialState: ReadAlongSettingsReducerState = {
   pitch: null,
   volume: null,
   utteranceStyle: null,
-  wordStyle: null
+  wordStyle: null,
+  highlight: initialHighlightState
 };
 
 export const readAlongSettingsSlice = createSlice({
@@ -82,11 +138,35 @@ export const readAlongSettingsSlice = createSlice({
     setReadAlongVolume: (state, action) => {
       state.volume = action.payload
     },
-    setReadAlongUtteranceStyle: (state, action) => {
-      state.utteranceStyle = action.payload
+    setReadAlongUtteranceStyle: (state, action: SetHighlightStylePayload) => {
+      handleHighlightStyle(state, action, ThReadAlongHighlightKeys.utteranceStyle);
     },
-    setReadAlongWordStyle: (state, action) => {
-      state.wordStyle = action.payload
+    setReadAlongWordStyle: (state, action: SetHighlightStylePayload) => {
+      handleHighlightStyle(state, action, ThReadAlongHighlightKeys.wordStyle);
+    },
+    setReadAlongHighlightPreset: (state, action: SetHighlightPresetPayload) => {
+      const { preset, values, effective } = action.payload;
+
+      if (!state.highlight) {
+        state.highlight = { ...initialHighlightState };
+      }
+
+      state.highlight.preset = preset;
+
+      if (preset !== ThReadAlongHighlightPresetKeys.custom) {
+        state.highlight.baseline = values;
+      }
+
+      state.utteranceStyle = effective[ThReadAlongHighlightKeys.utteranceStyle] ?? null;
+      state.wordStyle = effective[ThReadAlongHighlightKeys.wordStyle] ?? null;
+    },
+    setReadAlongHighlightEffective: (state, action: { payload: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle | null>> }) => {
+      if (action.payload[ThReadAlongHighlightKeys.utteranceStyle] !== undefined) {
+        state.utteranceStyle = action.payload[ThReadAlongHighlightKeys.utteranceStyle];
+      }
+      if (action.payload[ThReadAlongHighlightKeys.wordStyle] !== undefined) {
+        state.wordStyle = action.payload[ThReadAlongHighlightKeys.wordStyle];
+      }
     }
   }
 });
@@ -106,7 +186,9 @@ export const {
   setReadAlongPitch,
   setReadAlongVolume,
   setReadAlongUtteranceStyle,
-  setReadAlongWordStyle
+  setReadAlongWordStyle,
+  setReadAlongHighlightPreset,
+  setReadAlongHighlightEffective
 } = readAlongSettingsSlice.actions;
 
 export default readAlongSettingsSlice.reducer;

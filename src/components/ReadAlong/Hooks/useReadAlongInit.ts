@@ -11,6 +11,7 @@ import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } f
 import { useReadAlongState } from "./useReadAlongState";
 import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
+import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
 
 // Not settings, so pinned rather than left to the navigator's own defaults
 const readAlongDefaults: IReadAloudDefaults = {
@@ -35,6 +36,13 @@ export const useReadAlongInit = ({
 
   useSleepTimerCountdown();
 
+  const { applyTheme } = useHighlightPresets();
+
+  // Recolors the highlight when the reading theme changes
+  useEffect(() => {
+    applyTheme();
+  }, [applyTheme]);
+
   useEffect(() => {
     if (!navigatorReady || !isActive) return;
 
@@ -42,7 +50,8 @@ export const useReadAlongInit = ({
     if (!visualNavigator) return;
 
     // Read at load time only: settings changes are submitted to the loaded navigator
-    const { voice, ...preferences } = store.getState().readAlongSettings;
+    // Highlight is Thorium's own preset state, its resolved styles are already in the settings
+    const { voice, highlight: _highlight, ...preferences } = store.getState().readAlongSettings;
 
     // Persisted with the player state, but only valid for the navigator they came from
     dispatch(resetReadAlongPlayer());
