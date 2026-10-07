@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from "react";
 
-import { ThActionsKeys, ThDockingKeys } from "@/preferences/models";
+import { ThActionsKeys, ThDockingKeys, ThMiniPlayerTypes } from "@/preferences/models";
 import { StatefulActionContainerProps } from "../Actions/models/actions";
 
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
@@ -15,6 +15,7 @@ import { StatefulReadAlongPlayer } from "./StatefulReadAlongPlayer";
 
 import { useDocking } from "../Docking/hooks/useDocking";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
+import { useReadAlongPlacement } from "./Hooks/useReadAlongPlacement";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -29,6 +30,7 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
   const { isActive, setActive } = useReadAlongState();
   const docking = useDocking(ThActionsKeys.readAlong, { canReserve: isActive });
   const sheetType = docking.sheetType;
+  const placement = useReadAlongPlacement();
 
   const setOpen = useCallback((value: boolean) => {
     if (profile) {
@@ -62,7 +64,8 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         triggerRef: triggerRef,
         heading: t("reader.actions.readAloud.compact"),
         placement: "bottom",
-        isOpen: actionState?.isOpen || false,
+        // The compact bottom sheet hosts the expanded player itself
+        isOpen: (actionState?.isOpen && placement !== ThMiniPlayerTypes.bottomSheet) || false,
         onOpenChange: setOpen,
         onClosePress: () => setActive(false),
         docker: docking.getDocker(),

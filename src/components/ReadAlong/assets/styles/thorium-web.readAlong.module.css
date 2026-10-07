@@ -12,6 +12,10 @@
   min-inline-size: 0;
 }
 
+.miniPlayerExpandButton {
+  text-align: start;
+}
+
 .miniPlayerHeading,
 .miniPlayerSubheading {
   overflow: hidden;
@@ -32,8 +36,51 @@
   align-items: center;
 }
 
+/* Reserves the height of the absolutely positioned drag indicator, which shares the close button's row */
+.playerSheetHeader {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  min-block-size: calc(var(--th-icon-size, 40px) * 1.5 + var(--th-layout-spacing) / 2);
+  padding: calc(var(--th-layout-spacing) / 2) var(--th-layout-spacing) 0;
+  /* Covers the sheet's shadow layer */
+  background-color: var(--th-theme-background);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  transition: border-radius 500ms;
+}
+
+/* Same top offset as the close button, both are 1.5 icon sizes tall so their centers line up */
+.playerSheet .playerSheetDragIndicator {
+  top: calc(var(--th-layout-spacing) / 2);
+}
+
+.playerSheet[data-full-height] .playerSheetHeader {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
 .miniPlayerSheetBody {
-  padding: var(--th-layout-spacing);
+  padding: 0 var(--th-layout-spacing) var(--th-layout-spacing);
+}
+
+/* Like the audio player, the cover shrinks so the expanded player fits the sheet instead of overflowing */
+.playerSheetBody {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.playerSheetBody .player {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+}
+
+.playerSheetBody .playerCover {
+  flex: 1 1 auto;
+  block-size: auto;
+  min-block-size: 100px;
+  max-block-size: var(--th-layout-constraints-cover, 300px);
 }
 
 .miniPlayerSheetBackdrop {

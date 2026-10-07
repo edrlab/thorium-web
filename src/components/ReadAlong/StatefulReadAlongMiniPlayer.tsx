@@ -26,6 +26,8 @@ import { useI18n } from "@/i18n/useI18n";
 
 import { useAppSelector } from "@/lib/hooks";
 
+import classNames from "classnames";
+
 export const StatefulReadAlongMiniPlayer = () => {
   const { t } = useI18n();
   const { readAloud } = useNavigator();
@@ -39,14 +41,15 @@ export const StatefulReadAlongMiniPlayer = () => {
   const displayOrder = preferences.readAlong.actions.miniPlayer.displayOrder;
 
   const isDisabled = !readAloud || isLoading;
-  const canExpand = placement === ThMiniPlayerTypes.bottomBar;
+  const isBottomBar = placement === ThMiniPlayerTypes.bottomBar;
 
   return (
     <ThMiniPlayer
       className={ readAlongStyles.miniPlayer }
       heading={ progress?.title || "" }
       subheading={ progress?.progression?.currentChapter }
-      onExpand={ canExpand ? () => setExpanded(true) : undefined }
+      // The sheet's drag indicator expands it, and buttons would block dragging
+      onExpand={ isBottomBar ? () => setExpanded(true) : undefined }
       expandLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
       controls={
         <ThPlaybackControls
@@ -64,7 +67,7 @@ export const StatefulReadAlongMiniPlayer = () => {
             if (!action) return null;
             return <AudioActionPair key={ key } action={ action } />;
           }) }
-          { canExpand &&
+          { isBottomBar &&
             <StatefulActionIcon
               aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
               tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
@@ -83,7 +86,7 @@ export const StatefulReadAlongMiniPlayer = () => {
       }
       compounds={ {
         metadata: { className: readAlongStyles.miniPlayerMetadata },
-        expandButton: { className: readAlongStyles.miniPlayerMetadata },
+        expandButton: { className: classNames(readAlongStyles.miniPlayerMetadata, readAlongStyles.miniPlayerExpandButton) },
         heading: { className: readAlongStyles.miniPlayerHeading },
         subheading: { className: readAlongStyles.miniPlayerSubheading },
         controls: { className: readAlongStyles.miniPlayerControls },
