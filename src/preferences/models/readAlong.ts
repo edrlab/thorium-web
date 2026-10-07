@@ -194,13 +194,11 @@ export const defaultReadAlongPreferences = {
       ThReadAlongKeys.volume,
       ThReadAlongKeys.utteranceStyle,
       ThReadAlongKeys.wordStyle,
-      ThReadAlongKeys.segmentation,
       ThReadAlongKeys.autoPause,
       ThReadAlongKeys.pauseDuration,
       ThReadAlongKeys.verbosity,
       ThReadAlongKeys.language,
-      ThReadAlongKeys.inlineContextualization,
-      ThReadAlongKeys.format
+      ThReadAlongKeys.inlineContextualization
     ],
     keys: {
       [ThReadAlongKeys.rate]: defaultReadAlongRate,

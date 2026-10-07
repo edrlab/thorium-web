@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { ReadAloudListeners } from "@readium/navigator";
+import { IReadAloudDefaults, ReadAloudListeners } from "@readium/navigator";
 
 import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
 
@@ -11,6 +11,12 @@ import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } f
 import { useReadAlongState } from "./useReadAlongState";
 import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
+
+// Not settings, so pinned rather than left to the navigator's own defaults
+const readAlongDefaults: IReadAloudDefaults = {
+  segmentation: "sentence",
+  format: "plain"
+};
 
 interface UseReadAlongInitProps {
   navigatorReady: boolean;
@@ -58,7 +64,7 @@ export const useReadAlongInit = ({
       error: (error) => console.warn("Read along:", error)
     };
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences }, () => {
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults }, () => {
       if (voice) setVoice(voice);
       syncVoiceControls();
     });
