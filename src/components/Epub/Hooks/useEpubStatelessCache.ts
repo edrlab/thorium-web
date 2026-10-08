@@ -16,6 +16,7 @@ export interface EPubStatelessCache {
   positionsList: SerializedLocator[];
   colorScheme?: ThColorScheme;
   reducedMotion?: boolean;
+  isReadAlongActive: boolean;
 }
 
 export const useEpubStatelessCache = (
@@ -43,7 +44,8 @@ export const useEpubStatelessCache = (
   layoutUI: ThLayoutUI,
   isImmersive: boolean,
   isHovering: boolean,
-  arrowsOccupySpace: boolean
+  arrowsOccupySpace: boolean,
+  isReadAlongActive: boolean
 ) => {
   const settingsCache = useEpubSettingsCache(
     textAlign,
@@ -75,6 +77,7 @@ export const useEpubStatelessCache = (
     positionsList: positionsList,
     colorScheme,
     reducedMotion,
+    isReadAlongActive
   });
 
   // Update cache synchronously on every render to ensure fresh values
@@ -86,6 +89,7 @@ export const useEpubStatelessCache = (
   cache.current.positionsList = positionsList;
   cache.current.colorScheme = colorScheme;
   cache.current.reducedMotion = reducedMotion;
+  cache.current.isReadAlongActive = isReadAlongActive;
 
   return cache;
 };

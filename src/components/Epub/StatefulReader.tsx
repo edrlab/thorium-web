@@ -46,6 +46,7 @@ import { StatefulReaderFooter } from "../StatefulReaderFooter";
 
 import { useLocale } from "react-aria";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
+import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
@@ -189,6 +190,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
 
   const layoutUI = isFXL 
     ? preferences.theming.layout.ui?.fxl || ThLayoutUI.layered 
@@ -221,7 +223,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     layoutUI,
     isImmersive,
     isHovering,
-    arrowsOccupySpace
+    arrowsOccupySpace,
+    isReadAlongActive
   );
 
   const atPublicationStart = useAppSelector(state => state.publication.atPublicationStart);
@@ -244,6 +247,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const epubNavigator = useEpubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
+  const { readFromPointer } = readAloudNavigator;
+  const readAlongPreferences = useReadAlongPreferences();
   const {
     goLeft,
     goRight,
@@ -332,6 +337,14 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       }
   }, [cache, preferences.affordances.scroll, toggleIsImmersive]);
 
+  // While read along is active, a press on content reads from there, other presses are handled as usual.
+  const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
+    if (!readAlongPreferences.readFromPointer || !cache.current.isReadAlongActive) return fallback(event);
+    readFromPointer(event).then((handled) => {
+      if (!handled) fallback(event);
+    });
+  }, [readAlongPreferences.readFromPointer, cache, readFromPointer]);
+
   // We could use canGoBackward() and canGoForward() directly on arrows
   // but maybe we will need to sync the state for other features in the future
   const updatePublicationNavigationState = useCallback(() => {
@@ -402,11 +415,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       debouncedHandleProgression();
     },
     tap: function (_e: FrameClickEvent): boolean {
-      handleTap(_e);
+      handlePointer(_e, handleTap);
       return true;
     },
     click: function (_e: FrameClickEvent): boolean {
-      handleClick(_e);
+      handlePointer(_e, handleClick);
       return true;
     },
     zoom: function (_scale: number): void {},
@@ -499,7 +512,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which

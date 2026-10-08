@@ -25,6 +25,19 @@ readAlong: {
 
 It applies when read along starts.
 
+## Reading From a Press
+
+While read along is active, clicking or tapping content (text, an image…) reads from there, including in another resource than the one being read, for instance after pausing and turning pages. Presses on empty space, links and other interactive elements, or content that isn’t read, are handled as usual, so turning pages keeps working.
+
+Set `readAlong.readFromPointer` to `false` to turn this off.
+
+```typescript
+readAlong: {
+  ...defaultReadAlongPreferences,
+  readFromPointer: false
+}
+```
+
 ## Provider and Engine
 
 The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, replaces what the TS-Toolkit `ReadAloudNavigator` uses by default. Both are factories, called with the publication each time read along starts:

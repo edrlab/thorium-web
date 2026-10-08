@@ -3,6 +3,7 @@
 import { useCallback, useSyncExternalStore } from "react";
 
 import { Locator } from "@readium/shared";
+import { FrameClickEvent } from "@readium/navigator-html-injectables";
 import {
   GuidedNavigationProvider,
   IReadAloudDefaults,
@@ -104,6 +105,13 @@ export const useReadAloudNavigator = () => {
     await navigatorInstance?.play(from).catch(warn);
   }, []);
 
+  const readFromPointer = useCallback(async (event: FrameClickEvent): Promise<boolean> => {
+    return await navigatorInstance?.readFromPointer(event).catch((error) => {
+      warn(error);
+      return false;
+    }) ?? false;
+  }, []);
+
   const pause = useCallback(() => {
     navigatorInstance?.pause();
   }, []);
@@ -154,6 +162,7 @@ export const useReadAloudNavigator = () => {
     ReadAloudNavigatorDestroy,
     isLoaded,
     play,
+    readFromPointer,
     pause,
     stop,
     next,

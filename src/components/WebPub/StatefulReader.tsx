@@ -39,12 +39,13 @@ import { StatefulReaderFooter } from "../StatefulReaderFooter";
 import { PositionStorage, ReadAlongConfig } from "../Reader/StatefulReaderWrapper";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
+import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useWebPubNavigator } from "@/core/Hooks/WebPub";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
 import { useReadAlongInit, useReadAlongMetadata, useReadAlongState } from "@/components/ReadAlong/Hooks";
-import { useWebPubSettingsCache } from "@/core/Hooks/WebPub/useWebPubSettingsCache";
 import { useWebPubReaderInit } from "./Hooks/useReaderInit";
+import { useWebPubStatelessCache } from "./Hooks/useWebPubStatelessCache";
 import { useWebPubKeyboardPeripherals } from "./Hooks/useWebPubKeyboardPeripherals";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { useI18n } from "@/i18n/useI18n";
@@ -146,10 +147,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const hasDisplayTransformability = useAppSelector(state => state.publication.hasDisplayTransformability);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
   const containerBreakpoint = useAppSelector(state => state.theming.containerBreakpoint);
 
-  const cache = useWebPubSettingsCache(
+  const cache = useWebPubStatelessCache(
     fontFamily,
     fontWeight,
     hyphens,
@@ -163,7 +165,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     textAlign,
     textNormalization,
     wordSpacing,
-    zoom
+    zoom,
+    isReadAlongActive
   );
 
   const layoutUI = preferences.theming.layout.ui?.webPub || ThLayoutUI.stacked;
@@ -182,6 +185,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const webPubNavigator = useWebPubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
+  const { readFromPointer } = readAloudNavigator;
+  const readAlongPreferences = useReadAlongPreferences();
   const {
     currentPositions,
     canGoBackward,
@@ -220,6 +225,14 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const { zoomIn, zoomOut } = useZoomCallbacks(webPubNavigator);
 
+  // While read along is active, a press on content reads from there, other presses are handled as usual.
+  const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
+    if (!readAlongPreferences.readFromPointer || !cache.current.isReadAlongActive) return fallback(event);
+    readFromPointer(event).then((handled) => {
+      if (!handled) fallback(event);
+    });
+  }, [readAlongPreferences.readFromPointer, cache, readFromPointer]);
+
   const listeners: WebPubNavigatorListeners = useMemo(() => ({
     frameLoaded: async function (_wnd: Window): Promise<void> {},
     timelineItemChanged: function (item: TimelineItem | undefined): void {
@@ -250,11 +263,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       }
     },
     tap: function (_e: FrameClickEvent): boolean {
-      toggleIsImmersive();
+      handlePointer(_e, toggleIsImmersive);
       return true;
     },
     click: function (_e: FrameClickEvent): boolean {
-      return false;
+      handlePointer(_e, () => {});
+      return true;
     },
     zoom: function (_scale: number): void { },
     scroll: function (_delta: number): void { },
@@ -311,7 +325,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [setLocalData, canGoBackward, canGoForward, dispatch, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
