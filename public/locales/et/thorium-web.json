@@ -103,6 +103,19 @@
                     "trigger": "Täiendavad sõrendamise valikud"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Näita kahte lehte kõrvuti"
+            },
+            "divinaStripWidth": "Riba laius",
+            "divinaQuality": {
+                "title": "Pildikvaliteet",
+                "auto": "Automaatne",
+                "low": "Madal",
+                "high": "Kõrge",
+                "max": "Maksimaalne"
+            }
         }
     },
     "audio": {
