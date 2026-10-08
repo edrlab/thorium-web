@@ -103,6 +103,19 @@
                     "trigger": "Lisää välistysasetuksia"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Näytä kaksi sivua vierekkäin"
+            },
+            "divinaStripWidth": "Kuvan leveys",
+            "divinaQuality": {
+                "title": "Kuvan laatu",
+                "auto": "Auto",
+                "low": "Matala",
+                "high": "Korkea",
+                "max": "Max"
+            }
         }
     },
     "audio": {
