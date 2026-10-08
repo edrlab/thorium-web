@@ -171,6 +171,7 @@ export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys
 export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   generateFromMarkup: boolean;
   readFromPointer: boolean;
+  detachable: boolean;
   actions: {
     miniPlayer: {
       displayOrder: Array<ReadAlongActionKey<K>>;

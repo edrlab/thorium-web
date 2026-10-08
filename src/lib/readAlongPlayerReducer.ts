@@ -27,6 +27,7 @@ export interface ReadAlongPlayerReducerState {
   layout: ReadAlongLayout;
   metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
+  isNavigationLocked: boolean;
   voiceControls: ReadAlongVoiceControls;
   sleepTimer: ReadAlongSleepTimerState;
   settingsContainer: ThReadAlongSettingsContainerKeys;
@@ -37,6 +38,7 @@ const initialState: ReadAlongPlayerReducerState = {
   layout: "mini",
   metadata: null,
   status: "idle",
+  isNavigationLocked: false,
   voiceControls: { boundary: true, speed: true },
   sleepTimer: { remainingSeconds: null },
   settingsContainer: ThReadAlongSettingsContainerKeys.initial
@@ -54,6 +56,9 @@ export const readAlongPlayerSlice = createSlice({
     },
     setReadAlongStatus: (state, action: PayloadAction<ReadAloudState>) => {
       state.status = action.payload;
+    },
+    setReadAlongNavigationLocked: (state, action: PayloadAction<boolean>) => {
+      state.isNavigationLocked = action.payload;
     },
     setReadAlongVoiceControls: (state, action: PayloadAction<ReadAlongVoiceControls>) => {
       state.voiceControls = action.payload;
@@ -75,6 +80,7 @@ export const {
   setReadAlongActive,
   setReadAlongLayout,
   setReadAlongStatus,
+  setReadAlongNavigationLocked,
   setReadAlongVoiceControls,
   setReadAlongSleepTimer,
   setReadAlongMetadata,

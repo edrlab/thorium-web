@@ -10,7 +10,7 @@ import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks
 import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 
 import { useAppDispatch, useAppStore } from "@/lib/hooks";
-import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
+import { resetReadAlongPlayer, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
@@ -36,9 +36,9 @@ export const useReadAlongInit = ({
   const { isActive, setActive } = useReadAlongState();
   const store = useAppStore();
   const dispatch = useAppDispatch();
-  const { generateFromMarkup } = useReadAlongPreferences();
+  const { generateFromMarkup, detachable } = useReadAlongPreferences();
 
-  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
+  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
 
   useSleepTimerCountdown();
 
@@ -80,6 +80,8 @@ export const useReadAlongInit = ({
     const listeners: ReadAloudListeners = {
       stateChanged: (state) => {
         dispatch(setReadAlongStatus(state));
+        // The toolkit only locks navigation in the content, the app's own navigation is locked with this
+        dispatch(setReadAlongNavigationLocked(!isDetachable() && (state === "playing" || state === "loading")));
         syncVoiceControls();
       },
       error: (error) => console.warn("Read along:", error)
@@ -91,7 +93,7 @@ export const useReadAlongInit = ({
 
     let cancelled = false;
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults, provider, engine }, async () => {
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults, provider, engine, detachable }, async () => {
       // The engine loads its voices asynchronously, and a voice name set before then is not found
       if (voice) {
         const stored = (await getVoices()).find((item) => item.name === voice);
@@ -106,7 +108,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {

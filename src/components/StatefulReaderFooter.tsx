@@ -55,6 +55,7 @@ export const StatefulReaderFooter = ({
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
   const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
@@ -185,11 +186,13 @@ export const StatefulReaderFooter = ({
               },
               leftButton: {
                 className: readerPaginationStyles.leftButton,
-                preventFocusOnPress: true
+                preventFocusOnPress: true,
+                isDisabled: isNavigationLocked
               },
               rightButton: {
                 className: readerPaginationStyles.rightButton,
-                preventFocusOnPress: true
+                preventFocusOnPress: true,
+                isDisabled: isNavigationLocked
               }
             } }
           >

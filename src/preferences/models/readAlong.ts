@@ -251,6 +251,7 @@ export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
 export const defaultReadAlongPreferences = {
   generateFromMarkup: false,
   readFromPointer: true,
+  detachable: true,
   actions: {
     miniPlayer: {
       displayOrder: [

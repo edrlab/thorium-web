@@ -191,6 +191,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
 
   const layoutUI = isFXL 
     ? preferences.theming.layout.ui?.fxl || ThLayoutUI.layered 
@@ -224,7 +225,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     isImmersive,
     isHovering,
     arrowsOccupySpace,
-    isReadAlongActive
+    isReadAlongActive,
+    isNavigationLocked
   );
 
   const atPublicationStart = useAppSelector(state => state.publication.atPublicationStart);
@@ -312,9 +314,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         };
     
         if (event.x < oneQuarter) {
+          if (cache.current.isNavigationLocked) return;
           goLeft(!cache.current.reducedMotion, navigationCallback);
         } 
         else if (event.x > oneQuarter * 3) {
+          if (cache.current.isNavigationLocked) return;
           goRight(!cache.current.reducedMotion, navigationCallback);
         } else if (oneQuarter <= event.x && event.x <= oneQuarter * 3) {
           toggleIsImmersive();
@@ -362,6 +366,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   }, [canGoBackward, canGoForward, dispatch]);
 
   const moveTo = useCallback((direction: "left" | "right" | "up" | "down" | "home" | "end") => {
+    if (cache.current.isNavigationLocked) return;
     const navigationCallback = () => {
       dispatch(setUserNavigated(true));
       activateImmersiveOnAction();
@@ -381,6 +386,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const { zoomIn, zoomOut } = useZoomCallbacks(epubNavigator);
 
   const goProgression = useCallback((shiftKey?: boolean) => {
+    if (cache.current.isNavigationLocked) return;
     if (!cache.current.settings?.scroll) {
       const cb = () => {
         dispatch(setUserNavigated(true));
@@ -646,7 +652,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
             ? <nav className={ classNames(arrowStyles.container, arrowStyles.leftContainer) }>
                 <StatefulReaderArrowButton 
                   direction="left" 
-                  isDisabled={ isRTL ? atPublicationEnd : atPublicationStart } 
+                  isDisabled={ isNavigationLocked || (isRTL ? atPublicationEnd : atPublicationStart) } 
                   onPress={ () => {
                     const navigationCallback = () => {
                       dispatch(setUserNavigated(true));
@@ -666,7 +672,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
             ? <nav className={ classNames(arrowStyles.container, arrowStyles.rightContainer) }>
                 <StatefulReaderArrowButton 
                   direction="right" 
-                  isDisabled={ isRTL ? atPublicationStart : atPublicationEnd } 
+                  isDisabled={ isNavigationLocked || (isRTL ? atPublicationStart : atPublicationEnd) } 
                   onPress={ () => {
                     const navigationCallback = () => {
                       dispatch(setUserNavigated(true));

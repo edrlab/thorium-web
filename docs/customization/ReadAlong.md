@@ -38,6 +38,21 @@ readAlong: {
 }
 ```
 
+## Navigating While Reading
+
+By default, users can scroll, turn pages and navigate while read along is playing. It then stops following what is read until they are back on it, or play, skip, or read from a press.
+
+Set `readAlong.detachable` to `false` to lock navigation while read along is playing or loading: scrolling, swiping and links in the content, as well as page turns, the table of contents, go to position, and previous/next links in the reader. Read along still turns pages as it goes, and pressing content still reads from there. Everything is unlocked when read along is paused or stopped.
+
+```typescript
+readAlong: {
+  ...defaultReadAlongPreferences,
+  detachable: false
+}
+```
+
+It applies when read along starts.
+
 ## Provider and Engine
 
 The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, replaces what the TS-Toolkit `ReadAloudNavigator` uses by default. Both are factories, called with the publication each time read along starts:

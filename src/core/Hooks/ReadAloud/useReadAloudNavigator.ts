@@ -52,6 +52,7 @@ export interface ReadAloudNavigatorLoadProps {
   defaults?: IReadAloudDefaults;
   engine?: ReadiumSpeechPlaybackEngine;
   provider?: GuidedNavigationProvider;
+  detachable?: boolean;
 }
 
 export const useReadAloudNavigator = () => {
@@ -82,6 +83,7 @@ export const useReadAloudNavigator = () => {
         {
           engine: config.engine,
           provider: config.provider,
+          detachable: config.detachable,
           preferences: config.preferences || {},
           defaults: config.defaults || {}
         }
@@ -138,6 +140,10 @@ export const useReadAloudNavigator = () => {
     return navigatorInstance?.state ?? "idle";
   }, []);
 
+  const isDetachable = useCallback((): boolean => {
+    return navigatorInstance?.detachable ?? true;
+  }, []);
+
   const getVoices = useCallback(async (options?: ReadAloudVoicesOptions): Promise<ReadiumSpeechVoice[]> => {
     return await navigatorInstance?.getVoices(options).catch((error) => {
       warn(error);
@@ -168,6 +174,7 @@ export const useReadAloudNavigator = () => {
     next,
     previous,
     state,
+    isDetachable,
     getVoices,
     setVoice,
     getCurrentVoice,
