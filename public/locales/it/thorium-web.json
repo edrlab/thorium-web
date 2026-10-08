@@ -103,6 +103,19 @@
                     "trigger": "Opzioni avanzate di spaziatura"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Mostra due pagine affiancate"
+            },
+            "divinaStripWidth": "Larghezza della striscia",
+            "divinaQuality": {
+                "title": "Qualità dell'immagine",
+                "auto": "Auto",
+                "low": "Bassa",
+                "high": "Alta",
+                "max": "Max"
+            }
         }
     },
     "audio": {
