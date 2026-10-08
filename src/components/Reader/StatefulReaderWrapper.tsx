@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 
 import { Publication, Locator } from "@readium/shared";
-import { getScriptMode } from "@readium/navigator";
+import { getScriptMode, GuidedNavigationProvider, ReadiumSpeechPlaybackEngine } from "@readium/navigator";
 import { ThThemeKeys, ThemeKeyType, useTheming } from "@/preferences";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
@@ -43,11 +43,18 @@ export interface PositionStorage {
   set: (locator: Locator) => void | Promise<void>;
 }
 
+export interface ReadAlongConfig {
+  provider?: (publication: Publication) => GuidedNavigationProvider;
+  // Called on each start, as the read-aloud navigator destroys its engine when it stops
+  engine?: (publication: Publication) => ReadiumSpeechPlaybackEngine;
+}
+
 export interface StatefulReaderProps {
   publication: Publication;
   localDataKey: string | null;
   plugins?: ThPlugin[];
   positionStorage?: PositionStorage;
+  readAlong?: ReadAlongConfig;
   containerRefSetter?: (el: Element | null) => void;
 }
 
@@ -69,6 +76,7 @@ export interface ReaderComponentProps<
   localDataKey: string | null;
   isLoading?: boolean;
   positionStorage?: PositionStorage;
+  readAlong?: ReadAlongConfig;
   plugins?: ReaderPlugins;
   i18n?: Partial<InitOptions>;
   preferences?: P extends "audio"
@@ -190,6 +198,7 @@ interface ReaderContentProps {
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
+  readAlong?: ReadAlongConfig;
   plugins?: ThPlugin[];
   coverUrl?: string;
 }

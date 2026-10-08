@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-import { IReadAloudDefaults, ReadAloudListeners } from "@readium/navigator";
+import { IReadAloudDefaults, PublicationGuidedNavigationProvider, ReadAloudListeners } from "@readium/navigator";
+
+import { ReadAlongConfig } from "@/components/Reader/StatefulReaderWrapper";
 
 import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
+import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 
 import { useAppDispatch, useAppStore } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
@@ -21,22 +24,31 @@ const readAlongDefaults: IReadAloudDefaults = {
 
 interface UseReadAlongInitProps {
   navigatorReady: boolean;
+  config?: ReadAlongConfig;
   getVisualNavigator: () => ReadAloudNavigatorLoadProps["navigator"] | null;
 }
 
 export const useReadAlongInit = ({
   navigatorReady,
+  config,
   getVisualNavigator
 }: UseReadAlongInitProps) => {
   const { isActive, setActive } = useReadAlongState();
   const store = useAppStore();
   const dispatch = useAppDispatch();
+  const { generateFromMarkup } = useReadAlongPreferences();
 
   const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
 
   useSleepTimerCountdown();
 
   const { applyTheme } = useHighlightPresets();
+
+  // Factories may be recreated on each render, so they are read at load time only
+  const configRef = useRef(config);
+  useEffect(() => {
+    configRef.current = config;
+  }, [config]);
 
   // Recolors the highlight when the reading theme changes
   useEffect(() => {
@@ -73,9 +85,13 @@ export const useReadAlongInit = ({
       error: (error) => console.warn("Read along:", error)
     };
 
+    const { publication } = visualNavigator;
+    const provider = configRef.current?.provider?.(publication) ?? new PublicationGuidedNavigationProvider(publication, { generateFromMarkup });
+    const engine = configRef.current?.engine?.(publication);
+
     let cancelled = false;
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults }, async () => {
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults, provider, engine }, async () => {
       // The engine loads its voices asynchronously, and a voice name set before then is not found
       if (voice) {
         const stored = (await getVoices()).find((item) => item.name === voice);
@@ -90,7 +106,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, getVoices, setVoice, getCurrentVoice]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {

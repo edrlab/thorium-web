@@ -249,6 +249,7 @@ export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
 };
 
 export const defaultReadAlongPreferences = {
+  generateFromMarkup: false,
   actions: {
     miniPlayer: {
       displayOrder: [

@@ -111,6 +111,7 @@ The Reader expects the following props:
 - `localDataKey`: a key for storing reader position and settings locally.
 - `plugins` (optional): the components (actions, settings) to use in the reader. More below.
 - `positionStorage` (optional): custom storage interface for position data.
+- `readAlong` (optional): factories for read along’s Guided Navigation provider and speech engine, see [Read Along](../../customization/ReadAlong.md#provider-and-engine).
 
 You can take a look how the NextJS app is currently doing in [the Read Page](../../../src/app/read/[identifier]/page.tsx).
 

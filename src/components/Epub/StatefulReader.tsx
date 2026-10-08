@@ -37,7 +37,7 @@ import {
   Layout,
   TimelineItem
 } from "@readium/shared";
-import { PositionStorage, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
+import { PositionStorage, ReadAlongConfig, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
 import { StatefulReaderHeader } from "../StatefulReaderHeader";
@@ -109,6 +109,7 @@ export const StatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
@@ -130,13 +131,13 @@ export const StatefulReader = ({
   return (
     <>
       <ThPluginProvider>
-        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } containerRefSetter={ containerRefSetter } />
+        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } readAlong={ readAlong } containerRefSetter={ containerRefSetter } />
       </ThPluginProvider>
     </>
   );
 };
 
-const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
+const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readAlong, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; readAlong?: ReadAlongConfig; containerRefSetter?: (el: Element | null) => void }) => {
   const { fxlActionKeys, fxlThemeKeys, reflowActionKeys, reflowThemeKeys } = useFilteredPreferenceKeys();
   const { preferences, getFontMetadata, getFontInjectables } = usePreferences();
   const { direction: uiDirection } = useLocale();
@@ -538,7 +539,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
-  useReadAlongInit({ navigatorReady, getVisualNavigator: epubNavigator.getInstance });
+  useReadAlongInit({ navigatorReady, config: readAlong, getVisualNavigator: epubNavigator.getInstance });
   useReadAlongMetadata(publication);
 
   const applyConstraint = useCallback(async (value: number) => {

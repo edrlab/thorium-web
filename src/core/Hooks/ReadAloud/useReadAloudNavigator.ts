@@ -4,6 +4,7 @@ import { useCallback, useSyncExternalStore } from "react";
 
 import { Locator } from "@readium/shared";
 import {
+  GuidedNavigationProvider,
   IReadAloudDefaults,
   IReadAloudPreferences,
   ReadAloudListeners,
@@ -49,6 +50,7 @@ export interface ReadAloudNavigatorLoadProps {
   preferences?: IReadAloudPreferences;
   defaults?: IReadAloudDefaults;
   engine?: ReadiumSpeechPlaybackEngine;
+  provider?: GuidedNavigationProvider;
 }
 
 export const useReadAloudNavigator = () => {
@@ -78,6 +80,7 @@ export const useReadAloudNavigator = () => {
         config.listeners,
         {
           engine: config.engine,
+          provider: config.provider,
           preferences: config.preferences || {},
           defaults: config.defaults || {}
         }

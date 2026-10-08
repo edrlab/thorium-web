@@ -36,7 +36,7 @@ import {
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
 import { StatefulReaderHeader } from "../StatefulReaderHeader";
 import { StatefulReaderFooter } from "../StatefulReaderFooter";
-import { PositionStorage } from "../Reader/StatefulReaderWrapper";
+import { PositionStorage, ReadAlongConfig } from "../Reader/StatefulReaderWrapper";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
@@ -85,6 +85,7 @@ export const ExperimentalWebPubStatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
@@ -107,13 +108,13 @@ export const ExperimentalWebPubStatefulReader = ({
   return (
     <>
       <ThPluginProvider>
-        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } containerRefSetter={ containerRefSetter } />
+        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } readAlong={ readAlong } containerRefSetter={ containerRefSetter } />
       </ThPluginProvider>
     </>
   );
 };
 
-const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
+const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readAlong, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; readAlong?: ReadAlongConfig; containerRefSetter?: (el: Element | null) => void }) => {
   const { preferences, getFontMetadata, getFontInjectables } = usePreferences();
   const { t } = useI18n();
   const { getEffectiveSpacingValue } = useSpacingPresets();
@@ -343,7 +344,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
-  useReadAlongInit({ navigatorReady, getVisualNavigator: webPubNavigator.getInstance });
+  useReadAlongInit({ navigatorReady, config: readAlong, getVisualNavigator: webPubNavigator.getInstance });
   useReadAlongMetadata(publication);
 
   return (

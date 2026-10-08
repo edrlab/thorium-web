@@ -4,10 +4,45 @@ Read along reads EPUB and WebPub publications aloud with text-to-speech, highlig
 
 Playback is by utterance, not by time: there is no duration, seek bar or time-based skipping. Skipping moves to the previous or next sentence.
 
-It is configured in two places:
+It is configured in three places:
 
 - `actions.keys.readAlong`: the reader action that starts read along, and where its players show;
-- `readAlong`: the players’ own actions and the read-along settings.
+- `readAlong`: the players’ own actions and the read-along settings;
+- the reader’s `readAlong` prop: the Guided Navigation provider and speech engine, see [Provider and Engine](#provider-and-engine).
+
+## What Is Read
+
+By default, read along reads each resource from the publication’s [Guided Navigation](https://github.com/readium/guided-navigation) document when it has one, and from the resource’s markup otherwise.
+
+Set `readAlong.generateFromMarkup` to `true` to always read from the markup, ignoring the Guided Navigation document.
+
+```typescript
+readAlong: {
+  ...defaultReadAlongPreferences,
+  generateFromMarkup: true
+}
+```
+
+It applies when read along starts.
+
+## Provider and Engine
+
+The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, replaces what the TS-Toolkit `ReadAloudNavigator` uses by default. Both are factories, called with the publication each time read along starts:
+
+- `provider`: returns the `GuidedNavigationProvider` giving what is read. It replaces the default one, so `generateFromMarkup` is then ignored.
+- `engine`: returns the `ReadiumSpeechPlaybackEngine` speaking it. Defaults to the TS-Toolkit’s Web Speech engine. A new engine is needed on each start, as it is destroyed when read along stops.
+
+```tsx
+<StatefulReaderWrapper
+  profile="epub"
+  publication={ publication }
+  localDataKey={ localDataKey }
+  readAlong={{
+    provider: (publication) => new MyGuidedNavigationProvider(publication),
+    engine: (publication) => new MySpeechEngine(publication.metadata.languages)
+  }}
+/>
+```
 
 ## The Read Along Action
 
