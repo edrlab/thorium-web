@@ -91,6 +91,11 @@ export const mapPreferencesToState = <T extends CustomizableKeys>(prefs: ThPrefe
       reflow: mapPaginatedAffordance(prefs.affordances?.paginated?.reflow),
       fxl: mapPaginatedAffordance(prefs.affordances?.paginated?.fxl),
       divina: mapPaginatedAffordance(prefs.affordances?.paginated?.divina)
+    },
+    readAlong: {
+      generateFromMarkup: prefs.readAlong?.generateFromMarkup,
+      readFromPointer: prefs.readAlong?.readFromPointer,
+      detachable: prefs.readAlong?.detachable
     }
   };
 }
@@ -240,6 +245,12 @@ export const mapStateToPreferences = <T extends CustomizableKeys = CustomizableK
           divina: updatePaginatedAffordance(state.paginatedAffordances.divina, currentPrefs.affordances?.paginated?.divina)
         }
       })
-    }
+    },
+    ...(state.readAlong && {
+      readAlong: {
+        ...currentPrefs.readAlong,
+        ...state.readAlong
+      }
+    })
   };
 };

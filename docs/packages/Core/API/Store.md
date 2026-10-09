@@ -392,6 +392,11 @@ interface PreferencesReducerState {
     hideOnForwardScroll?: boolean;
     showOnBackwardScroll?: boolean;
   };
+  readAlong?: {
+    generateFromMarkup?: boolean;
+    readFromPointer?: boolean;
+    detachable?: boolean;
+  };
 }
 ```
 
@@ -401,6 +406,7 @@ interface PreferencesReducerState {
 - `setUI`: Update UI settings
 - `setScrollAffordances`: Configure scroll behavior
 - `setPaginatedAffordance`: Update paginated affordance settings
+- `setReadAlong`: Update read-along runtime preferences (generateFromMarkup, readFromPointer, detachable)
 - `updateFromPreferences`: Bulk update from a preferences object
 
 > [!NOTE]
