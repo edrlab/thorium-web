@@ -2,14 +2,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  min-inline-size: 0;
+  min-width: 0;
 }
 
 .miniPlayerMetadata {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
-  min-inline-size: 0;
+  min-width: 0;
 }
 
 .miniPlayerExpandButton {
@@ -41,7 +41,7 @@
   box-sizing: border-box;
   display: flex;
   justify-content: flex-end;
-  min-block-size: calc(var(--th-icon-size, 40px) * 1.5 + var(--th-layout-spacing) / 2);
+  min-height: calc(var(--th-icon-size, 40px) * 1.5 + var(--th-layout-spacing) / 2);
   padding: calc(var(--th-layout-spacing) / 2) var(--th-layout-spacing) 0;
   /* Covers the sheet's shadow layer */
   background-color: var(--th-theme-background);
@@ -74,7 +74,7 @@
   padding: 0 var(--th-layout-spacing) var(--th-layout-spacing);
 }
 
-/* Like the audio player, the cover shrinks so the expanded player fits the sheet instead of overflowing */
+/* Like the audio player, the cover shrinks so the expanded player fits the sheet, then the player scrolls */
 .playerSheetBody {
   box-sizing: border-box;
   height: 100%;
@@ -83,14 +83,49 @@
 .playerSheetBody .player {
   box-sizing: border-box;
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+}
+
+/* Sheet types nest the body differently, so every element between the sheet and the player flexes */
+.readAlongSheet,
+.readAlongSheet :has(.player) {
+  display: flex;
+  flex-direction: column;
+}
+
+.readAlongSheet :has(.player),
+.readAlongSheet .player {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.readAlongSheet .player {
+  overflow-y: auto;
+}
+
+/* Fullscreen sheets size their wrapper, not the dialog */
+.readAlongSheet[role="dialog"] {
+  max-height: 100%;
+}
+
+/* Popovers and modals only cap their height, so the cover sizes its children with container units */
+.readAlongSheet .playerCover {
+  container-type: size;
+  flex: 0 1 var(--th-layout-constraints-cover, 300px);
+  height: auto;
+  min-height: 100px;
+}
+
+.readAlongSheet .playerCover > * {
+  height: 100cqh;
 }
 
 .playerSheetBody .playerCover {
   flex: 1 1 auto;
-  block-size: auto;
-  min-block-size: 100px;
-  max-block-size: var(--th-layout-constraints-cover, 300px);
+  height: auto;
+  min-height: 100px;
+  max-height: var(--th-layout-constraints-cover, 300px);
 }
 
 .miniPlayerSheetBackdrop {
@@ -110,8 +145,8 @@
   display: flex;
   flex-direction: column;
   flex: none;
-  inline-size: 100%;
-  block-size: var(--th-layout-constraints-cover, 300px);
+  width: 100%;
+  height: var(--th-layout-constraints-cover, 300px);
 }
 
 .readAlongExpandedActions {

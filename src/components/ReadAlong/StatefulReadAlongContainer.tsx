@@ -6,6 +6,7 @@ import { ThActionsKeys, ThDockingKeys, ThMiniPlayerTypes } from "@/preferences/m
 import { StatefulActionContainerProps } from "../Actions/models/actions";
 
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
+import readAlongStyles from "./assets/styles/thorium-web.readAlong.module.css";
 
 import CollapseIcon from "./assets/icons/expand_more.svg";
 
@@ -63,6 +64,7 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         id: ThActionsKeys.readAlong,
         triggerRef: triggerRef,
         heading: t("reader.actions.readAloud.compact"),
+        className: readAlongStyles.readAlongSheet,
         placement: "bottom",
         // The compact bottom sheet hosts the expanded player itself
         isOpen: (actionState?.isOpen && placement !== ThMiniPlayerTypes.bottomSheet) || false,
