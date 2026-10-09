@@ -1,6 +1,6 @@
 "use client";
 
-import audioStyles from "../Audio/actions/assets/styles/thorium-web.audioActions.module.css";
+import readAlongStyles from "./assets/styles/thorium-web.readAlong.module.css";
 
 import { ThActionsBar } from "@/core/Components/Actions/ThActionsBar";
 import { AudioActionPair } from "../Audio/actions/StatefulAudioMediaActions";
@@ -17,7 +17,7 @@ export const StatefulReadAlongMediaActions = () => {
   const displayOrder = preferences.readAlong.actions.expanded.displayOrder;
 
   return (
-    <ThActionsBar className={ audioStyles.wrapper } aria-label={ t("audio.player.mediaActions") }>
+    <ThActionsBar className={ readAlongStyles.readAlongExpandedActions } aria-label={ t("audio.player.mediaActions") }>
       { displayOrder.map(key => {
         const action = readAlongActionsMap[key];
         if (!action) return null;

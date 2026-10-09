@@ -2,20 +2,6 @@
   width: auto;
 }
 
-.button {
-  --th-icon-size: calc(var(--audio-icon-base) * (5/4));
-  padding: calc(var(--th-icon-size) * (1/4));
-  outline: none;
-}
-
-.button[data-focus-visible] {
-  outline: 2px solid var(--th-theme-focus);
-}
-
-.button[data-disabled] {
-  color: var(--th-theme-disable);
-}
-
 .sliderTrack {
   position: relative;
   box-sizing: border-box;

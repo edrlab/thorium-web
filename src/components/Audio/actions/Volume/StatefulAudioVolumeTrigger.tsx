@@ -10,8 +10,6 @@ import VolumeOffIcon from "./assets/icons/volume_off.svg";
 import { StatefulActionIcon } from "../../../Actions/Triggers/StatefulActionIcon";
 import { StatefulActionTriggerProps } from "../../../Actions/models/actions";
 
-import volumeStyles from "./assets/styles/thorium-web.volume.module.css";
-
 import { useI18n } from "@/i18n/useI18n";
 import { useVolumeAction } from "./hooks/useVolumeAction";
 
@@ -53,7 +51,6 @@ export const StatefulAudioVolumeTrigger = ({ ref }: StatefulActionTriggerProps) 
         }
       } }
       isDisabled={ isDisabled }
-      className={ volumeStyles.button }
     >
       <VolumeIcon aria-hidden="true" focusable="false" />
     </StatefulActionIcon>

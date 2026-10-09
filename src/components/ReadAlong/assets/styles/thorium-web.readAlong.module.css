@@ -114,6 +114,25 @@
   block-size: var(--th-layout-constraints-cover, 300px);
 }
 
+.readAlongExpandedActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  --readAlong-icon-base: var(--th-icon-size, 24px);
+}
+
+@container (max-width: 300px) {
+  .readAlongExpandedActions {
+    --th-icon-size: 18px;
+  }
+}
+
+/* Set on the triggers since the base is read from the bar's own --th-icon-size */
+.readAlongExpandedActions > * {
+  --th-icon-size: calc(var(--readAlong-icon-base) * (5/4));
+}
+
 .playerChapter {
   margin: 0;
   color: var(--th-theme-subdue-text);
