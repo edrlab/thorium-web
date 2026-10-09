@@ -40,7 +40,7 @@ const MySwitch = () => {
 }
 ```
 
-[Stateful components](../../src/components/) are making extensive use of this property if you need more complex examples.
+[Stateful components](../../../src/components/) are making extensive use of this property if you need more complex examples.
 
 ## Categories
 
@@ -54,17 +54,28 @@ The Core package provides various UI components organized into categories:
 - `Menu`: Components for creating menus and menus items.
 - `Reader`: Components for the general interface of the reader.
 - `Settings`: Components for settings (switche, slider, numberfield, etc.).
+- `Tooltips`: Components for tooltips.
 
 
 ## Audio Components
 
-A core primitive for building audio player interfaces.
+Core primitives for building audio and read-along player interfaces.
 
 ```tsx
-import { ThAudioProgress } from "@edrlab/thorium-web/core/components";
+import {
+  ThAudioProgress,
+  ThCover,
+  ThMiniPlayer,
+  ThPlaybackControls,
+  ThPublicationMetadata
+} from "@edrlab/thorium-web/core/components";
 ```
 
 - `ThAudioProgress`: A seekable progress bar displaying elapsed time, remaining time, an optional chapter label, and seekable range overlays.
+- `ThCover`: A publication cover with a placeholder and an optional loading indicator.
+- `ThMiniPlayer`: A compact player with metadata, optionally a button expanding the player, and slots for controls and actions.
+- `ThPlaybackControls`: An actions bar laying out playback buttons in a fixed, left-to-right order.
+- `ThPublicationMetadata`: Title, subtitle and authors in a configurable order.
 
 Please refer to the [Audio Components API documentation](./API/Components/Audio.md) for more information.
 
@@ -327,6 +338,7 @@ These components are used for creating settings:
 
 ```tsx
 import {
+  ThColorSwatchPicker,
   ThDropdown,
   ThNumberField,
   ThRadioGroup,
@@ -342,6 +354,23 @@ TBD.
 The package also contains a wrapper component that can be used to create a group/collection of settings, `<ThSettingsWrapper>`. It accepts an `items` prop to build entries of the settings list dynamically.
 
 TBD.
+
+## Tooltips Components
+
+Components for creating tooltips:
+
+```tsx
+import { ThTooltip } from "@edrlab/thorium-web/core/components";
+```
+
+`<ThTooltip>` replaces the Tooltip component from react-aria-components inside a `TooltipTrigger`. It adds two things:
+
+- Pressing Escape while the tooltip is open also removes focus from its trigger.
+- Tooltips no longer get stuck in the top-left corner of the viewport after you move quickly from one trigger to another.
+
+`ThActionButton` and `ThLink` already use it for their tooltips.
+
+Please refer to the [Tooltips Components API documentation](./API/Components/Tooltips.md) for more information.
 
 ## Misc Components
 

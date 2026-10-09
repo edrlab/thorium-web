@@ -311,7 +311,7 @@ As a matter of fact, this user setting is created dynamically from these prefere
 > **Although not recommended**, this means creating a theme took 4 steps if you were forking the project.
 
 - add it to the `ThThemeKeys` enum;
-- add its display string to `settings.themes` in [resources/locales](../../resources/locales/en.json);
+- add its display string to `settings.themes` in [public/locales](../../public/locales/en/thorium-shared.json);
 - add it to `reflowOrder` and/or `fxlOrder`;
 - add and configure them in `themes.keys`.
 
@@ -390,3 +390,13 @@ The `keys` object contains the themes (key of `ThThemeKeys` enum as a property) 
 - `focus`: the color of the outline on `:focus-visible`
 - `elevate`: the drop shadow of containers
 - `immerse`: the opacity of immersive mode (value in the range `[0...1]` as a string)
+
+Reader themes (`ThReaderThemeTokens`) also require the colors of the read-along highlight, so that it matches the reading theme:
+
+- `readAlongUtterance`: the color of the sentence being read
+- `readAlongWord`: the color of the word being read
+- `readAlongMask`: the color dimming everything but the sentence being read, in the Focus preset. The defaults use the theme’s background with transparency, e.g. `#ffffff99` for the light theme
+
+Audio themes don’t use them. A color the user picks for the highlight is kept as-is, whatever the theme.
+
+Like other tokens, they are also exposed as CSS variables, e.g. `--th-theme-readAlongUtterance`.

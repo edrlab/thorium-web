@@ -11,7 +11,7 @@ import { ActionComponent } from "@/components/Plugins/PluginRegistry";
 import { useI18n } from "@/i18n/useI18n";
 import { useAudioPreferences } from "@/preferences/hooks/useAudioPreferences";
 
-const AudioActionPair = ({ action }: { action: ActionComponent }) => {
+export const AudioActionPair =({ action }: { action: ActionComponent }) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const { Trigger, Target } = action;
   return (

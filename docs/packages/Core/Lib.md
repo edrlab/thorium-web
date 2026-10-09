@@ -36,6 +36,8 @@ The Core package comes with a list of slices offering multiple reducers:
 - `playerReducer`: manages audio player state (playback status, seeking, stalled, seekable ranges);
 - `preferencesReducer`: manages persisted preferences state via Redux;
 - `publicationReducer`: manages data related to the publication (direction, title, etc.);
+- `readAlongPlayerReducer`: manages the read-along player (active, layout, status, sleep timer, etc.);
+- `readAlongSettingsReducer`: manages read-along preferences (voice, rate, highlight, etc.);
 - `readerReducer`: manages state of the reader (loading, immersive mode, etc.);
 - `settingsReducer`: manages settings of the application (typography, spacing, etc.);
 - `themeReducer`: manages the theme and accessibility of the application;

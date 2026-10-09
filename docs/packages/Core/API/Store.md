@@ -80,6 +80,90 @@ interface PlayerReducerState {
 - `setTrackReady`: Set track-ready flag
 - `setSeekableRanges`: Update seekable time ranges
 
+### ReadAlongSettings Reducer
+
+Manages read-along preferences. Values map to the TS-Toolkit `ReadAloudNavigator` preferences, and `null` means the navigator’s default. The slice is persisted, and its values are submitted as preferences when read-along loads.
+
+**State Interface:**
+```typescript
+type HighlightStateKey = "utteranceStyle" | "wordStyle";
+
+// A style without tint takes the reading theme’s color
+interface HighlightStateObject {
+  preset: ThReadAlongHighlightPresetKeys;
+  custom: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
+  baseline: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
+}
+
+interface ReadAlongSettingsReducerState {
+  voice: string | null;               // Applied with setVoice() rather than as a preference
+  format: ReadAloudSettings["format"] | null;
+  inlineContextualization: boolean | null;
+  verbosity: ReadAloudSettings["verbosity"] | null;
+  skip: ReadAloudSettings["skip"] | null;
+  contextualize: ReadAloudSettings["contextualize"] | null;
+  language: ReadAloudSettings["language"] | null;
+  segmentation: ReadAloudSettings["segmentation"] | null;
+  pauseDuration: number | null;
+  autoPause: ReadAloudSettings["autoPause"] | null;
+  rate: number | null;
+  pitch: number | null;
+  volume: number | null;
+  utteranceStyle: ReadAloudSettings["utteranceStyle"] | null; // Resolved style submitted to the navigator
+  wordStyle: ReadAloudSettings["wordStyle"] | null;           // Resolved style submitted to the navigator
+  highlight: HighlightStateObject;
+}
+```
+
+**Actions:**
+- `setReadAlongVoice`: Set the voice name
+- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`, `setReadAlongRate`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles
+- `setReadAlongHighlightPreset`: Apply a highlight preset, with payload `{ preset, values, effective }`
+- `setReadAlongHighlightEffective`: Update the resolved styles only, e.g. when the reading theme changes
+
+### ReadAlongPlayer Reducer
+
+Manages the read-along player. `isActive` and `layout` are user state; the other fields are session state, reset each time read-along loads.
+
+**State Interface:**
+```typescript
+interface ReadAlongMetadata {
+  title: string;
+  subtitle?: string;
+  authors?: string[];
+  coverUrl?: string;
+  language?: string;
+}
+
+interface ReadAlongVoiceControls {
+  boundary: boolean; // The voice reports word boundaries, needed for word highlighting
+  speed: boolean;    // The voice supports changing the rate
+}
+
+type ReadAlongLayout = "mini" | "expanded";
+
+interface ReadAlongPlayerReducerState {
+  isActive: boolean;
+  layout: ReadAlongLayout;     // Restored when read-along is activated again
+  metadata: ReadAlongMetadata | null;
+  status: ReadAloudState;
+  voiceControls: ReadAlongVoiceControls;
+  sleepTimer: { remainingSeconds: number | null };
+  settingsContainer: ThReadAlongSettingsContainerKeys;
+}
+```
+
+**Actions:**
+- `setReadAlongActive`: Show or hide the player
+- `setReadAlongLayout`: Set the layout restored on activation
+- `setReadAlongStatus`: Set the navigator state
+- `setReadAlongVoiceControls`: Set what the current voice supports
+- `setReadAlongSleepTimer`: Update the sleep timer
+- `setReadAlongMetadata`: Set the publication metadata shown by the player
+- `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the highlight submenu
+- `resetReadAlongPlayer`: Reset the session fields, keeping `isActive`, `layout` and `metadata`
+
 ### Actions Reducer
 
 Manages state for action-related features.
@@ -308,6 +392,11 @@ interface PreferencesReducerState {
     hideOnForwardScroll?: boolean;
     showOnBackwardScroll?: boolean;
   };
+  readAlong?: {
+    generateFromMarkup?: boolean;
+    readFromPointer?: boolean;
+    detachable?: boolean;
+  };
 }
 ```
 
@@ -317,6 +406,7 @@ interface PreferencesReducerState {
 - `setUI`: Update UI settings
 - `setScrollAffordances`: Configure scroll behavior
 - `setPaginatedAffordance`: Update paginated affordance settings
+- `setReadAlong`: Update read-along runtime preferences (generateFromMarkup, readFromPointer, detachable)
 - `updateFromPreferences`: Bulk update from a preferences object
 
 > [!NOTE]

@@ -1,5 +1,5 @@
 import { ThPlugin } from "../PluginRegistry";
-import { ThActionsKeys, ThSettingsKeys } from "@/preferences/models";
+import { ThActionsKeys, ThReadAlongActionKeys, ThReadAlongKeys, ThSettingsKeys } from "@/preferences/models";
 
 import { StatefulFullscreenTrigger } from "../../Actions/Fullscreen/StatefulFullscreenTrigger";
 import { StatefulJumpToPositionTrigger } from "../../Actions/JumpToPosition/StatefulJumpToPositionTrigger";
@@ -8,6 +8,16 @@ import { StatefulSettingsTrigger } from "../../Actions/Settings/StatefulSettings
 import { StatefulVisualSettingsContainer } from "../../Actions/Settings/StatefulVisualSettingsContainer";
 import { StatefulTocTrigger } from "../../Actions/Toc/StatefulTocTrigger";
 import { StatefulTocContainer } from "../../Actions/Toc/StatefulTocContainer";
+import { StatefulReadAlongTrigger } from "../../ReadAlong/StatefulReadAlongTrigger";
+import { StatefulReadAlongContainer } from "../../ReadAlong/StatefulReadAlongContainer";
+import { StatefulAudioVolumeTrigger } from "../../Audio/actions/Volume/StatefulAudioVolumeTrigger";
+import { StatefulAudioVolumeContainer } from "../../Audio/actions/Volume/StatefulAudioVolumeContainer";
+import { StatefulAudioPlaybackRateTrigger } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateTrigger";
+import { StatefulAudioPlaybackRateContainer } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateContainer";
+import { StatefulAudioSleepTimerTrigger } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerTrigger";
+import { StatefulAudioSleepTimerContainer } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerContainer";
+import { StatefulReadAlongSettingsTrigger } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsTrigger";
+import { StatefulReadAlongSettingsContainer } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsContainer";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulDivinaQuality } from "../../Divina/Settings/StatefulDivinaQuality";
@@ -32,6 +42,19 @@ import { StatefulNoRuby } from "../../Settings/Text/StatefulNoRuby";
 import { StatefulTheme } from "../../Settings/StatefulTheme";
 import { StatefulWordSpacing } from "../../Settings/Spacing/StatefulWordSpacing";
 import { StatefulZoom } from "../../Settings/StatefulZoom";
+import { StatefulReadAlongVoice } from "../../ReadAlong/Settings/StatefulReadAlongVoice";
+import { StatefulReadAlongRate } from "../../ReadAlong/Settings/StatefulReadAlongRate";
+import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
+import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
+import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/StatefulReadAlongPauseDuration";
+import { StatefulReadAlongUtteranceStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongUtteranceStyle";
+import { StatefulReadAlongWordStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongWordStyle";
+import { StatefulReadAlongHighlightGroup } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightGroup";
+import { StatefulReadAlongHighlightPresets } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightPresets";
+import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/StatefulReadAlongAutoPause";
+import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/StatefulReadAlongVerbosity";
+import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/StatefulReadAlongLanguage";
+import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/StatefulReadAlongInlineContextualization";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -55,6 +78,28 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThActionsKeys.toc]: {
           Trigger: StatefulTocTrigger,
           Target: StatefulTocContainer
+        },
+        [ThActionsKeys.readAlong]: {
+          Trigger: StatefulReadAlongTrigger,
+          Target: StatefulReadAlongContainer
+        }
+      },
+      readAlongActions: {
+        [ThReadAlongActionKeys.volume]: {
+          Trigger: StatefulAudioVolumeTrigger,
+          Target: StatefulAudioVolumeContainer
+        },
+        [ThReadAlongActionKeys.rate]: {
+          Trigger: StatefulAudioPlaybackRateTrigger,
+          Target: StatefulAudioPlaybackRateContainer
+        },
+        [ThReadAlongActionKeys.sleepTimer]: {
+          Trigger: StatefulAudioSleepTimerTrigger,
+          Target: StatefulAudioSleepTimerContainer
+        },
+        [ThReadAlongActionKeys.settings]: {
+          Trigger: StatefulReadAlongSettingsTrigger,
+          Target: StatefulReadAlongSettingsContainer
         }
       },
       settings: {
@@ -140,6 +185,48 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThSettingsKeys.zoom]: {
           Comp: StatefulZoom
+        },
+        [ThReadAlongKeys.voice]: {
+          Comp: StatefulReadAlongVoice
+        },
+        [ThReadAlongKeys.rate]: {
+          Comp: StatefulReadAlongRate
+        },
+        [ThReadAlongKeys.pitch]: {
+          Comp: StatefulReadAlongPitch
+        },
+        [ThReadAlongKeys.volume]: {
+          Comp: StatefulReadAlongVolume
+        },
+        [ThReadAlongKeys.pauseDuration]: {
+          Comp: StatefulReadAlongPauseDuration
+        },
+        [ThReadAlongKeys.highlightGroup]: {
+          Comp: StatefulReadAlongHighlightGroup
+        },
+        [ThReadAlongKeys.highlightPresets]: {
+          Comp: StatefulReadAlongHighlightPresets,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.utteranceStyle]: {
+          Comp: StatefulReadAlongUtteranceStyle,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.wordStyle]: {
+          Comp: StatefulReadAlongWordStyle,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.autoPause]: {
+          Comp: StatefulReadAlongAutoPause
+        },
+        [ThReadAlongKeys.verbosity]: {
+          Comp: StatefulReadAlongVerbosity
+        },
+        [ThReadAlongKeys.language]: {
+          Comp: StatefulReadAlongLanguage
+        },
+        [ThReadAlongKeys.inlineContextualization]: {
+          Comp: StatefulReadAlongInlineContextualization
         }
       }
     }

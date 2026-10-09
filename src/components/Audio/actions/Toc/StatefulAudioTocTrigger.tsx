@@ -6,8 +6,6 @@ import { ThAudioActionKeys } from "@/preferences/models";
 import { StatefulActionIcon } from "../../../Actions/Triggers/StatefulActionIcon";
 import { StatefulActionTriggerProps } from "../../../Actions/models/actions";
 
-import audioTocStyles from "./assets/styles/thorium-web.audioToc.module.css";
-
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -39,7 +37,6 @@ export const StatefulAudioTocTrigger = ({ ref }: StatefulActionTriggerProps) => 
         }
       } }
       isDisabled={ isDisabled }
-      className={ audioTocStyles.button }
     >
       <TocIcon aria-hidden="true" focusable="false" />
     </StatefulActionIcon>

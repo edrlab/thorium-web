@@ -32,7 +32,7 @@ export const StatefulDivinaStripWidth = () => {
   // Strip width is only effective in scrolled mode
   const isScrolled = getSetting("scrolled") ?? scrolledPref ?? false;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.divinaStripWidth);
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaStripWidth, "divina");
 
   const updatePreference = useCallback(async (newValue: number) => {
     await submitPreferences({ [prefKey]: newValue });

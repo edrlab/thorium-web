@@ -2,13 +2,13 @@
 
 import SpeedIcon from "./assets/icons/speed.svg";
 
-import { ThAudioActionKeys } from "@/preferences/models";
 import { StatefulActionIcon } from "../../../Actions/Triggers/StatefulActionIcon";
 import { StatefulActionTriggerProps } from "../../../Actions/models/actions";
 
 import playbackStyles from "./assets/styles/thorium-web.playbackRate.module.css";
 
 import { useI18n } from "@/i18n/useI18n";
+import { usePlaybackRateAction } from "./hooks/usePlaybackRateAction";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleActionOpen } from "@/lib/actionsReducer";
@@ -18,13 +18,9 @@ export const StatefulAudioPlaybackRateTrigger = ({ ref }: StatefulActionTriggerP
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);
   const { actionsKeys } = useActionsPreferences();
-  
-  const shortcut = actionsKeys[ThAudioActionKeys.playbackRate]?.shortcut;
+  const { actionKey, playbackRate, isDisabled } = usePlaybackRateAction();
 
-  const playbackRate = useAppSelector(state => state.audioSettings.playbackRate);
-  const isTrackReady = useAppSelector(state => state.player.isTrackReady);
-  const isStalled = useAppSelector(state => state.player.isStalled);
-  const isDisabled = !isTrackReady || isStalled;
+  const shortcut = actionsKeys[actionKey]?.shortcut;
 
   const dispatch = useAppDispatch();
 
@@ -36,7 +32,7 @@ export const StatefulAudioPlaybackRateTrigger = ({ ref }: StatefulActionTriggerP
       placement="top"
       onPress={ () => {
         if (profile) {
-          dispatch(toggleActionOpen({ key: ThAudioActionKeys.playbackRate, profile }));
+          dispatch(toggleActionOpen({ key: actionKey, profile }));
         }
       } }
       isDisabled={ isDisabled }

@@ -1,0 +1,91 @@
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+import { ReadAloudState } from "@readium/navigator";
+import { ThReadAlongSettingsContainerKeys } from "@/preferences/models";
+
+export interface ReadAlongSleepTimerState {
+  remainingSeconds: number | null;
+}
+
+export interface ReadAlongMetadata {
+  title: string;
+  subtitle?: string;
+  authors?: string[];
+  coverUrl?: string;
+  language?: string;
+}
+
+export interface ReadAlongVoiceControls {
+  boundary: boolean;
+  speed: boolean;
+}
+
+export type ReadAlongLayout = "mini" | "expanded";
+
+export interface ReadAlongPlayerReducerState {
+  isActive: boolean;
+  layout: ReadAlongLayout;
+  metadata: ReadAlongMetadata | null;
+  status: ReadAloudState;
+  isNavigationLocked: boolean;
+  voiceControls: ReadAlongVoiceControls;
+  sleepTimer: ReadAlongSleepTimerState;
+  settingsContainer: ThReadAlongSettingsContainerKeys;
+}
+
+const initialState: ReadAlongPlayerReducerState = {
+  isActive: false,
+  layout: "mini",
+  metadata: null,
+  status: "idle",
+  isNavigationLocked: false,
+  voiceControls: { boundary: true, speed: true },
+  sleepTimer: { remainingSeconds: null },
+  settingsContainer: ThReadAlongSettingsContainerKeys.initial
+};
+
+export const readAlongPlayerSlice = createSlice({
+  name: "readAlongPlayer",
+  initialState,
+  reducers: {
+    setReadAlongActive: (state, action: PayloadAction<boolean>) => {
+      state.isActive = action.payload;
+    },
+    setReadAlongLayout: (state, action: PayloadAction<ReadAlongLayout>) => {
+      state.layout = action.payload;
+    },
+    setReadAlongStatus: (state, action: PayloadAction<ReadAloudState>) => {
+      state.status = action.payload;
+    },
+    setReadAlongNavigationLocked: (state, action: PayloadAction<boolean>) => {
+      state.isNavigationLocked = action.payload;
+    },
+    setReadAlongVoiceControls: (state, action: PayloadAction<ReadAlongVoiceControls>) => {
+      state.voiceControls = action.payload;
+    },
+    setReadAlongSleepTimer: (state, action: PayloadAction<Partial<ReadAlongSleepTimerState>>) => {
+      state.sleepTimer = { ...state.sleepTimer, ...action.payload };
+    },
+    setReadAlongMetadata: (state, action: PayloadAction<ReadAlongMetadata | null>) => {
+      state.metadata = action.payload;
+    },
+    setReadAlongSettingsContainer: (state, action: PayloadAction<ThReadAlongSettingsContainerKeys>) => {
+      state.settingsContainer = action.payload;
+    },
+    resetReadAlongPlayer: (state) => ({ ...initialState, isActive: state.isActive, layout: state.layout, metadata: state.metadata })
+  }
+});
+
+export const {
+  setReadAlongActive,
+  setReadAlongLayout,
+  setReadAlongStatus,
+  setReadAlongNavigationLocked,
+  setReadAlongVoiceControls,
+  setReadAlongSleepTimer,
+  setReadAlongMetadata,
+  setReadAlongSettingsContainer,
+  resetReadAlongPlayer
+} = readAlongPlayerSlice.actions;
+
+export default readAlongPlayerSlice.reducer;

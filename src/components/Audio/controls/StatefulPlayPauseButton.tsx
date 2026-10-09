@@ -14,8 +14,12 @@ import { useI18n } from "@/i18n/useI18n";
 
 export const StatefulPlayPauseButton = ({ isDisabled }: { isDisabled?: boolean }) => {
   const { t } = useI18n();
-  const { play, pause } = useNavigator().media;
-  const isPlaying = useAppSelector(state => state.player.status === "playing");
+  const { readAloud, playback } = useNavigator();
+  const { play, pause } = playback;
+  const isPlaying = useAppSelector(state => readAloud 
+    ? state.readAlongPlayer.status === "playing"
+    : state.player.status === "playing"
+  );
 
   const handlePress = useCallback(() => {
     if (isPlaying) {

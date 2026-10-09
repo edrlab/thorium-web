@@ -130,3 +130,14 @@ interface StatefulAudioTocActionProps {
   isDisabled: boolean;
 }
 ```
+
+## Shared with Read Along
+
+The volume, playback rate and sleep timer actions also make up the read-along player’s actions, and the playback buttons its controls. They pick their context from the preferences provider they are rendered in:
+
+- **In the audio player** (`ThAudioPreferencesProvider`): audio preferences, the audio navigator and the `audioSettings` / `player` state, as described above.
+- **In a reader** (`ThPreferencesProvider`): `preferences.readAlong`, the read-aloud navigator and the `readAlongSettings` / `readAlongPlayer` state. They are disabled until read-along has loaded, and the playback rate also when the current voice can’t change its rate.
+
+In read-along, the sleep timer only supports durations: the end of resource and end of fragment presets have no effect there, and its default presets don’t include them.
+
+See [Read Along](../../../customization/ReadAlong.md) for configuring them.

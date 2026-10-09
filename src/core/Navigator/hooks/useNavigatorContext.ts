@@ -19,6 +19,16 @@ type AllVisualSettings = EpubSettings & WebPubSettings & DivinaSettings;
 // Define the callback type used across navigators
 type NavigationCallback = (ok: boolean) => void;
 
+// Playback controls of the media navigator, or of the read-aloud navigator once loaded
+interface PlaybackNavigator {
+  play(): void;
+  pause(): void;
+  skipBackward(): void;
+  skipForward(): void;
+}
+
+const noop = () => {};
+
 // Define the unified navigator interface
 interface UnifiedNavigator {
   // Navigation methods available in both
@@ -126,6 +136,31 @@ export const useNavigator = () => {
     return context.media;
   }, [context.media]);
 
+  // Loads asynchronously after the reader, so consumers must handle null instead of throwing
+  const readAloudMemo = useMemo(() => {
+    return context.readAloud?.isLoaded ? context.readAloud : null;
+  }, [context.readAloud]);
+
+  const playback = useMemo<PlaybackNavigator>(() => {
+    if (readAloudMemo) {
+      return {
+        play: () => { readAloudMemo.play() },
+        pause: readAloudMemo.pause,
+        skipBackward: () => { readAloudMemo.previous() },
+        skipForward: () => { readAloudMemo.next() }
+      };
+    }
+    if (mediaMemo) {
+      return {
+        play: mediaMemo.play,
+        pause: mediaMemo.pause,
+        skipBackward: mediaMemo.skipBackward,
+        skipForward: mediaMemo.skipForward
+      };
+    }
+    return { play: noop, pause: noop, skipBackward: noop, skipForward: noop };
+  }, [readAloudMemo, mediaMemo]);
+
   return useMemo(() => ({
     get visual() {
       if (!visualMemo) throw new Error("Visual navigator not available");
@@ -135,8 +170,14 @@ export const useNavigator = () => {
       if (!mediaMemo) throw new Error("Media navigator not available");
       return mediaMemo;
     },
+    get readAloud() {
+      return readAloudMemo;
+    },
+    get playback(): PlaybackNavigator {
+      return playback;
+    },
     get unified(): UnifiedNavigator {
       return unified;
     }
-  }), [visualMemo, mediaMemo, unified]);
+  }), [visualMemo, mediaMemo, readAloudMemo, playback, unified]);
 };

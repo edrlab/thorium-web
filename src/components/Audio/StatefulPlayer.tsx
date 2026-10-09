@@ -36,6 +36,7 @@ import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useAudioPlayerInit } from "./Hooks/useAudioPlayerInit";
 import { useAudioKeyboardPeripherals } from "./Hooks/useAudioKeyboardPeripherals";
 import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
+import { useSleepTimerCountdown } from "./actions/SleepTimer/hooks/useSleepTimerCountdown";
 
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import {
@@ -151,6 +152,8 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
 
   const audioNavigator = useAudioNavigator();
   const { canGoBackward, canGoForward, submitPreferences, pause, isPlaying, timeline: getNavigatorTimeline } = audioNavigator;
+
+  useSleepTimerCountdown();
 
   const { setLocalData, getLocalData } = usePositionStorage(localDataKey, positionStorage);
 

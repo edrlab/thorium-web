@@ -1,0 +1,174 @@
+.miniPlayer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.miniPlayerMetadata {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.miniPlayerExpandButton {
+  text-align: start;
+}
+
+.miniPlayerHeading,
+.miniPlayerSubheading {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.miniPlayerHeading {
+  font-weight: bold;
+}
+
+.miniPlayerControls {
+  --th-icon-size: 18px;
+}
+
+.miniPlayerActions {
+  display: flex;
+  align-items: center;
+}
+
+/* Reserves the height of the absolutely positioned drag indicator, which shares the close button's row */
+.playerSheetHeader {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  min-height: calc(var(--th-icon-size, 40px) * 1.5 + var(--th-layout-spacing) / 2);
+  padding: calc(var(--th-layout-spacing) / 2) var(--th-layout-spacing) 0;
+  /* Covers the sheet's shadow layer */
+  background-color: var(--th-theme-background);
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+  transition: border-radius 500ms;
+}
+
+/* Same top offset as the close button, both are 1.5 icon sizes tall so their centers line up */
+.playerSheet .playerSheetDragIndicator {
+  top: calc(var(--th-layout-spacing) / 2);
+}
+
+.playerSheet[data-full-height] .playerSheetHeader {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* The bottom bar holding the mini player stays visible in immersive mode, doubled class to win over the reader's rules */
+:global(.thorium_web_layeredUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  transform: translateY(0);
+  box-shadow: var(--th-theme-elevate);
+}
+
+:global(.thorium_web_stackedUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  opacity: 1;
+}
+
+.miniPlayerSheetBody {
+  padding: 0 var(--th-layout-spacing) var(--th-layout-spacing);
+}
+
+/* Like the audio player, the cover shrinks so the expanded player fits the sheet, then the player scrolls */
+.playerSheetBody {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.playerSheetBody .player {
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Sheet types nest the body differently, so every element between the sheet and the player flexes */
+.readAlongSheet,
+.readAlongSheet :has(.player) {
+  display: flex;
+  flex-direction: column;
+}
+
+.readAlongSheet :has(.player),
+.readAlongSheet .player {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.readAlongSheet .player {
+  overflow-y: auto;
+}
+
+/* Fullscreen sheets size their wrapper, not the dialog */
+.readAlongSheet[role="dialog"] {
+  max-height: 100%;
+}
+
+/* Popovers and modals only cap their height, so the cover sizes its children with container units */
+.readAlongSheet .playerCover {
+  container-type: size;
+  flex: 0 1 var(--th-layout-constraints-cover, 300px);
+  height: auto;
+  min-height: 100px;
+}
+
+.readAlongSheet .playerCover > * {
+  height: 100cqh;
+}
+
+.playerSheetBody .playerCover {
+  flex: 1 1 auto;
+  height: auto;
+  min-height: 100px;
+  max-height: var(--th-layout-constraints-cover, 300px);
+}
+
+.miniPlayerSheetBackdrop {
+  display: none;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--th-layout-spacing) * 2);
+  padding-block: var(--th-layout-spacing);
+}
+
+/* The audio cover sizes its image against a definite height, which the audio player layout otherwise provides */
+.playerCover {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: 100%;
+  height: var(--th-layout-constraints-cover, 300px);
+}
+
+.readAlongExpandedActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  --readAlong-icon-base: var(--th-icon-size, 24px);
+}
+
+@container (max-width: 300px) {
+  .readAlongExpandedActions {
+    --th-icon-size: 18px;
+  }
+}
+
+/* Set on the triggers since the base is read from the bar's own --th-icon-size */
+.readAlongExpandedActions > * {
+  --th-icon-size: calc(var(--readAlong-icon-base) * (5/4));
+}
+
+.playerChapter {
+  margin: 0;
+  color: var(--th-theme-subdue-text);
+}

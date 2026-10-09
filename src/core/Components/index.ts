@@ -9,4 +9,5 @@ export * from "./Links";
 export * from "./Menu";
 export * from "./Reader";
 export * from "./Settings";
+export * from "./Tooltips";
 export * from "./ThGrid";

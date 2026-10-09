@@ -146,5 +146,83 @@
         "remaining": "Pausing in {{ remaining }}"
       }
     }
+  },
+  "_pendingThoriumLocales": {
+    "reader": {
+      "readAlong": {
+        "close": "Stop reading aloud",
+        "player": {
+          "expand": "Expand player",
+          "collapse": "Collapse player"
+        },
+        "preferences": {
+          "title": "Read aloud settings",
+          "voice": "Voice",
+          "pitch": "Pitch",
+          "pauseDuration": "Pause between sentences",
+          "autoPause": {
+            "title": "Pause automatically",
+            "values": {
+              "none": "Off",
+              "utterance": "After each sentence",
+              "block": "After each paragraph",
+              "page": "After each page",
+              "spread": "After each spread"
+            }
+          },
+          "verbosity": {
+            "title": "Announcements",
+            "values": {
+              "none": "None",
+              "few": "Few",
+              "some": "Some",
+              "most": "Most"
+            }
+          },
+          "language": {
+            "title": "Switch voice for other languages",
+            "values": {
+              "none": "Never",
+              "block-level": "For passages in another language",
+              "always": "Always, including inline phrases"
+            }
+          },
+          "inlineContextualization": {
+            "title": "Notes and page breaks",
+            "label": "Read them where they appear in a sentence"
+          },
+          "highlight": {
+            "title": "Highlight",
+            "advanced": {
+              "trigger": "Customize",
+              "tooltip": "Customize highlight styles and colors"
+            },
+            "presets": {
+              "title": "Highlight presets",
+              "none": "None",
+              "sentenceAndWord": "Sentence and word",
+              "word": "Word",
+              "mask": "Focus",
+              "custom": "Custom"
+            }
+          },
+          "decoration": {
+            "utterance": "Sentence highlight",
+            "word": "Word highlight",
+            "color": "Color",
+            "styles": {
+              "none": "None",
+              "highlight": "Highlight",
+              "highlightUnderline": "Highlight and underline",
+              "underline": "Underline",
+              "strikethrough": "Strikethrough",
+              "outline": "Outline",
+              "textColor": "Text color",
+              "mask": "Dim the rest"
+            }
+          }
+        }
+      }
+    }
   }
 }

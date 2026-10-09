@@ -4,8 +4,10 @@ import React from "react";
 
 import { WithRef } from "../customTypes";
 
-import { Button, ButtonProps, Tooltip, TooltipProps, TooltipTrigger } from "react-aria-components";
+import { Button, ButtonProps, TooltipProps, TooltipTrigger } from "react-aria-components";
 import { TooltipTriggerProps } from "react-aria";
+
+import { ThTooltip } from "../Tooltips/ThTooltip";
 
 export interface ThActionButtonProps extends ButtonProps {
   label?: string,
@@ -44,12 +46,12 @@ export const ThActionButton = ({
         >
           { children } 
         </Button>
-        <Tooltip
+        <ThTooltip
           arrowBoundaryOffset={ 0 }
           { ...compounds.tooltip }
         >
           { compounds.label }
-        </Tooltip>
+        </ThTooltip>
       </TooltipTrigger>
       </>
     )

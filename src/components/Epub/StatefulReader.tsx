@@ -37,7 +37,7 @@ import {
   Layout,
   TimelineItem
 } from "@readium/shared";
-import { PositionStorage, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
+import { PositionStorage, ReadAlongConfig, StatefulReaderProps } from "../Reader/StatefulReaderWrapper";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
 import { StatefulReaderHeader } from "../StatefulReaderHeader";
@@ -46,10 +46,13 @@ import { StatefulReaderFooter } from "../StatefulReaderFooter";
 
 import { useLocale } from "react-aria";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
+import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
 import { useEpubNavigator } from "@/core/Hooks/Epub/useEpubNavigator";
+import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
+import { useReadAlongInit, useReadAlongMetadata, useReadAlongState } from "@/components/ReadAlong/Hooks";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
@@ -107,6 +110,7 @@ export const StatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
@@ -128,13 +132,13 @@ export const StatefulReader = ({
   return (
     <>
       <ThPluginProvider>
-        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } containerRefSetter={ containerRefSetter } />
+        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } readAlong={ readAlong } containerRefSetter={ containerRefSetter } />
       </ThPluginProvider>
     </>
   );
 };
 
-const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
+const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readAlong, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; readAlong?: ReadAlongConfig; containerRefSetter?: (el: Element | null) => void }) => {
   const { fxlActionKeys, fxlThemeKeys, reflowActionKeys, reflowThemeKeys } = useFilteredPreferenceKeys();
   const { preferences, getFontMetadata, getFontInjectables } = usePreferences();
   const { direction: uiDirection } = useLocale();
@@ -186,6 +190,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
 
   const layoutUI = isFXL 
     ? preferences.theming.layout.ui?.fxl || ThLayoutUI.layered 
@@ -218,7 +224,9 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     layoutUI,
     isImmersive,
     isHovering,
-    arrowsOccupySpace
+    arrowsOccupySpace,
+    isReadAlongActive,
+    isNavigationLocked
   );
 
   const atPublicationStart = useAppSelector(state => state.publication.atPublicationStart);
@@ -237,8 +245,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   }, [dispatch]);
   
   const { handleFullscreen } = useFullscreen(onFsChange);
+  const { toggleActive: toggleReadAlong } = useReadAlongState();
 
   const epubNavigator = useEpubNavigator();
+  const readAloudNavigator = useReadAloudNavigator();
+  const { readFromPointer } = readAloudNavigator;
+  const readAlongPreferences = useReadAlongPreferences();
   const {
     goLeft,
     goRight,
@@ -302,9 +314,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         };
     
         if (event.x < oneQuarter) {
+          if (cache.current.isNavigationLocked) return;
           goLeft(!cache.current.reducedMotion, navigationCallback);
         } 
         else if (event.x > oneQuarter * 3) {
+          if (cache.current.isNavigationLocked) return;
           goRight(!cache.current.reducedMotion, navigationCallback);
         } else if (oneQuarter <= event.x && event.x <= oneQuarter * 3) {
           toggleIsImmersive();
@@ -327,6 +341,14 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       }
   }, [cache, preferences.affordances.scroll, toggleIsImmersive]);
 
+  // While read along is active, a press on content reads from there, other presses are handled as usual.
+  const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
+    if (!readAlongPreferences.readFromPointer || !cache.current.isReadAlongActive) return fallback(event);
+    readFromPointer(event).then((handled) => {
+      if (!handled) fallback(event);
+    });
+  }, [readAlongPreferences.readFromPointer, cache, readFromPointer]);
+
   // We could use canGoBackward() and canGoForward() directly on arrows
   // but maybe we will need to sync the state for other features in the future
   const updatePublicationNavigationState = useCallback(() => {
@@ -344,6 +366,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   }, [canGoBackward, canGoForward, dispatch]);
 
   const moveTo = useCallback((direction: "left" | "right" | "up" | "down" | "home" | "end") => {
+    if (cache.current.isNavigationLocked) return;
     const navigationCallback = () => {
       dispatch(setUserNavigated(true));
       activateImmersiveOnAction();
@@ -363,6 +386,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const { zoomIn, zoomOut } = useZoomCallbacks(epubNavigator);
 
   const goProgression = useCallback((shiftKey?: boolean) => {
+    if (cache.current.isNavigationLocked) return;
     if (!cache.current.settings?.scroll) {
       const cb = () => {
         dispatch(setUserNavigated(true));
@@ -397,11 +421,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       debouncedHandleProgression();
     },
     tap: function (_e: FrameClickEvent): boolean {
-      handleTap(_e);
+      handlePointer(_e, handleTap);
       return true;
     },
     click: function (_e: FrameClickEvent): boolean {
-      handleClick(_e);
+      handlePointer(_e, handleClick);
       return true;
     },
     zoom: function (_scale: number): void {},
@@ -472,6 +496,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
             return;
           }
 
+          // Starts or stops read along like its trigger, rather than expanding the player
+          if (actionKey === ThActionsKeys.readAlong) {
+            toggleReadAlong();
+            return;
+          }
+
           if (actionKey && profile) {
             dispatch(toggleActionOpen({ key: actionKey, profile }));
             return;
@@ -488,7 +518,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         }
       }
     },
-  }), [navLayout, setLocalData, dispatch, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which
@@ -528,6 +558,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
+  useReadAlongInit({ navigatorReady, config: readAlong, getVisualNavigator: epubNavigator.getInstance });
+  useReadAlongMetadata(publication);
 
   const applyConstraint = useCallback(async (value: number) => {
     await submitPreferences({
@@ -585,7 +617,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   return (
     <>
-    <NavigatorProvider visualNavigator={ epubNavigator }>
+    <NavigatorProvider
+      visualNavigator={ epubNavigator }
+      readAloudNavigator={ navigatorReady ? readAloudNavigator : undefined }
+    >
       <main className={ readerStyles.main }>
         <StatefulDockingWrapper>
           <div
@@ -617,7 +652,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
             ? <nav className={ classNames(arrowStyles.container, arrowStyles.leftContainer) }>
                 <StatefulReaderArrowButton 
                   direction="left" 
-                  isDisabled={ isRTL ? atPublicationEnd : atPublicationStart } 
+                  isDisabled={ isNavigationLocked || (isRTL ? atPublicationEnd : atPublicationStart) } 
                   onPress={ () => {
                     const navigationCallback = () => {
                       dispatch(setUserNavigated(true));
@@ -637,7 +672,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
             ? <nav className={ classNames(arrowStyles.container, arrowStyles.rightContainer) }>
                 <StatefulReaderArrowButton 
                   direction="right" 
-                  isDisabled={ isRTL ? atPublicationStart : atPublicationEnd } 
+                  isDisabled={ isNavigationLocked || (isRTL ? atPublicationStart : atPublicationEnd) } 
                   onPress={ () => {
                     const navigationCallback = () => {
                       dispatch(setUserNavigated(true));

@@ -38,6 +38,7 @@ export const StatefulModalBase = ({
     onOpenChange,
     onClosePress,
     docker,
+    headerActions,
     children,
     resetFocus,
     focusWithinRef,
@@ -119,6 +120,7 @@ export const StatefulModalBase = ({
                 keys={ docker || [] }
                 ref={ sheetCloseRef }
                 onClose={ onClosePress }
+                actions={ headerActions }
               />
             }
         </ThContainerHeader>

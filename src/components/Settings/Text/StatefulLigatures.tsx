@@ -28,7 +28,7 @@ export const StatefulLigatures = ({ standalone = true }: StatefulSettingsItemPro
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.ligatures);
+  const prefKey = getPreferenceKey(ThSettingsKeys.ligatures, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

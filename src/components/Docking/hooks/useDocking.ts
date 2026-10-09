@@ -14,13 +14,13 @@ import { useDockReservation } from "./useDockReservation";
 
 const isDockedType = (type: ThSheetTypes) => type === ThSheetTypes.dockedStart || type === ThSheetTypes.dockedEnd;
 
-export const useDocking = <T extends string>(key: T) => {
+export const useDocking = <T extends string>(key: T, { canReserve = true }: { canReserve?: boolean } = {}) => {
   const preferences = useActionsPreferences();
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
   const profile = useAppSelector(state => state.reader.profile);
   const actionsMap = useAppSelector(state => profile ? state.actions.keys[profile] : undefined);
   const actionState = actionsMap?.[key];
-  const { dock, reserved, isSlotLockedByOther } = useDockReservation(key);
+  const { dock, reserved, isSlotLockedByOther } = useDockReservation(key, canReserve);
   const dispatch = useAppDispatch();
 
   const dockingPref = preferences.docking.dock;
@@ -205,8 +205,8 @@ export const useDocking = <T extends string>(key: T) => {
       }
     });
 
-    // If the action can only be transient, then it can’t be docked
-    if (dockerKeys.length === 1 && dockerKeys[0] === ThDockingKeys.transient) return [];
+    // A single option leaves nothing to choose, e.g. transient only, or a reserved action with one slot
+    if (dockerKeys.length === 1) return [];
 
     return dockerKeys;
   }, [preferences.docking.displayOrder, currentDockConfig, sheetPref, dockablePref, reserved, canBeDocked]);

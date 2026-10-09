@@ -504,3 +504,40 @@
 .switch[data-disabled] .switchIndicator::before {
   background: var(--th-theme-disable) !important;
 }
+
+/* Color swatch picker */
+
+.swatchPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--th-layout-spacing) / 2);
+  margin: var(--th-layout-spacing) 0;
+}
+
+.swatchPickerItem {
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.swatchPickerItem[data-selected] {
+  border-color: var(--th-theme-subdue);
+}
+
+.swatchPickerItem[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+  outline-offset: 2px;
+}
+
+.swatchPickerItem[data-disabled] {
+  cursor: default;
+  opacity: 0.4;
+}
+
+.swatch {
+  width: var(--th-icon-size, 24px);
+  height: var(--th-icon-size, 24px);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px var(--th-theme-subdue);
+}

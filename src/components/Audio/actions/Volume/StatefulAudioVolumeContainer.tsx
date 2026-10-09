@@ -2,47 +2,36 @@
 
 import { useCallback } from "react";
 
-import { ThAudioKeys, ThAudioActionKeys, ThSheetTypes } from "@/preferences/models";
+import { ThSheetTypes } from "@/preferences/models";
 import { ThSlider } from "@/core/Components/Settings/ThSlider";
 import { StatefulActionContainerProps } from "../../../Actions/models/actions";
 
 import volumeStyles from "./assets/styles/thorium-web.volume.module.css";
 
-import { useNavigator } from "@/core/Navigator";
-import { useAudioPreferences } from "@/preferences/hooks/useAudioPreferences";
 import { useI18n } from "@/i18n/useI18n";
-import { useEffectiveRange } from "../../../Settings/hooks/useEffectiveRange";
+import { useVolumeAction } from "./hooks/useVolumeAction";
 import { useDocking } from "../../../Docking/hooks/useDocking";
 import { StatefulSheetWrapper } from "@/components/Sheets/StatefulSheetWrapper";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { setVolume } from "@/lib/audioSettingsReducer";
 import { setActionOpen } from "@/lib/actionsReducer";
 
 import { isIOSish } from "@/core/Helpers/getPlatform";
 
 export const StatefulAudioVolumeContainer = ({ triggerRef, placement = "top" }: StatefulActionContainerProps) => {
-  const volume = useAppSelector(state => state.audioSettings.volume);
+  const { actionKey, config, range, volume, updateVolume } = useVolumeAction();
   const profile = useAppSelector(state => state.reader.profile);
-  const isOpen = useAppSelector(state => profile ? state.actions.keys[profile][ThAudioActionKeys.volume]?.isOpen ?? false : false);
+  const isOpen = useAppSelector(state => profile ? state.actions.keys[profile][actionKey]?.isOpen ?? false : false);
 
   const { t } = useI18n();
-  const { preferences } = useAudioPreferences();
 
   const dispatch = useAppDispatch();
-  const { submitPreferences, getSetting, preferencesEditor } = useNavigator().media;
-
-  const config = preferences.settings.keys[ThAudioKeys.volume];
-  const { range } = useEffectiveRange(config.range, preferencesEditor?.volume?.supportedRange);
 
   const updatePreference = useCallback(async (value: number | number[]) => {
-    const val = Array.isArray(value) ? value[0] : value;
-    await submitPreferences({ volume: val });
-    const effectiveVolume = getSetting("volume");
-    dispatch(setVolume(effectiveVolume));
-  }, [submitPreferences, getSetting, dispatch]);
+    await updateVolume(Array.isArray(value) ? value[0] : value);
+  }, [updateVolume]);
 
-  const docking = useDocking(ThAudioActionKeys.volume);
+  const docking = useDocking(actionKey);
 
   const sliderOrientation = (docking.sheetType === ThSheetTypes.popover || docking.sheetType === ThSheetTypes.compactPopover)
     ? "vertical"
@@ -50,9 +39,9 @@ export const StatefulAudioVolumeContainer = ({ triggerRef, placement = "top" }: 
 
   const setOpen = useCallback((open: boolean) => {
     if (profile) {
-      dispatch(setActionOpen({ key: ThAudioActionKeys.volume, isOpen: open, profile }));
+      dispatch(setActionOpen({ key: actionKey, isOpen: open, profile }));
     }
-  }, [dispatch, profile]);
+  }, [dispatch, profile, actionKey]);
 
   if (isIOSish()) return null;
 
@@ -60,7 +49,7 @@ export const StatefulAudioVolumeContainer = ({ triggerRef, placement = "top" }: 
     <StatefulSheetWrapper
       sheetType={ docking.sheetType }
       sheetProps={ {
-        id: ThAudioActionKeys.volume,
+        id: actionKey,
         triggerRef,
         heading: t("reader.playback.preferences.audio.volume"),
         className: volumeStyles.wrapper,

@@ -13,6 +13,8 @@ import webPubSettingsReducer, { WebPubSettingsReducerState } from "./webPubSetti
 import divinaSettingsReducer, { DivinaSettingsReducerState } from "./divinaSettingsReducer";
 import audioSettingsReducer, { AudioSettingsState } from "./audioSettingsReducer";
 import playerReducer, { PlayerReducerState } from "./playerReducer";
+import readAlongPlayerReducer, { ReadAlongPlayerReducerState } from "./readAlongPlayerReducer";
+import readAlongSettingsReducer, { ReadAlongSettingsReducerState } from "./readAlongSettingsReducer";
 
 import debounce from "debounce";
 
@@ -34,6 +36,8 @@ export type RootState = {
   divinaSettings: DivinaSettingsReducerState;
   audioSettings: AudioSettingsState;
   player: PlayerReducerState;
+  readAlongPlayer: ReadAlongPlayerReducerState;
+  readAlongSettings: ReadAlongSettingsReducerState;
   [key: string]: any; // For external reducers
 };
 
@@ -197,7 +201,9 @@ const loadState = (storageKey: string = DEFAULT_STORAGE_KEY) => {
         preferences: undefined,
         globalPreferences: undefined,
         webPubSettings: undefined,
-        audioSettings: undefined
+        audioSettings: undefined,
+        readAlongPlayer: undefined,
+        readAlongSettings: undefined
       };
     }
     
@@ -254,6 +260,8 @@ const saveState = (state: any, storageKey?: string, externalReducers: Record<str
     if (state.webPubSettings) stateToPersist.webPubSettings = state.webPubSettings;
     if (state.divinaSettings) stateToPersist.divinaSettings = state.divinaSettings;
     if (state.audioSettings) stateToPersist.audioSettings = state.audioSettings;
+    if (state.readAlongPlayer) stateToPersist.readAlongPlayer = state.readAlongPlayer;
+    if (state.readAlongSettings) stateToPersist.readAlongSettings = state.readAlongSettings;
     
     // External reducers to persist
     Object.entries(externalReducers).forEach(([key, config]) => {
@@ -283,6 +291,8 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
     divinaSettings: divinaSettingsReducer,
     audioSettings: audioSettingsReducer,
     player: playerReducer,
+    readAlongPlayer: readAlongPlayerReducer,
+    readAlongSettings: readAlongSettingsReducer,
     ...Object.entries(externalReducers).reduce((acc, [key, config]) => ({
       ...acc,
       [key]: config.reducer
@@ -302,6 +312,8 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
     webPubSettings: persistedState.webPubSettings,
     divinaSettings: persistedState.divinaSettings,
     audioSettings: persistedState.audioSettings,
+    readAlongPlayer: persistedState.readAlongPlayer,
+    readAlongSettings: persistedState.readAlongSettings,
     // Include persisted state for external reducers that have it
     ...Object.entries(externalReducers).reduce((acc, [key, config]) => {
       if (config.persist && persistedState[key] !== undefined) {

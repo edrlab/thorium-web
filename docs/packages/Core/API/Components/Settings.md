@@ -190,6 +190,34 @@ interface ThSwitchProps extends SwitchProps {
 }
 ```
 
+## ThColorSwatchPicker
+
+A color picker limited to preset swatches, wrapping React Aria’s `ColorSwatchPicker`.
+
+### Props
+
+```typescript
+interface ThColorSwatchPickerProps extends Omit<ColorSwatchPickerProps, "children"> {
+  ref?: React.ForwardedRef<HTMLDivElement>;
+  swatches: string[];                  // CSS colors, one swatch each
+  heading?: string;                    // Optional heading, labelling the picker
+  isDisabled?: boolean;                // Disables every swatch
+  compounds?: {
+    wrapper?: HTMLAttributesWithRef<HTMLDivElement>;
+    heading?: WithRef<HeadingProps, HTMLHeadingElement>;
+    item?: Omit<ColorSwatchPickerItemProps, "color" | "children">;
+    swatch?: ColorSwatchProps;
+  }
+}
+```
+
+### Features
+
+- `value`, `defaultValue` and `onChange` pass through to `ColorSwatchPicker`; `onChange` receives a React Aria `Color`, which you can convert with `color.toString("hexa")`
+- The heading labels the picker through `aria-labelledby`, unless you pass an `aria-label`
+- `isDisabled` is applied to each swatch, as `ColorSwatchPicker` has no disabled state of its own
+- Keyboard navigation and color names for screen readers come from React Aria
+
 ## ThSettingsWrapper
 
 A container component for organizing settings with support for main and subpanels.

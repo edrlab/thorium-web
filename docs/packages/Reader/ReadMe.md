@@ -57,6 +57,7 @@ The Reader expects the following props:
 - `publication`: `Publication` — the Readium Publication object
 - `localDataKey`: `string | null` — a unique key for storing local reading data (bookmarks, positions, etc.)
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
+- `readAlong`: `ReadAlongConfig` (optional) — factories for read along’s Guided Navigation provider and speech engine, for `"epub"` and `"webPub"` (see [Read Along](../../customization/ReadAlong.md#provider-and-engine))
 - `plugins`: `ReaderPlugins` (optional) — per-profile plugin factories (see [Plugins](#plugins))
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:
@@ -157,6 +158,8 @@ const epubPlugins = async (): Promise<ThPlugin[]> => {
   plugins={{ epub: epubPlugins }}
 />
 ```
+
+Besides `actions` and `settings`, `components` accepts `primaryAudioActions` for the audio player’s media bar, and `readAlongActions` for the read-along players. Read-along actions are Trigger/Target pairs like reader actions, keyed by the `readAlongAction` custom key (see [Read Along](../../customization/ReadAlong.md#extending-read-along)).
 
 The wrapper will not mount the reader until the factory has resolved, ensuring the plugin registry is initialised with the correct plugins from the start. Only the factory matching the active profile is called — unused factories are never loaded.
 

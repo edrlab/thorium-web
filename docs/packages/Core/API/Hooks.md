@@ -123,6 +123,7 @@ function useEpubNavigator(): {
   submitPreferences: (preferences: IEpubPreferences) => Promise<void>;
   getCframes: () => (FrameManager | FXLFrameManager | undefined)[] | undefined;
   onFXLPositionChange: (cb: (locator: Locator) => void) => void;
+  getInstance: () => EpubNavigator | null; // The loaded navigator, e.g. to load the read-aloud navigator on top of it
 };
 ```
 
@@ -205,6 +206,7 @@ function useWebPubNavigator(): {
   getSetting: <K extends keyof WebPubSettings>(settingKey: K) => WebPubSettings[K];
   submitPreferences: (preferences: IWebPubPreferences) => Promise<void>;
   getCframes: () => (FrameManager | FXLFrameManager | undefined)[] | undefined;
+  getInstance: () => ExperimentalWebPubNavigator | null; // The loaded navigator, e.g. to load the read-aloud navigator on top of it
 }
 ```
 
@@ -266,6 +268,58 @@ function useDivinaNavigator(): {
 - Zoom in paged mode, and pixel scrolling in scrolled mode
 - Preferences: `scrolled`, `spreads`, `stripWidth`, `quality`, `constraint`, and `backgroundColor` (set by themes)
 - Position tracking and locator management – the navigator synthesizes its own positions
+
+## Read Aloud Navigator Hook
+
+Manages read aloud (text-to-speech) on top of a loaded EPUB or WebPub navigator. The `ReadAloudNavigator` from the Readium TS-Toolkit reads utterances with `@readium/speech`, turns pages and highlights what is read.
+
+```typescript
+interface ReadAloudNavigatorLoadProps {
+  navigator: ConstructorParameters<typeof ReadAloudNavigator>[0]; // The loaded visual navigator
+  listeners: ReadAloudListeners;
+  preferences?: IReadAloudPreferences;
+  defaults?: IReadAloudDefaults;
+  engine?: ReadiumSpeechPlaybackEngine;
+}
+
+function useReadAloudNavigator(): {
+  ReadAloudNavigatorLoad: (config: ReadAloudNavigatorLoadProps, cb?: Function) => Promise<void>;
+  ReadAloudNavigatorDestroy: (cb?: Function) => Promise<void>;
+  isLoaded: boolean;
+  play: (from?: Locator) => Promise<void>;
+  pause: () => void;
+  stop: () => void;
+  next: () => Promise<boolean>;
+  previous: () => Promise<boolean>;
+  state: () => ReadAloudState;
+  getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
+  setVoice: (voice: ReadiumSpeechVoice | string) => void;
+  getCurrentVoice: () => ReadiumSpeechVoice | null;
+  preferencesEditor: ReadAloudPreferencesEditor | undefined;
+  getSetting: <K extends keyof ReadAloudSettings>(settingKey: K) => ReadAloudSettings[K] | undefined;
+  settings: () => Readonly<ReadAloudSettings> | undefined;
+  submitPreferences: (preferences: IReadAloudPreferences) => Promise<void>;
+};
+```
+
+**Features:**
+- A single instance shared by every caller; `isLoaded` re-renders components when it is loaded or destroyed
+- Loading destroys the previous instance first, and a load superseded by another one is dropped
+- Playback by utterance: `next` and `previous` move to the adjacent utterance, there is no time-based seeking
+- Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with `setVoice`, not as a preference
+- Errors are logged with `console.warn` instead of thrown
+
+## Navigator Context
+
+The EPUB and WebPub readers provide their visual navigator and the read-aloud navigator to Stateful Components, which read them with `useNavigator`.
+
+```typescript
+const { visual, media, readAloud, playback, unified } = useNavigator();
+```
+
+- `visual` and `media` throw when their navigator isn’t provided.
+- `readAloud` returns `null` until the read-aloud navigator is loaded, as it loads after the reader. Disable controls depending on it rather than expecting it.
+- `playback` exposes `play`, `pause`, `skipBackward` and `skipForward` of the read-aloud navigator once it is loaded, otherwise of the media navigator. With neither, they do nothing. Playback controls such as `StatefulPlayPauseButton` use it, so they work in both the audio and read-along players.
 
 ## Media Query Hooks
 

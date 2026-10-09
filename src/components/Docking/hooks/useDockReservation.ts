@@ -8,13 +8,13 @@ import { useAppSelector } from "@/lib/hooks";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 import { isReservedByPref } from "../helpers/dockReservation";
 
-export const useDockReservation = <T extends string>(key: T) => {
+export const useDockReservation = <T extends string>(key: T, canReserve: boolean = true) => {
   const preferences = useActionsPreferences();
   const profile = useAppSelector(state => state.reader.profile);
   const dock = useAppSelector(state => profile ? state.actions.dock[profile] : undefined);
 
   const actionPref = preferences.actionsKeys[key as keyof typeof preferences.actionsKeys];
-  const reserved = isReservedByPref(actionPref);
+  const reserved = canReserve && isReservedByPref(actionPref);
 
   // A reserved occupant can't be displaced by any other action's docking
   const isSlotLockedByOther = useCallback((slot: ThDockingKeys.start | ThDockingKeys.end) => {
