@@ -9,7 +9,7 @@ import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
 
 import { SheetRef } from "react-modal-sheet";
 
-import { ThBottomSheet } from "@/core/Components/Containers/ThBottomSheet";
+import { ThBottomSheet, ThBottomSheetProps } from "@/core/Components/Containers/ThBottomSheet";
 import { ThContainerHeader } from "@/core/Components/Containers/ThContainerHeader";
 import { ThContainerBody } from "@/core/Components/Containers/ThContainerBody";
 import { ThCloseButton } from "@/core/Components/Buttons/ThCloseButton";
@@ -24,8 +24,15 @@ import { useAppSelector } from "@/lib/hooks";
 import classNames from "classnames";
 
 const FALLBACK_COLLAPSED_HEIGHT = 96;
+// One below react-modal-sheet's default so other bottom sheets open on top of it
+const DEFAULT_Z_INDEX = 9998;
 
-export const StatefulReadAlongSheet = ({ isOpen }: { isOpen: boolean }) => {
+export interface StatefulReadAlongSheetProps {
+  isOpen: boolean;
+  style?: ThBottomSheetProps["style"];
+}
+
+export const StatefulReadAlongSheet = ({ isOpen, style }: StatefulReadAlongSheetProps) => {
   const { t } = useI18n();
   const prefersReducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const { isExpanded, setActive, setExpanded } = useReadAlongState();
@@ -101,6 +108,7 @@ export const StatefulReadAlongSheet = ({ isOpen }: { isOpen: boolean }) => {
       onDragStart={ () => { if (!isExpanded) setDragging(true); } }
       disableScrollLocking={ !isExpanded }
       prefersReducedMotion={ prefersReducedMotion }
+      style={ { zIndex: DEFAULT_Z_INDEX, ...style } }
       focusOptions={ {
         withinRef: bodyRef,
         trackedState: isExpanded,

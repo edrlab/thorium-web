@@ -53,6 +53,7 @@ A bottom sheet hosting both players, for the `bottomSheet` mini player placement
 
 **Props:**
 - `isOpen`: Whether the sheet is shown, i.e. read along is active and the placement is `bottomSheet`
+- `style`: Style of the sheet’s root. `zIndex` defaults to `9998`, one below other bottom sheets so they open on top of it; set it higher to keep the sheet on top
 
 **Features:**
 - Collapsed to the mini player’s height, measured as it renders
