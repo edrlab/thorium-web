@@ -374,7 +374,7 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     dock: {
       [ThBreakpoints.compact]: ThDockingTypes.none,
       [ThBreakpoints.medium]: ThDockingTypes.none,
-      [ThBreakpoints.expanded]: ThDockingTypes.start,
+      [ThBreakpoints.expanded]: ThDockingTypes.end,
       [ThBreakpoints.large]: ThDockingTypes.both,
       [ThBreakpoints.xLarge]: ThDockingTypes.both
     },
