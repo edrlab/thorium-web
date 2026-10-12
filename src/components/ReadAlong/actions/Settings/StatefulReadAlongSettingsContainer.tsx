@@ -5,7 +5,6 @@ import { useCallback, useEffect } from "react";
 import {
   defaultReadAlongHighlightMain,
   defaultReadAlongHighlightSubpanel,
-  readAlongActionSettings,
   ThReadAlongActionKeys,
   ThReadAlongSettingsContainerKeys,
   ThSheetHeaderVariant
@@ -20,7 +19,6 @@ import { StatefulReadAlongHighlightGroupContainer } from "../../Settings/Highlig
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
 import { useDocking } from "../../../Docking/hooks/useDocking";
-import { useReadAlongState } from "../../Hooks/useReadAlongState";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -38,13 +36,8 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
   const docking = useDocking(ThReadAlongActionKeys.settings);
 
-  const { isExpanded } = useReadAlongState();
-
   const settingItems = preferences.readAlong.settings.order;
   const highlightPrefs = preferences.readAlong.settings.highlight;
-  const playerActions = isExpanded
-    ? preferences.readAlong.actions.expanded.displayOrder
-    : preferences.readAlong.actions.miniPlayer.displayOrder;
 
   const setOpen = useCallback((value: boolean) => {
     if (profile) {
@@ -65,10 +58,6 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
     return highlightSettings.includes(key);
   }, [highlightPrefs?.main, highlightPrefs?.subPanel]);
 
-  const isPlayerAction = useCallback((key: string) => {
-    return playerActions.some((action) => readAlongActionSettings[action as ThReadAlongActionKeys] === key);
-  }, [playerActions]);
-
   const renderSettings = useCallback(() => {
     switch (contains) {
       case ThReadAlongSettingsContainerKeys.highlight:
@@ -80,7 +69,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
           <>
             { settingItems.length > 0 && settingsComponentsMap
               ? settingItems
-                .filter((key) => !isHighlightNested(key) && !isPlayerAction(key))
+                .filter((key) => !isHighlightNested(key))
                 .map((key) => {
                   const match = settingsComponentsMap[key];
                   if (!match) {
@@ -94,7 +83,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
           </>
         );
     }
-  }, [settingsComponentsMap, contains, settingItems, isHighlightNested, isPlayerAction]);
+  }, [settingsComponentsMap, contains, settingItems, isHighlightNested]);
 
   const getHeading = useCallback(() => {
     switch (contains) {

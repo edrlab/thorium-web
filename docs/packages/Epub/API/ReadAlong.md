@@ -83,7 +83,6 @@ The read-along settings menu.
 **Features:**
 - Renders the settings in `readAlong.settings.order`
 - Leaves out the components of the highlight group, which renders them itself
-- Leaves out a setting when the current player already shows the matching action (`readAlongActionSettings`)
 - Switches to the highlight submenu, with a back button in its header; Escape returns to the menu
 - Returns to the menu when closed
 

@@ -140,7 +140,6 @@ readAlong: {
     expanded: {
       displayOrder: [
         ThReadAlongActionKeys.volume,
-        ThReadAlongActionKeys.rate,
         ThReadAlongActionKeys.sleepTimer,
         ThReadAlongActionKeys.settings
       ]
@@ -158,8 +157,6 @@ readAlong: {
 The rate action is disabled when the current voice can’t change its rate.
 
 Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the highlight submenu.
-
-The settings menu leaves out a setting when the player it was opened from already shows the matching action. With the defaults, the mini player’s menu includes rate and volume, and the expanded player’s menu doesn’t. The matching actions and settings are listed in `readAlongActionSettings`: `rate` and `volume`.
 
 ## Settings
 

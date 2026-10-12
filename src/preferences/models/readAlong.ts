@@ -33,12 +33,6 @@ export enum ThReadAlongKeys {
   highlightPresets = "highlightPresets"
 }
 
-// Settings left out of the settings menu when their action is displayed in the player
-export const readAlongActionSettings: Partial<Record<ThReadAlongActionKeys, ThReadAlongKeys>> = {
-  [ThReadAlongActionKeys.rate]: ThReadAlongKeys.rate,
-  [ThReadAlongActionKeys.volume]: ThReadAlongKeys.volume
-};
-
 export enum ThReadAlongHighlightKeys {
   highlightPresets = "highlightPresets",
   utteranceStyle = "utteranceStyle",
@@ -261,7 +255,6 @@ export const defaultReadAlongPreferences = {
     expanded: {
       displayOrder: [
         ThReadAlongActionKeys.volume,
-        ThReadAlongActionKeys.rate,
         ThReadAlongActionKeys.sleepTimer,
         ThReadAlongActionKeys.settings
       ]
