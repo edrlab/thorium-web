@@ -101,7 +101,7 @@ Converts the `breakpointsMap` from preferences into CSS media queries evaluated 
 
 ```tsx
 const breakpoints = useBreakpoints(preferences.theming.breakpoints, (bp) => {
-  // called when the active breakpoint changes
+  // called when the active breakpoint changes, never with null before it is known
   console.log("window breakpoint:", bp);
 });
 

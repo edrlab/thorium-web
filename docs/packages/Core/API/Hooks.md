@@ -363,6 +363,8 @@ function useBreakpoints(
 ): ThBreakpointsObject
 ```
 
+Media queries are evaluated after mount, so `current` is `null` until one matches, and `onChange` is only called once a breakpoint is known. A breakpoint restored from a persisted store is therefore not overwritten with `null` on load.
+
 ## Accessibility Hooks
 
 ### useColorScheme
