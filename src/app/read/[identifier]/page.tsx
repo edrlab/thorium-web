@@ -21,10 +21,16 @@ export default function BookPage({ params }: Props) {
   const isLoading = useAppSelector(state => state.reader.isLoading);
   
   // Check predefined publications, fallback to direct URL
-  const manifestUrl = identifier 
-    ? PUBLICATION_MANIFESTS[identifier as keyof typeof PUBLICATION_MANIFESTS] || 
+  const rawManifestUrl = identifier
+    ? PUBLICATION_MANIFESTS[identifier as keyof typeof PUBLICATION_MANIFESTS] ||
       identifier
     : "";
+
+  // Root-relative entries (e.g. locally-hosted publications under /public)
+  // resolve against the current origin instead of a hardcoded host.
+  const manifestUrl = rawManifestUrl.startsWith("/") && typeof window !== "undefined"
+    ? `${ window.location.origin }${ rawManifestUrl }`
+    : rawManifestUrl;
 
   useEffect(() => {
     if (manifestUrl) {
