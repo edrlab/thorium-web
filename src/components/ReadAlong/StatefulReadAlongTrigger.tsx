@@ -4,7 +4,7 @@ import { ThActionsKeys } from "@/preferences/models";
 import { StatefulActionTriggerProps } from "../Actions/models/actions";
 import { ThActionsTriggerVariant } from "@/core/Components/Actions/ThActionsBar";
 
-import ReadAlongIcon from "./assets/icons/record_voice_over.svg";
+import ReadAlongIcon from "./assets/icons/text_to_speech.svg";
 
 import { StatefulOverflowMenuItem } from "../Actions/Triggers/StatefulOverflowMenuItem";
 import { StatefulActionIcon } from "../Actions/Triggers/StatefulActionIcon";
