@@ -12,7 +12,7 @@ import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPrefere
 import { useAppDispatch, useAppStore } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
-import { useSleepTimerCountdown } from "../../Audio/actions/SleepTimer/hooks/useSleepTimerCountdown";
+import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
 

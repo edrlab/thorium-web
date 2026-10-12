@@ -139,7 +139,8 @@ readAlong: {
     miniPlayer: {
       displayOrder: [
         ThReadAlongActionKeys.settings
-      ]
+      ],
+      collapse: true
     },
     expanded: {
       displayOrder: [
@@ -157,6 +158,8 @@ readAlong: {
   }
 }
 ```
+
+The mini player’s `collapse` works like the [collapsibility of reader actions](./Customization.md#collapsibility-and-visibility). By default, it is `true`: the actions take the space left in the mini player, and those that don’t fit move to an overflow menu, depending on their `visibility`.
 
 The rate action is disabled when the current voice can’t change its rate.
 

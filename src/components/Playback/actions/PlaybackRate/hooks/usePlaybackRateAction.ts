@@ -9,6 +9,7 @@ import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMappin
 
 import { useNavigator } from "@/core/Navigator";
 import { useEffectiveRange } from "../../../../Settings/hooks/useEffectiveRange";
+import { usePlaybackStatus } from "../../../hooks/usePlaybackStatus";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setPlaybackRate } from "@/lib/audioSettingsReducer";
@@ -18,21 +19,19 @@ import { setReadAlongRate } from "@/lib/readAlongSettingsReducer";
 export const usePlaybackRateAction = () => {
   const audioContext = useContext(ThAudioPreferencesContext);
   const readerContext = useContext(ThPreferencesContext);
-  const isAudio = !!audioContext;
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
 
   const navigator = useNavigator();
   const readAloud = navigator.readAloud;
   const dispatch = useAppDispatch();
 
-  const audioRate = useAppSelector(state => state.audioSettings.playbackRate);
-  const readAlongRate = useAppSelector(state => state.readAlongSettings.rate);
+  const { isLoading } = usePlaybackStatus();
+  const storedRate = useAppSelector(state => isAudio ? state.audioSettings.playbackRate : state.readAlongSettings.rate);
   const voiceSupportsRate = useAppSelector(state => state.readAlongPlayer.voiceControls.speed);
-  const isAudioDisabled = useAppSelector(state => !state.player.isTrackReady || state.player.isStalled);
-  const isReadAlongLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
 
   const actionKey = isAudio ? ThAudioActionKeys.playbackRate : ThReadAlongActionKeys.rate;
 
-  const config = isAudio
+  const config = isAudio && audioContext
     ? audioContext.preferences.settings.keys[ThAudioKeys.playbackRate]
     : readerContext?.preferences.readAlong?.settings.keys[ThReadAlongKeys.rate] ?? defaultReadAlongRate;
 
@@ -44,8 +43,8 @@ export const usePlaybackRateAction = () => {
   const audioPrefKey = getPreferenceKey(ThAudioKeys.playbackRate, "audio");
   const readAlongPrefKey = getPreferenceKey(ThReadAlongKeys.rate, "readAlong");
 
-  const playbackRate = isAudio ? audioRate : readAlongRate ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
-  const isDisabled = isAudio ? isAudioDisabled : !readAloud || isReadAlongLoading || !voiceSupportsRate;
+  const playbackRate = storedRate ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
+  const isDisabled = isAudio ? isLoading : !readAloud || isLoading || !voiceSupportsRate;
 
   const updatePlaybackRate = useCallback(async (value: number) => {
     if (isAudio) {

@@ -52,6 +52,7 @@ The Core package provides various UI components organized into categories:
 - `Containers`: Components that are used for modals, popovers, etc.
 - `Forms`: Components that are used for collecting user input.
 - `Menu`: Components for creating menus and menus items.
+- `Playback`: Components shared by the audio and read-along players.
 - `Reader`: Components for the general interface of the reader.
 - `Settings`: Components for settings (switche, slider, numberfield, etc.).
 - `Tooltips`: Components for tooltips.
@@ -59,11 +60,22 @@ The Core package provides various UI components organized into categories:
 
 ## Audio Components
 
-Core primitives for building audio and read-along player interfaces.
+Core primitives for building audio player interfaces.
+
+```tsx
+import { ThAudioProgress } from "@edrlab/thorium-web/core/components";
+```
+
+- `ThAudioProgress`: A seekable progress bar displaying elapsed time, remaining time, an optional chapter label, and seekable range overlays.
+
+Please refer to the [Audio Components API documentation](./API/Components/Audio.md) for more information.
+
+## Playback Components
+
+Core primitives shared by the audio and read-along players.
 
 ```tsx
 import {
-  ThAudioProgress,
   ThCover,
   ThMiniPlayer,
   ThPlaybackControls,
@@ -71,13 +83,12 @@ import {
 } from "@edrlab/thorium-web/core/components";
 ```
 
-- `ThAudioProgress`: A seekable progress bar displaying elapsed time, remaining time, an optional chapter label, and seekable range overlays.
 - `ThCover`: A publication cover with a placeholder and an optional loading indicator.
-- `ThMiniPlayer`: A compact player with metadata, optionally a button expanding the player, and slots for controls and actions.
+- `ThMiniPlayer`: A compact player with metadata and an optional cover, optionally a button expanding the player, and slots for player actions, controls and actions.
 - `ThPlaybackControls`: An actions bar laying out playback buttons in a fixed, left-to-right order.
 - `ThPublicationMetadata`: Title, subtitle and authors in a configurable order.
 
-Please refer to the [Audio Components API documentation](./API/Components/Audio.md) for more information.
+Please refer to the [Playback Components API documentation](./API/Components/Playback.md) for more information.
 
 ## Actions Components
 

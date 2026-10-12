@@ -21,6 +21,8 @@ import { useReadAlongState } from "./Hooks/useReadAlongState";
 import { useI18n } from "@/i18n/useI18n";
 import { useAppSelector } from "@/lib/hooks";
 
+import { PLAY_PAUSE_ID } from "./helpers/playPauseId";
+
 import classNames from "classnames";
 
 const FALLBACK_COLLAPSED_HEIGHT = 96;
@@ -112,6 +114,7 @@ export const StatefulReadAlongSheet = ({ isOpen, style }: StatefulReadAlongSheet
       focusOptions={ {
         withinRef: bodyRef,
         trackedState: isExpanded,
+        withSelector: `#${ PLAY_PAUSE_ID }`,
         action: {
           type: "focus",
           options: {

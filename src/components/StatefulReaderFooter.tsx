@@ -19,7 +19,7 @@ import { StatefulReadAlongSheet } from "./ReadAlong/StatefulReadAlongSheet";
 import { Link, Publication } from "@readium/shared";
 
 import { useNavigator } from "@/core/Navigator";
-import { useFocusWithin, useLocale } from "react-aria";
+import { FocusScope, useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 
@@ -55,13 +55,15 @@ export const StatefulReaderFooter = ({
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
-  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
+  // Read-along state is global, so it is ignored in profiles that don't implement read along
+  const isReadAlongProfile = useAppSelector(state => state.reader.profile !== "divina");
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked) && isReadAlongProfile;
   const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
   const { isActive: isReadAlongActive, isExpanded: isReadAlongExpanded } = useReadAlongState();
   const readAlongPlacement = useReadAlongPlacement();
-  const showReadAlong = isReadAlongActive && !isReadAlongExpanded && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
+  const showReadAlong = isReadAlongProfile && isReadAlongActive && !isReadAlongExpanded && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
 
   const dispatch = useAppDispatch();
 
@@ -174,7 +176,9 @@ export const StatefulReaderFooter = ({
       { ...focusWithinProps }
     >
       { showReadAlong
-        ? <StatefulReadAlongMiniPlayer />
+        ? <FocusScope restoreFocus={ true }>
+            <StatefulReadAlongMiniPlayer />
+          </FocusScope>
         : (isScroll)
         ? <StatefulReaderPagination
             aria-label={ t("reader.navigation.scroll.wrapper") }

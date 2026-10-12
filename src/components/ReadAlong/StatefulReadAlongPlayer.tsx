@@ -1,21 +1,24 @@
 "use client";
 
 import readAlongStyles from "./assets/styles/thorium-web.readAlong.module.css";
-import audioStyles from "../Audio/controls/assets/styles/thorium-web.audioPlayback.module.css";
-import metadataStyles from "../Audio/assets/styles/thorium-web.audioMetadata.module.css";
 
-import { ThPublicationMetadata } from "@/core/Components/Audio/ThPublicationMetadata";
-import { ThPlaybackControls } from "@/core/Components/Audio/ThPlaybackControls";
-import { StatefulAudioCover } from "../Audio/StatefulAudioCover";
-import { StatefulSkipBackwardButton } from "../Audio/controls/StatefulSkipBackwardButton";
-import { StatefulPlayPauseButton } from "../Audio/controls/StatefulPlayPauseButton";
-import { StatefulSkipForwardButton } from "../Audio/controls/StatefulSkipForwardButton";
+import ReadAlongIcon from "./assets/icons/text_to_speech.svg";
+
+import { ThPublicationMetadata } from "@/core/Components/Playback/ThPublicationMetadata";
+import { ThPlaybackControls } from "@/core/Components/Playback/ThPlaybackControls";
+import { StatefulCover } from "../Playback/StatefulCover";
+import { StatefulSkipBackwardButton } from "../Playback/controls/StatefulSkipBackwardButton";
+import { StatefulPlayPauseButton } from "../Playback/controls/StatefulPlayPauseButton";
+import { StatefulSkipForwardButton } from "../Playback/controls/StatefulSkipForwardButton";
 import { StatefulReadAlongMediaActions } from "./StatefulReadAlongMediaActions";
 
 import { useNavigator } from "@/core/Navigator";
+import { usePlayPauseFocus } from "./Hooks/usePlayPauseFocus";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppSelector } from "@/lib/hooks";
+
+import { PLAY_PAUSE_ID } from "./helpers/playPauseId";
 
 export const StatefulReadAlongPlayer = () => {
   const { t } = useI18n();
@@ -25,33 +28,46 @@ export const StatefulReadAlongPlayer = () => {
   const isLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
 
   const isDisabled = !readAloud || isLoading;
+  const playPauseRef = usePlayPauseFocus(isDisabled);
   const title = metadata?.title ?? progress?.title ?? "";
   const chapter = progress?.progression?.currentChapter;
 
   return (
     <div className={ readAlongStyles.player }>
       <div className={ readAlongStyles.playerCover }>
-        <StatefulAudioCover coverUrl={ metadata?.coverUrl } title={ title } />
+        <StatefulCover
+          coverUrl={ metadata?.coverUrl }
+          title={ title }
+          placeholder={ <ReadAlongIcon /> }
+          className={ readAlongStyles.playerCoverFigure }
+          compounds={ {
+            image: { className: readAlongStyles.playerCoverImage },
+            placeholder: { className: readAlongStyles.playerCoverPlaceholder },
+            loadingOverlay: { className: readAlongStyles.playerCoverLoadingOverlay },
+            loadingIcon: { className: readAlongStyles.playerCoverLoadingIcon }
+          } }
+        />
       </div>
       <ThPublicationMetadata
-        className={ metadataStyles.audioMetadata }
+        className={ readAlongStyles.playerMetadata }
         title={ title }
         subtitle={ metadata?.subtitle }
         authors={ metadata?.authors }
         order={ ["titleWithSubtitle", "authors"] }
         extra={ chapter && <p className={ readAlongStyles.playerChapter }>{ chapter }</p> }
         compounds={ {
-          title: { className: metadataStyles.audioMetadataTitle },
-          subtitle: { className: metadataStyles.audioMetadataSubtitle },
-          authors: { className: metadataStyles.audioMetadataAuthors }
+          titleGroup: { className: readAlongStyles.playerMetadataTitleGroup },
+          title: { className: readAlongStyles.playerMetadataTitle },
+          subtitle: { className: readAlongStyles.playerMetadataSubtitle },
+          authors: { className: readAlongStyles.playerMetadataAuthors }
         } }
       />
       <ThPlaybackControls
-        className={ audioStyles.audioControls }
+        className={ readAlongStyles.playerPlaybackControls }
         aria-label={ t("audio.player.controls") }
-        skipBackward={ <StatefulSkipBackwardButton isDisabled={ isDisabled } /> }
-        playPause={ <StatefulPlayPauseButton isDisabled={ isDisabled } /> }
-        skipForward={ <StatefulSkipForwardButton isDisabled={ isDisabled } /> }
+        skipBackward={ <StatefulSkipBackwardButton className={ readAlongStyles.skipBackwardButton } isDisabled={ isDisabled } /> }
+        playPause={ <StatefulPlayPauseButton ref={ playPauseRef } id={ PLAY_PAUSE_ID } className={ readAlongStyles.playPauseButton } isDisabled={ isDisabled } /> }
+        skipForward={ <StatefulSkipForwardButton className={ readAlongStyles.skipForwardButton } isDisabled={ isDisabled } /> }
       />
       <StatefulReadAlongMediaActions />
     </div>

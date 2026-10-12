@@ -175,6 +175,7 @@ export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   actions: {
     miniPlayer: {
       displayOrder: Array<ReadAlongActionKey<K>>;
+      collapse: ThCollapsibility;
     };
     expanded: {
       displayOrder: Array<ReadAlongActionKey<K>>;

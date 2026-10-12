@@ -3,7 +3,7 @@
 import readAlongStyles from "./assets/styles/thorium-web.readAlong.module.css";
 
 import { ThActionsBar } from "@/core/Components/Actions/ThActionsBar";
-import { AudioActionPair } from "../Audio/actions/StatefulAudioMediaActions";
+import { PlaybackActionPair } from "../Playback/actions/PlaybackActionPair";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
 
 import { useI18n } from "@/i18n/useI18n";
@@ -17,11 +17,11 @@ export const StatefulReadAlongMediaActions = () => {
   const displayOrder = preferences.readAlong.actions.expanded.displayOrder;
 
   return (
-    <ThActionsBar className={ readAlongStyles.readAlongExpandedActions } aria-label={ t("audio.player.mediaActions") }>
+    <ThActionsBar className={ readAlongStyles.readAlongExpandedActions } aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.mediaActions") }>
       { displayOrder.map(key => {
         const action = readAlongActionsMap[key];
         if (!action) return null;
-        return <AudioActionPair key={ key } action={ action } />;
+        return <PlaybackActionPair key={ key } action={ action } />;
       }) }
     </ThActionsBar>
   );

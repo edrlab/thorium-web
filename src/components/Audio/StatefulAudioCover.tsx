@@ -3,16 +3,8 @@ import { Ref } from "react";
 import styles from "./assets/styles/thorium-web.audioCover.module.css";
 
 import MusicNoteIcon from "./assets/icons/music_note.svg";
-import SyncIcon from "./assets/icons/sync.svg";
 
-import { ThCover } from "@/core/Components/Audio/ThCover";
-
-import { useNavigator } from "@/core/Navigator";
-import { useI18n } from "@/i18n/useI18n";
-
-import { useAppSelector } from "@/lib/hooks";
-
-import { proxyUrl } from "@/helpers/proxyUrl";
+import { StatefulCover } from "../Playback/StatefulCover";
 
 interface StatefulAudioCoverProps {
   ref?: Ref<HTMLElement>;
@@ -20,28 +12,20 @@ interface StatefulAudioCoverProps {
   title?: string;
 }
 
-export function StatefulAudioCover({ ref, coverUrl, title }: StatefulAudioCoverProps) {
-  const { t } = useI18n();
-  const { readAloud } = useNavigator();
-  const isLoading = useAppSelector(state => readAloud
-    ? state.readAlongPlayer.status === "loading"
-    : !state.player.isTrackReady || state.player.isStalled
-  );
-
+export const StatefulAudioCover = ({ ref, coverUrl, title }: StatefulAudioCoverProps) => {
   return (
-    <ThCover
+    <StatefulCover
       ref={ ref }
-      className={ styles.audioCoverSection }
-      src={ coverUrl ? proxyUrl(coverUrl) : undefined }
-      alt={ title || t("audio.player.coverAlt") }
-      isLoading={ isLoading }
+      coverUrl={ coverUrl }
+      title={ title }
       placeholder={ <MusicNoteIcon /> }
-      loadingIndicator={ <SyncIcon className={ styles.audioCoverSyncIcon } aria-hidden="true" /> }
+      className={ styles.audioCoverSection }
       compounds={ {
-        image: { className: styles.audioCoverImage, crossOrigin: "anonymous" },
+        image: { className: styles.audioCoverImage },
         placeholder: { className: styles.audioCoverPlaceholder },
-        loadingOverlay: { className: styles.audioCoverSyncOverlay }
+        loadingOverlay: { className: styles.audioCoverSyncOverlay },
+        loadingIcon: { className: styles.audioCoverSyncIcon }
       } }
     />
   );
-}
+};

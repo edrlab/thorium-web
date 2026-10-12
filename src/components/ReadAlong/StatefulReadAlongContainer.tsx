@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from "react";
 
-import { ThActionsKeys, ThDockingKeys, ThMiniPlayerTypes } from "@/preferences/models";
+import { ThActionsKeys, ThDockingKeys, ThMiniPlayerTypes, ThSheetTypes } from "@/preferences/models";
 import { StatefulActionContainerProps } from "../Actions/models/actions";
 
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
@@ -22,6 +22,10 @@ import { useI18n } from "@/i18n/useI18n";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
 
+import { PLAY_PAUSE_ID } from "./helpers/playPauseId";
+
+import classNames from "classnames";
+
 export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContainerProps) => {
   const { t } = useI18n();
 
@@ -32,6 +36,7 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
   const docking = useDocking(ThActionsKeys.readAlong, { canReserve: isActive });
   const sheetType = docking.sheetType;
   const placement = useReadAlongPlacement();
+  const isDialogSheet = sheetType === ThSheetTypes.modal || sheetType === ThSheetTypes.fullscreen;
 
   const setOpen = useCallback((value: boolean) => {
     if (profile) {
@@ -64,13 +69,14 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         id: ThActionsKeys.readAlong,
         triggerRef: triggerRef,
         heading: t("reader.actions.readAloud.compact"),
-        className: readAlongStyles.readAlongSheet,
+        className: classNames(readAlongStyles.readAlongSheet, isDialogSheet && readAlongStyles.readAlongDialogSheet),
         placement: "bottom",
         // The compact bottom sheet hosts the expanded player itself
         isOpen: (actionState?.isOpen && placement !== ThMiniPlayerTypes.bottomSheet) || false,
         onOpenChange: setOpen,
         onClosePress: () => setActive(false),
         docker: docking.getDocker(),
+        focusSelector: `#${ PLAY_PAUSE_ID }`,
         headerActions: (
           <StatefulActionIcon
             className={ readerSharedUI.dockerButton }

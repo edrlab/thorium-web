@@ -18,13 +18,23 @@ export interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
    * Prefix of the expand button’s accessible name, followed by the heading and subheading.
    */
   expandLabel?: string;
+  /**
+   * Rendered before the heading, inside the expand button when there is one, so it must be phrasing content.
+   */
+  cover?: React.ReactNode;
+  /**
+   * Actions on the player itself, e.g. expand and close, rendered before the metadata.
+   */
+  playerActions?: React.ReactNode;
   controls?: React.ReactNode;
   actions?: React.ReactNode;
   compounds?: {
     expandButton?: WithRef<Omit<ButtonProps, "onPress" | "aria-label">, HTMLButtonElement>;
     metadata?: HTMLAttributesWithRef<HTMLDivElement>;
+    text?: React.HTMLAttributes<HTMLSpanElement>;
     heading?: React.HTMLAttributes<HTMLSpanElement>;
     subheading?: React.HTMLAttributes<HTMLSpanElement>;
+    playerActions?: HTMLAttributesWithRef<HTMLDivElement>;
     controls?: HTMLAttributesWithRef<HTMLDivElement>;
     actions?: HTMLAttributesWithRef<HTMLDivElement>;
   };
@@ -36,6 +46,8 @@ export const ThMiniPlayer = ({
   subheading,
   onExpand,
   expandLabel,
+  cover,
+  playerActions,
   controls,
   actions,
   compounds,
@@ -43,8 +55,11 @@ export const ThMiniPlayer = ({
 }: ThMiniPlayerProps) => {
   const metadataContent = (
     <>
-      <span { ...compounds?.heading }>{ heading }</span>
-      { subheading && <span { ...compounds?.subheading }>{ subheading }</span> }
+      { cover }
+      <span { ...compounds?.text }>
+        <span { ...compounds?.heading }>{ heading }</span>
+        { subheading && <span { ...compounds?.subheading }>{ subheading }</span> }
+      </span>
     </>
   );
 
@@ -52,6 +67,7 @@ export const ThMiniPlayer = ({
 
   return (
     <section ref={ ref } { ...props }>
+      { playerActions && <div { ...compounds?.playerActions }>{ playerActions }</div> }
       { onExpand ? (
         <Button
           { ...compounds?.expandButton }

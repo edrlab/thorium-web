@@ -36,7 +36,7 @@ import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useAudioPlayerInit } from "./Hooks/useAudioPlayerInit";
 import { useAudioKeyboardPeripherals } from "./Hooks/useAudioKeyboardPeripherals";
 import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
-import { useSleepTimerCountdown } from "./actions/SleepTimer/hooks/useSleepTimerCountdown";
+import { useSleepTimerCountdown } from "../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import {

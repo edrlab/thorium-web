@@ -1,0 +1,4 @@
+/* The focus ring comes from data-focus-visible, not the browser's own */
+.button {
+  outline: none;
+}

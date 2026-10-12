@@ -168,10 +168,10 @@ export const defaultReadAlongSettingsAction: ThActionsTokens = {
 
 export const defaultReadAlongRate: ThSettingsRangePrefRequired = {
   variant: ThSettingsRangeVariant.sliderWithPresets,
-  range: [0.5, 3],
+  range: [0.5, 4],
   step: 0.05,
   placeholder: ThSettingsRangePlaceholder.range,
-  presets: [0.75, 1, 1.25, 1.5, 2]
+  presets: [0.75, 1, 1.25, 1.5, 1.75, 2]
 };
 
 export const defaultReadAlongPitch: ThSettingsRangePrefRequired = {
@@ -204,8 +204,8 @@ export const defaultReadAlongWordStyle: ThReadAlongStylePref = {
 };
 
 export const defaultReadAlongSleepTimer: ThSettingsTimerPref = {
-  variant: ThSettingsTimerVariant.presetList,
-  presets: [15, 30, 45, 60, 90]
+  variant: ThSettingsTimerVariant.durationField,
+  maxHours: 23
 };
 
 export const defaultReadAlongHighlightMain = [
@@ -250,7 +250,8 @@ export const defaultReadAlongPreferences = {
     miniPlayer: {
       displayOrder: [
         ThReadAlongActionKeys.settings
-      ]
+      ],
+      collapse: true
     },
     expanded: {
       displayOrder: [

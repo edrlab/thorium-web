@@ -10,12 +10,12 @@ import { StatefulTocTrigger } from "../../Actions/Toc/StatefulTocTrigger";
 import { StatefulTocContainer } from "../../Actions/Toc/StatefulTocContainer";
 import { StatefulReadAlongTrigger } from "../../ReadAlong/StatefulReadAlongTrigger";
 import { StatefulReadAlongContainer } from "../../ReadAlong/StatefulReadAlongContainer";
-import { StatefulAudioVolumeTrigger } from "../../Audio/actions/Volume/StatefulAudioVolumeTrigger";
-import { StatefulAudioVolumeContainer } from "../../Audio/actions/Volume/StatefulAudioVolumeContainer";
-import { StatefulAudioPlaybackRateTrigger } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateTrigger";
-import { StatefulAudioPlaybackRateContainer } from "../../Audio/actions/PlaybackRate/StatefulAudioPlaybackRateContainer";
-import { StatefulAudioSleepTimerTrigger } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerTrigger";
-import { StatefulAudioSleepTimerContainer } from "../../Audio/actions/SleepTimer/StatefulAudioSleepTimerContainer";
+import { StatefulReadAlongVolumeTrigger } from "../../ReadAlong/actions/Volume/StatefulReadAlongVolumeTrigger";
+import { StatefulReadAlongVolumeContainer } from "../../ReadAlong/actions/Volume/StatefulReadAlongVolumeContainer";
+import { StatefulReadAlongRateTrigger } from "../../ReadAlong/actions/Rate/StatefulReadAlongRateTrigger";
+import { StatefulReadAlongRateContainer } from "../../ReadAlong/actions/Rate/StatefulReadAlongRateContainer";
+import { StatefulReadAlongSleepTimerTrigger } from "../../ReadAlong/actions/SleepTimer/StatefulReadAlongSleepTimerTrigger";
+import { StatefulReadAlongSleepTimerContainer } from "../../ReadAlong/actions/SleepTimer/StatefulReadAlongSleepTimerContainer";
 import { StatefulReadAlongSettingsTrigger } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsTrigger";
 import { StatefulReadAlongSettingsContainer } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsContainer";
 
@@ -86,16 +86,16 @@ export const createDefaultPlugin = (): ThPlugin => {
       },
       readAlongActions: {
         [ThReadAlongActionKeys.volume]: {
-          Trigger: StatefulAudioVolumeTrigger,
-          Target: StatefulAudioVolumeContainer
+          Trigger: StatefulReadAlongVolumeTrigger,
+          Target: StatefulReadAlongVolumeContainer
         },
         [ThReadAlongActionKeys.rate]: {
-          Trigger: StatefulAudioPlaybackRateTrigger,
-          Target: StatefulAudioPlaybackRateContainer
+          Trigger: StatefulReadAlongRateTrigger,
+          Target: StatefulReadAlongRateContainer
         },
         [ThReadAlongActionKeys.sleepTimer]: {
-          Trigger: StatefulAudioSleepTimerTrigger,
-          Target: StatefulAudioSleepTimerContainer
+          Trigger: StatefulReadAlongSleepTimerTrigger,
+          Target: StatefulReadAlongSleepTimerContainer
         },
         [ThReadAlongActionKeys.settings]: {
           Trigger: StatefulReadAlongSettingsTrigger,

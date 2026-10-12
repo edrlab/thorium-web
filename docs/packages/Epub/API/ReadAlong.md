@@ -1,6 +1,6 @@
 # Read Along Components API Reference
 
-This document details the Read Along components, which read EPUB and WebPub publications aloud. They are exported from the `epub`, `webpub` and `reader` packages.
+This document details the Read Along components, which read EPUB and WebPub publications aloud. They are exported from the `divina`, `epub`, `webpub` and `reader` packages.
 
 They rely on the read-aloud navigator (see [Read Aloud Navigator Hook](../../Core/API/Hooks.md#read-aloud-navigator-hook)), which loads after the reader. Until it has loaded, `useNavigator().readAloud` is `null` and controls depending on it are disabled.
 
@@ -36,10 +36,12 @@ Target of the `ThActionsKeys.readAlong` action: the expanded player in the sheet
 
 ### StatefulReadAlongMiniPlayer
 
-The mini player: title, current chapter, previous sentence / play-pause / next sentence, the mini player’s actions, and a button stopping read along.
+The mini player: an expand button (bottom bar only) and a button stopping read along, cover, title, current chapter, previous sentence / play-pause / next sentence, and the mini player’s actions.
 
 **Features:**
-- Renders the actions in `readAlong.actions.miniPlayer.displayOrder`
+- Expand and close buttons, and the actions, are toolbars navigated with arrow keys
+- Renders the actions in `readAlong.actions.miniPlayer.displayOrder`, collapsing them into an overflow menu per `readAlong.actions.miniPlayer.collapse`
+- When narrower than 480px, only the cover shows, the title and chapter staying available to assistive technologies
 - In the bottom bar, pressing the title or the expand button expands the player
 - In the bottom sheet, the title is plain text so that it can be dragged
 
@@ -65,6 +67,41 @@ A bottom sheet hosting both players, for the `bottomSheet` mini player placement
 ### StatefulReadAlongMediaActions
 
 The expanded player’s actions bar. Renders the actions in `readAlong.actions.expanded.displayOrder` from the plugin `readAlongActions` map. Keys without a component are skipped.
+
+## Volume Action
+
+### StatefulReadAlongVolumeTrigger, StatefulReadAlongVolumeContainer
+
+Trigger and container of the `ThReadAlongActionKeys.volume` action. They render the shared [`StatefulVolumeTrigger` and `StatefulVolumeContainer`](../../Audio/API/Controls.md#statefulvolumetrigger-statefulvolumecontainer) with the read-along classes (`.thorium_web_readAlongVolume_*`).
+
+**Features:**
+- Read the range from `readAlong.settings.keys.volume` and the range the voice supports
+- Disabled until read along has loaded, and while it is loading
+- The slider is vertical in popovers, horizontal in other sheets
+
+## Rate Action
+
+### StatefulReadAlongRateTrigger, StatefulReadAlongRateContainer
+
+Trigger and container of the `ThReadAlongActionKeys.rate` action. They render the shared [`StatefulPlaybackRateTrigger` and `StatefulPlaybackRateContainer`](../../Audio/API/Controls.md#statefulplaybackratetrigger-statefulplaybackratecontainer) with the read-along classes (`.thorium_web_readAlongRate_*`).
+
+**Features:**
+- Show the current rate as a label on the button, e.g. `1.5×`
+- Render a slider, slider with presets, or number field based on `readAlong.settings.keys.rate.variant`
+- Read the range from `readAlong.settings.keys.rate` and the range the voice supports
+- Disabled until read along has loaded, while it is loading, and when the voice can’t change its rate
+
+## Sleep Timer Action
+
+### StatefulReadAlongSleepTimerTrigger, StatefulReadAlongSleepTimerContainer
+
+Trigger and container of the `ThReadAlongActionKeys.sleepTimer` action. They render the shared [`StatefulSleepTimerTrigger` and `StatefulSleepTimerContainer`](../../Audio/API/Controls.md#statefulsleeptimertrigger-statefulsleeptimercontainer) with the read-along classes (`.thorium_web_readAlongSleepTimer_*`).
+
+**Features:**
+- Render a preset list or duration fields based on `readAlong.settings.keys.sleepTimer.variant`
+- Show the remaining time as a badge on the button while the timer runs
+- Pause read along when the timer expires; the countdown runs only while it is playing
+- Disabled until read along has loaded, and while it is loading
 
 ## Settings Action
 

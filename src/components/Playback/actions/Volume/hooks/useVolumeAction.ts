@@ -9,6 +9,7 @@ import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMappin
 
 import { useNavigator } from "@/core/Navigator";
 import { useEffectiveRange } from "../../../../Settings/hooks/useEffectiveRange";
+import { usePlaybackStatus } from "../../../hooks/usePlaybackStatus";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setVolume } from "@/lib/audioSettingsReducer";
@@ -18,20 +19,18 @@ import { setReadAlongVolume } from "@/lib/readAlongSettingsReducer";
 export const useVolumeAction = () => {
   const audioContext = useContext(ThAudioPreferencesContext);
   const readerContext = useContext(ThPreferencesContext);
-  const isAudio = !!audioContext;
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
 
   const navigator = useNavigator();
   const readAloud = navigator.readAloud;
   const dispatch = useAppDispatch();
 
-  const audioVolume = useAppSelector(state => state.audioSettings.volume);
-  const readAlongVolume = useAppSelector(state => state.readAlongSettings.volume);
-  const isAudioDisabled = useAppSelector(state => !state.player.isTrackReady || state.player.isStalled);
-  const isReadAlongLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
+  const { isLoading } = usePlaybackStatus();
+  const storedVolume = useAppSelector(state => isAudio ? state.audioSettings.volume : state.readAlongSettings.volume);
 
   const actionKey = isAudio ? ThAudioActionKeys.volume : ThReadAlongActionKeys.volume;
 
-  const config = isAudio
+  const config = isAudio && audioContext
     ? audioContext.preferences.settings.keys[ThAudioKeys.volume]
     : readerContext?.preferences.readAlong?.settings.keys[ThReadAlongKeys.volume] ?? defaultReadAlongVolume;
 
@@ -41,8 +40,8 @@ export const useVolumeAction = () => {
   const audioPrefKey = getPreferenceKey(ThAudioKeys.volume, "audio");
   const readAlongPrefKey = getPreferenceKey(ThReadAlongKeys.volume, "readAlong");
 
-  const volume = isAudio ? audioVolume : readAlongVolume ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
-  const isDisabled = isAudio ? isAudioDisabled : !readAloud || isReadAlongLoading;
+  const volume = storedVolume ?? readAloud?.getSetting(readAlongPrefKey) ?? 1;
+  const isDisabled = isAudio ? isLoading : !readAloud || isLoading;
 
   const updateVolume = useCallback(async (value: number) => {
     if (isAudio) {

@@ -4,3 +4,4 @@ export * from "./useReadAlongInit";
 export * from "./useReadAlongMetadata";
 export * from "./useReadAlongPlacement";
 export * from "./useReadAlongState";
+export * from "./usePlayPauseFocus";

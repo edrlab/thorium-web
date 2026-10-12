@@ -33,7 +33,7 @@
 
 /* Playback rate - number field variant */
 
-.numberfield {
+.numberField {
   min-width: 140px;
   display: flex;
   justify-content: center;

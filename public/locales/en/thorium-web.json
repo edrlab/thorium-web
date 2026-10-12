@@ -153,7 +153,9 @@
         "close": "Stop reading aloud",
         "player": {
           "expand": "Expand player",
-          "collapse": "Collapse player"
+          "collapse": "Collapse player",
+          "actions": "Player actions",
+          "mediaActions": "Read aloud actions"
         },
         "preferences": {
           "title": "Read aloud settings",

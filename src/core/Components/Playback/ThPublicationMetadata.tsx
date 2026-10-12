@@ -15,6 +15,7 @@ export interface ThPublicationMetadataProps extends React.HTMLAttributes<HTMLEle
    */
   extra?: React.ReactNode;
   compounds?: {
+    titleGroup?: React.HTMLAttributes<HTMLElement>;
     title?: React.HTMLAttributes<HTMLHeadingElement>;
     subtitle?: React.HTMLAttributes<HTMLParagraphElement>;
     authors?: React.HTMLAttributes<HTMLParagraphElement>;
@@ -37,7 +38,7 @@ export const ThPublicationMetadata = ({
 
       case "titleWithSubtitle":
         return (
-          <hgroup key="title-with-subtitle">
+          <hgroup key="title-with-subtitle" { ...compounds?.titleGroup }>
             <h1 { ...compounds?.title }>{ title }</h1>
             { subtitle && <p { ...compounds?.subtitle }>{ subtitle }</p> }
           </hgroup>
@@ -45,7 +46,7 @@ export const ThPublicationMetadata = ({
 
       case "subtitleWithTitle":
         return (
-          <hgroup key="subtitle-with-title">
+          <hgroup key="subtitle-with-title" { ...compounds?.titleGroup }>
             { subtitle && <p { ...compounds?.subtitle }>{ subtitle }</p> }
             <h1 { ...compounds?.title }>{ title }</h1>
           </hgroup>

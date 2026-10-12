@@ -1,19 +1,71 @@
+/* Full width as containment drops the intrinsic width */
 .miniPlayer {
+  --readAlong-miniPlayer-gap: 0.5rem;
+  --readAlong-miniPlayer-zone-gap: 2rem;
+  box-sizing: border-box;
+  container-type: inline-size;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--readAlong-miniPlayer-zone-gap);
+  width: 100%;
   min-width: 0;
 }
 
+/* Grows as much as the actions, so the space after them mirrors this one and centers the visible unit */
+.miniPlayer::before {
+  content: "";
+  flex: 1 1 0;
+  margin-inline-end: calc(var(--readAlong-miniPlayer-zone-gap) * -1);
+}
+
+/* Absorbs nearly all the shrinking, otherwise the actions shrink below their always visible actions and overflow menu */
 .miniPlayerMetadata {
   display: flex;
-  flex-direction: column;
-  flex: 1 1 auto;
-  min-width: 0;
+  align-items: center;
+  gap: var(--readAlong-miniPlayer-gap);
+  flex: 0 1000 auto;
+  min-width: calc(var(--th-icon-size, 24px) * 2);
 }
 
 .miniPlayerExpandButton {
   text-align: start;
+  border-radius: var(--th-layout-radius);
+}
+
+.miniPlayerExpandButton[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+/* Sized by its height so the radius follows the image's own aspect ratio */
+.miniPlayerCover {
+  box-sizing: border-box;
+  flex: none;
+  width: auto;
+  max-width: calc(var(--th-icon-size, 24px) * 2);
+  height: calc(var(--th-icon-size, 24px) * 2);
+  object-fit: contain;
+  border-radius: var(--th-layout-radius);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.miniPlayerCoverPlaceholder {
+  width: calc(var(--th-icon-size, 24px) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--th-theme-subdue);
+}
+
+.miniPlayerCoverPlaceholder svg {
+  width: 60%;
+  height: 60%;
+  fill: var(--th-theme-text);
+}
+
+.miniPlayerText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .miniPlayerHeading,
@@ -27,13 +79,56 @@
   font-weight: bold;
 }
 
+.miniPlayerPlayerActions,
 .miniPlayerControls {
-  --th-icon-size: 18px;
+  flex: none;
 }
 
+.miniPlayerPlayerActions,
 .miniPlayerActions {
   display: flex;
   align-items: center;
+}
+
+/* Grows from its actions' width as much as the leading spacer, so its collapsible bar can fit actions in the space left */
+.miniPlayerActions {
+  flex: 1 1 auto;
+  min-width: calc(var(--th-icon-size, 24px) * 1.5);
+}
+
+.miniPlayerActionsBar {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.miniPlayerPlayerActionsBar,
+.miniPlayerPlaybackControls,
+.miniPlayerActionsBar {
+  display: flex;
+  align-items: center;
+  gap: var(--readAlong-miniPlayer-gap);
+}
+
+/* Base size the playback buttons scale from */
+.miniPlayerPlaybackControls {
+  --readAlong-icon-base: 18px;
+}
+
+/* Visually hidden rather than removed, it is the only accessible title when the metadata is not a button */
+@container (max-width: 400px) {
+  .miniPlayerText {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .miniPlayerMetadata {
+    flex: none;
+  }
 }
 
 /* Reserves the height of the absolutely positioned drag indicator, which shares the close button's row */
@@ -104,8 +199,8 @@
   overflow-y: auto;
 }
 
-/* Fullscreen sheets size their wrapper, not the dialog */
-.readAlongSheet[role="dialog"] {
+/* Modal and fullscreen sheets apply it to the dialog, whose wrapper they size; doubled class to win over the modal dialog's cap */
+.readAlongSheet.readAlongDialogSheet {
   max-height: 100%;
 }
 
@@ -117,7 +212,7 @@
   min-height: 100px;
 }
 
-.readAlongSheet .playerCover > * {
+.readAlongSheet .playerCoverFigure {
   height: 100cqh;
 }
 
@@ -140,13 +235,103 @@
   padding-block: var(--th-layout-spacing);
 }
 
-/* The audio cover sizes its image against a definite height, which the audio player layout otherwise provides */
+/* The cover sizes its image against a definite height, which this wrapper provides */
 .playerCover {
   display: flex;
   flex-direction: column;
   flex: none;
   width: 100%;
   height: var(--th-layout-constraints-cover, 300px);
+}
+
+.playerCoverFigure {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  min-height: 100px;
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: 100%;
+  margin: 0;
+}
+
+.playerCoverImage {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--th-layout-radius);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.playerCoverPlaceholder {
+  height: 100%;
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--th-theme-background);
+  border-radius: var(--th-layout-radius);
+  border: 1px solid var(--th-theme-subdue);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.playerCoverPlaceholder svg {
+  width: 50%;
+  height: 50%;
+  fill: var(--th-theme-text);
+}
+
+.playerCoverLoadingOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--th-layout-radius);
+  background-color: color-mix(in srgb, var(--th-theme-background) 60%, transparent);
+}
+
+.playerCoverLoadingIcon {
+  width: calc(var(--th-icon-size, 24px) * 2);
+  height: calc(var(--th-icon-size, 24px) * 2);
+  fill: var(--th-theme-text);
+  animation: readAlongCoverSpin 1.2s linear infinite;
+}
+
+@keyframes readAlongCoverSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.playerPlaybackControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  --readAlong-icon-base: var(--th-icon-size, 24px);
+}
+
+.skipBackwardButton,
+.skipForwardButton {
+  --th-icon-size: calc(var(--readAlong-icon-base) * (3/2));
+  padding: calc(var(--th-icon-size) * (1/6));
+}
+
+.playPauseButton {
+  --th-icon-size: calc(var(--readAlong-icon-base) * 2);
+  padding: calc(var(--th-icon-size) * (1/8));
 }
 
 .readAlongExpandedActions {
@@ -158,6 +343,7 @@
 }
 
 @container (max-width: 300px) {
+  .playerPlaybackControls,
   .readAlongExpandedActions {
     --th-icon-size: 18px;
   }
@@ -166,6 +352,49 @@
 /* Set on the triggers since the base is read from the bar's own --th-icon-size */
 .readAlongExpandedActions > * {
   --th-icon-size: calc(var(--readAlong-icon-base) * (5/4));
+}
+
+.playerMetadata {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  gap: var(--th-layout-spacing);
+  text-align: center;
+}
+
+.playerMetadataTitleGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+}
+
+.playerMetadataTitle {
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--th-theme-text);
+}
+
+.playerMetadataSubtitle {
+  display: block;
+  margin: 0;
+  margin-top: calc(var(--th-layout-spacing) / 4);
+  font-weight: normal;
+  color: var(--th-theme-text);
+}
+
+.playerMetadataAuthors {
+  margin: 0;
+  color: var(--th-theme-subdue-text);
+}
+
+@container (max-width: 300px) {
+  .playerMetadata {
+    font-size: 0.875rem;
+  }
 }
 
 .playerChapter {

@@ -1,7 +1,7 @@
 import styles from "./assets/styles/thorium-web.audioMetadata.module.css";
 
 import { Publication } from "@readium/shared";
-import { ThPublicationMetadata } from "@/core/Components/Audio/ThPublicationMetadata";
+import { ThPublicationMetadata } from "@/core/Components/Playback/ThPublicationMetadata";
 import { useAudioPreferences } from "@/preferences/hooks/useAudioPreferences";
 
 interface StatefulAudioMetadataProps {
