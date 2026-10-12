@@ -96,7 +96,7 @@ import classNames from "classnames";
 import debounce from "debounce";
 import { buildThemeObject } from "@/preferences/helpers/buildThemeObject";
 import { createDefaultPlugin } from "../Plugins/helpers/createDefaultPlugin";
-import { NavPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "../../helpers/peripherals";
+import { NavPeripheralType, PlaybackPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "../../helpers/peripherals";
 import { getPlatformModifier } from "@/core/Helpers/keyboardUtilities";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
@@ -192,6 +192,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
   const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
+  const isReadAlongPlaying = useAppSelector(state => state.readAlongPlayer.status === "playing");
 
   const layoutUI = isFXL 
     ? preferences.theming.layout.ui?.fxl || ThLayoutUI.layered 
@@ -226,7 +227,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     isHovering,
     arrowsOccupySpace,
     isReadAlongActive,
-    isNavigationLocked
+    isNavigationLocked,
+    isReadAlongPlaying
   );
 
   const atPublicationStart = useAppSelector(state => state.publication.atPublicationStart);
@@ -249,7 +251,16 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const epubNavigator = useEpubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
-  const { readFromPointer } = readAloudNavigator;
+  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong } = readAloudNavigator;
+
+  const toggleReadAlongPlayback = useCallback(() => {
+    if (cache.current.isReadAlongPlaying) {
+      pauseReadAlong();
+    } else {
+      playReadAlong();
+    }
+  }, [cache, playReadAlong, pauseReadAlong]);
+
   const readAlongPreferences = useReadAlongPreferences();
   const {
     goLeft,
@@ -488,6 +499,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         case NavPeripheralType.moveEnd:          moveTo("end");        break;
         case NavPeripheralType.zoomIn:           zoomIn();             break;
         case NavPeripheralType.zoomOut:          zoomOut();            break;
+        case PlaybackPeripheralType.playPause:   toggleReadAlongPlayback(); break;
         default: {
           const actionKey = fromActionPeripheralType(data.type);
 
@@ -518,7 +530,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which

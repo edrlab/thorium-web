@@ -31,6 +31,10 @@ While read along is active, clicking or tapping content (text, an image…) read
 
 Set `readAlong.readFromPointer` to `false` to turn this off.
 
+## Keyboard
+
+While read along is active, Space pauses and resumes it instead of turning pages or scrolling. Shift + Space no longer goes back a page in paginated EPUB.
+
 ```typescript
 readAlong: {
   ...defaultReadAlongPreferences,

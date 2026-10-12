@@ -79,7 +79,7 @@ import classNames from "classnames";
 import { createDefaultPlugin } from "../Plugins/helpers/createDefaultPlugin";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
-import { NavPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
+import { NavPeripheralType, PlaybackPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
 
 export const ExperimentalWebPubStatefulReader = ({
   publication,
@@ -148,6 +148,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
+  const isReadAlongPlaying = useAppSelector(state => state.readAlongPlayer.status === "playing");
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
   const containerBreakpoint = useAppSelector(state => state.theming.containerBreakpoint);
 
@@ -166,7 +167,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     textNormalization,
     wordSpacing,
     zoom,
-    isReadAlongActive
+    isReadAlongActive,
+    isReadAlongPlaying
   );
 
   const layoutUI = preferences.theming.layout.ui?.webPub || ThLayoutUI.stacked;
@@ -185,7 +187,16 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const webPubNavigator = useWebPubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
-  const { readFromPointer } = readAloudNavigator;
+  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong } = readAloudNavigator;
+
+  const toggleReadAlongPlayback = useCallback(() => {
+    if (cache.current.isReadAlongPlaying) {
+      pauseReadAlong();
+    } else {
+      playReadAlong();
+    }
+  }, [cache, playReadAlong, pauseReadAlong]);
+
   const readAlongPreferences = useReadAlongPreferences();
   const {
     currentPositions,
@@ -295,6 +306,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       switch (data.type) {
         case NavPeripheralType.zoomIn:  zoomIn();  break;
         case NavPeripheralType.zoomOut: zoomOut(); break;
+        case PlaybackPeripheralType.playPause: toggleReadAlongPlayback(); break;
         default: {
           const actionKey = fromActionPeripheralType(data.type);
 
@@ -325,7 +337,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
