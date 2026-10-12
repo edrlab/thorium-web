@@ -173,7 +173,7 @@
             }
           },
           "verbosity": {
-            "title": "Announcements",
+            "title": "Verbosity",
             "values": {
               "none": "None",
               "few": "Few",
