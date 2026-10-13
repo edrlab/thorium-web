@@ -119,8 +119,8 @@ The read-along settings menu.
 
 **Features:**
 - Renders the settings in `readAlong.settings.order`
-- Leaves out the components of the highlight group, which renders them itself
-- Switches to the highlight submenu, with a back button in its header; Escape returns to the menu
+- Leaves out the components of the highlight and prosody groups, which render them themselves
+- Switches to the highlight or prosody submenu, with a back button in its header; Escape returns to the menu
 - Returns to the menu when closed
 
 ## Settings Components
@@ -137,7 +137,7 @@ Range settings, rendered according to their `variant` in `readAlong.settings.key
 
 ### StatefulReadAlongAutoPause, StatefulReadAlongVerbosity, StatefulReadAlongLanguage
 
-Dropdowns of the values supported by the TS-Toolkit. Auto pause disables pausing after each page in scroll mode; verbosity doesn’t offer `custom`.
+Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausing after each block, and disables pausing after each page in scroll mode; verbosity doesn’t offer `custom`.
 
 ### StatefulReadAlongInlineContextualization
 
@@ -145,7 +145,7 @@ A switch reading notes and page breaks where they appear in a sentence.
 
 ### StatefulReadAlongHighlightGroup
 
-The highlight group: the components in `readAlong.settings.highlight.main`, and a “Customize” button opening the submenu when `subPanel` isn’t `null`.
+The highlight group: the components in `readAlong.settings.highlight.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
 
 `StatefulReadAlongHighlightGroupContainer` renders the submenu’s components, from `subPanel`.
 
@@ -160,6 +160,18 @@ Presets that need word boundaries are hidden when no voice for the publication�
 A style dropdown and a color swatch picker, for the sentence and word highlights. Only the styles the browser supports are offered. The word style doesn’t offer `mask`, is disabled when the current voice doesn’t report word boundaries, and is hidden when no voice for the publication’s language does.
 
 Changing a style switches the highlight presets to custom.
+
+### StatefulReadAlongProsodyGroup
+
+The prosody group: the components in `readAlong.settings.prosody.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+
+`StatefulReadAlongProsodyGroupContainer` renders the submenu’s components, from `subPanel`.
+
+### StatefulReadAlongProsodyPresets
+
+A radio group of the prosody presets in `readAlong.settings.prosody.presets.order`, with icons. Custom is hidden when the submenu has no prosody components. Presets pausing after each page or spread are disabled in scroll mode.
+
+Changing the rate, pause duration or auto pause, including from the rate action, switches the prosody presets to custom.
 
 ## Hooks
 
@@ -179,6 +191,7 @@ function useReadAlongInit(props: {
 - Keeps `readAlongPlayer.status` and the current voice’s capabilities up to date
 - Runs the sleep timer countdown
 - Recolors the highlight when the reading theme changes
+- Resolves the auto pause of the prosody preset against the layout, pausing after each page outside fixed layout
 - Deactivates read along when the reader unmounts
 
 ### useReadAlongMetadata

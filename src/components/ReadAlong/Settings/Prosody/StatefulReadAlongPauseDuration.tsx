@@ -3,18 +3,18 @@
 import { useCallback } from "react";
 
 import { ThReadAlongKeys, ThSettingsRangeVariant } from "@/preferences";
-import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
 
-import { StatefulSettingsItemProps } from "../../Settings/models/settings";
+import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
-import { StatefulNumberField } from "../../Settings/StatefulNumberField";
-import { StatefulSlider } from "../../Settings/StatefulSlider";
+import { StatefulNumberField } from "../../../Settings/StatefulNumberField";
+import { StatefulSlider } from "../../../Settings/StatefulSlider";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { usePlaceholder } from "../../Settings/hooks/usePlaceholder";
-import { useEffectiveRange } from "../../Settings/hooks/useEffectiveRange";
+import { usePlaceholder } from "../../../Settings/hooks/usePlaceholder";
+import { useEffectiveRange } from "../../../Settings/hooks/useEffectiveRange";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setReadAlongPauseDuration } from "@/lib/readAlongSettingsReducer";

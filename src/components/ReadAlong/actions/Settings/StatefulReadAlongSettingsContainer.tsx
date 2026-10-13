@@ -5,6 +5,8 @@ import { useCallback, useEffect } from "react";
 import {
   defaultReadAlongHighlightMain,
   defaultReadAlongHighlightSubpanel,
+  defaultReadAlongProsodyMain,
+  defaultReadAlongProsodySubpanel,
   ThReadAlongActionKeys,
   ThReadAlongSettingsContainerKeys,
   ThSheetHeaderVariant
@@ -15,6 +17,7 @@ import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.s
 
 import { StatefulSheetWrapper } from "../../../Sheets/StatefulSheetWrapper";
 import { StatefulReadAlongHighlightGroupContainer } from "../../Settings/Highlight/StatefulReadAlongHighlightGroup";
+import { StatefulReadAlongProsodyGroupContainer } from "../../Settings/Prosody/StatefulReadAlongProsodyGroup";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
@@ -38,6 +41,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
   const settingItems = preferences.readAlong.settings.order;
   const highlightPrefs = preferences.readAlong.settings.highlight;
+  const prosodyPrefs = preferences.readAlong.settings.prosody;
 
   const setOpen = useCallback((value: boolean) => {
     if (profile) {
@@ -49,19 +53,24 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
     dispatch(setReadAlongSettingsContainer(ThReadAlongSettingsContainerKeys.initial));
   }, [dispatch]);
 
-  const isHighlightNested = useCallback((key: string) => {
-    const highlightSettings = [
+  const isGroupNested = useCallback((key: string) => {
+    const groupSettings = [
       highlightPrefs?.main || defaultReadAlongHighlightMain,
       highlightPrefs?.subPanel || defaultReadAlongHighlightSubpanel,
+      prosodyPrefs?.main || defaultReadAlongProsodyMain,
+      prosodyPrefs?.subPanel || defaultReadAlongProsodySubpanel
     ].flat() as string[];
 
-    return highlightSettings.includes(key);
-  }, [highlightPrefs?.main, highlightPrefs?.subPanel]);
+    return groupSettings.includes(key);
+  }, [highlightPrefs?.main, highlightPrefs?.subPanel, prosodyPrefs?.main, prosodyPrefs?.subPanel]);
 
   const renderSettings = useCallback(() => {
     switch (contains) {
       case ThReadAlongSettingsContainerKeys.highlight:
         return <StatefulReadAlongHighlightGroupContainer />;
+
+      case ThReadAlongSettingsContainerKeys.prosody:
+        return <StatefulReadAlongProsodyGroupContainer />;
 
       case ThReadAlongSettingsContainerKeys.initial:
       default:
@@ -69,7 +78,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
           <>
             { settingItems.length > 0 && settingsComponentsMap
               ? settingItems
-                .filter((key) => !isHighlightNested(key))
+                .filter((key) => !isGroupNested(key))
                 .map((key) => {
                   const match = settingsComponentsMap[key];
                   if (!match) {
@@ -83,12 +92,15 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
           </>
         );
     }
-  }, [settingsComponentsMap, contains, settingItems, isHighlightNested]);
+  }, [settingsComponentsMap, contains, settingItems, isGroupNested]);
 
   const getHeading = useCallback(() => {
     switch (contains) {
       case ThReadAlongSettingsContainerKeys.highlight:
         return t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.title");
+
+      case ThReadAlongSettingsContainerKeys.prosody:
+        return t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.title");
 
       case ThReadAlongSettingsContainerKeys.initial:
       default:
@@ -101,11 +113,14 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
       case ThReadAlongSettingsContainerKeys.highlight:
         return highlightPrefs?.header || ThSheetHeaderVariant.close;
 
+      case ThReadAlongSettingsContainerKeys.prosody:
+        return prosodyPrefs?.header || ThSheetHeaderVariant.close;
+
       case ThReadAlongSettingsContainerKeys.initial:
       default:
         return ThSheetHeaderVariant.close;
     }
-  }, [contains, highlightPrefs?.header]);
+  }, [contains, highlightPrefs?.header, prosodyPrefs?.header]);
 
   useEffect(() => {
     if (!isOpen) setInitial();

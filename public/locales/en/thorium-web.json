@@ -167,7 +167,6 @@
             "values": {
               "none": "Off",
               "utterance": "After each sentence",
-              "block": "After each paragraph",
               "page": "After each page",
               "spread": "After each spread"
             }
@@ -206,6 +205,21 @@
               "sentence": "Sentence",
               "word": "Word",
               "mask": "Focus",
+              "custom": "Custom"
+            }
+          },
+          "prosody": {
+            "title": "Rhythm",
+            "advanced": {
+              "trigger": "Customize",
+              "tooltip": "Customize speed and pauses"
+            },
+            "presets": {
+              "title": "Rhythm presets",
+              "default": "Default",
+              "slow": "Slow",
+              "fast": "Fast",
+              "relaxed": "Relaxed",
               "custom": "Custom"
             }
           },

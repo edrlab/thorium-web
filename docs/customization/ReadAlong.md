@@ -163,7 +163,7 @@ The mini player’s `collapse` works like the [collapsibility of reader actions]
 
 The rate action is disabled when the current voice can’t change its rate.
 
-Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the highlight submenu.
+Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the highlight and prosody submenus.
 
 ## Settings
 
@@ -178,12 +178,10 @@ readAlong: {
   settings: {
     order: [
       ThReadAlongKeys.voice,
-      ThReadAlongKeys.rate,
       ThReadAlongKeys.pitch,
       ThReadAlongKeys.volume,
       ThReadAlongKeys.highlightGroup,
-      ThReadAlongKeys.autoPause,
-      ThReadAlongKeys.pauseDuration,
+      ThReadAlongKeys.prosodyGroup,
       ThReadAlongKeys.verbosity,
       ThReadAlongKeys.language,
       ThReadAlongKeys.inlineContextualization
@@ -193,9 +191,9 @@ readAlong: {
 ```
 
 - `voice`: a list of the voices for the publication’s main language, sorted by the TS-Toolkit.
-- `rate`, `pitch`, `volume`, `pauseDuration`: ranges, see below.
+- `pitch`, `volume`: ranges, see below.
 - `highlightGroup`: the highlight presets, with a submenu for the highlight styles, see [Highlight](#highlight).
-- `autoPause`: pause after each sentence, paragraph, page or spread. Spreads only apply to fixed layout, and pausing after each page isn’t available in scroll mode.
+- `prosodyGroup`: the prosody presets, with a submenu for the rate, pause duration and auto pause, see [Prosody](#prosody).
 - `verbosity`: how much is announced besides the text, such as images, figures or tables.
 - `language`: whether to switch voices for passages in another language.
 - `inlineContextualization`: whether notes and page breaks are read where they appear in a sentence.
@@ -247,17 +245,17 @@ readAlong: {
 `readAlong.settings.highlight` configures the highlight group, like the [spacing group](./Settings.md#spacing-optional). Use enum `ThReadAlongHighlightKeys` to reference its components: `highlightPresets`, `utteranceStyle` and `wordStyle`.
 
 - `main`: the components shown in the settings menu. Defaults to the presets.
-- `subPanel`: the components shown in the highlight submenu, opened with the “Customize” button. Defaults to the presets, then the sentence and word styles. Set it to `null` to remove the submenu.
+- `subPanel`: the components shown in the highlight submenu, opened with the group’s advanced button. Defaults to the presets, then the sentence and word styles. Set it to `null` to remove the submenu.
 - `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
-- `presets`: the highlight presets.
+- `presets`: the highlight presets. Defaults to the ones below.
 
 Presets set the sentence and word styles, using enum `ThReadAlongHighlightPresetKeys`:
 
 - `sentenceAndWord`: highlights the sentence and the word;
 - `sentence`: highlights the sentence only;
 - `word`: highlights the word only;
-- `mask`: dims everything but the sentence, and highlights the word. It is labelled “Focus”;
-- `none`: highlights nothing. It isn’t configured in `keys`, but can be ordered or removed like the others;
+- `mask`: dims everything but the sentence, and highlights the word;
+- `none`: highlights nothing. It can’t be set in `keys`, as it has nothing to configure, but can be ordered or removed like the others;
 - `custom`: selected automatically when the user changes a style in the submenu. It isn’t configured in `keys`, and is hidden when the submenu has no style components.
 
 A preset needs word boundaries when, without its word style, it highlights nothing or matches another preset. With the defaults, these are `sentenceAndWord` and `word`. They are hidden when no voice for the publication’s language reports word boundaries, e.g. on Android, and disabled when the current voice doesn’t.
@@ -312,21 +310,89 @@ The colors of the presets come from the reading theme, so the highlight changes 
 
 The presets are only applied when `highlightGroup` is in `order` and `highlightPresets` is in its `main` or `subPanel`.
 
+### Prosody
+
+`readAlong.settings.prosody` configures the prosody group, like the highlight group. Use enum `ThReadAlongProsodyKeys` to reference its components:
+
+- `prosodyPresets`: the prosody presets;
+- `rate`, `pauseDuration`: ranges, see [Keys](#keys);
+- `autoPause`: pause after each sentence, page or spread. Pausing after each block isn’t offered, as it pauses after each sentence too. Spreads only apply to fixed layout, and pausing after each page isn’t available in scroll mode.
+
+Its options are the same as the highlight group’s:
+
+- `main`: the components shown in the settings menu. Defaults to the presets.
+- `subPanel`: the components shown in the prosody submenu, opened with the group’s advanced button. Defaults to the presets, then the rate, pause duration and auto pause. Set it to `null` to remove the submenu.
+- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+- `presets`: the prosody presets. Defaults to the ones below.
+
+Presets set the rate, pause duration and auto pause, using enum `ThReadAlongProsodyPresetKeys`:
+
+- `default`: the defaults of the TS-Toolkit, a rate of 1, a 300ms pause and no auto pause. Its values always come from the TS-Toolkit, so it can’t be set in `keys`, and isn’t meant to be: use another preset for your own values. It can be ordered or removed like the others;
+- `slow`: a rate of 0.85, with a 500ms pause;
+- `fast`: a rate of 1.25, with a 150ms pause;
+- `relaxed`: pauses after each spread in fixed layout, and after each page otherwise, at the default rate and pause duration;
+- `custom`: selected automatically when the user changes the rate, pause duration or auto pause, including from the rate action. It isn’t configured in `keys`, and is hidden when the submenu has no prosody components.
+
+A value a preset leaves out uses the TS-Toolkit’s default. An auto pause of `spread` pauses after each page outside fixed layout, and a preset pausing after each page or spread is disabled in scroll mode.
+
+```typescript
+readAlong: {
+  settings: {
+    prosody: {
+      header: ThSheetHeaderVariant.previous,
+      main: [ThReadAlongProsodyKeys.prosodyPresets],
+      subPanel: [
+        ThReadAlongProsodyKeys.prosodyPresets,
+        ThReadAlongProsodyKeys.rate,
+        ThReadAlongProsodyKeys.pauseDuration,
+        ThReadAlongProsodyKeys.autoPause
+      ],
+      presets: {
+        order: [
+          ThReadAlongProsodyPresetKeys.default,
+          ThReadAlongProsodyPresetKeys.slow,
+          ThReadAlongProsodyPresetKeys.fast,
+          ThReadAlongProsodyPresetKeys.relaxed,
+          ThReadAlongProsodyPresetKeys.custom
+        ],
+        keys: {
+          [ThReadAlongProsodyPresetKeys.slow]: {
+            rate: 0.85,
+            pauseDuration: 500
+          },
+          [ThReadAlongProsodyPresetKeys.fast]: {
+            rate: 1.25,
+            pauseDuration: 150
+          },
+          [ThReadAlongProsodyPresetKeys.relaxed]: {
+            autoPause: ReadAloudAutoPause.spread
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+The presets are only applied when `prosodyGroup` is in `order` and `prosodyPresets` is in its `main` or `subPanel`.
+
 ## Validation
 
 `createPreferences` warns, without throwing, when:
 
 - a key in either `displayOrder` has no entry in `readAlong.actions.keys`;
 - a preset in `highlight.presets.order` has no entry in its `keys`, except `none` and `custom`;
+- a preset in `prosody.presets.order` has no entry in its `keys`, except `default` and `custom`;
 - a range preset can’t be reached with its `range` and `step`.
 
 ## Extending Read Along
 
-Read along accepts custom actions and settings, declared with the `readAlongAction` and `readAlong` customizable keys (see [Custom Action Keys](./HandlingPreferences.md#custom-action-keys)).
+Read along accepts custom actions and settings, declared with the `readAlongAction`, `readAlong`, `readAlongHighlight` and `readAlongProsody` customizable keys (see [Custom Action Keys](./HandlingPreferences.md#custom-action-keys)).
 
 - **Actions:** add your key to the display order of either player, configure its tokens in `readAlong.actions.keys`, and register its Trigger/Target pair in the `readAlongActions` map of a plugin.
 - **Settings:** add your key to `readAlong.settings.order`, and register its component in the `settings` map of a plugin. Its entry in `readAlong.settings.keys` is typed as a range setting. Its value lives in your own state, as the `readAlongSettings` slice only holds built-in preferences.
-- **Highlight components:** register a component with `type: "readAlongHighlight"` under one of the `ThReadAlongHighlightKeys` to replace the built-in one in the highlight group.
+- **Highlight components:** add your key to `readAlong.settings.highlight.main` or `subPanel`, and register its component with `type: "readAlongHighlight"`. A preset can set a value for it in `highlight.presets.keys`. Registering under one of the `ThReadAlongHighlightKeys` replaces the built-in component.
+- **Prosody components:** add your key to `readAlong.settings.prosody.main` or `subPanel`, and register its component with `type: "readAlongProsody"`. A preset can set a value for it in `prosody.presets.keys`. Registering under one of the `ThReadAlongProsodyKeys` replaces the built-in component.
 
 ```typescript
 {

@@ -95,6 +95,15 @@ interface HighlightStateObject {
   baseline: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
 }
 
+type ProsodyStateKey = "rate" | "pauseDuration" | "autoPause";
+
+// A null value falls back to the navigator’s default
+interface ProsodyStateObject {
+  preset: ThReadAlongProsodyPresetKeys;
+  custom: Partial<Record<ProsodyStateKey, number | ReadAloudSettings["autoPause"] | null>>;
+  baseline: Partial<Record<ProsodyStateKey, number | ReadAloudSettings["autoPause"] | null>>;
+}
+
 interface ReadAlongSettingsReducerState {
   voice: string | null;               // Applied with setVoice() rather than as a preference
   format: ReadAloudSettings["format"] | null;
@@ -112,15 +121,19 @@ interface ReadAlongSettingsReducerState {
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null; // Resolved style submitted to the navigator
   wordStyle: ReadAloudSettings["wordStyle"] | null;           // Resolved style submitted to the navigator
   highlight: HighlightStateObject;
+  prosody: ProsodyStateObject;
 }
 ```
 
 **Actions:**
 - `setReadAlongVoice`: Set the voice name
-- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`, `setReadAlongRate`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values
 - `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles
 - `setReadAlongHighlightPreset`: Apply a highlight preset, with payload `{ preset, values, effective }`
 - `setReadAlongHighlightEffective`: Update the resolved styles only, e.g. when the reading theme changes
+- `setReadAlongProsodyPreset`: Apply a prosody preset, with payload `{ preset, values, effective }`
+- `setReadAlongProsodyEffective`: Update the resolved values only, e.g. when the auto pause is resolved against the layout
 
 ### ReadAlongPlayer Reducer
 
@@ -163,7 +176,7 @@ interface ReadAlongPlayerReducerState {
 - `setReadAlongAnyVoiceHasBoundaries`: Set whether any voice for the publication's language reports word boundaries
 - `setReadAlongSleepTimer`: Update the sleep timer
 - `setReadAlongMetadata`: Set the publication metadata shown by the player
-- `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the highlight submenu
+- `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the highlight or prosody submenu
 - `resetReadAlongPlayer`: Reset the session fields, keeping `isActive`, `layout` and `metadata`
 
 ### Actions Reducer

@@ -3,9 +3,9 @@
 import { useCallback, useMemo } from "react";
 
 import { BuiltinDecorationStyle, DecorationStyleType, ReadAloudDecorationStyle } from "@readium/navigator";
+import { ThReadAlongHighlightPreset } from "@/preferences/preferences";
 import {
   ThReadAlongHighlightKeys,
-  ThReadAlongHighlightPreset,
   ThReadAlongHighlightPresetKeys,
   ThReadAlongKeys,
   ThThemeKeys,

@@ -16,6 +16,7 @@ import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
+import { useProsodyPresets } from "../Settings/Prosody/hooks/useProsodyPresets";
 
 // Not settings, so pinned rather than left to the navigator's own defaults
 const readAlongDefaults: IReadAloudDefaults = {
@@ -81,6 +82,7 @@ export const useReadAlongInit = ({
   useSleepTimerCountdown();
 
   const { applyTheme } = useHighlightPresets();
+  const { applyLayout } = useProsodyPresets();
 
   // Factories may be recreated on each render, so they are read at load time only
   const configRef = useRef(config);
@@ -92,6 +94,11 @@ export const useReadAlongInit = ({
   useEffect(() => {
     applyTheme();
   }, [applyTheme]);
+
+  // Pausing after each spread becomes pausing after each page outside fixed layout
+  useEffect(() => {
+    applyLayout();
+  }, [applyLayout]);
 
   useEffect(() => {
     if (!navigatorReady || !isActive) return;

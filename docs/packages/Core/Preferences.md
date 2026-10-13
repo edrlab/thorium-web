@@ -149,10 +149,12 @@ const myEnum = {
 Read-along has its own models:
 
 - `ThReadAlongActionKeys`: the player’s actions (`volume`, `rate`, `sleepTimer`, `settings`);
-- `ThReadAlongKeys`: its settings, including the `highlightGroup` and `highlightPresets` components;
+- `ThReadAlongKeys`: its settings, including the `highlightGroup`, `highlightPresets`, `prosodyGroup` and `prosodyPresets` components;
 - `ThReadAlongHighlightKeys` and `ThReadAlongHighlightPresetKeys`: the highlight group’s components and presets;
+- `ThReadAlongProsodyKeys` and `ThReadAlongProsodyPresetKeys`: the prosody group’s components and presets;
+- `ThReadAlongHighlightPresets<K>` and `ThReadAlongProsodyPresets<K>`: the presets of both groups, whose values accept the `readAlongHighlight` and `readAlongProsody` customizable keys;
 - `ThMiniPlayerTypes`: where the mini player shows (`bottomBar` or `bottomSheet`);
-- `defaultReadAlongPreferences` and the default constants it is built from, e.g. `defaultReadAlongAction` or `defaultReadAlongHighlightPresets`.
+- `defaultReadAlongPreferences` and the default constants it is built from, e.g. `defaultReadAlongAction`, `defaultReadAlongHighlightPresets` or `defaultReadAlongProsodyPresets`.
 
 Reader themes are typed with `ThReaderThemeTokens`, which extends the `ThemeTokens` shared with audio themes with the read-along highlight colors. See [Theming](../../customization/Theming.md#keys-and-tokens).
 

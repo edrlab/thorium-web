@@ -5,7 +5,7 @@ import { ThSettingsTimerPref, ThSettingsTimerVariant } from "./audio";
 import { ThBreakpoints } from "./ui";
 import { ThSettingsRangePrefRequired, ThSettingsRangeVariant, ThSettingsRangePlaceholder } from "./settings";
 
-import { BuiltinDecorationStyle, DecorationStyleType } from "@readium/navigator";
+import { BuiltinDecorationStyle, DecorationStyleType, ReadAloudAutoPause } from "@readium/navigator";
 
 export enum ThReadAlongActionKeys {
   volume = "readAlong.volume",
@@ -30,7 +30,9 @@ export enum ThReadAlongKeys {
   wordStyle = "wordStyle",
   sleepTimer = "sleepTimer",
   highlightGroup = "highlightGroup",
-  highlightPresets = "highlightPresets"
+  highlightPresets = "highlightPresets",
+  prosodyGroup = "prosodyGroup",
+  prosodyPresets = "prosodyPresets"
 }
 
 export enum ThReadAlongHighlightKeys {
@@ -48,9 +50,25 @@ export enum ThReadAlongHighlightPresetKeys {
   custom = "custom"
 }
 
+export enum ThReadAlongProsodyKeys {
+  prosodyPresets = "prosodyPresets",
+  rate = "rate",
+  pauseDuration = "pauseDuration",
+  autoPause = "autoPause"
+}
+
+export enum ThReadAlongProsodyPresetKeys {
+  default = "default",
+  slow = "slow",
+  fast = "fast",
+  relaxed = "relaxed",
+  custom = "custom"
+}
+
 export enum ThReadAlongSettingsContainerKeys {
   initial = "initial",
-  highlight = "highlight"
+  highlight = "highlight",
+  prosody = "prosody"
 }
 
 export enum ThMiniPlayerTypes {
@@ -72,19 +90,6 @@ export interface ThReadAlongStylePref {
 // Only which styles apply: their colors come from the reading theme
 // Contrast enforcement is always disabled when the style is resolved against the reading theme
 export type ThReadAlongHighlightStyle = Omit<BuiltinDecorationStyle, "enforceContrast">;
-
-export interface ThReadAlongHighlightPreset {
-  [ThReadAlongHighlightKeys.utteranceStyle]: ThReadAlongHighlightStyle | false;
-  [ThReadAlongHighlightKeys.wordStyle]: (Omit<ThReadAlongHighlightStyle, "type"> & { type?: Exclude<ThReadAlongHighlightStyle["type"], "mask"> }) | false;
-}
-
-export interface ThReadAlongHighlightPresets {
-  order: ThReadAlongHighlightPresetKeys[];
-  // None and custom are not included as they are special cases
-  keys: {
-    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset;
-  };
-}
 
 export const defaultReadAlongAction: ThReadAlongActionTokens = {
   visibility: ThCollapsibilityVisibility.partially,
@@ -152,7 +157,7 @@ export const defaultReadAlongSleepTimerAction: ThAudioActionsTokens = {
   docked: { dockable: ThDockingTypes.none }
 };
 
-// Popover rather than compact popover, its header holds the back button of the highlight submenu
+// Popover rather than compact popover, its header holds the back button of the submenus
 export const defaultReadAlongSettingsAction: ThActionsTokens = {
   visibility: ThCollapsibilityVisibility.partially,
   shortcut: null,
@@ -222,7 +227,7 @@ export const defaultReadAlongHighlightSubpanel = [
   ThReadAlongHighlightKeys.wordStyle
 ];
 
-export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
+export const defaultReadAlongHighlightPresets = {
   order: [
     ThReadAlongHighlightPresetKeys.sentenceAndWord,
     ThReadAlongHighlightPresetKeys.sentence,
@@ -238,15 +243,50 @@ export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
     },
     [ThReadAlongHighlightPresetKeys.sentence]: {
       [ThReadAlongHighlightKeys.utteranceStyle]: { type: DecorationStyleType.Highlight },
-      [ThReadAlongHighlightKeys.wordStyle]: false
+      [ThReadAlongHighlightKeys.wordStyle]: false as const
     },
     [ThReadAlongHighlightPresetKeys.word]: {
-      [ThReadAlongHighlightKeys.utteranceStyle]: false,
+      [ThReadAlongHighlightKeys.utteranceStyle]: false as const,
       [ThReadAlongHighlightKeys.wordStyle]: { type: DecorationStyleType.Highlight }
     },
     [ThReadAlongHighlightPresetKeys.mask]: {
       [ThReadAlongHighlightKeys.utteranceStyle]: { type: DecorationStyleType.Mask },
       [ThReadAlongHighlightKeys.wordStyle]: { type: DecorationStyleType.Highlight }
+    }
+  }
+};
+
+export const defaultReadAlongProsodyMain = [
+  ThReadAlongProsodyKeys.prosodyPresets
+];
+
+export const defaultReadAlongProsodySubpanel = [
+  ThReadAlongProsodyKeys.prosodyPresets,
+  ThReadAlongProsodyKeys.rate,
+  ThReadAlongProsodyKeys.pauseDuration,
+  ThReadAlongProsodyKeys.autoPause
+];
+
+export const defaultReadAlongProsodyPresets = {
+  order: [
+    ThReadAlongProsodyPresetKeys.default,
+    ThReadAlongProsodyPresetKeys.slow,
+    ThReadAlongProsodyPresetKeys.fast,
+    ThReadAlongProsodyPresetKeys.relaxed,
+    ThReadAlongProsodyPresetKeys.custom
+  ],
+  keys: {
+    [ThReadAlongProsodyPresetKeys.slow]: {
+      [ThReadAlongProsodyKeys.rate]: 0.85,
+      [ThReadAlongProsodyKeys.pauseDuration]: 500
+    },
+    [ThReadAlongProsodyPresetKeys.fast]: {
+      [ThReadAlongProsodyKeys.rate]: 1.25,
+      [ThReadAlongProsodyKeys.pauseDuration]: 150
+    },
+    // Pauses after each page outside fixed layout
+    [ThReadAlongProsodyPresetKeys.relaxed]: {
+      [ThReadAlongProsodyKeys.autoPause]: ReadAloudAutoPause.spread
     }
   }
 };
@@ -279,12 +319,10 @@ export const defaultReadAlongPreferences = {
   settings: {
     order: [
       ThReadAlongKeys.voice,
-      ThReadAlongKeys.rate,
       ThReadAlongKeys.pitch,
       ThReadAlongKeys.volume,
       ThReadAlongKeys.highlightGroup,
-      ThReadAlongKeys.autoPause,
-      ThReadAlongKeys.pauseDuration,
+      ThReadAlongKeys.prosodyGroup,
       ThReadAlongKeys.verbosity,
       ThReadAlongKeys.language,
       ThReadAlongKeys.inlineContextualization
@@ -303,6 +341,12 @@ export const defaultReadAlongPreferences = {
       main: defaultReadAlongHighlightMain,
       subPanel: defaultReadAlongHighlightSubpanel,
       presets: defaultReadAlongHighlightPresets
+    },
+    prosody: {
+      header: ThSheetHeaderVariant.previous,
+      main: defaultReadAlongProsodyMain,
+      subPanel: defaultReadAlongProsodySubpanel,
+      presets: defaultReadAlongProsodyPresets
     }
   }
 };
