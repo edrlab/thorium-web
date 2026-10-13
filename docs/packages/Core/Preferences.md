@@ -149,7 +149,8 @@ const myEnum = {
 Read-along has its own models:
 
 - `ThReadAlongActionKeys`: the player’s actions (`volume`, `rate`, `sleepTimer`, `settings`);
-- `ThReadAlongKeys`: its settings, including the `highlightGroup`, `highlightPresets`, `prosodyGroup` and `prosodyPresets` components;
+- `ThReadAlongKeys`: its settings, including the `voiceGroup`, `highlightGroup`, `highlightPresets`, `prosodyGroup` and `prosodyPresets` components;
+- `ThReadAlongVoiceKeys`: the voice group’s components;
 - `ThReadAlongHighlightKeys` and `ThReadAlongHighlightPresetKeys`: the highlight group’s components and presets;
 - `ThReadAlongProsodyKeys` and `ThReadAlongProsodyPresetKeys`: the prosody group’s components and presets;
 - `ThReadAlongHighlightPresets<K>` and `ThReadAlongProsodyPresets<K>`: the presets of both groups, whose values accept the `readAlongHighlight` and `readAlongProsody` customizable keys;

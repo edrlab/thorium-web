@@ -42,10 +42,11 @@ import { StatefulNoRuby } from "../../Settings/Text/StatefulNoRuby";
 import { StatefulTheme } from "../../Settings/StatefulTheme";
 import { StatefulWordSpacing } from "../../Settings/Spacing/StatefulWordSpacing";
 import { StatefulZoom } from "../../Settings/StatefulZoom";
-import { StatefulReadAlongVoice } from "../../ReadAlong/Settings/StatefulReadAlongVoice";
+import { StatefulReadAlongVoice } from "../../ReadAlong/Settings/Voice/StatefulReadAlongVoice";
+import { StatefulReadAlongVoiceGroup } from "../../ReadAlong/Settings/Voice/StatefulReadAlongVoiceGroup";
 import { StatefulReadAlongRate } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongRate";
-import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/StatefulReadAlongPitch";
-import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/StatefulReadAlongVolume";
+import { StatefulReadAlongPitch } from "../../ReadAlong/Settings/Voice/StatefulReadAlongPitch";
+import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/Voice/StatefulReadAlongVolume";
 import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongPauseDuration";
 import { StatefulReadAlongUtteranceStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongUtteranceStyle";
 import { StatefulReadAlongWordStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongWordStyle";
@@ -55,7 +56,7 @@ import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/Prosody/Sta
 import { StatefulReadAlongProsodyGroup } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongProsodyGroup";
 import { StatefulReadAlongProsodyPresets } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongProsodyPresets";
 import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/StatefulReadAlongVerbosity";
-import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/StatefulReadAlongLanguage";
+import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguage";
 import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/StatefulReadAlongInlineContextualization";
 
 export const createDefaultPlugin = (): ThPlugin => {
@@ -188,18 +189,24 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThSettingsKeys.zoom]: {
           Comp: StatefulZoom
         },
+        [ThReadAlongKeys.voiceGroup]: {
+          Comp: StatefulReadAlongVoiceGroup
+        },
         [ThReadAlongKeys.voice]: {
-          Comp: StatefulReadAlongVoice
+          Comp: StatefulReadAlongVoice,
+          type: "readAlongVoice"
         },
         [ThReadAlongKeys.rate]: {
           Comp: StatefulReadAlongRate,
           type: "readAlongProsody"
         },
         [ThReadAlongKeys.pitch]: {
-          Comp: StatefulReadAlongPitch
+          Comp: StatefulReadAlongPitch,
+          type: "readAlongVoice"
         },
         [ThReadAlongKeys.volume]: {
-          Comp: StatefulReadAlongVolume
+          Comp: StatefulReadAlongVolume,
+          type: "readAlongVoice"
         },
         [ThReadAlongKeys.pauseDuration]: {
           Comp: StatefulReadAlongPauseDuration,
@@ -235,7 +242,8 @@ export const createDefaultPlugin = (): ThPlugin => {
           Comp: StatefulReadAlongVerbosity
         },
         [ThReadAlongKeys.language]: {
-          Comp: StatefulReadAlongLanguage
+          Comp: StatefulReadAlongLanguage,
+          type: "readAlongVoice"
         },
         [ThReadAlongKeys.inlineContextualization]: {
           Comp: StatefulReadAlongInlineContextualization

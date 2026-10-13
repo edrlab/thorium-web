@@ -32,7 +32,8 @@ export enum ThReadAlongKeys {
   highlightGroup = "highlightGroup",
   highlightPresets = "highlightPresets",
   prosodyGroup = "prosodyGroup",
-  prosodyPresets = "prosodyPresets"
+  prosodyPresets = "prosodyPresets",
+  voiceGroup = "voiceGroup"
 }
 
 export enum ThReadAlongHighlightKeys {
@@ -65,10 +66,18 @@ export enum ThReadAlongProsodyPresetKeys {
   custom = "custom"
 }
 
+export enum ThReadAlongVoiceKeys {
+  voice = "voice",
+  volume = "volume",
+  pitch = "pitch",
+  language = "language"
+}
+
 export enum ThReadAlongSettingsContainerKeys {
   initial = "initial",
   highlight = "highlight",
-  prosody = "prosody"
+  prosody = "prosody",
+  voice = "voice"
 }
 
 export enum ThMiniPlayerTypes {
@@ -217,6 +226,17 @@ export const defaultReadAlongSleepTimer: ThSettingsTimerPref = {
   maxHours: 23
 };
 
+export const defaultReadAlongVoiceMain = [
+  ThReadAlongVoiceKeys.voice
+];
+
+export const defaultReadAlongVoiceSubpanel = [
+  ThReadAlongVoiceKeys.voice,
+  ThReadAlongVoiceKeys.volume,
+  ThReadAlongVoiceKeys.pitch,
+  ThReadAlongVoiceKeys.language
+];
+
 export const defaultReadAlongHighlightMain = [
   ThReadAlongHighlightKeys.highlightPresets
 ];
@@ -318,13 +338,10 @@ export const defaultReadAlongPreferences = {
   },
   settings: {
     order: [
-      ThReadAlongKeys.voice,
-      ThReadAlongKeys.pitch,
-      ThReadAlongKeys.volume,
+      ThReadAlongKeys.voiceGroup,
       ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.prosodyGroup,
       ThReadAlongKeys.verbosity,
-      ThReadAlongKeys.language,
       ThReadAlongKeys.inlineContextualization
     ],
     keys: {
@@ -335,6 +352,11 @@ export const defaultReadAlongPreferences = {
       [ThReadAlongKeys.utteranceStyle]: defaultReadAlongUtteranceStyle,
       [ThReadAlongKeys.wordStyle]: defaultReadAlongWordStyle,
       [ThReadAlongKeys.sleepTimer]: defaultReadAlongSleepTimer
+    },
+    voice: {
+      header: ThSheetHeaderVariant.previous,
+      main: defaultReadAlongVoiceMain,
+      subPanel: defaultReadAlongVoiceSubpanel
     },
     highlight: {
       header: ThSheetHeaderVariant.previous,

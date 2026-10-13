@@ -8,6 +8,7 @@ interface ThPluginContextType {
   settingsComponentsMap: Record<string, SettingComponent>;
   textSettingsComponentsMap: Record<string, SettingComponent>;
   spacingSettingsComponentsMap: Record<string, SettingComponent>;
+  readAlongVoiceSettingsComponentsMap: Record<string, SettingComponent>;
   readAlongHighlightSettingsComponentsMap: Record<string, SettingComponent>;
   readAlongProsodySettingsComponentsMap: Record<string, SettingComponent>;
   primaryAudioActionsMap: Record<string, ActionComponent>;
@@ -21,6 +22,7 @@ const ThPluginContext = createContext<ThPluginContextType>({
   settingsComponentsMap: {} as Record<string, SettingComponent>,
   textSettingsComponentsMap: {} as Record<string, SettingComponent>,
   spacingSettingsComponentsMap: {} as Record<string, SettingComponent>,
+  readAlongVoiceSettingsComponentsMap: {} as Record<string, SettingComponent>,
   readAlongHighlightSettingsComponentsMap: {} as Record<string, SettingComponent>,
   readAlongProsodySettingsComponentsMap: {} as Record<string, SettingComponent>,
   primaryAudioActionsMap: {} as Record<string, ActionComponent>,
@@ -37,6 +39,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
     settingsComponentsMap: Record<string, SettingComponent>;
     textSettingsComponentsMap: Record<string, SettingComponent>;
     spacingSettingsComponentsMap: Record<string, SettingComponent>;
+    readAlongVoiceSettingsComponentsMap: Record<string, SettingComponent>;
     readAlongHighlightSettingsComponentsMap: Record<string, SettingComponent>;
     readAlongProsodySettingsComponentsMap: Record<string, SettingComponent>;
     primaryAudioActionsMap: Record<string, ActionComponent>;
@@ -48,6 +51,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
       ...maps,
       textSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "text"),
       spacingSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "spacing"),
+      readAlongVoiceSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongVoice"),
       readAlongHighlightSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongHighlight"),
       readAlongProsodySettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongProsody")
     };
@@ -74,6 +78,7 @@ export const ThPluginProvider = ({ children }: { children: React.ReactNode }) =>
         ...maps,
         textSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "text"),
         spacingSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "spacing"),
+        readAlongVoiceSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongVoice"),
         readAlongHighlightSettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongHighlight"),
         readAlongProsodySettingsComponentsMap: getTypedSettingsComponents(maps.settingsComponentsMap, "readAlongProsody"),
       });

@@ -4,17 +4,17 @@ import { Key, useCallback, useEffect, useState } from "react";
 
 import { ReadiumSpeechVoice } from "@readium/navigator";
 
-import { StatefulSettingsItemProps } from "../../Settings/models/settings";
+import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
-import settingsStyles from "../../Settings/assets/styles/thorium-web.reader.settings.module.css";
+import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.settings.module.css";
 
-import { StatefulDropdown } from "../../Settings/StatefulDropdown";
+import { StatefulDropdown } from "../../../Settings/StatefulDropdown";
 import { Collection, Header, ListBox, ListBoxItem, ListBoxSection } from "react-aria-components";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { getVoiceControls } from "../helpers/getVoiceControls";
-import { groupVoicesByLanguage } from "../helpers/groupVoicesByLanguage";
+import { getVoiceControls } from "../../helpers/getVoiceControls";
+import { groupVoicesByLanguage } from "../../helpers/groupVoicesByLanguage";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setReadAlongVoice } from "@/lib/readAlongSettingsReducer";
@@ -59,7 +59,7 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice") }
+      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice.title") }
       selectedKey={ currentVoice }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || voiceGroups.length === 0 }

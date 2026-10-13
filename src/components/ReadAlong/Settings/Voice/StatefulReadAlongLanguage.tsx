@@ -4,13 +4,13 @@ import { Key, useCallback } from "react";
 
 import { LanguageMode } from "@readium/navigator";
 import { ThReadAlongKeys } from "@/preferences";
-import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
 
-import { StatefulSettingsItemProps } from "../../Settings/models/settings";
+import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
-import settingsStyles from "../../Settings/assets/styles/thorium-web.reader.settings.module.css";
+import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.settings.module.css";
 
-import { StatefulDropdown } from "../../Settings/StatefulDropdown";
+import { StatefulDropdown } from "../../../Settings/StatefulDropdown";
 import { ListBox, ListBoxItem } from "react-aria-components";
 
 import { useNavigator } from "@/core/Navigator";

@@ -7,6 +7,8 @@ import {
   defaultReadAlongHighlightSubpanel,
   defaultReadAlongProsodyMain,
   defaultReadAlongProsodySubpanel,
+  defaultReadAlongVoiceMain,
+  defaultReadAlongVoiceSubpanel,
   ThReadAlongActionKeys,
   ThReadAlongSettingsContainerKeys,
   ThSheetHeaderVariant
@@ -18,6 +20,7 @@ import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.s
 import { StatefulSheetWrapper } from "../../../Sheets/StatefulSheetWrapper";
 import { StatefulReadAlongHighlightGroupContainer } from "../../Settings/Highlight/StatefulReadAlongHighlightGroup";
 import { StatefulReadAlongProsodyGroupContainer } from "../../Settings/Prosody/StatefulReadAlongProsodyGroup";
+import { StatefulReadAlongVoiceGroupContainer } from "../../Settings/Voice/StatefulReadAlongVoiceGroup";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
@@ -40,6 +43,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
   const docking = useDocking(ThReadAlongActionKeys.settings);
 
   const settingItems = preferences.readAlong.settings.order;
+  const voicePrefs = preferences.readAlong.settings.voice;
   const highlightPrefs = preferences.readAlong.settings.highlight;
   const prosodyPrefs = preferences.readAlong.settings.prosody;
 
@@ -55,6 +59,8 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
   const isGroupNested = useCallback((key: string) => {
     const groupSettings = [
+      voicePrefs?.main || defaultReadAlongVoiceMain,
+      voicePrefs?.subPanel || defaultReadAlongVoiceSubpanel,
       highlightPrefs?.main || defaultReadAlongHighlightMain,
       highlightPrefs?.subPanel || defaultReadAlongHighlightSubpanel,
       prosodyPrefs?.main || defaultReadAlongProsodyMain,
@@ -62,10 +68,13 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
     ].flat() as string[];
 
     return groupSettings.includes(key);
-  }, [highlightPrefs?.main, highlightPrefs?.subPanel, prosodyPrefs?.main, prosodyPrefs?.subPanel]);
+  }, [voicePrefs?.main, voicePrefs?.subPanel, highlightPrefs?.main, highlightPrefs?.subPanel, prosodyPrefs?.main, prosodyPrefs?.subPanel]);
 
   const renderSettings = useCallback(() => {
     switch (contains) {
+      case ThReadAlongSettingsContainerKeys.voice:
+        return <StatefulReadAlongVoiceGroupContainer />;
+
       case ThReadAlongSettingsContainerKeys.highlight:
         return <StatefulReadAlongHighlightGroupContainer />;
 
@@ -96,6 +105,9 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
   const getHeading = useCallback(() => {
     switch (contains) {
+      case ThReadAlongSettingsContainerKeys.voice:
+        return t("_pendingThoriumLocales.reader.readAlong.preferences.voice.title");
+
       case ThReadAlongSettingsContainerKeys.highlight:
         return t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.title");
 
@@ -110,6 +122,9 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
   const getHeaderVariant = useCallback(() => {
     switch (contains) {
+      case ThReadAlongSettingsContainerKeys.voice:
+        return voicePrefs?.header || ThSheetHeaderVariant.close;
+
       case ThReadAlongSettingsContainerKeys.highlight:
         return highlightPrefs?.header || ThSheetHeaderVariant.close;
 
@@ -120,7 +135,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
       default:
         return ThSheetHeaderVariant.close;
     }
-  }, [contains, highlightPrefs?.header, prosodyPrefs?.header]);
+  }, [contains, voicePrefs?.header, highlightPrefs?.header, prosodyPrefs?.header]);
 
   useEffect(() => {
     if (!isOpen) setInitial();

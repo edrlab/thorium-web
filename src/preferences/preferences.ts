@@ -39,6 +39,7 @@ import {
   ThReadAlongHighlightStyle,
   ThReadAlongProsodyKeys,
   ThReadAlongProsodyPresetKeys,
+  ThReadAlongVoiceKeys,
   ThAudioActionsTokens,
   ThSettingsTimerPref,
   CSSColor,
@@ -56,6 +57,7 @@ export type CustomizableKeys = {
   spacing?: string;
   readAlongAction?: string;
   readAlong?: string;
+  readAlongVoice?: string;
   readAlongHighlight?: string;
   readAlongProsody?: string;
 };
@@ -69,6 +71,7 @@ export type DefaultKeys = {
   spacing: ThSpacingSettingsKeys;
   readAlongAction: ThReadAlongActionKeys;
   readAlong: ThReadAlongKeys;
+  readAlongVoice: ThReadAlongVoiceKeys;
   readAlongHighlight: ThReadAlongHighlightKeys;
   readAlongProsody: ThReadAlongProsodyKeys;
 };
@@ -122,6 +125,13 @@ export type ReadAlongSettingsKey<K extends CustomizableKeys> =
       ? ThReadAlongKeys | R
       : ThReadAlongKeys
     : ThReadAlongKeys;
+
+export type ReadAlongVoiceSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongVoice: infer V }
+    ? V extends string
+      ? ThReadAlongVoiceKeys | V
+      : ThReadAlongVoiceKeys
+    : ThReadAlongVoiceKeys;
 
 export type ReadAlongHighlightSettingsKey<K extends CustomizableKeys> =
   K extends { readAlongHighlight: infer H }
@@ -240,6 +250,7 @@ export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   settings: {
     order: Array<ReadAlongSettingsKey<K>>;
     keys: ThReadAlongSettingsKeyTypes<K>;
+    voice: ThSettingsGroupPref<ReadAlongVoiceSettingsKey<K>>;
     highlight: ThSettingsGroupPref<ReadAlongHighlightSettingsKey<K>> & { presets?: ThReadAlongHighlightPresets<K> };
     prosody: ThSettingsGroupPref<ReadAlongProsodySettingsKey<K>> & { presets?: ThReadAlongProsodyPresets<K> };
   };

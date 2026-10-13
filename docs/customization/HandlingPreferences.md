@@ -191,6 +191,7 @@ Read-along has its own customizable keys, declared the same way:
 
 - `readAlongAction`: actions of the read-along player, added to `readAlong.actions` and rendered through the plugin `readAlongActions` map;
 - `readAlong`: read-along settings, added to `readAlong.settings`. Their `keys` entries are typed as range settings;
+- `readAlongVoice`: components of the voice group, added to `readAlong.settings.voice`, like `text` and `spacing`;
 - `readAlongHighlight`: components of the highlight group, added to `readAlong.settings.highlight`, like `text` and `spacing`;
 - `readAlongProsody`: components of the prosody group, added to `readAlong.settings.prosody`, like `text` and `spacing`.
 
@@ -198,6 +199,7 @@ Read-along has its own customizable keys, declared the same way:
 type MyKeys = {
   readAlongAction: ThReadAlongActionKeys | "myReadAlongAction";
   readAlong: ThReadAlongKeys | "myReadAlongSetting";
+  readAlongVoice: ThReadAlongVoiceKeys | "myVoiceSetting";
   readAlongHighlight: ThReadAlongHighlightKeys | "myHighlightSetting";
   readAlongProsody: ThReadAlongProsodyKeys | "myProsodySetting";
 } & CustomizableKeys;
