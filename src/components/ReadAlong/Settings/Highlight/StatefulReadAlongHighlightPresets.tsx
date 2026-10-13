@@ -6,6 +6,7 @@ import { ThReadAlongHighlightPresetKeys } from "@/preferences/models";
 
 import NoneIcon from "./assets/icons/format_color_reset.svg";
 import HighlighterIcon from "./assets/icons/ink_highlighter.svg";
+import SentenceIcon from "./assets/icons/short_text.svg";
 import WordIcon from "./assets/icons/match_word.svg";
 import MaskIcon from "./assets/icons/filter_center_focus.svg";
 import TuneIcon from "../../../Settings/Spacing/assets/icons/tune.svg";
@@ -21,6 +22,7 @@ import { useHighlightPresets } from "./hooks/useHighlightPresets";
 const iconMap = {
   [ThReadAlongHighlightPresetKeys.none]: NoneIcon,
   [ThReadAlongHighlightPresetKeys.sentenceAndWord]: HighlighterIcon,
+  [ThReadAlongHighlightPresetKeys.sentence]: SentenceIcon,
   [ThReadAlongHighlightPresetKeys.word]: WordIcon,
   [ThReadAlongHighlightPresetKeys.mask]: MaskIcon,
   [ThReadAlongHighlightPresetKeys.custom]: TuneIcon

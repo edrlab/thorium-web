@@ -203,6 +203,7 @@
               "title": "Highlight presets",
               "none": "None",
               "sentenceAndWord": "Sentence and word",
+              "sentence": "Sentence",
               "word": "Word",
               "mask": "Focus",
               "custom": "Custom"

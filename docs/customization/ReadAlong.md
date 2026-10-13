@@ -253,10 +253,11 @@ readAlong: {
 
 Presets only set which styles apply, using enum `ThReadAlongHighlightPresetKeys`:
 
-- `none`: highlights nothing. It isn’t configured in `keys`, but can be ordered or removed like the others;
 - `sentenceAndWord`: highlights the sentence and the word;
+- `sentence`: highlights the sentence only;
 - `word`: highlights the word only;
 - `mask`: dims everything but the sentence, and highlights the word. It is labelled “Focus”;
+- `none`: highlights nothing. It isn’t configured in `keys`, but can be ordered or removed like the others;
 - `custom`: selected automatically when the user changes a style in the submenu. It isn’t configured in `keys`, and is hidden when the submenu has no style components.
 
 ```typescript
@@ -272,16 +273,21 @@ readAlong: {
       ],
       presets: {
         order: [
-          ThReadAlongHighlightPresetKeys.none,
           ThReadAlongHighlightPresetKeys.sentenceAndWord,
+          ThReadAlongHighlightPresetKeys.sentence,
           ThReadAlongHighlightPresetKeys.word,
           ThReadAlongHighlightPresetKeys.mask,
+          ThReadAlongHighlightPresetKeys.none,
           ThReadAlongHighlightPresetKeys.custom
         ],
         keys: {
           [ThReadAlongHighlightPresetKeys.sentenceAndWord]: {
             utteranceStyle: DecorationStyleType.Highlight,
             wordStyle: DecorationStyleType.Highlight
+          },
+          [ThReadAlongHighlightPresetKeys.sentence]: {
+            utteranceStyle: DecorationStyleType.Highlight,
+            wordStyle: false
           },
           [ThReadAlongHighlightPresetKeys.word]: {
             utteranceStyle: false,

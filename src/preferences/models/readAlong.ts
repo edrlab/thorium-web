@@ -42,6 +42,7 @@ export enum ThReadAlongHighlightKeys {
 export enum ThReadAlongHighlightPresetKeys {
   none = "none",
   sentenceAndWord = "sentenceAndWord",
+  sentence = "sentence",
   word = "word",
   mask = "mask",
   custom = "custom"
@@ -220,16 +221,21 @@ export const defaultReadAlongHighlightSubpanel = [
 
 export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
   order: [
-    ThReadAlongHighlightPresetKeys.none,
     ThReadAlongHighlightPresetKeys.sentenceAndWord,
+    ThReadAlongHighlightPresetKeys.sentence,
     ThReadAlongHighlightPresetKeys.word,
     ThReadAlongHighlightPresetKeys.mask,
+    ThReadAlongHighlightPresetKeys.none,
     ThReadAlongHighlightPresetKeys.custom
   ],
   keys: {
     [ThReadAlongHighlightPresetKeys.sentenceAndWord]: {
       [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Highlight,
       [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+    },
+    [ThReadAlongHighlightPresetKeys.sentence]: {
+      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Highlight,
+      [ThReadAlongHighlightKeys.wordStyle]: false
     },
     [ThReadAlongHighlightPresetKeys.word]: {
       [ThReadAlongHighlightKeys.utteranceStyle]: false,
