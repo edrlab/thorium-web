@@ -429,6 +429,28 @@
   gap: calc(var(--th-layout-spacing) / 2);
 }
 
+.dropdownListboxSection {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--th-layout-spacing) / 2);
+}
+
+.dropdownListboxSection + .dropdownListboxSection {
+  margin-block-start: calc(var(--th-layout-spacing) / 2);
+}
+
+.dropdownListboxHeader {
+  position: sticky;
+  /* Offsets the popover's padding so the header sticks to its edge */
+  inset-block-start: calc(var(--th-layout-spacing) / -2);
+  z-index: 1;
+  padding: calc(var(--th-layout-spacing) / 2) calc(var(--th-layout-spacing) / 4) calc(var(--th-layout-spacing) / 4);
+  background-color: var(--th-theme-background);
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: var(--th-theme-text);
+}
+
 .dropdownListboxItem {
   padding: calc(var(--th-layout-spacing) / 4);
   border-radius: var(--th-layout-radius);
