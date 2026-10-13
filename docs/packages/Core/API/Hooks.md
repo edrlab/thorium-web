@@ -309,6 +309,46 @@ function useReadAloudNavigator(): {
 - Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with `setVoice`, not as a preference
 - Errors are logged with `console.warn` instead of thrown
 
+## Read Aloud Settings Cache Hook
+
+Provides a stateless cache for read aloud settings, mapping React state to mutable refs. Values never go stale and do not trigger navigator re-initialization.
+
+```typescript
+interface ReadAloudSettingsObject {
+  format: ReadAloudSettings["format"] | null;
+  inlineContextualization: boolean | null;
+  verbosity: ReadAloudSettings["verbosity"] | null;
+  skip: ReadAloudSettings["skip"] | null;
+  contextualize: ReadAloudSettings["contextualize"] | null;
+  language: ReadAloudSettings["language"] | null;
+  segmentation: ReadAloudSettings["segmentation"] | null;
+  pauseDuration: number | null;
+  autoPause: ReadAloudSettings["autoPause"] | null;
+  rate: number | null;
+  pitch: number | null;
+  volume: number | null;
+  utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
+  wordStyle: ReadAloudSettings["wordStyle"] | null;
+}
+
+function useReadAloudSettingsCache(
+  format: ReadAloudSettings["format"] | null,
+  inlineContextualization: boolean | null,
+  verbosity: ReadAloudSettings["verbosity"] | null,
+  skip: ReadAloudSettings["skip"] | null,
+  contextualize: ReadAloudSettings["contextualize"] | null,
+  language: ReadAloudSettings["language"] | null,
+  segmentation: ReadAloudSettings["segmentation"] | null,
+  pauseDuration: number | null,
+  autoPause: ReadAloudSettings["autoPause"] | null,
+  rate: number | null,
+  pitch: number | null,
+  volume: number | null,
+  utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
+  wordStyle: ReadAloudSettings["wordStyle"] | null
+): React.MutableRefObject<{ settings: ReadAloudSettingsObject }>
+```
+
 ## Navigator Context
 
 The EPUB and WebPub readers provide their visual navigator and the read-aloud navigator to Stateful Components, which read them with `useNavigator`.

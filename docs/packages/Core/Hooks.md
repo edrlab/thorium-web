@@ -67,13 +67,16 @@ This hook provides navigation functionality for Divina publications – image-ba
 
 ```tsx
 import {
-  useReadAloudNavigator
+  useReadAloudNavigator,
+  useReadAloudSettingsCache
 } from "@edrlab/thorium-web/core/hooks";
 ```
 
-This hook exposes the Readium TS-Toolkit `ReadAloudNavigator`, which reads an EPUB or WebPub publication aloud on top of its loaded visual navigator. It provides methods to load and destroy it, control playback by utterance, pick a voice, and submit preferences.
+`useReadAloudNavigator` exposes the Readium TS-Toolkit `ReadAloudNavigator`, which reads an EPUB or WebPub publication aloud on top of its loaded visual navigator. It provides methods to load and destroy it, control playback by utterance, pick a voice, and submit preferences.
 
 Unlike the other navigator hooks, it doesn’t throw: methods do nothing and return empty values until the navigator is loaded, and `isLoaded` tells you when it is.
+
+`useReadAloudSettingsCache` provides a stateless cache for read aloud settings that maps React state to mutable refs — useful for settings that need to persist across re-renders without triggering navigator re-initialization.
 
 ## Responsive Design Hooks
 

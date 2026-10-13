@@ -9,9 +9,10 @@ import { ReadAlongConfig } from "@/components/Reader/StatefulReaderWrapper";
 import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
 import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 
-import { useAppDispatch, useAppStore } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
+import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
@@ -34,8 +35,43 @@ export const useReadAlongInit = ({
   getVisualNavigator
 }: UseReadAlongInitProps) => {
   const { isActive, setActive } = useReadAlongState();
-  const store = useAppStore();
   const dispatch = useAppDispatch();
+
+  const format = useAppSelector(state => state.readAlongSettings.format);
+  const inlineContextualization = useAppSelector(state => state.readAlongSettings.inlineContextualization);
+  const verbosity = useAppSelector(state => state.readAlongSettings.verbosity);
+  const skip = useAppSelector(state => state.readAlongSettings.skip);
+  const contextualize = useAppSelector(state => state.readAlongSettings.contextualize);
+  const language = useAppSelector(state => state.readAlongSettings.language);
+  const segmentation = useAppSelector(state => state.readAlongSettings.segmentation);
+  const pauseDuration = useAppSelector(state => state.readAlongSettings.pauseDuration);
+  const autoPause = useAppSelector(state => state.readAlongSettings.autoPause);
+  const rate = useAppSelector(state => state.readAlongSettings.rate);
+  const pitch = useAppSelector(state => state.readAlongSettings.pitch);
+  const volume = useAppSelector(state => state.readAlongSettings.volume);
+  const utteranceStyle = useAppSelector(state => state.readAlongSettings.utteranceStyle);
+  const wordStyle = useAppSelector(state => state.readAlongSettings.wordStyle);
+  const voice = useAppSelector(state => state.readAlongSettings.voice);
+  const voiceControls = useAppSelector(state => state.readAlongPlayer.voiceControls);
+
+  const cache = useReadAlongStatelessCache(
+    format,
+    inlineContextualization,
+    verbosity,
+    skip,
+    contextualize,
+    language,
+    segmentation,
+    pauseDuration,
+    autoPause,
+    rate,
+    pitch,
+    volume,
+    utteranceStyle,
+    wordStyle,
+    voice,
+    voiceControls
+  );
   const { generateFromMarkup, detachable } = useReadAlongPreferences();
 
   const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
@@ -62,8 +98,7 @@ export const useReadAlongInit = ({
     if (!visualNavigator) return;
 
     // Read at load time only: settings changes are submitted to the loaded navigator
-    // Highlight is Thorium's own preset state, its resolved styles are already in the settings
-    const { voice, highlight: _highlight, ...preferences } = store.getState().readAlongSettings;
+    const { settings: preferences, voice: storedVoice } = cache.current;
 
     // Persisted with the player state, but only valid for the navigator they came from
     dispatch(resetReadAlongPlayer());
@@ -71,7 +106,7 @@ export const useReadAlongInit = ({
     // The default voice is picked asynchronously by the engine, so it is only known once state changes
     const syncVoiceControls = () => {
       const voiceControls = getVoiceControls(getCurrentVoice());
-      const current = store.getState().readAlongPlayer.voiceControls;
+      const current = cache.current.voiceControls;
       if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed) {
         dispatch(setReadAlongVoiceControls(voiceControls));
       }
@@ -95,8 +130,8 @@ export const useReadAlongInit = ({
 
     ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults, provider, engine, detachable }, async () => {
       // The engine loads its voices asynchronously, and a voice name set before then is not found
-      if (voice) {
-        const stored = (await getVoices()).find((item) => item.name === voice);
+      if (storedVoice) {
+        const stored = (await getVoices()).find((item) => item.name === storedVoice);
         if (cancelled) return;
         if (stored) setVoice(stored);
       }
@@ -108,7 +143,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, store, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {
