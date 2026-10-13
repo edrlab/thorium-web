@@ -153,9 +153,11 @@ The highlight group: the components in `readAlong.settings.highlight.main`, and 
 
 A radio group of the highlight presets in `readAlong.settings.highlight.presets.order`, with icons. Custom is hidden when the submenu has no style components.
 
+Presets that need word boundaries are hidden when no voice for the publication’s language reports them, and disabled when the current voice doesn’t. A hidden preset that is selected shows as the preset it matches without the word.
+
 ### StatefulReadAlongUtteranceStyle, StatefulReadAlongWordStyle
 
-A style dropdown and a color swatch picker, for the sentence and word highlights. Only the styles the browser supports are offered. The word style doesn’t offer `mask`, and is disabled when the current voice doesn’t report word boundaries.
+A style dropdown and a color swatch picker, for the sentence and word highlights. Only the styles the browser supports are offered. The word style doesn’t offer `mask`, is disabled when the current voice doesn’t report word boundaries, and is hidden when no voice for the publication’s language does.
 
 Changing a style switches the highlight presets to custom.
 
@@ -212,7 +214,9 @@ Applies highlight presets and resolves styles against the reading theme.
 ```typescript
 function useHighlightPresets(): {
   preset: ThReadAlongHighlightPresetKeys;   // Current preset
+  displayedPreset: ThReadAlongHighlightPresetKeys | null; // Current preset, or the one it matches when hidden
   presetKeys: ThReadAlongHighlightPresetKeys[]; // Presets to display
+  requiresWordBoundaries: (key: ThReadAlongHighlightPresetKeys) => boolean; // The preset needs word boundaries
   shouldApplyPresets: boolean;              // The presets component is displayed
   getStoredStyle: (key: HighlightStateKey) => ReadAloudDecorationStyle | undefined; // Style as the user picked it
   applyPreset: (preset: ThReadAlongHighlightPresetKeys) => Promise<void>;

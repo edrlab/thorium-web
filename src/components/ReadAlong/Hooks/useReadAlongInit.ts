@@ -10,7 +10,7 @@ import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks
 import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { resetReadAlongPlayer, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
+import { resetReadAlongPlayer, setReadAlongAnyVoiceHasBoundaries, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
@@ -53,6 +53,7 @@ export const useReadAlongInit = ({
   const wordStyle = useAppSelector(state => state.readAlongSettings.wordStyle);
   const voice = useAppSelector(state => state.readAlongSettings.voice);
   const voiceControls = useAppSelector(state => state.readAlongPlayer.voiceControls);
+  const publicationLanguage = useAppSelector(state => state.readAlongPlayer.metadata?.language);
 
   const cache = useReadAlongStatelessCache(
     format,
@@ -70,7 +71,8 @@ export const useReadAlongInit = ({
     utteranceStyle,
     wordStyle,
     voice,
-    voiceControls
+    voiceControls,
+    publicationLanguage
   );
   const { generateFromMarkup, detachable } = useReadAlongPreferences();
 
@@ -136,6 +138,12 @@ export const useReadAlongInit = ({
         if (stored) setVoice(stored);
       }
       syncVoiceControls();
+
+      // Same voices as the voice selector, an empty list leaves it unknown
+      const { publicationLanguage } = cache.current;
+      const voices = await getVoices({ languages: publicationLanguage ? [publicationLanguage] : undefined });
+      if (cancelled) return;
+      dispatch(setReadAlongAnyVoiceHasBoundaries(voices.length > 0 ? voices.some((item) => getVoiceControls(item).boundary) : null));
     });
 
     return () => {

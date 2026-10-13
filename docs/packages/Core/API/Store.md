@@ -149,6 +149,7 @@ interface ReadAlongPlayerReducerState {
   metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
   voiceControls: ReadAlongVoiceControls;
+  anyVoiceHasBoundaries: boolean | null; // Any voice for the publication's language reports word boundaries, null until known
   sleepTimer: { remainingSeconds: number | null };
   settingsContainer: ThReadAlongSettingsContainerKeys;
 }
@@ -159,6 +160,7 @@ interface ReadAlongPlayerReducerState {
 - `setReadAlongLayout`: Set the layout restored on activation
 - `setReadAlongStatus`: Set the navigator state
 - `setReadAlongVoiceControls`: Set what the current voice supports
+- `setReadAlongAnyVoiceHasBoundaries`: Set whether any voice for the publication's language reports word boundaries
 - `setReadAlongSleepTimer`: Update the sleep timer
 - `setReadAlongMetadata`: Set the publication metadata shown by the player
 - `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the highlight submenu

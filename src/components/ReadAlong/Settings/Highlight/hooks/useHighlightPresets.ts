@@ -5,6 +5,7 @@ import { useCallback, useMemo } from "react";
 import { BuiltinDecorationStyle, DecorationStyleType, ReadAloudDecorationStyle } from "@readium/navigator";
 import {
   ThReadAlongHighlightKeys,
+  ThReadAlongHighlightPreset,
   ThReadAlongHighlightPresetKeys,
   ThReadAlongKeys,
   ThThemeKeys,
@@ -27,6 +28,14 @@ import {
 
 type HighlightStyles = Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
 
+type KeyedPresetKeys = Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>;
+
+const isSameStyle = (a: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle], b: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle]) => {
+  if (a === false || b === false) return a === b;
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]) as Set<keyof typeof a>;
+  return Array.from(keys).every((key) => a[key] === b[key]);
+};
+
 /**
  * Hook to apply highlight presets, and resolve styles against the reading theme
  * Styles without a tint take the reading theme's, tints set in a preset
@@ -41,6 +50,7 @@ export const useHighlightPresets = () => {
   const themeObject = useAppSelector(state => state.theming.theme);
   const colorScheme = useAppSelector(state => state.theming.colorScheme);
   const highlight = useAppSelector(state => state.readAlongSettings.highlight);
+  const anyVoiceHasBoundaries = useAppSelector(state => state.readAlongPlayer.anyVoiceHasBoundaries);
 
   const dispatch = useAppDispatch();
 
@@ -64,11 +74,47 @@ export const useHighlightPresets = () => {
     return subPanel.includes(ThReadAlongHighlightKeys.utteranceStyle) || subPanel.includes(ThReadAlongHighlightKeys.wordStyle);
   }, [highlightPrefs]);
 
+  // Presets that highlight nothing or match another one without the word, mapped to that one if any
+  const wordPresetFallbacks = useMemo(() => {
+    const fallbacks = new Map<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys | null>();
+
+    presets.order.forEach((key) => {
+      const values = presets.keys[key as KeyedPresetKeys];
+      if (!values || values[ThReadAlongHighlightKeys.wordStyle] === false) return;
+
+      const utteranceStyle = values[ThReadAlongHighlightKeys.utteranceStyle];
+      const match = presets.order.find((other) => {
+        if (other === key || other === ThReadAlongHighlightPresetKeys.custom) return false;
+        if (other === ThReadAlongHighlightPresetKeys.none) return utteranceStyle === false;
+        const otherValues = presets.keys[other as KeyedPresetKeys];
+        return !!otherValues
+          && otherValues[ThReadAlongHighlightKeys.wordStyle] === false
+          && isSameStyle(otherValues[ThReadAlongHighlightKeys.utteranceStyle], utteranceStyle);
+      });
+
+      if (match || utteranceStyle === false) {
+        fallbacks.set(key, match ?? null);
+      }
+    });
+
+    return fallbacks;
+  }, [presets.order, presets.keys]);
+
+  const requiresWordBoundaries = useCallback((key: ThReadAlongHighlightPresetKeys) => {
+    return wordPresetFallbacks.has(key);
+  }, [wordPresetFallbacks]);
+
   const presetKeys = useMemo(() => {
-    return hasCustomizableStyles
-      ? presets.order
-      : presets.order.filter(key => key !== ThReadAlongHighlightPresetKeys.custom);
-  }, [presets.order, hasCustomizableStyles]);
+    return presets.order.filter((key) => {
+      if (key === ThReadAlongHighlightPresetKeys.custom) return hasCustomizableStyles;
+      return anyVoiceHasBoundaries !== false || !wordPresetFallbacks.has(key);
+    });
+  }, [presets.order, hasCustomizableStyles, anyVoiceHasBoundaries, wordPresetFallbacks]);
+
+  // A hidden preset shows as the one it matches without the word
+  const displayedPreset = anyVoiceHasBoundaries === false && wordPresetFallbacks.has(preset)
+    ? wordPresetFallbacks.get(preset) ?? null
+    : preset;
 
   // Same resolution as the reader's theme, auto following the color scheme
   const themeTokens = useMemo(() => {
@@ -163,7 +209,9 @@ export const useHighlightPresets = () => {
 
   return {
     preset,
+    displayedPreset,
     presetKeys,
+    requiresWordBoundaries,
     shouldApplyPresets,
     getStoredStyle,
     applyPreset,

@@ -10,6 +10,7 @@ export interface ReadAlongStatelessCache {
   settings: ReadAloudSettingsObject;
   voice: string | null;
   voiceControls: ReadAlongVoiceControls;
+  publicationLanguage: string | undefined;
 }
 
 export const useReadAlongStatelessCache = (
@@ -28,7 +29,8 @@ export const useReadAlongStatelessCache = (
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
   wordStyle: ReadAloudSettings["wordStyle"] | null,
   voice: string | null,
-  voiceControls: ReadAlongVoiceControls
+  voiceControls: ReadAlongVoiceControls,
+  publicationLanguage: string | undefined
 ) => {
   const settingsCache = useReadAloudSettingsCache(
     format,
@@ -51,12 +53,14 @@ export const useReadAlongStatelessCache = (
     settings: settingsCache.current.settings,
     voice,
     voiceControls,
+    publicationLanguage,
   });
 
   // Update cache synchronously on every render to ensure fresh values
   cache.current.settings = settingsCache.current.settings;
   cache.current.voice = voice;
   cache.current.voiceControls = voiceControls;
+  cache.current.publicationLanguage = publicationLanguage;
 
   return cache;
 };

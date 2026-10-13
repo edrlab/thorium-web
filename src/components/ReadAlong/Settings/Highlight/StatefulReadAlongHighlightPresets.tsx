@@ -19,6 +19,8 @@ import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 import { useHighlightPresets } from "./hooks/useHighlightPresets";
 
+import { useAppSelector } from "@/lib/hooks";
+
 const iconMap = {
   [ThReadAlongHighlightPresetKeys.none]: NoneIcon,
   [ThReadAlongHighlightPresetKeys.sentenceAndWord]: HighlighterIcon,
@@ -32,7 +34,8 @@ export const StatefulReadAlongHighlightPresets = ({ standalone }: StatefulSettin
   const { t } = useI18n();
 
   const readAloud = useNavigator().readAloud;
-  const { preset, presetKeys, applyPreset } = useHighlightPresets();
+  const currentVoiceHasBoundaries = useAppSelector(state => state.readAlongPlayer.voiceControls.boundary);
+  const { displayedPreset, presetKeys, requiresWordBoundaries, applyPreset } = useHighlightPresets();
 
   const items = useMemo(() => {
     return presetKeys.map((key) => ({
@@ -40,9 +43,9 @@ export const StatefulReadAlongHighlightPresets = ({ standalone }: StatefulSettin
       icon: iconMap[key],
       value: key,
       label: t(`_pendingThoriumLocales.reader.readAlong.preferences.highlight.presets.${ key }`),
-      isDisabled: !readAloud
+      isDisabled: !readAloud || (!currentVoiceHasBoundaries && requiresWordBoundaries(key))
     }));
-  }, [presetKeys, readAloud, t]);
+  }, [presetKeys, readAloud, currentVoiceHasBoundaries, requiresWordBoundaries, t]);
 
   if (items.length === 0) {
     return null;
@@ -54,7 +57,7 @@ export const StatefulReadAlongHighlightPresets = ({ standalone }: StatefulSettin
       standalone={ standalone }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.presets.title") }
       orientation="horizontal"
-      value={ preset }
+      value={ displayedPreset }
       onChange={ async (val: string) => await applyPreset(val as ThReadAlongHighlightPresetKeys) }
       items={ items }
     />

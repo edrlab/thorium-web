@@ -260,6 +260,8 @@ Presets set the sentence and word styles, using enum `ThReadAlongHighlightPreset
 - `none`: highlights nothing. It isn’t configured in `keys`, but can be ordered or removed like the others;
 - `custom`: selected automatically when the user changes a style in the submenu. It isn’t configured in `keys`, and is hidden when the submenu has no style components.
 
+A preset needs word boundaries when, without its word style, it highlights nothing or matches another preset. With the defaults, these are `sentenceAndWord` and `word`. They are hidden when no voice for the publication’s language reports word boundaries, e.g. on Android, and disabled when the current voice doesn’t.
+
 ```typescript
 readAlong: {
   settings: {

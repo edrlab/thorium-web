@@ -30,14 +30,15 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
   const config = preferences.readAlong.settings.keys[ThReadAlongKeys.wordStyle] ?? defaultReadAlongWordStyle;
 
   const readAloud = useNavigator().readAloud;
-  const hasWordBoundaries = useAppSelector(state => state.readAlongPlayer.voiceControls.boundary);
+  const currentVoiceHasBoundaries = useAppSelector(state => state.readAlongPlayer.voiceControls.boundary);
+  const anyVoiceHasBoundaries = useAppSelector(state => state.readAlongPlayer.anyVoiceHasBoundaries);
   const { getStoredStyle, setStyle } = useHighlightPresets();
 
   const style = getStoredStyle(ThReadAlongHighlightKeys.wordStyle) ?? false;
   const builtinStyle = style === false ? undefined : style as BuiltinDecorationStyle;
   const tint = builtinStyle?.tint;
 
-  const isDisabled = !readAloud || !hasWordBoundaries;
+  const isDisabled = !readAloud || !currentVoiceHasBoundaries;
 
   // Dimming everything but the spoken word would hide the sentence around it
   const styleOptions = [
@@ -64,6 +65,10 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
     if (!builtinStyle) return;
     await setStyle(ThReadAlongHighlightKeys.wordStyle, { ...builtinStyle, tint: color.toString("hexa") });
   }, [setStyle, builtinStyle]);
+
+  if (anyVoiceHasBoundaries === false) {
+    return null;
+  }
 
   return (
     <>
