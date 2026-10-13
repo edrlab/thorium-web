@@ -13,11 +13,13 @@ import {
   defaultReadAlongVerbositySubpanel,
   ThReadAlongActionKeys,
   ThReadAlongSettingsContainerKeys,
-  ThSheetHeaderVariant
+  ThSheetHeaderVariant,
+  ThSheetTypes
 } from "@/preferences/models";
 import { StatefulActionContainerProps } from "../../../Actions/models/actions";
 
 import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.settings.module.css";
+import readAlongStyles from "../../assets/styles/thorium-web.readAlong.module.css";
 
 import { StatefulSheetWrapper } from "../../../Sheets/StatefulSheetWrapper";
 import { StatefulReadAlongHighlightGroupContainer } from "../../Settings/Highlight/StatefulReadAlongHighlightGroup";
@@ -34,6 +36,8 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
 import { setReadAlongSettingsContainer } from "@/lib/readAlongPlayerReducer";
 
+import classNames from "classnames";
+
 export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "top" }: StatefulActionContainerProps) => {
   const { preferences } = usePreferences();
   const { t } = useI18n();
@@ -44,6 +48,9 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
   const dispatch = useAppDispatch();
 
   const docking = useDocking(ThReadAlongActionKeys.settings);
+  const isContentSizedSheet = docking.sheetType === ThSheetTypes.popover
+    || docking.sheetType === ThSheetTypes.compactPopover
+    || docking.sheetType === ThSheetTypes.modal;
 
   const settingItems = preferences.readAlong.settings.order;
   const voicePrefs = preferences.readAlong.settings.voice;
@@ -178,7 +185,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
         triggerRef,
         heading: getHeading(),
         headerVariant: getHeaderVariant(),
-        className: settingsStyles.wrapper,
+        className: classNames(settingsStyles.wrapper, isContentSizedSheet && readAlongStyles.settingsSheet),
         placement,
         isOpen,
         onOpenChange: setOpen,

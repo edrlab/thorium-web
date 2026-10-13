@@ -401,3 +401,8 @@
   margin: 0;
   color: var(--th-theme-subdue-text);
 }
+
+/* Fills up to the sheet's max-height, so switching panels doesn't resize it */
+.settingsSheet {
+  height: var(--visual-viewport-height, 100dvh);
+}

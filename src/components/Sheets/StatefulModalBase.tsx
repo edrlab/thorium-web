@@ -111,7 +111,7 @@ export const StatefulModalBase = ({
                 direction={ direction === "ltr" ? "left" : "right" }
                 label={ t("reader.app.back.trigger") }
                 ref={ sheetCloseRef }
-                className={ classNames(className, readerSharedUI.backButton) }
+                className={ readerSharedUI.backButton }
                 aria-label={ t("reader.app.back.trigger") }
                 onPress={ onClosePress }
               />

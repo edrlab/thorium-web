@@ -358,6 +358,7 @@ In both the mini and expanded players.
 
 - `.thorium_web_readAlong_readAlongSheet` - Sheet hosting the expanded player
 - `.thorium_web_readAlong_readAlongDialogSheet` - That sheet’s dialog, in modal and fullscreen sheets
+- `.thorium_web_readAlong_settingsSheet` - Settings sheet, in popover, compact popover and modal sheets
 - `.thorium_web_readAlong_playerSheet` - Bottom sheet hosting both players
 - `.thorium_web_readAlong_playerSheetHeader` - Header of that bottom sheet
 - `.thorium_web_readAlong_playerSheetDragIndicator` - Drag indicator of that bottom sheet

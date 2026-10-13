@@ -116,7 +116,7 @@ export const StatefulDockedSheet = ({
               direction={ direction === "ltr" ? "left" : "right" } 
               label={ t("reader.app.back.trigger") }
               ref={ dockedSheetCloseRef }
-              className={ classNames(className, readerSharedUI.backButton) } 
+              className={ readerSharedUI.backButton } 
               aria-label={ t("reader.app.back.trigger") }
               onPress={ onClosePress }
             /> 
