@@ -51,8 +51,8 @@ export const StatefulReadAlongUtteranceStyle = ({ standalone = true }: StatefulS
     if (!key) return;
     await setStyle(ThReadAlongHighlightKeys.utteranceStyle, key === NO_STYLE
       ? false
-      : { type: key as BuiltinDecorationStyle["type"], tint });
-  }, [setStyle, tint]);
+      : { ...builtinStyle, type: key as BuiltinDecorationStyle["type"] });
+  }, [setStyle, builtinStyle]);
 
   const updateTint = useCallback(async (color: Color) => {
     if (!builtinStyle) return;

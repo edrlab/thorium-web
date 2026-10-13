@@ -5,7 +5,7 @@ import { ThSettingsTimerPref, ThSettingsTimerVariant } from "./audio";
 import { ThBreakpoints } from "./ui";
 import { ThSettingsRangePrefRequired, ThSettingsRangeVariant, ThSettingsRangePlaceholder } from "./settings";
 
-import { DecorationStyleType } from "@readium/navigator";
+import { BuiltinDecorationStyle, DecorationStyleType } from "@readium/navigator";
 
 export enum ThReadAlongActionKeys {
   volume = "readAlong.volume",
@@ -70,9 +70,12 @@ export interface ThReadAlongStylePref {
 }
 
 // Only which styles apply: their colors come from the reading theme
+// Contrast enforcement is always disabled when the style is resolved against the reading theme
+export type ThReadAlongHighlightStyle = Omit<BuiltinDecorationStyle, "enforceContrast">;
+
 export interface ThReadAlongHighlightPreset {
-  [ThReadAlongHighlightKeys.utteranceStyle]: Exclude<DecorationStyleType, "template"> | false;
-  [ThReadAlongHighlightKeys.wordStyle]: Exclude<DecorationStyleType, "template" | "mask"> | false;
+  [ThReadAlongHighlightKeys.utteranceStyle]: ThReadAlongHighlightStyle | false;
+  [ThReadAlongHighlightKeys.wordStyle]: (Omit<ThReadAlongHighlightStyle, "type"> & { type?: Exclude<ThReadAlongHighlightStyle["type"], "mask"> }) | false;
 }
 
 export interface ThReadAlongHighlightPresets {
@@ -230,20 +233,20 @@ export const defaultReadAlongHighlightPresets: ThReadAlongHighlightPresets = {
   ],
   keys: {
     [ThReadAlongHighlightPresetKeys.sentenceAndWord]: {
-      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Highlight,
-      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+      [ThReadAlongHighlightKeys.utteranceStyle]: { type: DecorationStyleType.Highlight },
+      [ThReadAlongHighlightKeys.wordStyle]: { type: DecorationStyleType.Highlight }
     },
     [ThReadAlongHighlightPresetKeys.sentence]: {
-      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Highlight,
+      [ThReadAlongHighlightKeys.utteranceStyle]: { type: DecorationStyleType.Highlight },
       [ThReadAlongHighlightKeys.wordStyle]: false
     },
     [ThReadAlongHighlightPresetKeys.word]: {
       [ThReadAlongHighlightKeys.utteranceStyle]: false,
-      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+      [ThReadAlongHighlightKeys.wordStyle]: { type: DecorationStyleType.Highlight }
     },
     [ThReadAlongHighlightPresetKeys.mask]: {
-      [ThReadAlongHighlightKeys.utteranceStyle]: DecorationStyleType.Mask,
-      [ThReadAlongHighlightKeys.wordStyle]: DecorationStyleType.Highlight
+      [ThReadAlongHighlightKeys.utteranceStyle]: { type: DecorationStyleType.Mask },
+      [ThReadAlongHighlightKeys.wordStyle]: { type: DecorationStyleType.Highlight }
     }
   }
 };

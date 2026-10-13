@@ -57,8 +57,8 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
     if (!key) return;
     await setStyle(ThReadAlongHighlightKeys.wordStyle, key === NO_STYLE
       ? false
-      : { type: key as BuiltinDecorationStyle["type"], tint });
-  }, [setStyle, tint]);
+      : { ...builtinStyle, type: key as BuiltinDecorationStyle["type"] });
+  }, [setStyle, builtinStyle]);
 
   const updateTint = useCallback(async (color: Color) => {
     if (!builtinStyle) return;

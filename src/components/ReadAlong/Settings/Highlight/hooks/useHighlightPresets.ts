@@ -29,8 +29,8 @@ type HighlightStyles = Partial<Record<HighlightStateKey, ReadAloudDecorationStyl
 
 /**
  * Hook to apply highlight presets, and resolve styles against the reading theme
- * Presets only set which styles apply, their tints come from the reading theme
- * unless the user picked a color, which is used as-is
+ * Styles without a tint take the reading theme's, tints set in a preset
+ * or picked by the user are used as-is
  */
 export const useHighlightPresets = () => {
   const { preferences } = usePreferences();
@@ -109,15 +109,7 @@ export const useHighlightPresets = () => {
       };
     }
 
-    const presetValues = presets.keys[presetKey];
-    if (!presetValues) return {};
-
-    const toStyle = (type: DecorationStyleType | false): ReadAloudDecorationStyle => type === false ? false : { type };
-
-    return {
-      [ThReadAlongHighlightKeys.utteranceStyle]: toStyle(presetValues[ThReadAlongHighlightKeys.utteranceStyle]),
-      [ThReadAlongHighlightKeys.wordStyle]: toStyle(presetValues[ThReadAlongHighlightKeys.wordStyle])
-    };
+    return presets.keys[presetKey] ?? {};
   }, [presets.keys, highlight?.custom]);
 
   // The style as stored, without the theme tint, for the advanced controls

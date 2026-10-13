@@ -221,7 +221,7 @@ function useHighlightPresets(): {
 }
 ```
 
-A style without a tint takes the reading theme’s color: `readAlongWord` for the word, `readAlongMask` for the mask, `readAlongUtterance` otherwise. A tint the user picked is kept as-is. The navigator receives the styles without contrast adjustment.
+A style without a tint takes the reading theme’s color: `readAlongWord` for the word, `readAlongMask` for the mask, `readAlongUtterance` otherwise. A tint set in a preset or picked by the user is kept as-is. The navigator receives the styles without contrast adjustment.
 
 ## Accessibility
 

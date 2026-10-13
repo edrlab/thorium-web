@@ -251,7 +251,7 @@ readAlong: {
 - `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 - `presets`: the highlight presets.
 
-Presets only set which styles apply, using enum `ThReadAlongHighlightPresetKeys`:
+Presets set the sentence and word styles, using enum `ThReadAlongHighlightPresetKeys`:
 
 - `sentenceAndWord`: highlights the sentence and the word;
 - `sentence`: highlights the sentence only;
@@ -282,20 +282,20 @@ readAlong: {
         ],
         keys: {
           [ThReadAlongHighlightPresetKeys.sentenceAndWord]: {
-            utteranceStyle: DecorationStyleType.Highlight,
-            wordStyle: DecorationStyleType.Highlight
+            utteranceStyle: { type: DecorationStyleType.Highlight },
+            wordStyle: { type: DecorationStyleType.Highlight }
           },
           [ThReadAlongHighlightPresetKeys.sentence]: {
-            utteranceStyle: DecorationStyleType.Highlight,
+            utteranceStyle: { type: DecorationStyleType.Highlight },
             wordStyle: false
           },
           [ThReadAlongHighlightPresetKeys.word]: {
             utteranceStyle: false,
-            wordStyle: DecorationStyleType.Highlight
+            wordStyle: { type: DecorationStyleType.Highlight }
           },
           [ThReadAlongHighlightPresetKeys.mask]: {
-            utteranceStyle: DecorationStyleType.Mask,
-            wordStyle: DecorationStyleType.Highlight
+            utteranceStyle: { type: DecorationStyleType.Mask },
+            wordStyle: { type: DecorationStyleType.Highlight }
           }
         }
       }
@@ -304,7 +304,7 @@ readAlong: {
 }
 ```
 
-A style is a `DecorationStyleType` from `@readium/navigator`, or `false` for none. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
+A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the reading theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
 
 The colors of the presets come from the reading theme, so the highlight changes with it: see the `readAlong*` tokens in [Theming](./Theming.md#keys-and-tokens). A color the user picks in the submenu is used as-is, whatever the theme.
 
