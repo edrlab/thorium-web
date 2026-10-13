@@ -3,11 +3,11 @@
 import { useCallback } from "react";
 
 import { ThReadAlongKeys } from "@/preferences";
-import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
 
-import { StatefulSettingsItemProps } from "../../Settings/models/settings";
+import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
-import { StatefulSwitch } from "../../Settings/StatefulSwitch";
+import { StatefulSwitch } from "../../../Settings/StatefulSwitch";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";

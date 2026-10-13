@@ -193,7 +193,8 @@ Read-along has its own customizable keys, declared the same way:
 - `readAlong`: read-along settings, added to `readAlong.settings`. Their `keys` entries are typed as range settings;
 - `readAlongVoice`: components of the voice group, added to `readAlong.settings.voice`, like `text` and `spacing`;
 - `readAlongHighlight`: components of the highlight group, added to `readAlong.settings.highlight`, like `text` and `spacing`;
-- `readAlongProsody`: components of the prosody group, added to `readAlong.settings.prosody`, like `text` and `spacing`.
+- `readAlongProsody`: components of the prosody group, added to `readAlong.settings.prosody`, like `text` and `spacing`;
+- `readAlongVerbosity`: components of the verbosity group, added to `readAlong.settings.verbosity`, like `text` and `spacing`.
 
 ```typescript
 type MyKeys = {
@@ -202,6 +203,7 @@ type MyKeys = {
   readAlongVoice: ThReadAlongVoiceKeys | "myVoiceSetting";
   readAlongHighlight: ThReadAlongHighlightKeys | "myHighlightSetting";
   readAlongProsody: ThReadAlongProsodyKeys | "myProsodySetting";
+  readAlongVerbosity: ThReadAlongVerbosityKeys | "myVerbositySetting";
 } & CustomizableKeys;
 ```
 

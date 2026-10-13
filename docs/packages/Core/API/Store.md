@@ -176,7 +176,7 @@ interface ReadAlongPlayerReducerState {
 - `setReadAlongAnyVoiceHasBoundaries`: Set whether any voice for the publication's language reports word boundaries
 - `setReadAlongSleepTimer`: Update the sleep timer
 - `setReadAlongMetadata`: Set the publication metadata shown by the player
-- `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the voice, highlight or prosody submenu
+- `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the voice, highlight, prosody or verbosity submenu
 - `resetReadAlongPlayer`: Reset the session fields, keeping `isActive`, `layout` and `metadata`
 
 ### Actions Reducer

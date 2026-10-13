@@ -9,6 +9,8 @@ import {
   defaultReadAlongProsodySubpanel,
   defaultReadAlongVoiceMain,
   defaultReadAlongVoiceSubpanel,
+  defaultReadAlongVerbosityMain,
+  defaultReadAlongVerbositySubpanel,
   ThReadAlongActionKeys,
   ThReadAlongSettingsContainerKeys,
   ThSheetHeaderVariant
@@ -21,6 +23,7 @@ import { StatefulSheetWrapper } from "../../../Sheets/StatefulSheetWrapper";
 import { StatefulReadAlongHighlightGroupContainer } from "../../Settings/Highlight/StatefulReadAlongHighlightGroup";
 import { StatefulReadAlongProsodyGroupContainer } from "../../Settings/Prosody/StatefulReadAlongProsodyGroup";
 import { StatefulReadAlongVoiceGroupContainer } from "../../Settings/Voice/StatefulReadAlongVoiceGroup";
+import { StatefulReadAlongVerbosityGroupContainer } from "../../Settings/Verbosity/StatefulReadAlongVerbosityGroup";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
@@ -46,6 +49,7 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
   const voicePrefs = preferences.readAlong.settings.voice;
   const highlightPrefs = preferences.readAlong.settings.highlight;
   const prosodyPrefs = preferences.readAlong.settings.prosody;
+  const verbosityPrefs = preferences.readAlong.settings.verbosity;
 
   const setOpen = useCallback((value: boolean) => {
     if (profile) {
@@ -64,11 +68,13 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
       highlightPrefs?.main || defaultReadAlongHighlightMain,
       highlightPrefs?.subPanel || defaultReadAlongHighlightSubpanel,
       prosodyPrefs?.main || defaultReadAlongProsodyMain,
-      prosodyPrefs?.subPanel || defaultReadAlongProsodySubpanel
+      prosodyPrefs?.subPanel || defaultReadAlongProsodySubpanel,
+      verbosityPrefs?.main || defaultReadAlongVerbosityMain,
+      verbosityPrefs?.subPanel || defaultReadAlongVerbositySubpanel
     ].flat() as string[];
 
     return groupSettings.includes(key);
-  }, [voicePrefs?.main, voicePrefs?.subPanel, highlightPrefs?.main, highlightPrefs?.subPanel, prosodyPrefs?.main, prosodyPrefs?.subPanel]);
+  }, [voicePrefs?.main, voicePrefs?.subPanel, highlightPrefs?.main, highlightPrefs?.subPanel, prosodyPrefs?.main, prosodyPrefs?.subPanel, verbosityPrefs?.main, verbosityPrefs?.subPanel]);
 
   const renderSettings = useCallback(() => {
     switch (contains) {
@@ -80,6 +86,9 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
 
       case ThReadAlongSettingsContainerKeys.prosody:
         return <StatefulReadAlongProsodyGroupContainer />;
+
+      case ThReadAlongSettingsContainerKeys.verbosity:
+        return <StatefulReadAlongVerbosityGroupContainer />;
 
       case ThReadAlongSettingsContainerKeys.initial:
       default:
@@ -114,6 +123,9 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
       case ThReadAlongSettingsContainerKeys.prosody:
         return t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.title");
 
+      case ThReadAlongSettingsContainerKeys.verbosity:
+        return t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title");
+
       case ThReadAlongSettingsContainerKeys.initial:
       default:
         return t("_pendingThoriumLocales.reader.readAlong.preferences.title");
@@ -131,11 +143,14 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
       case ThReadAlongSettingsContainerKeys.prosody:
         return prosodyPrefs?.header || ThSheetHeaderVariant.close;
 
+      case ThReadAlongSettingsContainerKeys.verbosity:
+        return verbosityPrefs?.header || ThSheetHeaderVariant.close;
+
       case ThReadAlongSettingsContainerKeys.initial:
       default:
         return ThSheetHeaderVariant.close;
     }
-  }, [contains, voicePrefs?.header, highlightPrefs?.header, prosodyPrefs?.header]);
+  }, [contains, voicePrefs?.header, highlightPrefs?.header, prosodyPrefs?.header, verbosityPrefs?.header]);
 
   useEffect(() => {
     if (!isOpen) setInitial();

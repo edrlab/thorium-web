@@ -179,6 +179,10 @@
           },
           "verbosity": {
             "title": "Verbosity",
+            "advanced": {
+              "trigger": "Customize",
+              "tooltip": "Customize what is announced and when"
+            },
             "values": {
               "none": "None",
               "few": "Few",

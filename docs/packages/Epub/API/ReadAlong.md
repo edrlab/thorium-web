@@ -119,8 +119,8 @@ The read-along settings menu.
 
 **Features:**
 - Renders the settings in `readAlong.settings.order`
-- Leaves out the components of the voice, highlight and prosody groups, which render them themselves
-- Switches to the voice, highlight or prosody submenu, with a back button in its header; Escape returns to the menu
+- Leaves out the components of the voice, highlight, prosody and verbosity groups, which render them themselves
+- Switches to the voice, highlight, prosody or verbosity submenu, with a back button in its header; Escape returns to the menu
 - Returns to the menu when closed
 
 ## Settings Components
@@ -135,9 +135,13 @@ A dropdown of the voices for the publication’s main language, as filtered and 
 
 Range settings, rendered according to their `variant` in `readAlong.settings.keys`. Their range is limited to what the TS-Toolkit supports, and they show the navigator’s value until the user sets one.
 
-### StatefulReadAlongAutoPause, StatefulReadAlongVerbosity, StatefulReadAlongLanguage
+### StatefulReadAlongAutoPause, StatefulReadAlongLanguage
 
-Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausing after each block, and disables pausing after each page in scroll mode; verbosity doesn’t offer `custom`.
+Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausing after each block, and disables pausing after each page in scroll mode.
+
+### StatefulReadAlongVerbosity
+
+A radio group of the verbosity presets supported by the TS-Toolkit, without `custom`.
 
 ### StatefulReadAlongInlineContextualization
 
@@ -148,6 +152,12 @@ A switch reading notes and page breaks where they appear in a sentence.
 The voice group: the components in `readAlong.settings.voice.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
 
 `StatefulReadAlongVoiceGroupContainer` renders the submenu’s components, from `subPanel`.
+
+### StatefulReadAlongVerbosityGroup
+
+The verbosity group: the components in `readAlong.settings.verbosity.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+
+`StatefulReadAlongVerbosityGroupContainer` renders the submenu’s components, from `subPanel`.
 
 ### StatefulReadAlongHighlightGroup
 

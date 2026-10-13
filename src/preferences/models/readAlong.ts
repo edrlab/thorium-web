@@ -33,7 +33,8 @@ export enum ThReadAlongKeys {
   highlightPresets = "highlightPresets",
   prosodyGroup = "prosodyGroup",
   prosodyPresets = "prosodyPresets",
-  voiceGroup = "voiceGroup"
+  voiceGroup = "voiceGroup",
+  verbosityGroup = "verbosityGroup"
 }
 
 export enum ThReadAlongHighlightKeys {
@@ -73,11 +74,17 @@ export enum ThReadAlongVoiceKeys {
   language = "language"
 }
 
+export enum ThReadAlongVerbosityKeys {
+  verbosity = "verbosity",
+  inlineContextualization = "inlineContextualization"
+}
+
 export enum ThReadAlongSettingsContainerKeys {
   initial = "initial",
   highlight = "highlight",
   prosody = "prosody",
-  voice = "voice"
+  voice = "voice",
+  verbosity = "verbosity"
 }
 
 export enum ThMiniPlayerTypes {
@@ -237,6 +244,15 @@ export const defaultReadAlongVoiceSubpanel = [
   ThReadAlongVoiceKeys.language
 ];
 
+export const defaultReadAlongVerbosityMain = [
+  ThReadAlongVerbosityKeys.verbosity
+];
+
+export const defaultReadAlongVerbositySubpanel = [
+  ThReadAlongVerbosityKeys.verbosity,
+  ThReadAlongVerbosityKeys.inlineContextualization
+];
+
 export const defaultReadAlongHighlightMain = [
   ThReadAlongHighlightKeys.highlightPresets
 ];
@@ -341,8 +357,7 @@ export const defaultReadAlongPreferences = {
       ThReadAlongKeys.voiceGroup,
       ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.prosodyGroup,
-      ThReadAlongKeys.verbosity,
-      ThReadAlongKeys.inlineContextualization
+      ThReadAlongKeys.verbosityGroup
     ],
     keys: {
       [ThReadAlongKeys.rate]: defaultReadAlongRate,
@@ -369,6 +384,11 @@ export const defaultReadAlongPreferences = {
       main: defaultReadAlongProsodyMain,
       subPanel: defaultReadAlongProsodySubpanel,
       presets: defaultReadAlongProsodyPresets
+    },
+    verbosity: {
+      header: ThSheetHeaderVariant.previous,
+      main: defaultReadAlongVerbosityMain,
+      subPanel: defaultReadAlongVerbositySubpanel
     }
   }
 };

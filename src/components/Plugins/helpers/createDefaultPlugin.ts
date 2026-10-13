@@ -55,9 +55,10 @@ import { StatefulReadAlongHighlightPresets } from "../../ReadAlong/Settings/High
 import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongAutoPause";
 import { StatefulReadAlongProsodyGroup } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongProsodyGroup";
 import { StatefulReadAlongProsodyPresets } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongProsodyPresets";
-import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/StatefulReadAlongVerbosity";
+import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosity";
+import { StatefulReadAlongVerbosityGroup } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosityGroup";
 import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguage";
-import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/StatefulReadAlongInlineContextualization";
+import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongInlineContextualization";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -238,15 +239,20 @@ export const createDefaultPlugin = (): ThPlugin => {
           Comp: StatefulReadAlongProsodyPresets,
           type: "readAlongProsody"
         },
+        [ThReadAlongKeys.verbosityGroup]: {
+          Comp: StatefulReadAlongVerbosityGroup
+        },
         [ThReadAlongKeys.verbosity]: {
-          Comp: StatefulReadAlongVerbosity
+          Comp: StatefulReadAlongVerbosity,
+          type: "readAlongVerbosity"
         },
         [ThReadAlongKeys.language]: {
           Comp: StatefulReadAlongLanguage,
           type: "readAlongVoice"
         },
         [ThReadAlongKeys.inlineContextualization]: {
-          Comp: StatefulReadAlongInlineContextualization
+          Comp: StatefulReadAlongInlineContextualization,
+          type: "readAlongVerbosity"
         }
       }
     }

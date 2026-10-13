@@ -163,7 +163,7 @@ The mini player’s `collapse` works like the [collapsibility of reader actions]
 
 The rate action is disabled when the current voice can’t change its rate.
 
-Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the voice, highlight and prosody submenus.
+Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the voice, highlight, prosody and verbosity submenus.
 
 ## Settings
 
@@ -180,8 +180,7 @@ readAlong: {
       ThReadAlongKeys.voiceGroup,
       ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.prosodyGroup,
-      ThReadAlongKeys.verbosity,
-      ThReadAlongKeys.inlineContextualization
+      ThReadAlongKeys.verbosityGroup
     ]
   }
 }
@@ -190,8 +189,7 @@ readAlong: {
 - `voiceGroup`: the voice, with a submenu for the voice, volume, pitch and language, see [Voice](#voice).
 - `highlightGroup`: the highlight presets, with a submenu for the highlight styles, see [Highlight](#highlight).
 - `prosodyGroup`: the prosody presets, with a submenu for the rate, pause duration and auto pause, see [Prosody](#prosody).
-- `verbosity`: how much is announced besides the text, such as images, figures or tables.
-- `inlineContextualization`: whether notes and page breaks are read where they appear in a sentence.
+- `verbosityGroup`: the verbosity, with a submenu for the verbosity and inline contextualization, see [Verbosity](#verbosity).
 
 The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings.
 
@@ -402,6 +400,34 @@ readAlong: {
 
 The presets are only applied when `prosodyGroup` is in `order` and `prosodyPresets` is in its `main` or `subPanel`.
 
+### Verbosity
+
+`readAlong.settings.verbosity` configures the verbosity group, like the voice group. Use enum `ThReadAlongVerbosityKeys` to reference its components:
+
+- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable;
+- `inlineContextualization`: whether notes and page breaks are read where they appear in a sentence.
+
+Its options are the same as the voice group’s:
+
+- `main`: the components shown in the settings menu. Defaults to the verbosity.
+- `subPanel`: the components shown in the verbosity submenu, opened with the group’s advanced button. Defaults to the verbosity and inline contextualization. Set it to `null` to remove the submenu.
+- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+
+```typescript
+readAlong: {
+  settings: {
+    verbosity: {
+      header: ThSheetHeaderVariant.previous,
+      main: [ThReadAlongVerbosityKeys.verbosity],
+      subPanel: [
+        ThReadAlongVerbosityKeys.verbosity,
+        ThReadAlongVerbosityKeys.inlineContextualization
+      ]
+    }
+  }
+}
+```
+
 ## Validation
 
 `createPreferences` warns, without throwing, when:
@@ -413,13 +439,14 @@ The presets are only applied when `prosodyGroup` is in `order` and `prosodyPrese
 
 ## Extending Read Along
 
-Read along accepts custom actions and settings, declared with the `readAlongAction`, `readAlong`, `readAlongVoice`, `readAlongHighlight` and `readAlongProsody` customizable keys (see [Custom Action Keys](./HandlingPreferences.md#custom-action-keys)).
+Read along accepts custom actions and settings, declared with the `readAlongAction`, `readAlong`, `readAlongVoice`, `readAlongHighlight`, `readAlongProsody` and `readAlongVerbosity` customizable keys (see [Custom Action Keys](./HandlingPreferences.md#custom-action-keys)).
 
 - **Actions:** add your key to the display order of either player, configure its tokens in `readAlong.actions.keys`, and register its Trigger/Target pair in the `readAlongActions` map of a plugin.
 - **Settings:** add your key to `readAlong.settings.order`, and register its component in the `settings` map of a plugin. Its entry in `readAlong.settings.keys` is typed as a range setting. Its value lives in your own state, as the `readAlongSettings` slice only holds built-in preferences.
 - **Voice components:** add your key to `readAlong.settings.voice.main` or `subPanel`, and register its component with `type: "readAlongVoice"`. Registering under one of the `ThReadAlongVoiceKeys` replaces the built-in component.
 - **Highlight components:** add your key to `readAlong.settings.highlight.main` or `subPanel`, and register its component with `type: "readAlongHighlight"`. A preset can set a value for it in `highlight.presets.keys`. Registering under one of the `ThReadAlongHighlightKeys` replaces the built-in component.
 - **Prosody components:** add your key to `readAlong.settings.prosody.main` or `subPanel`, and register its component with `type: "readAlongProsody"`. A preset can set a value for it in `prosody.presets.keys`. Registering under one of the `ThReadAlongProsodyKeys` replaces the built-in component.
+- **Verbosity components:** add your key to `readAlong.settings.verbosity.main` or `subPanel`, and register its component with `type: "readAlongVerbosity"`. Registering under one of the `ThReadAlongVerbosityKeys` replaces the built-in component.
 
 ```typescript
 {
