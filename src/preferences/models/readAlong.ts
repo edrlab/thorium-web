@@ -249,6 +249,8 @@ export const defaultReadAlongPreferences = {
   actions: {
     miniPlayer: {
       displayOrder: [
+        ThReadAlongActionKeys.volume,
+        ThReadAlongActionKeys.sleepTimer,
         ThReadAlongActionKeys.settings
       ],
       collapse: true

@@ -167,6 +167,7 @@ export const useDocking = <T extends string>(key: T, { canReserve = true }: { ca
   }, [dockablePref, safeDefaultSheet, effectiveDocking, canBeDocked, isDockedSheetPref, usableSheetPref, nonDockedSheetPref, breakpoint]);
 
   const previousSheetType = usePrevious(sheetType);
+  const previousIsOpen = usePrevious(actionState?.isOpen);
 
   // Builds the docker for the action based on all preferences
   const getDocker = useCallback((): ThDockingKeys[] => {
@@ -220,11 +221,9 @@ export const useDocking = <T extends string>(key: T, { canReserve = true }: { ca
       // Docking isn't available at this breakpoint. A remembered `isOpen:
       // true` from a wider viewport shouldn't leak into whatever fallback
       // sheet this action renders as on a cold load — the "dismiss when
-      // sheet stops being docked" effect below can't catch this itself,
-      // since `usePrevious` has nothing to compare against on first render.
-      // Gated to that one-shot case: previousSheetType is only null on
-      // mount, so a later deliberate reopen isn't clobbered right back shut
-      if (previousSheetType == null && (actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
+      // sheet stops being docked" effect below has no previous sheet type.
+      // Holds until the sheet type or open state first changes, so a later reopen isn't clobbered
+      if (previousSheetType == null && previousIsOpen == null && (actionState?.docking === ThDockingKeys.start || actionState?.docking === ThDockingKeys.end) && actionState?.isOpen) {
         dispatch(setActionOpen({
           key: key,
           isOpen: false,
@@ -259,7 +258,7 @@ export const useDocking = <T extends string>(key: T, { canReserve = true }: { ca
         profile
       }));
     }
-  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, previousSheetType, key, dispatch, profile, reserved, reopenOnLoadPref]);
+  }, [effectiveDocking, hasStaleTransient, actionState?.isOpen, actionState?.docking, sheetType, previousSheetType, previousIsOpen, key, dispatch, profile, reserved, reopenOnLoadPref]);
 
   // Dismiss when the sheet stops being docked. `docking` is left pointing at
   // the slot, so it is reclaimed for free once the slot comes back
@@ -274,14 +273,14 @@ export const useDocking = <T extends string>(key: T, { canReserve = true }: { ca
     if (effectiveDocking === ThDockingKeys.end && !isSlotLockedByOther(ThDockingKeys.end)) return;
 
     if (!previousSheetType || !isDockedType(previousSheetType) || isDockedType(sheetType)) return;
-    if (!breakpoint || !profile) return;
+    if (!profile) return;
 
     dispatch(setActionOpen({
       key: key,
       isOpen: false,
       profile
     }));
-  }, [dispatch, key, sheetType, previousSheetType, breakpoint, profile, effectiveDocking, isSlotLockedByOther]);
+  }, [dispatch, key, sheetType, previousSheetType, profile, effectiveDocking, isSlotLockedByOther]);
 
   // Sync action docking property with profile dock state when profile changes.
   // The slot is authoritative here: it can already name this action while the

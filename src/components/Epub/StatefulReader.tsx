@@ -600,7 +600,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     const theme = isFXL ? (themeObject.fxl ?? "auto") : (themeObject.reflow ?? "auto");
 
     // Protecting against re-applying on theme change
-    if (theme !== "auto" && previousTheme !== theme) return;
+    if (theme !== "auto" && previousTheme !== null && previousTheme !== theme) return;
 
     const applyCurrentTheme = async () => {
       const themeKeys = isFXL ? fxlThemeKeys : reflowThemeKeys;

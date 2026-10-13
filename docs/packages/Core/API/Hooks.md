@@ -523,7 +523,7 @@ function useLocalStorage(
 
 ### usePrevious
 
-Stores and returns the previous value of a variable.
+Returns the value a variable had before its last change, or `null` until it first changes.
 
 ```typescript
 function usePrevious<T>(
@@ -533,8 +533,11 @@ function usePrevious<T>(
 
 **Features:**
 - Generic type support
-- Ref-based storage for performance
-- Updates only after render
+- Changes only when `value` changes, so unrelated re-renders don’t affect it and it is safe as an effect dependency
+- `previous !== value` stays true until the next change
+
+> [!IMPORTANT]
+> `value` must keep its identity across renders: pass a primitive or a memoized value. A new object on every render counts as a change on every render.
 
 ### usePublicationProgress
 

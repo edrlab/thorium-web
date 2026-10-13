@@ -512,7 +512,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     const theme = themeObject.fxl ?? "auto";
 
     // Protecting against re-applying on theme change
-    if (theme !== "auto" && previousTheme !== theme) return;
+    if (theme !== "auto" && previousTheme !== null && previousTheme !== theme) return;
 
     const applyCurrentTheme = async () => {
       const themeKey = fxlThemeKeys.includes(theme as any) ? theme : "auto";

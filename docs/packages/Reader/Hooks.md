@@ -50,6 +50,8 @@ For `"divina"`, it also sets `isManifestScrolled` in the publication store when 
 
 Derives boolean transition flags from the reader's Redux state. Useful for reacting to state changes (e.g. entering/leaving immersive mode) without manually tracking previous values.
 
+The flags describe the latest change of any of these four states, and stay set until the next one: re-renders don't reset them.
+
 ```typescript
 import { useReaderTransitions } from "@edrlab/thorium-web/reader";
 
@@ -72,7 +74,7 @@ interface ReaderTransitions {
   wasScroll: boolean;
   wasUserNavigated: boolean;
 
-  // Transitions (previous → current)
+  // Transitions (latest change)
   fromImmersive: boolean;
   toImmersive: boolean;
   fromFullscreen: boolean;
