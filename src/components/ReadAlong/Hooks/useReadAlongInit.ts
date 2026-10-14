@@ -75,7 +75,7 @@ export const useReadAlongInit = ({
     voiceControls,
     publicationLanguage
   );
-  const { generateFromMarkup, detachable } = useReadAlongPreferences();
+  const { generateFromMarkup, detachable, readFromPointer, startInViewport } = useReadAlongPreferences();
 
   const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
 
@@ -137,7 +137,9 @@ export const useReadAlongInit = ({
 
     let cancelled = false;
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults: readAlongDefaults, provider, engine, detachable }, async () => {
+    const defaults: IReadAloudDefaults = { ...readAlongDefaults, detachable, readFromPointer, startInViewport };
+
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults, provider, engine }, async () => {
       // The engine loads its voices asynchronously, and a voice name set before then is not found
       if (storedVoice) {
         const stored = (await getVoices()).find((item) => item.name === storedVoice);
@@ -158,7 +160,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, readFromPointer, startInViewport, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {

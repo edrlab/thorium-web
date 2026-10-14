@@ -39,7 +39,6 @@ import { StatefulReaderFooter } from "../StatefulReaderFooter";
 import { PositionStorage, ReadAlongConfig } from "../Reader/StatefulReaderWrapper";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
-import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useWebPubNavigator } from "@/core/Hooks/WebPub";
 import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
@@ -197,7 +196,6 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     }
   }, [cache, playReadAlong, pauseReadAlong]);
 
-  const readAlongPreferences = useReadAlongPreferences();
   const {
     currentPositions,
     canGoBackward,
@@ -238,11 +236,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   // While read along is active, a press on content reads from there, other presses are handled as usual.
   const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
-    if (!readAlongPreferences.readFromPointer || !cache.current.isReadAlongActive) return fallback(event);
+    if (!cache.current.isReadAlongActive) return fallback(event);
     readFromPointer(event).then((handled) => {
       if (!handled) fallback(event);
     });
-  }, [readAlongPreferences.readFromPointer, cache, readFromPointer]);
+  }, [cache, readFromPointer]);
 
   const listeners: WebPubNavigatorListeners = useMemo(() => ({
     frameLoaded: async function (_wnd: Window): Promise<void> {},

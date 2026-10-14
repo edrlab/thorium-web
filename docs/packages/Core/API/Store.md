@@ -411,6 +411,7 @@ interface PreferencesReducerState {
     generateFromMarkup?: boolean;
     readFromPointer?: boolean;
     detachable?: boolean;
+    startInViewport?: boolean;
   };
 }
 ```
@@ -421,7 +422,7 @@ interface PreferencesReducerState {
 - `setUI`: Update UI settings
 - `setScrollAffordances`: Configure scroll behavior
 - `setPaginatedAffordance`: Update paginated affordance settings
-- `setReadAlong`: Update read-along runtime preferences (generateFromMarkup, readFromPointer, detachable)
+- `setReadAlong`: Update read-along runtime preferences (generateFromMarkup, readFromPointer, detachable, startInViewport)
 - `updateFromPreferences`: Bulk update from a preferences object
 
 > [!NOTE]

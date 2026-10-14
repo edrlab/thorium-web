@@ -95,7 +95,8 @@ export const mapPreferencesToState = <T extends CustomizableKeys>(prefs: ThPrefe
     readAlong: {
       generateFromMarkup: prefs.readAlong?.generateFromMarkup,
       readFromPointer: prefs.readAlong?.readFromPointer,
-      detachable: prefs.readAlong?.detachable
+      detachable: prefs.readAlong?.detachable,
+      startInViewport: prefs.readAlong?.startInViewport
     }
   };
 }

@@ -52,7 +52,6 @@ export interface ReadAloudNavigatorLoadProps {
   defaults?: IReadAloudDefaults;
   engine?: ReadiumSpeechPlaybackEngine;
   provider?: GuidedNavigationProvider;
-  detachable?: boolean;
 }
 
 export const useReadAloudNavigator = () => {
@@ -83,7 +82,6 @@ export const useReadAloudNavigator = () => {
         {
           engine: config.engine,
           provider: config.provider,
-          detachable: config.detachable,
           preferences: config.preferences || {},
           defaults: config.defaults || {}
         }

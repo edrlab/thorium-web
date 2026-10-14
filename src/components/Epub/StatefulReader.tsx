@@ -46,7 +46,6 @@ import { StatefulReaderFooter } from "../StatefulReaderFooter";
 
 import { useLocale } from "react-aria";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
-import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useEpubStatelessCache } from "./Hooks/useEpubStatelessCache";
 import { useEpubReaderInit } from "./Hooks/useReaderInit";
@@ -261,7 +260,6 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     }
   }, [cache, playReadAlong, pauseReadAlong]);
 
-  const readAlongPreferences = useReadAlongPreferences();
   const {
     goLeft,
     goRight,
@@ -354,11 +352,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   // While read along is active, a press on content reads from there, other presses are handled as usual.
   const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
-    if (!readAlongPreferences.readFromPointer || !cache.current.isReadAlongActive) return fallback(event);
+    if (!cache.current.isReadAlongActive) return fallback(event);
     readFromPointer(event).then((handled) => {
       if (!handled) fallback(event);
     });
-  }, [readAlongPreferences.readFromPointer, cache, readFromPointer]);
+  }, [cache, readFromPointer]);
 
   // We could use canGoBackward() and canGoForward() directly on arrows
   // but maybe we will need to sync the state for other features in the future
