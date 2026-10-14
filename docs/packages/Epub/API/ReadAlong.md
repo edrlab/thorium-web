@@ -141,11 +141,11 @@ Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausi
 
 ### StatefulReadAlongVerbosity
 
-A radio group of the verbosity presets supported by the TS-Toolkit, without `custom`.
+A radio group of the verbosity presets supported by the TS-Toolkit. `custom` is left out unless the verbosity submenu has other components, and starts from the current preset when picked without having been customized.
 
-### StatefulReadAlongInlineContextualization
+### StatefulReadAlongNotes, StatefulReadAlongPageBreaks
 
-A switch reading notes and page breaks where they appear in a sentence.
+Dropdowns reading notes and page breaks never, inline (where they are referenced or appear), or after the sentence. Their value is derived from the navigator’s current settings, so it matches any preset. Changing whether they are read switches verbosity to `custom`, starting from the current preset’s tables.
 
 ### StatefulReadAlongKeepCentered
 

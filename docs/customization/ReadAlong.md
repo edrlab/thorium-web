@@ -424,13 +424,16 @@ The presets are only applied when `prosodyGroup` is in `order` and `prosodyPrese
 
 `readAlong.settings.verbosity` configures the verbosity group, like the voice group. Use enum `ThReadAlongVerbosityKeys` to reference its components:
 
-- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable. It is kept separately for reflowable and fixed-layout publications, like the reading theme;
-- `inlineContextualization`: whether notes and page breaks are read where they appear in a sentence.
+- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable. It is kept separately for reflowable and fixed-layout publications, like the reading theme. `custom` is offered when `subPanel` has components to customize it with, and appears once one of them is changed;
+- `notes`: whether notes are read never, where they are referenced, or after the sentence referencing them;
+- `pageBreaks`: whether page breaks are read never, where they appear, or after the sentence they appear in.
+
+Reading notes or page breaks never, or again, switches verbosity to `custom`, starting from what the current preset reads. Picking a preset again resets them to that preset’s.
 
 Its options are the same as the voice group’s:
 
 - `main`: the components shown in the settings menu. Defaults to the verbosity.
-- `subPanel`: the components shown in the verbosity submenu, opened with the group’s advanced button. Defaults to the verbosity and inline contextualization. Set it to `null` to remove the submenu.
+- `subPanel`: the components shown in the verbosity submenu, opened with the group’s advanced button. Defaults to the verbosity, notes and page breaks. Set it to `null` to remove the submenu.
 - `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 
 ```typescript
@@ -441,7 +444,8 @@ readAlong: {
       main: [ThReadAlongVerbosityKeys.verbosity],
       subPanel: [
         ThReadAlongVerbosityKeys.verbosity,
-        ThReadAlongVerbosityKeys.inlineContextualization
+        ThReadAlongVerbosityKeys.notes,
+        ThReadAlongVerbosityKeys.pageBreaks
       ]
     }
   }

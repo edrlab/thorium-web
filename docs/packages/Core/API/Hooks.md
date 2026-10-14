@@ -314,7 +314,7 @@ Provides a stateless cache for read aloud settings, mapping React state to mutab
 ```typescript
 interface ReadAloudSettingsObject {
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: boolean | null;
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
   keepCentered: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
   skip: ReadAloudSettings["skip"] | null;
@@ -333,7 +333,7 @@ interface ReadAloudSettingsObject {
 
 function useReadAloudSettingsCache(
   format: ReadAloudSettings["format"] | null,
-  inlineContextualization: boolean | null,
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null,
   keepCentered: boolean | null,
   verbosity: ReadAloudSettings["verbosity"] | null,
   skip: ReadAloudSettings["skip"] | null,

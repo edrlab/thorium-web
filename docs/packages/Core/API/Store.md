@@ -138,7 +138,7 @@ interface ProsodyStateObject {
 interface ReadAlongSettingsReducerState {
   voice: string | null;               // Voice id of the publication’s language, the navigator’s own voice when null
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: boolean | null;
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null; // Roles read inline, set by the notes and page breaks settings
   keepCentered: boolean | null;
   verbosity: Partial<Record<"reflow" | "fxl" | "divina", ReadAloudSettings["verbosity"]>>; // Per format, like the reading theme
   skip: ReadAloudSettings["skip"] | null;

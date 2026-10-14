@@ -119,7 +119,7 @@ export interface ReadAlongSettingsReducerState {
   // Voice id of the publication's language, the navigator picking its own when null
   voice: string | null;
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: boolean | null;
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
   keepCentered: boolean | null;
   verbosity: ReadAlongVerbosityStateObject;
   skip: ReadAloudSettings["skip"] | null;

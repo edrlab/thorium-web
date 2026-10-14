@@ -59,7 +59,8 @@ import { StatefulReadAlongProsodyPresets } from "../../ReadAlong/Settings/Prosod
 import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosity";
 import { StatefulReadAlongVerbosityGroup } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosityGroup";
 import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguage";
-import { StatefulReadAlongInlineContextualization } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongInlineContextualization";
+import { StatefulReadAlongNotes } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongNotes";
+import { StatefulReadAlongPageBreaks } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongPageBreaks";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -255,8 +256,12 @@ export const createDefaultPlugin = (): ThPlugin => {
           Comp: StatefulReadAlongLanguage,
           type: "readAlongVoice"
         },
-        [ThReadAlongKeys.inlineContextualization]: {
-          Comp: StatefulReadAlongInlineContextualization,
+        [ThReadAlongKeys.notes]: {
+          Comp: StatefulReadAlongNotes,
+          type: "readAlongVerbosity"
+        },
+        [ThReadAlongKeys.pageBreaks]: {
+          Comp: StatefulReadAlongPageBreaks,
           type: "readAlongVerbosity"
         }
       }

@@ -1,5 +1,6 @@
 "use client";
 
-export * from "./StatefulReadAlongInlineContextualization";
+export * from "./StatefulReadAlongNotes";
+export * from "./StatefulReadAlongPageBreaks";
 export * from "./StatefulReadAlongVerbosity";
 export * from "./StatefulReadAlongVerbosityGroup";

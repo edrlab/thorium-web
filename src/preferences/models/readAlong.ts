@@ -25,7 +25,8 @@ export enum ThReadAlongKeys {
   verbosity = "verbosity",
   language = "language",
   format = "format",
-  inlineContextualization = "inlineContextualization",
+  notes = "notes",
+  pageBreaks = "pageBreaks",
   keepCentered = "keepCentered",
   utteranceStyle = "utteranceStyle",
   wordStyle = "wordStyle",
@@ -78,7 +79,8 @@ export enum ThReadAlongVoiceKeys {
 
 export enum ThReadAlongVerbosityKeys {
   verbosity = "verbosity",
-  inlineContextualization = "inlineContextualization"
+  notes = "notes",
+  pageBreaks = "pageBreaks"
 }
 
 export enum ThReadAlongSettingsContainerKeys {
@@ -252,7 +254,8 @@ export const defaultReadAlongVerbosityMain = [
 
 export const defaultReadAlongVerbositySubpanel = [
   ThReadAlongVerbosityKeys.verbosity,
-  ThReadAlongVerbosityKeys.inlineContextualization
+  ThReadAlongVerbosityKeys.notes,
+  ThReadAlongVerbosityKeys.pageBreaks
 ];
 
 export const defaultReadAlongHighlightMain = [

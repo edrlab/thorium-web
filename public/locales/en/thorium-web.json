@@ -187,7 +187,8 @@
               "none": "None",
               "few": "Few",
               "some": "Some",
-              "most": "Most"
+              "most": "Most",
+              "custom": "Custom"
             }
           },
           "language": {
@@ -198,9 +199,21 @@
               "always": "Always, including inline phrases"
             }
           },
-          "inlineContextualization": {
-            "title": "Notes and page breaks",
-            "label": "Read them where they appear in a sentence"
+          "notes": {
+            "title": "Notes",
+            "values": {
+              "never": "Never",
+              "inline": "Where they are referenced",
+              "after": "After the sentence"
+            }
+          },
+          "pageBreaks": {
+            "title": "Page breaks",
+            "values": {
+              "never": "Never",
+              "inline": "Where they appear",
+              "after": "After the sentence"
+            }
           },
           "keepCentered": {
             "title": "Keep centered",

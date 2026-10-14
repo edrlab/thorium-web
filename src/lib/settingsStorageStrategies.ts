@@ -71,7 +71,6 @@ export const defaultSettingsStorageStrategies: ThSettingsStorageStrategies = {
     [ThReadAlongKeys.rate]: ThSettingsStorageStrategy.glocal,
     [ThReadAlongKeys.pauseDuration]: ThSettingsStorageStrategy.glocal,
     [ThReadAlongKeys.autoPause]: ThSettingsStorageStrategy.glocal,
-    [ThReadAlongKeys.verbosity]: ThSettingsStorageStrategy.glocal,
-    [ThReadAlongKeys.inlineContextualization]: ThSettingsStorageStrategy.glocal
+    [ThReadAlongKeys.verbosity]: ThSettingsStorageStrategy.glocal
   }
 };
