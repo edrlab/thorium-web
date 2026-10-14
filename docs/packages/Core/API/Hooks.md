@@ -293,6 +293,7 @@ function useReadAloudNavigator(): {
   previous: () => Promise<boolean>;
   state: () => ReadAloudState;
   getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
+  getLanguages: () => Promise<string[]>;
   preferencesEditor: ReadAloudPreferencesEditor | undefined;
   getSetting: <K extends keyof ReadAloudSettings>(settingKey: K) => ReadAloudSettings[K] | undefined;
   settings: () => Readonly<ReadAloudSettings> | undefined;
@@ -329,6 +330,7 @@ interface ReadAloudSettingsObject {
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
   voice: string | null;
+  languageOverride: string | null;
 }
 
 function useReadAloudSettingsCache(
@@ -347,7 +349,8 @@ function useReadAloudSettingsCache(
   volume: number | null,
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
   wordStyle: ReadAloudSettings["wordStyle"] | null,
-  voice: string | null
+  voice: string | null,
+  languageOverride: string | null
 ): React.MutableRefObject<{ settings: ReadAloudSettingsObject }>
 ```
 

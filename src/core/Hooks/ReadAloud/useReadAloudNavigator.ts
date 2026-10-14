@@ -149,6 +149,13 @@ export const useReadAloudNavigator = () => {
     }) ?? [];
   }, []);
 
+  const getLanguages = useCallback(async (): Promise<string[]> => {
+    return await navigatorInstance?.getLanguages().catch((error) => {
+      warn(error);
+      return [];
+    }) ?? [];
+  }, []);
+
   return {
     ReadAloudNavigatorLoad,
     ReadAloudNavigatorDestroy,
@@ -162,6 +169,7 @@ export const useReadAloudNavigator = () => {
     state,
     isDetachable,
     getVoices,
+    getLanguages,
     preferencesEditor: navigatorInstance?.preferencesEditor,
     getSetting,
     settings,

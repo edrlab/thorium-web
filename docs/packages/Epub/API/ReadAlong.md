@@ -129,7 +129,7 @@ All settings components accept `standalone` (`true` by default), like the [EPUB 
 
 ### StatefulReadAlongVoice
 
-A dropdown of the voices for the publication’s main language, as filtered and sorted by the TS-Toolkit.
+A dropdown of the voices for the publication’s main language, or its language override, as filtered and sorted by the TS-Toolkit.
 
 ### StatefulReadAlongRate, StatefulReadAlongPitch, StatefulReadAlongVolume, StatefulReadAlongPauseDuration
 
@@ -138,6 +138,10 @@ Range settings, rendered according to their `variant` in `readAlong.settings.key
 ### StatefulReadAlongAutoPause, StatefulReadAlongLanguage
 
 Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausing after each block, and disables pausing after each page in scroll mode.
+
+### StatefulReadAlongLanguageOverride
+
+A dropdown of the languages the TS-Toolkit’s `getLanguages()` lists, after the publication’s declared language. Picking one corrects the publication’s language: the voices listed, and the language its content is spoken in, follow it.
 
 ### StatefulReadAlongVerbosity
 

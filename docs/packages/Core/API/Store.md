@@ -30,7 +30,7 @@ Settings are stored according to a strategy, from enum `ThSettingsStorageStrateg
 
 Publications are only told apart with a `localDataKey` or a `settingsStorage` on the reader, see [SettingsStorage Interface](../../Reader/ReadMe.md#settingsstorage-interface). Without them, every setting is global.
 
-`ThSettingsStorageStrategies` maps settings keys to strategies, per scope, like the settings orders (`reflowOrder`, `fxlOrder`, `webPubOrder`, `divinaOrder`): `reflow`, `fxl`, `webPub` and `divina` take `ThSettingsKeys`, `audio` takes `ThAudioKeys` and `readAlong` takes `ThReadAlongKeys`. A setting left out is global. `defaultSettingsStorageStrategies` follows Thorium Mobile: reflowable settings are glocal but the theme, which is always global; fixed-layout and Divina settings are glocal, theme included; audio settings are global; read along’s voice, volume and pitch are global, while switching voices for other languages, highlights, prosody and verbosity are glocal.
+`ThSettingsStorageStrategies` maps settings keys to strategies, per scope, like the settings orders (`reflowOrder`, `fxlOrder`, `webPubOrder`, `divinaOrder`): `reflow`, `fxl`, `webPub` and `divina` take `ThSettingsKeys`, `audio` takes `ThAudioKeys` and `readAlong` takes `ThReadAlongKeys`. A setting left out is global. `defaultSettingsStorageStrategies` follows Thorium Mobile: reflowable settings are glocal but the theme, which is always global; fixed-layout and Divina settings are glocal, theme included; audio settings are global; read along’s voice, volume and pitch are global, its language override is local, while switching voices for other languages, highlights, prosody and verbosity are glocal.
 
 Spread the defaults in your own file, and pass it to `ThStoreProvider`, or to `makeStore(storageKey, externalReducers, settingsStorageStrategies)` for a custom store:
 
@@ -144,6 +144,7 @@ interface ReadAlongSettingsReducerState {
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
+  languageOverride: string | null;    // Local to the publication
   segmentation: ReadAloudSettings["segmentation"] | null;
   pauseDuration: number | null;
   autoPause: ReadAloudSettings["autoPause"] | null;
@@ -159,7 +160,7 @@ interface ReadAlongSettingsReducerState {
 
 **Actions:**
 - `setReadAlongVoice`: Set the voice id (a voice’s `voiceURI`, or `identifier` for a server voice)
-- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongLanguageOverride`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
 - `setReadAlongVerbosity`: Set the verbosity preset of a format, with payload `{ key, value }`: `key` is `reflow` for reflowable EPUB and WebPub, `fxl` for fixed-layout EPUB, `divina` for Divina
 - `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values
 - `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles

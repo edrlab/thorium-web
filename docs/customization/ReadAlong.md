@@ -256,12 +256,13 @@ readAlong: {
 
 - `voice`: a list of the voices for the publication’s main language, sorted by the TS-Toolkit;
 - `volume`, `pitch`: ranges, see [Keys](#keys);
-- `language`: whether to switch voices for passages in another language.
+- `language`: whether to switch voices for passages in another language;
+- `languageOverride`: the language the publication is actually in, when its metadata is wrong. It lists the languages the browser has voices for, and only loads the voices of the one picked. It is stored for the publication only, never carried over to another.
 
 Its options are the same as the highlight group’s, without presets:
 
 - `main`: the components shown in the settings menu. Defaults to the voice.
-- `subPanel`: the components shown in the voice submenu, opened with the group’s advanced button. Defaults to the voice, volume, pitch and language. Set it to `null` to remove the submenu.
+- `subPanel`: the components shown in the voice submenu, opened with the group’s advanced button. Defaults to the language override, voice, volume, pitch and language. Set it to `null` to remove the submenu.
 - `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 
 ```typescript
@@ -271,6 +272,7 @@ readAlong: {
       header: ThSheetHeaderVariant.previous,
       main: [ThReadAlongVoiceKeys.voice],
       subPanel: [
+        ThReadAlongVoiceKeys.languageOverride,
         ThReadAlongVoiceKeys.voice,
         ThReadAlongVoiceKeys.volume,
         ThReadAlongVoiceKeys.pitch,

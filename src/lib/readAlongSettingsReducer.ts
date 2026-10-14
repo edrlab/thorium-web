@@ -125,6 +125,7 @@ export interface ReadAlongSettingsReducerState {
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
+  languageOverride: string | null;
   segmentation: ReadAloudSettings["segmentation"] | null;
   pauseDuration: number | null;
   autoPause: ReadAloudSettings["autoPause"] | null;
@@ -146,6 +147,7 @@ const initialState: ReadAlongSettingsReducerState = {
   skip: null,
   contextualize: null,
   language: null,
+  languageOverride: null,
   segmentation: null,
   pauseDuration: null,
   autoPause: null,
@@ -189,6 +191,9 @@ export const readAlongSettingsSlice = createSlice({
     },
     setReadAlongLanguage: (state, action) => {
       state.language = action.payload
+    },
+    setReadAlongLanguageOverride: (state, action) => {
+      state.languageOverride = action.payload
     },
     setReadAlongSegmentation: (state, action) => {
       state.segmentation = action.payload
@@ -286,6 +291,7 @@ export const {
   setReadAlongSkip,
   setReadAlongContextualize,
   setReadAlongLanguage,
+  setReadAlongLanguageOverride,
   setReadAlongSegmentation,
   setReadAlongPauseDuration,
   setReadAlongAutoPause,

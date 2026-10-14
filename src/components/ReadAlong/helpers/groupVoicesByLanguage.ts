@@ -1,4 +1,6 @@
-import { getLanguageDisplayName, ReadiumSpeechVoice } from "@readium/navigator";
+import { ReadiumSpeechVoice } from "@readium/navigator";
+
+import { getLanguageLabel } from "./getLanguageLabel";
 
 export interface ReadAlongVoiceGroup {
   id: string;
@@ -6,13 +8,6 @@ export interface ReadAlongVoiceGroup {
   voices: ReadiumSpeechVoice[];
 }
 
-const getLanguageLabel = (language: string, displayLocale?: string) => {
-  const label = getLanguageDisplayName(language, displayLocale);
-  // Some locales (e.g. French) return lowercase language names
-  return label.charAt(0).toLocaleUpperCase(displayLocale) + label.slice(1);
-};
-
-// Labels come from Intl so every BCP 47 tag is covered without locale files
 export const groupVoicesByLanguage = (voices: ReadiumSpeechVoice[], displayLocale?: string): ReadAlongVoiceGroup[] => {
   const groups = new Map<string, ReadAlongVoiceGroup>();
 

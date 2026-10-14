@@ -29,6 +29,7 @@ export const useReadAlongStatelessCache = (
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
   wordStyle: ReadAloudSettings["wordStyle"] | null,
   voice: string | null,
+  languageOverride: string | null,
   voiceControls: ReadAlongVoiceControls,
   publicationLanguage: string | undefined
 ) => {
@@ -48,7 +49,8 @@ export const useReadAlongStatelessCache = (
     volume,
     utteranceStyle,
     wordStyle,
-    voice
+    voice,
+    languageOverride
   );
 
   const cache = useRef<ReadAlongStatelessCache>({

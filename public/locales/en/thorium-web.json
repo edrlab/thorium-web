@@ -199,6 +199,13 @@
               "always": "Always, including inline phrases"
             }
           },
+          "languageOverride": {
+            "title": "Language of the publication",
+            "values": {
+              "declared": "As declared ({{ language }})",
+              "undeclared": "As declared"
+            }
+          },
           "notes": {
             "title": "Notes",
             "values": {

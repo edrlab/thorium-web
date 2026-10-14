@@ -51,6 +51,7 @@ const SETTINGS_KEY_TO_PREFERENCE = {
     [ThReadAlongKeys.autoPause]: "autoPause",
     [ThReadAlongKeys.keepCentered]: "keepCentered",
     [ThReadAlongKeys.language]: "language",
+    [ThReadAlongKeys.languageOverride]: "languageOverride",
     [ThReadAlongKeys.notes]: "inlineContextualization",
     [ThReadAlongKeys.pageBreaks]: "inlineContextualization",
     [ThReadAlongKeys.pauseDuration]: "pauseDuration",

@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongAnyVoiceHasBoundaries, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
+import { useReadAlongLanguage } from "./useReadAlongLanguage";
 import { useReadAlongVerbosity } from "./useReadAlongVerbosity";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getMainVoiceId } from "../helpers/getMainVoiceId";
@@ -56,8 +57,9 @@ export const useReadAlongInit = ({
   const utteranceStyle = useAppSelector(state => state.readAlongSettings.utteranceStyle);
   const wordStyle = useAppSelector(state => state.readAlongSettings.wordStyle);
   const voice = useAppSelector(state => state.readAlongSettings.voice);
+  const languageOverride = useAppSelector(state => state.readAlongSettings.languageOverride);
   const voiceControls = useAppSelector(state => state.readAlongPlayer.voiceControls);
-  const publicationLanguage = useAppSelector(state => state.readAlongPlayer.metadata?.language);
+  const publicationLanguage = useReadAlongLanguage();
 
   const cache = useReadAlongStatelessCache(
     format,
@@ -76,6 +78,7 @@ export const useReadAlongInit = ({
     utteranceStyle,
     wordStyle,
     voice,
+    languageOverride,
     voiceControls,
     publicationLanguage
   );

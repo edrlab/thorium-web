@@ -24,6 +24,7 @@ export enum ThReadAlongKeys {
   segmentation = "segmentation",
   verbosity = "verbosity",
   language = "language",
+  languageOverride = "languageOverride",
   format = "format",
   notes = "notes",
   pageBreaks = "pageBreaks",
@@ -74,7 +75,8 @@ export enum ThReadAlongVoiceKeys {
   voice = "voice",
   volume = "volume",
   pitch = "pitch",
-  language = "language"
+  language = "language",
+  languageOverride = "languageOverride"
 }
 
 export enum ThReadAlongVerbosityKeys {
@@ -242,6 +244,7 @@ export const defaultReadAlongVoiceMain = [
 ];
 
 export const defaultReadAlongVoiceSubpanel = [
+  ThReadAlongVoiceKeys.languageOverride,
   ThReadAlongVoiceKeys.voice,
   ThReadAlongVoiceKeys.volume,
   ThReadAlongVoiceKeys.pitch,

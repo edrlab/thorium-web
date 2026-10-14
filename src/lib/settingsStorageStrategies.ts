@@ -63,6 +63,8 @@ export const defaultSettingsStorageStrategies: ThSettingsStorageStrategies = {
   // Voice, volume and pitch are global
   readAlong: {
     [ThReadAlongKeys.language]: ThSettingsStorageStrategy.glocal,
+    // Corrects one publication's metadata, so never carried over to another
+    [ThReadAlongKeys.languageOverride]: ThSettingsStorageStrategy.local,
     [ThReadAlongKeys.highlightPresets]: ThSettingsStorageStrategy.glocal,
     [ThReadAlongKeys.utteranceStyle]: ThSettingsStorageStrategy.glocal,
     [ThReadAlongKeys.wordStyle]: ThSettingsStorageStrategy.glocal,

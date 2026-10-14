@@ -23,6 +23,7 @@ import { StatefulSkipForwardButton } from "../Playback/controls/StatefulSkipForw
 import { useNavigator } from "@/core/Navigator";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
+import { useReadAlongLanguage } from "./Hooks/useReadAlongLanguage";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
 import { useReadAlongPlacement } from "./Hooks/useReadAlongPlacement";
 import { usePlayPauseFocus } from "./Hooks/usePlayPauseFocus";
@@ -39,7 +40,7 @@ export const StatefulReadAlongMiniPlayer = () => {
   const { readAloud } = useNavigator();
   const progress = useAppSelector(state => state.publication.progress);
   const coverUrl = useAppSelector(state => state.readAlongPlayer.metadata?.coverUrl);
-  const language = useAppSelector(state => state.readAlongPlayer.metadata?.language);
+  const language = useReadAlongLanguage();
   const scriptMode = useAppSelector(state => state.publication.scriptMode);
   const isLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
   const { setActive, setExpanded } = useReadAlongState();

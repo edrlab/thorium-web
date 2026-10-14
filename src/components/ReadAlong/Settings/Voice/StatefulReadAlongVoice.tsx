@@ -19,6 +19,7 @@ import { useI18n } from "@/i18n/useI18n";
 import { getMainVoiceId } from "../../helpers/getMainVoiceId";
 import { getVoiceControls } from "../../helpers/getVoiceControls";
 import { groupVoicesByLanguage } from "../../helpers/groupVoicesByLanguage";
+import { useReadAlongLanguage } from "../../Hooks/useReadAlongLanguage";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setReadAlongVoice } from "@/lib/readAlongSettingsReducer";
@@ -29,7 +30,7 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
 
   const readAloud = useNavigator().readAloud;
   const voice = useAppSelector(state => state.readAlongSettings.voice);
-  const language = useAppSelector(state => state.readAlongPlayer.metadata?.language);
+  const language = useReadAlongLanguage();
   const dispatch = useAppDispatch();
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.voice, "readAlong");
