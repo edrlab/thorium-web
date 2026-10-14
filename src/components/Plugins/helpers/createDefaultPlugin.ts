@@ -50,6 +50,7 @@ import { StatefulReadAlongVolume } from "../../ReadAlong/Settings/Voice/Stateful
 import { StatefulReadAlongPauseDuration } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongPauseDuration";
 import { StatefulReadAlongUtteranceStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongUtteranceStyle";
 import { StatefulReadAlongWordStyle } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongWordStyle";
+import { StatefulReadAlongKeepCentered } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongKeepCentered";
 import { StatefulReadAlongHighlightGroup } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightGroup";
 import { StatefulReadAlongHighlightPresets } from "../../ReadAlong/Settings/Highlight/StatefulReadAlongHighlightPresets";
 import { StatefulReadAlongAutoPause } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongAutoPause";
@@ -226,6 +227,10 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThReadAlongKeys.wordStyle]: {
           Comp: StatefulReadAlongWordStyle,
+          type: "readAlongHighlight"
+        },
+        [ThReadAlongKeys.keepCentered]: {
+          Comp: StatefulReadAlongKeepCentered,
           type: "readAlongHighlight"
         },
         [ThReadAlongKeys.autoPause]: {

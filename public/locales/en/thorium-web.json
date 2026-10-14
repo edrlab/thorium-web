@@ -202,6 +202,10 @@
             "title": "Notes and page breaks",
             "label": "Read them where they appear in a sentence"
           },
+          "keepCentered": {
+            "title": "Keep centered",
+            "label": "Keep the sentence read in the middle of the screen when scrolling"
+          },
           "highlight": {
             "title": "Highlight",
             "advanced": {

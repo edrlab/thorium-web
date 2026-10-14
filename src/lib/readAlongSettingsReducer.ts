@@ -107,6 +107,7 @@ export interface ReadAlongSettingsReducerState {
   voice: string | null;
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
+  keepCentered: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
@@ -127,6 +128,7 @@ const initialState: ReadAlongSettingsReducerState = {
   voice: null,
   format: null,
   inlineContextualization: null,
+  keepCentered: null,
   verbosity: null,
   skip: null,
   contextualize: null,
@@ -155,6 +157,9 @@ export const readAlongSettingsSlice = createSlice({
     },
     setReadAlongInlineContextualization: (state, action) => {
       state.inlineContextualization = action.payload
+    },
+    setReadAlongKeepCentered: (state, action) => {
+      state.keepCentered = action.payload
     },
     setReadAlongVerbosity: (state, action) => {
       state.verbosity = action.payload
@@ -251,6 +256,7 @@ export const {
   setReadAlongVoice,
   setReadAlongFormat,
   setReadAlongInlineContextualization,
+  setReadAlongKeepCentered,
   setReadAlongVerbosity,
   setReadAlongSkip,
   setReadAlongContextualize,

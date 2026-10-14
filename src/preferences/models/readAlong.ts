@@ -26,6 +26,7 @@ export enum ThReadAlongKeys {
   language = "language",
   format = "format",
   inlineContextualization = "inlineContextualization",
+  keepCentered = "keepCentered",
   utteranceStyle = "utteranceStyle",
   wordStyle = "wordStyle",
   sleepTimer = "sleepTimer",
@@ -39,6 +40,7 @@ export enum ThReadAlongKeys {
 
 export enum ThReadAlongHighlightKeys {
   highlightPresets = "highlightPresets",
+  keepCentered = "keepCentered",
   utteranceStyle = "utteranceStyle",
   wordStyle = "wordStyle"
 }
@@ -260,7 +262,8 @@ export const defaultReadAlongHighlightMain = [
 export const defaultReadAlongHighlightSubpanel = [
   ThReadAlongHighlightKeys.highlightPresets,
   ThReadAlongHighlightKeys.utteranceStyle,
-  ThReadAlongHighlightKeys.wordStyle
+  ThReadAlongHighlightKeys.wordStyle,
+  ThReadAlongHighlightKeys.keepCentered
 ];
 
 export const defaultReadAlongHighlightPresets = {

@@ -40,6 +40,7 @@ export const useReadAlongInit = ({
 
   const format = useAppSelector(state => state.readAlongSettings.format);
   const inlineContextualization = useAppSelector(state => state.readAlongSettings.inlineContextualization);
+  const keepCentered = useAppSelector(state => state.readAlongSettings.keepCentered);
   const verbosity = useAppSelector(state => state.readAlongSettings.verbosity);
   const skip = useAppSelector(state => state.readAlongSettings.skip);
   const contextualize = useAppSelector(state => state.readAlongSettings.contextualize);
@@ -59,6 +60,7 @@ export const useReadAlongInit = ({
   const cache = useReadAlongStatelessCache(
     format,
     inlineContextualization,
+    keepCentered,
     verbosity,
     skip,
     contextualize,

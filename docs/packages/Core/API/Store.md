@@ -108,6 +108,7 @@ interface ReadAlongSettingsReducerState {
   voice: string | null;               // Applied with setVoice() rather than as a preference
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
+  keepCentered: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
@@ -127,7 +128,7 @@ interface ReadAlongSettingsReducerState {
 
 **Actions:**
 - `setReadAlongVoice`: Set the voice name
-- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
 - `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values
 - `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles
 - `setReadAlongHighlightPreset`: Apply a highlight preset, with payload `{ preset, values, effective }`

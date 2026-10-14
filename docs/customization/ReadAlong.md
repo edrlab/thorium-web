@@ -283,10 +283,10 @@ readAlong: {
 
 ### Highlight
 
-`readAlong.settings.highlight` configures the highlight group, like the [spacing group](./Settings.md#spacing-optional). Use enum `ThReadAlongHighlightKeys` to reference its components: `highlightPresets`, `utteranceStyle` and `wordStyle`.
+`readAlong.settings.highlight` configures the highlight group, like the [spacing group](./Settings.md#spacing-optional). Use enum `ThReadAlongHighlightKeys` to reference its components: `highlightPresets`, `utteranceStyle`, `wordStyle` and `keepCentered`.
 
 - `main`: the components shown in the settings menu. Defaults to the presets.
-- `subPanel`: the components shown in the highlight submenu, opened with the group’s advanced button. Defaults to the presets, then the sentence and word styles. Set it to `null` to remove the submenu.
+- `subPanel`: the components shown in the highlight submenu, opened with the group’s advanced button. Defaults to the presets, the sentence and word styles, then keeping the sentence centered. Set it to `null` to remove the submenu.
 - `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 - `presets`: the highlight presets. Defaults to the ones below.
 
@@ -310,7 +310,8 @@ readAlong: {
       subPanel: [
         ThReadAlongHighlightKeys.highlightPresets,
         ThReadAlongHighlightKeys.utteranceStyle,
-        ThReadAlongHighlightKeys.wordStyle
+        ThReadAlongHighlightKeys.wordStyle,
+        ThReadAlongHighlightKeys.keepCentered
       ],
       presets: {
         order: [
@@ -350,6 +351,8 @@ A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforc
 The colors of the presets come from the reading theme, so the highlight changes with it: see the `readAlong*` tokens in [Theming](./Theming.md#keys-and-tokens). A color the user picks in the submenu is used as-is, whatever the theme.
 
 The presets are only applied when `highlightGroup` is in `order` and `highlightPresets` is in its `main` or `subPanel`.
+
+`keepCentered` keeps the sentence being read in the middle of the screen when scrolling, instead of following it once it goes out of view. It is disabled in paginated mode.
 
 ### Prosody
 

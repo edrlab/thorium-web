@@ -147,6 +147,10 @@ A radio group of the verbosity presets supported by the TS-Toolkit, without `cus
 
 A switch reading notes and page breaks where they appear in a sentence.
 
+### StatefulReadAlongKeepCentered
+
+A switch keeping the sentence being read in the middle of the screen when scrolling. It is disabled in paginated mode.
+
 ### StatefulReadAlongVoiceGroup
 
 The voice group: the components in `readAlong.settings.voice.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.

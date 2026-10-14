@@ -50,6 +50,7 @@ const SETTINGS_KEY_TO_PREFERENCE = {
   readAlong: {
     [ThReadAlongKeys.autoPause]: "autoPause",
     [ThReadAlongKeys.inlineContextualization]: "inlineContextualization",
+    [ThReadAlongKeys.keepCentered]: "keepCentered",
     [ThReadAlongKeys.language]: "language",
     [ThReadAlongKeys.pauseDuration]: "pauseDuration",
     [ThReadAlongKeys.pitch]: "pitch",

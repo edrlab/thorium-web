@@ -7,6 +7,7 @@ import { ReadAloudSettings } from "@readium/navigator";
 export interface ReadAloudSettingsObject {
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
+  keepCentered: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
@@ -28,6 +29,7 @@ export interface ReadAloudSettingsCache {
 export const useReadAloudSettingsCache = (
   format: ReadAloudSettings["format"] | null,
   inlineContextualization: boolean | null,
+  keepCentered: boolean | null,
   verbosity: ReadAloudSettings["verbosity"] | null,
   skip: ReadAloudSettings["skip"] | null,
   contextualize: ReadAloudSettings["contextualize"] | null,
@@ -45,6 +47,7 @@ export const useReadAloudSettingsCache = (
     settings: {
       format,
       inlineContextualization,
+      keepCentered,
       verbosity,
       skip,
       contextualize,
@@ -64,6 +67,7 @@ export const useReadAloudSettingsCache = (
     settings: {
       format,
       inlineContextualization,
+      keepCentered,
       verbosity,
       skip,
       contextualize,
@@ -80,6 +84,7 @@ export const useReadAloudSettingsCache = (
   }), [
     format,
     inlineContextualization,
+    keepCentered,
     verbosity,
     skip,
     contextualize,
