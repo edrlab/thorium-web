@@ -424,7 +424,7 @@ The presets are only applied when `prosodyGroup` is in `order` and `prosodyPrese
 
 `readAlong.settings.verbosity` configures the verbosity group, like the voice group. Use enum `ThReadAlongVerbosityKeys` to reference its components:
 
-- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable;
+- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable. It is kept separately for reflowable and fixed-layout publications, like the reading theme;
 - `inlineContextualization`: whether notes and page breaks are read where they appear in a sentence.
 
 Its options are the same as the voice group’s:

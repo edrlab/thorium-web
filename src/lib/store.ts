@@ -16,6 +16,9 @@ import playerReducer, { PlayerReducerState } from "./playerReducer";
 import readAlongPlayerReducer, { ReadAlongPlayerReducerState } from "./readAlongPlayerReducer";
 import readAlongSettingsReducer, { ReadAlongSettingsReducerState } from "./readAlongSettingsReducer";
 
+import { defaultSettingsStorageStrategies, ThSettingsStorageStrategies } from "./settingsStorageStrategies";
+import { withoutLocalSettings } from "./helpers/settingsStorage";
+
 import debounce from "debounce";
 
 interface ExternalReducerConfig {
@@ -202,7 +205,6 @@ const loadState = (storageKey: string = DEFAULT_STORAGE_KEY) => {
         globalPreferences: undefined,
         webPubSettings: undefined,
         audioSettings: undefined,
-        readAlongPlayer: undefined,
         readAlongSettings: undefined
       };
     }
@@ -244,7 +246,7 @@ const loadState = (storageKey: string = DEFAULT_STORAGE_KEY) => {
   }
 };
 
-const saveState = (state: any, storageKey?: string, externalReducers: Record<string, ExternalReducerConfig> = {}) => {
+const saveState = (state: any, storageKey?: string, externalReducers: Record<string, ExternalReducerConfig> = {}, settingsStorageStrategies: ThSettingsStorageStrategies = defaultSettingsStorageStrategies) => {
   try {
     const resolvedKey = storageKey || DEFAULT_STORAGE_KEY;
     
@@ -260,7 +262,6 @@ const saveState = (state: any, storageKey?: string, externalReducers: Record<str
     if (state.webPubSettings) stateToPersist.webPubSettings = state.webPubSettings;
     if (state.divinaSettings) stateToPersist.divinaSettings = state.divinaSettings;
     if (state.audioSettings) stateToPersist.audioSettings = state.audioSettings;
-    if (state.readAlongPlayer) stateToPersist.readAlongPlayer = state.readAlongPlayer;
     if (state.readAlongSettings) stateToPersist.readAlongSettings = state.readAlongSettings;
     
     // External reducers to persist
@@ -270,14 +271,18 @@ const saveState = (state: any, storageKey?: string, externalReducers: Record<str
       }
     });
     
-    const serializedState = JSON.stringify(stateToPersist);
+    const serializedState = JSON.stringify(withoutLocalSettings(stateToPersist, settingsStorageStrategies));
     localStorage.setItem(resolvedKey, serializedState);
   } catch (err) {
     console.error(err);
   }
 };
 
-export const makeStore = (storageKey?: string, externalReducers: Record<string, ExternalReducerConfig> = {}) => {
+export const makeStore = (
+  storageKey?: string,
+  externalReducers: Record<string, ExternalReducerConfig> = {},
+  settingsStorageStrategies: ThSettingsStorageStrategies = defaultSettingsStorageStrategies
+) => {
   // Combine internal and external reducers
   const combinedReducers = {
     reader: readerReducer,
@@ -300,20 +305,27 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
   };
 
   // Get persisted state for internal reducers
-  const persistedState = loadState(storageKey);
+  const persistedState = withoutLocalSettings(loadState(storageKey), settingsStorageStrategies);
+
+  // Local settings aren't persisted globally, so they start from the slice's initial state
+  const withInitialState = (reducer: Reducer, persisted: any) => persisted
+    ? { ...reducer(undefined, { type: "" }), ...persisted }
+    : undefined;
   
   // Create preloaded state with persisted values
   const preloadedState: any = {
     actions: persistedState.actions,
-    settings: persistedState.settings,
-    theming: persistedState.theming,
+    settings: withInitialState(settingsReducer, persistedState.settings),
+    theming: persistedState.theming && {
+      ...persistedState.theming,
+      theme: { ...themeReducer(undefined, { type: "" }).theme, ...persistedState.theming.theme }
+    },
     preferences: persistedState.preferences,
     globalPreferences: persistedState.globalPreferences,
-    webPubSettings: persistedState.webPubSettings,
-    divinaSettings: persistedState.divinaSettings,
-    audioSettings: persistedState.audioSettings,
-    readAlongPlayer: persistedState.readAlongPlayer,
-    readAlongSettings: persistedState.readAlongSettings,
+    webPubSettings: withInitialState(webPubSettingsReducer, persistedState.webPubSettings),
+    divinaSettings: withInitialState(divinaSettingsReducer, persistedState.divinaSettings),
+    audioSettings: withInitialState(audioSettingsReducer, persistedState.audioSettings),
+    readAlongSettings: withInitialState(readAlongSettingsReducer, persistedState.readAlongSettings),
     // Include persisted state for external reducers that have it
     ...Object.entries(externalReducers).reduce((acc, [key, config]) => {
       if (config.persist && persistedState[key] !== undefined) {
@@ -329,12 +341,13 @@ export const makeStore = (storageKey?: string, externalReducers: Record<string, 
   });
 
   const saveStateDebounced = debounce(() => {
-    saveState(store.getState(), storageKey, externalReducers);
+    saveState(store.getState(), storageKey, externalReducers, settingsStorageStrategies);
   }, 250);
 
   store.subscribe(saveStateDebounced);
 
-  return store;
+  // Read by the readers to store each publication's settings
+  return Object.assign(store, { settingsStorageStrategies });
 }
 
 // Infer the type of makeStore

@@ -13,13 +13,14 @@ import { StatefulRadioGroup } from "../../../Settings/StatefulRadioGroup";
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import { setReadAlongVerbosity } from "@/lib/readAlongSettingsReducer";
+import { useReadAlongVerbosity } from "../../Hooks/useReadAlongVerbosity";
 
 export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettingsItemProps) => {
   const { t } = useI18n();
 
-  const verbosity = useAppSelector(state => state.readAlongSettings.verbosity);
+  const { verbosityKey, verbosity } = useReadAlongVerbosity();
   const dispatch = useAppDispatch();
 
   const readAloud = useNavigator().readAloud;
@@ -39,8 +40,8 @@ export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettin
   const updatePreference = useCallback(async (value: string) => {
     if (!readAloud) return;
     await readAloud.submitPreferences({ [prefKey]: value as VerbosityPreset });
-    dispatch(setReadAlongVerbosity(readAloud.getSetting(prefKey)));
-  }, [prefKey, readAloud, dispatch]);
+    dispatch(setReadAlongVerbosity({ key: verbosityKey, value: readAloud.getSetting(prefKey) }));
+  }, [prefKey, readAloud, verbosityKey, dispatch]);
 
   return (
     <>

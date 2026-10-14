@@ -4,6 +4,7 @@ export { ThStoreProvider } from "./ThStoreProvider";
 export * from "./ThReduxPreferencesAdapter";
 export * from "./ThReduxGlobalPreferencesAdapter";
 export * from "./store";
+export * from "./settingsStorageStrategies";
 export * from "./hooks";
 export * from "./actionsReducer";
 export * from "./publicationReducer";

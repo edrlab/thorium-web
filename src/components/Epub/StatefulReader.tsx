@@ -59,7 +59,7 @@ import { usePublicationProgress } from "@/core/Hooks/usePublicationProgress";
 import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
 import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
 import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
-import { useIsScroll, usePositionStorage } from "@/hooks";
+import { useIsScroll, usePositionStorage, useSettingsStorage } from "@/hooks";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { resolveDocumentTitle } from "@/helpers/resolveDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
@@ -109,10 +109,12 @@ export const StatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  settingsStorage,
   readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
+  const isSettingsHydrated = useSettingsStorage(localDataKey, "epub", settingsStorage);
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
       plugins.forEach(plugin => {
@@ -124,7 +126,7 @@ export const StatefulReader = ({
     setPluginsRegistered(true);
   }, [plugins]);
 
-  if (!pluginsRegistered) {
+  if (!pluginsRegistered || !isSettingsHydrated) {
     return null;
   }
 

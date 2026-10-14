@@ -11,6 +11,7 @@ Context provider component for the Redux store.
 **Props:**
 - `children`: Child components
 - `storageKey`: Optional key for localStorage persistence (defaults to `thorium-web-state`)
+- `settingsStorageStrategies`: Optional storage strategy of each setting (defaults to `defaultSettingsStorageStrategies`), see [Settings Storage Strategies](#settings-storage-strategies)
 - `store`: Optional custom Redux store — use this when extending the default store
 
 **Features:**
@@ -18,6 +19,35 @@ Context provider component for the Redux store.
 - State persistence
 - Action dispatching
 - State selectors
+
+### Settings Storage Strategies
+
+Settings are stored according to a strategy, from enum `ThSettingsStorageStrategy`:
+
+- `global`: shared by all publications;
+- `glocal`: per publication, a publication without its own value starting from the last one used in any publication;
+- `local`: per publication only, never stored globally, a publication without its own value starting from the default.
+
+Publications are only told apart with a `localDataKey` or a `settingsStorage` on the reader, see [SettingsStorage Interface](../../Reader/ReadMe.md#settingsstorage-interface). Without them, every setting is global.
+
+`ThSettingsStorageStrategies` maps settings keys to strategies, per scope, like the settings orders (`reflowOrder`, `fxlOrder`, `webPubOrder`, `divinaOrder`): `reflow`, `fxl`, `webPub` and `divina` take `ThSettingsKeys`, `audio` takes `ThAudioKeys` and `readAlong` takes `ThReadAlongKeys`. A setting left out is global. `defaultSettingsStorageStrategies` follows Thorium Mobile: reflowable settings are glocal but the theme, which is always global; fixed-layout and Divina settings are glocal, theme included; audio settings are global; read along’s voice, volume and pitch are global, while switching voices for other languages, highlights, prosody and verbosity are glocal.
+
+Spread the defaults in your own file, and pass it to `ThStoreProvider`, or to `makeStore(storageKey, externalReducers, settingsStorageStrategies)` for a custom store:
+
+```typescript
+import { defaultSettingsStorageStrategies, ThSettingsStorageStrategies, ThSettingsStorageStrategy } from "@edrlab/thorium-web/core/lib";
+import { ThAudioKeys } from "@edrlab/thorium-web/core/preferences";
+
+export const settingsStorageStrategies: ThSettingsStorageStrategies = {
+  ...defaultSettingsStorageStrategies,
+  audio: {
+    ...defaultSettingsStorageStrategies.audio,
+    [ThAudioKeys.autoPlay]: ThSettingsStorageStrategy.global
+  }
+};
+```
+
+A publication stores its settings according to its own scope, so scopes sharing a value can give it different strategies: reflowable and fixed-layout EPUB share `columns`, and Divina uses the fixed-layout `theme`. That value is only left out of the global storage when it’s local in all of them.
 
 ## Reducers
 
@@ -50,6 +80,7 @@ interface AudioSettingsState {
 - `setPollInterval`: Set position polling interval in milliseconds
 - `setAutoPlay`: Set auto-play flag
 - `setEnableMediaSession`: Set Media Session API flag
+- `hydrateAudioSettings`: Merge a publication’s stored settings into the state, with payload `{ values, reset }`: `reset` lists the local settings it has no value for, which go back to their initial value
 
 ### Player Reducer
 
@@ -109,7 +140,7 @@ interface ReadAlongSettingsReducerState {
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
   keepCentered: boolean | null;
-  verbosity: ReadAloudSettings["verbosity"] | null;
+  verbosity: Partial<Record<"reflow" | "fxl" | "divina", ReadAloudSettings["verbosity"]>>; // Per format, like the reading theme
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
@@ -128,17 +159,19 @@ interface ReadAlongSettingsReducerState {
 
 **Actions:**
 - `setReadAlongVoice`: Set the voice name
-- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongVerbosity`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongVerbosity`: Set the verbosity preset of a format, with payload `{ key, value }`: `key` is `reflow` for reflowable EPUB and WebPub, `fxl` for fixed-layout EPUB, `divina` for Divina
 - `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values
 - `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles
 - `setReadAlongHighlightPreset`: Apply a highlight preset, with payload `{ preset, values, effective }`
 - `setReadAlongHighlightEffective`: Update the resolved styles only, e.g. when the reading theme changes
 - `setReadAlongProsodyPreset`: Apply a prosody preset, with payload `{ preset, values, effective }`
 - `setReadAlongProsodyEffective`: Update the resolved values only, e.g. when the auto pause is resolved against the layout
+- `hydrateReadAlongSettings`: Merge a publication’s stored settings into the state, with payload `{ values, reset }`: `reset` lists the local settings it has no value for, which go back to their initial value
 
 ### ReadAlongPlayer Reducer
 
-Manages the read-along player. `isActive` and `layout` are user state; the other fields are session state, reset each time read-along loads.
+Manages the read-along player. `isActive` and `layout` are user state, stored per publication only, through `useSettingsStorage`: they aren’t persisted with the rest of the store, so read along doesn’t start in another publication. The other fields are session state, reset each time read-along loads.
 
 **State Interface:**
 ```typescript
@@ -178,6 +211,7 @@ interface ReadAlongPlayerReducerState {
 - `setReadAlongSleepTimer`: Update the sleep timer
 - `setReadAlongMetadata`: Set the publication metadata shown by the player
 - `setReadAlongSettingsContainer`: Switch the settings menu between its main view and the voice, highlight, prosody or verbosity submenu
+- `hydrateReadAlongPlayer`: Restore a publication’s stored `isActive` and `layout`, or their initial values when missing
 - `resetReadAlongPlayer`: Reset the session fields, keeping `isActive`, `layout` and `metadata`
 
 ### Actions Reducer
@@ -355,6 +389,7 @@ interface SettingsReducerState {
 - `setTextAlign`: Set text alignment
 - `setTextNormalization`: Set text normalization
 - `setWordSpacing`: Set word spacing
+- `hydrateSettings`: Merge a publication’s stored settings into the state, with payload `{ values, reset }`: `reset` lists the local settings it has no value for, which go back to their initial value
 
 ### Theme Reducer
 
@@ -385,6 +420,7 @@ interface ThemeReducerState {
 - `setForcedColors`: Set forced colors mode
 - `setBreakpoint`: Set current breakpoint
 - `setContainerBreakpoint`: Set current container breakpoint
+- `hydrateTheme`: Merge a publication’s stored reading theme into `theme`, with payload `{ values, reset }` like the settings
 
 ### Preferences Reducer
 
@@ -464,6 +500,7 @@ interface DivinaSettingsReducerState {
 - `setDivinaScrolled`: Set scrolled or paged layout
 - `setDivinaSpreads`: Set spreads (two pages side by side) for paged layout
 - `setDivinaStripWidth`: Set strip width for scrolled layout
+- `hydrateDivinaSettings`: Merge a publication’s stored settings into the state, with payload `{ values, reset }`: `reset` lists the local settings it has no value for, which go back to their initial value
 
 ### WebPubSettings Reducer
 
@@ -506,3 +543,4 @@ interface WebPubSettingsReducerState {
 - `setWebPubTextNormalization`: Set text normalization for WebPub
 - `setWebPubWordSpacing`: Set word spacing for WebPub
 - `setWebPubZoom`: Set zoom level for WebPub
+- `hydrateWebPubSettings`: Merge a publication’s stored settings into the state, with payload `{ values, reset }`: `reset` lists the local settings it has no value for, which go back to their initial value

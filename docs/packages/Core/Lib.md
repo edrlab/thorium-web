@@ -21,9 +21,10 @@ const App = () => {
 > [!IMPORTANT]
 > When using stateful components from `@edrlab/thorium-web/epub`, you must use the `<ThStoreProvider>` from that package, not from `@edrlab/thorium-web/core/lib`. Otherwise, your app and components will use a different store.
 
-It accepts two optional props:
+It accepts three optional props:
 
 - `storageKey`: the key to use to store the states in local storage. Defaults to `thorium-web-state`.
+- `settingsStorageStrategies`: whether each setting is shared by all publications, or stored per publication. Defaults to `defaultSettingsStorageStrategies`, see [Settings Storage Strategies](./API/Store.md#settings-storage-strategies).
 - `store`: your own Redux store if you need to modify or extend the default one.
 
 ## Reducers

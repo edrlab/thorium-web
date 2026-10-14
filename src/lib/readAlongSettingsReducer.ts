@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 import { ReadAloudDecorationStyle, ReadAloudSettings } from "@readium/navigator";
 import { ThReadAlongHighlightKeys, ThReadAlongHighlightPresetKeys, ThReadAlongProsodyKeys, ThReadAlongProsodyPresetKeys } from "@/preferences/models";
@@ -102,13 +103,25 @@ const handleProsodyValue = <K extends ProsodyStateKey>(state: ReadAlongSettingsR
   state.prosody.custom[key] = value;
 };
 
+export type ReadAlongVerbosityKey = "reflow" | "fxl" | "divina";
+
+export type ReadAlongVerbosityStateObject = Partial<Record<ReadAlongVerbosityKey, ReadAloudSettings["verbosity"]>>;
+
+export interface ReadAlongVerbosityChangePayload {
+  type: string;
+  payload: {
+    key: ReadAlongVerbosityKey;
+    value?: ReadAloudSettings["verbosity"] | null;
+  }
+}
+
 export interface ReadAlongSettingsReducerState {
   // Set on the navigator with setVoice() rather than as a preference
   voice: string | null;
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;
   keepCentered: boolean | null;
-  verbosity: ReadAloudSettings["verbosity"] | null;
+  verbosity: ReadAlongVerbosityStateObject;
   skip: ReadAloudSettings["skip"] | null;
   contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
@@ -129,7 +142,7 @@ const initialState: ReadAlongSettingsReducerState = {
   format: null,
   inlineContextualization: null,
   keepCentered: null,
-  verbosity: null,
+  verbosity: {},
   skip: null,
   contextualize: null,
   language: null,
@@ -161,8 +174,12 @@ export const readAlongSettingsSlice = createSlice({
     setReadAlongKeepCentered: (state, action) => {
       state.keepCentered = action.payload
     },
-    setReadAlongVerbosity: (state, action) => {
-      state.verbosity = action.payload
+    setReadAlongVerbosity: (state, action: ReadAlongVerbosityChangePayload) => {
+      // Persisted before verbosity was stored per format
+      if (!state.verbosity || typeof state.verbosity !== "object") {
+        state.verbosity = {};
+      }
+      state.verbosity[action.payload.key] = action.payload.value ?? undefined;
     },
     setReadAlongSkip: (state, action) => {
       state.skip = action.payload
@@ -248,6 +265,14 @@ export const readAlongSettingsSlice = createSlice({
       if (action.payload[ThReadAlongHighlightKeys.wordStyle] !== undefined) {
         state.wordStyle = action.payload[ThReadAlongHighlightKeys.wordStyle];
       }
+    },
+    hydrateReadAlongSettings: (state, action: PayloadAction<HydratePayload<ReadAlongSettingsReducerState>>) => {
+      const hydrated = hydrateState(state, initialState, action.payload);
+      const verbosity = action.payload.values.verbosity;
+      if (!verbosity) return hydrated;
+      // Only the publication's format is stored, the others keep their value
+      const current = typeof state.verbosity === "object" ? state.verbosity : {};
+      return { ...hydrated, verbosity: { ...current, ...verbosity } };
     }
   }
 });
@@ -272,7 +297,8 @@ export const {
   setReadAlongHighlightPreset,
   setReadAlongHighlightEffective,
   setReadAlongProsodyPreset,
-  setReadAlongProsodyEffective
+  setReadAlongProsodyEffective,
+  hydrateReadAlongSettings
 } = readAlongSettingsSlice.actions;
 
 export default readAlongSettingsSlice.reducer;

@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { resetReadAlongPlayer, setReadAlongAnyVoiceHasBoundaries, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
+import { useReadAlongVerbosity } from "./useReadAlongVerbosity";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getVoiceControls } from "../helpers/getVoiceControls";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
@@ -41,7 +42,7 @@ export const useReadAlongInit = ({
   const format = useAppSelector(state => state.readAlongSettings.format);
   const inlineContextualization = useAppSelector(state => state.readAlongSettings.inlineContextualization);
   const keepCentered = useAppSelector(state => state.readAlongSettings.keepCentered);
-  const verbosity = useAppSelector(state => state.readAlongSettings.verbosity);
+  const { verbosity } = useReadAlongVerbosity();
   const skip = useAppSelector(state => state.readAlongSettings.skip);
   const contextualize = useAppSelector(state => state.readAlongSettings.contextualize);
   const language = useAppSelector(state => state.readAlongSettings.language);

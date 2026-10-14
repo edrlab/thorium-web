@@ -53,6 +53,7 @@ import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
 import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
 import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 import { usePositionStorage } from "@/hooks/usePositionStorage";
+import { useSettingsStorage } from "@/hooks/useSettingsStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { resolveDocumentTitle } from "@/helpers/resolveDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
@@ -85,10 +86,12 @@ export const ExperimentalWebPubStatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  settingsStorage,
   readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
+  const isSettingsHydrated = useSettingsStorage(localDataKey, "webPub", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
@@ -101,7 +104,7 @@ export const ExperimentalWebPubStatefulReader = ({
     setPluginsRegistered(true);
   }, [plugins]);
 
-  if (!pluginsRegistered) {
+  if (!pluginsRegistered || !isSettingsHydrated) {
     return null;
   }
 

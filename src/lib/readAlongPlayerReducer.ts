@@ -77,7 +77,12 @@ export const readAlongPlayerSlice = createSlice({
     setReadAlongSettingsContainer: (state, action: PayloadAction<ThReadAlongSettingsContainerKeys>) => {
       state.settingsContainer = action.payload;
     },
-    resetReadAlongPlayer: (state) => ({ ...initialState, isActive: state.isActive, layout: state.layout, metadata: state.metadata })
+    resetReadAlongPlayer: (state) => ({ ...initialState, isActive: state.isActive, layout: state.layout, metadata: state.metadata }),
+    hydrateReadAlongPlayer: (state, action: PayloadAction<Partial<Pick<ReadAlongPlayerReducerState, "isActive" | "layout">>>) => ({
+      ...state,
+      isActive: action.payload.isActive ?? initialState.isActive,
+      layout: action.payload.layout ?? initialState.layout
+    })
   }
 });
 
@@ -91,7 +96,8 @@ export const {
   setReadAlongSleepTimer,
   setReadAlongMetadata,
   setReadAlongSettingsContainer,
-  resetReadAlongPlayer
+  resetReadAlongPlayer,
+  hydrateReadAlongPlayer
 } = readAlongPlayerSlice.actions;
 
 export default readAlongPlayerSlice.reducer;
