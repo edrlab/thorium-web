@@ -2,7 +2,10 @@
 
 import { Key, useCallback, useEffect, useState } from "react";
 
-import { ReadiumSpeechVoice } from "@readium/navigator";
+import { getVoiceId, ReadiumSpeechVoice } from "@readium/navigator";
+
+import { ThReadAlongKeys } from "@/preferences";
+import { getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
@@ -13,6 +16,7 @@ import { Collection, Header, ListBox, ListBoxItem, ListBoxSection } from "react-
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
+import { getMainVoiceId } from "../../helpers/getMainVoiceId";
 import { getVoiceControls } from "../../helpers/getVoiceControls";
 import { groupVoicesByLanguage } from "../../helpers/groupVoicesByLanguage";
 
@@ -28,6 +32,8 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
   const language = useAppSelector(state => state.readAlongPlayer.metadata?.language);
   const dispatch = useAppDispatch();
 
+  const prefKey = getPreferenceKey(ThReadAlongKeys.voice, "readAlong");
+
   const [voices, setVoices] = useState<ReadiumSpeechVoice[]>([]);
 
   useEffect(() => {
@@ -41,20 +47,21 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
     };
   }, [readAloud, language]);
 
-  const currentVoice = voice ?? readAloud?.getCurrentVoice()?.name ?? null;
+  const currentVoice = voice ?? getMainVoiceId(readAloud?.getSetting(prefKey), language);
 
   const voiceGroups = groupVoicesByLanguage(voices, i18n.language);
 
-  const updatePreference = useCallback((key: Key | null) => {
+  const updatePreference = useCallback(async (key: Key | null) => {
     if (!readAloud || !key || key === currentVoice) return;
 
-    const selectedVoice = voices.find((item) => item.name === key);
+    const selectedVoice = voices.find((item) => getVoiceId(item) === key);
     if (!selectedVoice) return;
 
-    readAloud.setVoice(selectedVoice);
-    dispatch(setReadAlongVoice(selectedVoice.name));
+    const voiceId = getVoiceId(selectedVoice);
+    await readAloud.submitPreferences({ [prefKey]: voiceId });
+    dispatch(setReadAlongVoice(voiceId));
     dispatch(setReadAlongVoiceControls(getVoiceControls(selectedVoice)));
-  }, [readAloud, currentVoice, voices, dispatch]);
+  }, [readAloud, currentVoice, voices, prefKey, dispatch]);
 
   return (
     <StatefulDropdown
@@ -82,8 +89,8 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
                   { (item) => (
                     <ListBoxItem
                       className={ settingsStyles.dropdownListboxItem }
-                      id={ item.name }
-                      key={ item.name }
+                      id={ getVoiceId(item) }
+                      key={ getVoiceId(item) }
                       textValue={ item.label }
                     >
                       { item.label }

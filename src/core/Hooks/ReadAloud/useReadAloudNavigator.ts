@@ -149,18 +149,6 @@ export const useReadAloudNavigator = () => {
     }) ?? [];
   }, []);
 
-  const setVoice = useCallback((voice: ReadiumSpeechVoice | string) => {
-    try {
-      navigatorInstance?.setVoice(voice);
-    } catch (error) {
-      warn(error);
-    }
-  }, []);
-
-  const getCurrentVoice = useCallback((): ReadiumSpeechVoice | null => {
-    return navigatorInstance?.getCurrentVoice() ?? null;
-  }, []);
-
   return {
     ReadAloudNavigatorLoad,
     ReadAloudNavigatorDestroy,
@@ -174,8 +162,6 @@ export const useReadAloudNavigator = () => {
     state,
     isDetachable,
     getVoices,
-    setVoice,
-    getCurrentVoice,
     preferencesEditor: navigatorInstance?.preferencesEditor,
     getSetting,
     settings,

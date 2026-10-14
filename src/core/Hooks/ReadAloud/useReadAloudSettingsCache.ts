@@ -20,6 +20,7 @@ export interface ReadAloudSettingsObject {
   volume: number | null;
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
+  voice: string | null;
 }
 
 export interface ReadAloudSettingsCache {
@@ -41,7 +42,8 @@ export const useReadAloudSettingsCache = (
   pitch: number | null,
   volume: number | null,
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
-  wordStyle: ReadAloudSettings["wordStyle"] | null
+  wordStyle: ReadAloudSettings["wordStyle"] | null,
+  voice: string | null
 ) => {
   const cache = useRef<ReadAloudSettingsCache>({
     settings: {
@@ -60,6 +62,7 @@ export const useReadAloudSettingsCache = (
       volume,
       utteranceStyle,
       wordStyle,
+      voice,
     },
   });
 
@@ -80,6 +83,7 @@ export const useReadAloudSettingsCache = (
       volume,
       utteranceStyle,
       wordStyle,
+      voice,
     },
   }), [
     format,
@@ -97,6 +101,7 @@ export const useReadAloudSettingsCache = (
     volume,
     utteranceStyle,
     wordStyle,
+    voice,
   ]);
 
   cache.current = memoizedCache;

@@ -8,7 +8,6 @@ import { ReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 
 export interface ReadAlongStatelessCache {
   settings: ReadAloudSettingsObject;
-  voice: string | null;
   voiceControls: ReadAlongVoiceControls;
   publicationLanguage: string | undefined;
 }
@@ -48,19 +47,18 @@ export const useReadAlongStatelessCache = (
     pitch,
     volume,
     utteranceStyle,
-    wordStyle
+    wordStyle,
+    voice
   );
 
   const cache = useRef<ReadAlongStatelessCache>({
     settings: settingsCache.current.settings,
-    voice,
     voiceControls,
     publicationLanguage,
   });
 
   // Update cache synchronously on every render to ensure fresh values
   cache.current.settings = settingsCache.current.settings;
-  cache.current.voice = voice;
   cache.current.voiceControls = voiceControls;
   cache.current.publicationLanguage = publicationLanguage;
 

@@ -293,8 +293,6 @@ function useReadAloudNavigator(): {
   previous: () => Promise<boolean>;
   state: () => ReadAloudState;
   getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
-  setVoice: (voice: ReadiumSpeechVoice | string) => void;
-  getCurrentVoice: () => ReadiumSpeechVoice | null;
   preferencesEditor: ReadAloudPreferencesEditor | undefined;
   getSetting: <K extends keyof ReadAloudSettings>(settingKey: K) => ReadAloudSettings[K] | undefined;
   settings: () => Readonly<ReadAloudSettings> | undefined;
@@ -306,7 +304,7 @@ function useReadAloudNavigator(): {
 - A single instance shared by every caller; `isLoaded` re-renders components when it is loaded or destroyed
 - Loading destroys the previous instance first, and a load superseded by another one is dropped
 - Playback by utterance: `next` and `previous` move to the adjacent utterance, there is no time-based seeking
-- Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with `setVoice`, not as a preference
+- Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with the `voice` preference, and `getSetting("voice")` falls back to the navigator’s own voice when it is unset
 - Errors are logged with `console.warn` instead of thrown
 
 ## Read Aloud Settings Cache Hook
@@ -330,6 +328,7 @@ interface ReadAloudSettingsObject {
   volume: number | null;
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
+  voice: string | null;
 }
 
 function useReadAloudSettingsCache(
@@ -347,7 +346,8 @@ function useReadAloudSettingsCache(
   pitch: number | null,
   volume: number | null,
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
-  wordStyle: ReadAloudSettings["wordStyle"] | null
+  wordStyle: ReadAloudSettings["wordStyle"] | null,
+  voice: string | null
 ): React.MutableRefObject<{ settings: ReadAloudSettingsObject }>
 ```
 

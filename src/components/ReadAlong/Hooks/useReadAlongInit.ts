@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { IReadAloudDefaults, PublicationGuidedNavigationProvider, ReadAloudListeners } from "@readium/navigator";
+import { getVoiceId, IReadAloudDefaults, PublicationGuidedNavigationProvider, ReadAloudListeners, ReadiumSpeechVoice } from "@readium/navigator";
 
 import { ReadAlongConfig } from "@/components/Reader/StatefulReaderWrapper";
 
@@ -15,6 +15,7 @@ import { useReadAlongState } from "./useReadAlongState";
 import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
 import { useReadAlongVerbosity } from "./useReadAlongVerbosity";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
+import { getMainVoiceId } from "../helpers/getMainVoiceId";
 import { getVoiceControls } from "../helpers/getVoiceControls";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
 import { useProsodyPresets } from "../Settings/Prosody/hooks/useProsodyPresets";
@@ -80,7 +81,7 @@ export const useReadAlongInit = ({
   );
   const { generateFromMarkup, detachable, readFromPointer, startInViewport } = useReadAlongPreferences();
 
-  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice } = useReadAloudNavigator();
+  const { ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, getSetting } = useReadAloudNavigator();
 
   useSleepTimerCountdown();
 
@@ -110,14 +111,19 @@ export const useReadAlongInit = ({
     if (!visualNavigator) return;
 
     // Read at load time only: settings changes are submitted to the loaded navigator
-    const { settings: preferences, voice: storedVoice } = cache.current;
+    const { settings: preferences } = cache.current;
 
     // Persisted with the player state, but only valid for the navigator they came from
     dispatch(resetReadAlongPlayer());
 
+    let voices: ReadiumSpeechVoice[] = [];
+
     // The default voice is picked asynchronously by the engine, so it is only known once state changes
     const syncVoiceControls = () => {
-      const voiceControls = getVoiceControls(getCurrentVoice());
+      const voiceId = getMainVoiceId(getSetting("voice"), cache.current.publicationLanguage);
+      const mainVoice = voices.find((item) => getVoiceId(item) === voiceId);
+      if (!mainVoice) return;
+      const voiceControls = getVoiceControls(mainVoice);
       const current = cache.current.voiceControls;
       if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed) {
         dispatch(setReadAlongVoiceControls(voiceControls));
@@ -143,18 +149,11 @@ export const useReadAlongInit = ({
     const defaults: IReadAloudDefaults = { ...readAlongDefaults, detachable, readFromPointer, startInViewport };
 
     ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults, provider, engine }, async () => {
-      // The engine loads its voices asynchronously, and a voice name set before then is not found
-      if (storedVoice) {
-        const stored = (await getVoices()).find((item) => item.name === storedVoice);
-        if (cancelled) return;
-        if (stored) setVoice(stored);
-      }
-      syncVoiceControls();
-
       // Same voices as the voice selector, an empty list leaves it unknown
       const { publicationLanguage } = cache.current;
-      const voices = await getVoices({ languages: publicationLanguage ? [publicationLanguage] : undefined });
+      voices = await getVoices({ languages: publicationLanguage ? [publicationLanguage] : undefined });
       if (cancelled) return;
+      syncVoiceControls();
       dispatch(setReadAlongAnyVoiceHasBoundaries(voices.length > 0 ? voices.some((item) => getVoiceControls(item).boundary) : null));
     });
 
@@ -163,7 +162,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, readFromPointer, startInViewport, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, setVoice, getCurrentVoice]);
+  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, readFromPointer, startInViewport, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, getSetting]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {

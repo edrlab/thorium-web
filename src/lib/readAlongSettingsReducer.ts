@@ -116,7 +116,7 @@ export interface ReadAlongVerbosityChangePayload {
 }
 
 export interface ReadAlongSettingsReducerState {
-  // Set on the navigator with setVoice() rather than as a preference
+  // Voice id of the publication's language, the navigator picking its own when null
   voice: string | null;
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: boolean | null;

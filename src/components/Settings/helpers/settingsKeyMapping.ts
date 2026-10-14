@@ -57,6 +57,7 @@ const SETTINGS_KEY_TO_PREFERENCE = {
     [ThReadAlongKeys.rate]: "rate",
     [ThReadAlongKeys.utteranceStyle]: "utteranceStyle",
     [ThReadAlongKeys.verbosity]: "verbosity",
+    [ThReadAlongKeys.voice]: "voice",
     [ThReadAlongKeys.volume]: "volume",
     [ThReadAlongKeys.wordStyle]: "wordStyle",
   },
