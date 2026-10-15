@@ -170,6 +170,10 @@ This document outlines the available styling classes and custom properties for t
 - `.thorium_web_reader_settings_sliderWithPresetsRadio` - Individual radio button preset for slider
 - `.thorium_web_reader_settings_numberField` - Number input
 - `.thorium_web_reader_settings_numberFieldWrapper` - Number input wrapper
+- `.thorium_web_reader_settings_disclosure` - Collapsible section
+- `.thorium_web_reader_settings_disclosureHeading` - Collapsible section heading
+- `.thorium_web_reader_settings_disclosureButton` - Collapsible section trigger
+- `.thorium_web_reader_settings_disclosurePanel` - Collapsible section content
 - `.thorium_web_reader_settings_dropdown` - Dropdown menu
 - `.thorium_web_reader_settings_dropdownButton` - Dropdown button
 - `.thorium_web_reader_settings_dropdownListbox` - Dropdown list

@@ -350,6 +350,7 @@ These components are used for creating settings:
 ```tsx
 import {
   ThColorSwatchPicker,
+  ThDisclosure,
   ThDropdown,
   ThNumberField,
   ThRadioGroup,

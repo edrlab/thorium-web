@@ -13,7 +13,6 @@ export interface ReadAlongMetadata {
   authors?: string[];
   coverUrl?: string;
   language?: string;
-  languages?: string[];
 }
 
 export interface ReadAlongVoiceControls {

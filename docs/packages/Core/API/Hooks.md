@@ -294,6 +294,7 @@ function useReadAloudNavigator(): {
   state: () => ReadAloudState;
   getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
   getLanguages: () => Promise<string[]>;
+  getPublicationLanguages: () => string[];
   preferencesEditor: ReadAloudPreferencesEditor | undefined;
   getSetting: <K extends keyof ReadAloudSettings>(settingKey: K) => ReadAloudSettings[K] | undefined;
   settings: () => Readonly<ReadAloudSettings> | undefined;
@@ -306,6 +307,7 @@ function useReadAloudNavigator(): {
 - Loading destroys the previous instance first, and a load superseded by another one is dropped
 - Playback by utterance: `next` and `previous` move to the adjacent utterance, there is no time-based seeking
 - Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with the `voice` preference, and `getSetting("voice")` falls back to the navigator’s own voice when it is unset
+- The publication’s languages as voices are loaded for them, the language override in place of the declared one (`getPublicationLanguages()`)
 - Errors are logged with `console.warn` instead of thrown
 
 ## Read Aloud Settings Cache Hook

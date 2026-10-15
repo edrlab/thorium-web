@@ -76,6 +76,7 @@ Settings components provide user configuration options:
 ### Base Components
 - `StatefulGroupWrapper`: Wrapper for settings groups
 - `StatefulColorSwatchPicker`: Color picker limited to preset swatches
+- `StatefulDisclosure`: Collapsible section of settings
 - `StatefulDropdown`: Dropdown menu with selectable options
 - `StatefulNumberField`: Numeric input field
 - `StatefulRadioGroup`: Radio button group

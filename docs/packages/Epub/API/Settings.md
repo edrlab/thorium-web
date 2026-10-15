@@ -33,6 +33,20 @@ interface StatefulGroupWrapperProps {
 - Manages preferences and defaults
 - Integrates with the plugin system
 
+### StatefulDisclosure
+
+A collapsible section of settings, collapsed by default.
+
+```typescript
+interface StatefulDisclosureProps extends Omit<ThDisclosureProps, "classNames"> {
+  standalone?: boolean;
+}
+```
+
+**Features:**
+- Trigger with a chevron at its end, pointing up when expanded
+- Accessibility support
+
 ### StatefulDropdown
 
 A dropdown menu component for selecting from predefined options.

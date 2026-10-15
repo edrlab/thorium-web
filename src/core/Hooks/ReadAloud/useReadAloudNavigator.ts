@@ -156,6 +156,10 @@ export const useReadAloudNavigator = () => {
     }) ?? [];
   }, []);
 
+  const getPublicationLanguages = useCallback((): string[] => {
+    return navigatorInstance?.getPublicationLanguages() ?? [];
+  }, []);
+
   return {
     ReadAloudNavigatorLoad,
     ReadAloudNavigatorDestroy,
@@ -170,6 +174,7 @@ export const useReadAloudNavigator = () => {
     isDetachable,
     getVoices,
     getLanguages,
+    getPublicationLanguages,
     preferencesEditor: navigatorInstance?.preferencesEditor,
     getSetting,
     settings,

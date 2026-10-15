@@ -3,6 +3,7 @@
 export * from "./StatefulColorSwatchPicker";
 export * from "./StatefulGroupWrapper";
 export * from "./StatefulLayout";
+export * from "./StatefulDisclosure";
 export * from "./StatefulDropdown";
 export * from "./StatefulNumberField";
 export * from "./StatefulRadioGroup";

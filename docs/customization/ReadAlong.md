@@ -255,7 +255,7 @@ readAlong: {
 `readAlong.settings.voice` configures the voice group, like the [text group](./Settings.md#text-optional). Use enum `ThReadAlongVoiceKeys` to reference its components:
 
 - `voice`: a list of the voices for the publication’s main language, sorted by the TS-Toolkit;
-- `additionalVoices`: a list of voices for each other language of the publication, rendered only when its metadata declares several. Content in a language without a voice chosen is spoken with one the navigator picks;
+- `additionalVoices`: a collapsed “Additional languages” section with a list of voices for each other language of the publication, rendered only when its metadata declares several. Content in a language without a voice chosen is spoken with one the navigator picks;
 - `volume`, `pitch`: ranges, see [Keys](#keys);
 - `language`: whether to switch voices for passages in another language;
 - `languageOverride`: the language the publication is actually in, when its metadata is wrong. It lists the languages the browser has voices for, and only loads the voices of the one picked. It is stored for the publication only, never carried over to another.

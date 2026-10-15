@@ -201,7 +201,7 @@
             }
           },
           "additionalVoices": {
-            "label": "Voice for {{ language }}"
+            "title": "Additional languages"
           },
           "languageOverride": {
             "title": "Language of the publication",
