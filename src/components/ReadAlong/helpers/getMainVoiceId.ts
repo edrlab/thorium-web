@@ -4,5 +4,7 @@ import { ReadAloudSettings, valueForLanguage } from "@readium/navigator";
 export const getMainVoiceId = (voice: ReadAloudSettings["voice"] | undefined, language?: string): string | null => {
   if (!voice) return null;
   if (typeof voice === "string") return voice;
-  return language ? valueForLanguage(voice, language) ?? null : null;
+  // Without a language only a voice for all content is submitted, so a record is the engine voice's alone
+  if (!language) return Object.values(voice)[0] ?? null;
+  return valueForLanguage(voice, language) ?? null;
 };
