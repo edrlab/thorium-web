@@ -29,9 +29,7 @@ export const StatefulReadAlongAutoPause = ({ standalone = true }: StatefulSettin
 
   const readAloud = useNavigator().readAloud;
 
-  // Block pauses after every sentence in sentence segmentation, a duplicate of utterance
-  const supportedValues = (readAloud?.preferencesEditor?.autoPause.supportedValues ?? [])
-    .filter((value) => value !== ReadAloudAutoPause.block);
+  const supportedValues = readAloud?.preferencesEditor?.autoPause.supportedValues ?? [];
 
   const items = supportedValues.map((value) => ({
     id: value,

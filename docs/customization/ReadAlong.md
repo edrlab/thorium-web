@@ -364,7 +364,7 @@ The presets are only applied when `highlightGroup` is in `order` and `highlightP
 
 - `prosodyPresets`: the prosody presets;
 - `rate`, `pauseDuration`: ranges, see [Keys](#keys);
-- `autoPause`: pause after each sentence, page or spread. Pausing after each block isn’t offered, as it pauses after each sentence too. Spreads only apply to fixed layout, and pausing after each page isn’t available in scroll mode.
+- `autoPause`: pause after each sentence, paragraph, page or spread. Spreads only apply to fixed layout, and pausing after each page isn’t available in scroll mode.
 
 Its options are the same as the highlight group’s:
 

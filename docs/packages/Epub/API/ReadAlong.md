@@ -145,7 +145,7 @@ Range settings, rendered according to their `variant` in `readAlong.settings.key
 
 ### StatefulReadAlongAutoPause, StatefulReadAlongLanguage
 
-Dropdowns of the values supported by the TS-Toolkit. Auto pause leaves out pausing after each block, and disables pausing after each page in scroll mode.
+Dropdowns of the values supported by the TS-Toolkit. Auto pause disables pausing after each page in scroll mode.
 
 ### StatefulReadAlongLanguageOverride
 

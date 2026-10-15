@@ -173,6 +173,7 @@
             "values": {
               "none": "Off",
               "utterance": "After each sentence",
+              "block": "After each paragraph",
               "page": "After each page",
               "spread": "After each spread"
             }

@@ -209,7 +209,7 @@ export interface ThReadAlongProsodyPresets<K extends CustomizableKeys = DefaultK
 export type ThReadAlongProsodyPreset<K extends CustomizableKeys = DefaultKeys> = {
   [ThReadAlongProsodyKeys.rate]?: number;
   [ThReadAlongProsodyKeys.pauseDuration]?: number;
-  [ThReadAlongProsodyKeys.autoPause]?: Exclude<ReadAloudAutoPause, typeof ReadAloudAutoPause.block>;
+  [ThReadAlongProsodyKeys.autoPause]?: ReadAloudAutoPause;
 } & (K extends { readAlongProsody: infer P }
   ? P extends string
       ? { [key in Exclude<P, ThReadAlongProsodyKeys>]?: number | ReadAloudAutoPause }
