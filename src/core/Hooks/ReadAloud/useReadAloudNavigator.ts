@@ -52,6 +52,7 @@ export interface ReadAloudNavigatorLoadProps {
   defaults?: IReadAloudDefaults;
   engine?: ReadiumSpeechPlaybackEngine;
   provider?: GuidedNavigationProvider;
+  keepAwake?: boolean;
 }
 
 export const useReadAloudNavigator = () => {
@@ -83,7 +84,8 @@ export const useReadAloudNavigator = () => {
           engine: config.engine,
           provider: config.provider,
           preferences: config.preferences || {},
-          defaults: config.defaults || {}
+          defaults: config.defaults || {},
+          keepAwake: config.keepAwake
         }
       );
     } catch (error) {

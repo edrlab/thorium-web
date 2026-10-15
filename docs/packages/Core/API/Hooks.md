@@ -280,6 +280,8 @@ interface ReadAloudNavigatorLoadProps {
   preferences?: IReadAloudPreferences;
   defaults?: IReadAloudDefaults;
   engine?: ReadiumSpeechPlaybackEngine;
+  provider?: GuidedNavigationProvider;
+  keepAwake?: boolean; // Keeps the screen awake while playing, true by default
 }
 
 function useReadAloudNavigator(): {

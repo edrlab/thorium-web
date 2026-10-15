@@ -74,6 +74,21 @@ readAlong: {
 
 It applies when read along starts.
 
+## Keeping the Screen Awake
+
+By default, the screen is kept awake while read along is playing, where the browser grants a screen wake lock.
+
+Set `readAlong.keepAwake` to `false` to let the screen turn off as usual:
+
+```typescript
+readAlong: {
+  ...defaultReadAlongPreferences,
+  keepAwake: false
+}
+```
+
+It applies when read along starts.
+
 ## Provider and Engine
 
 The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, replaces what the TS-Toolkit `ReadAloudNavigator` uses by default. Both are factories, called with the publication each time read along starts:

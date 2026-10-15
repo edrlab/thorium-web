@@ -46,7 +46,7 @@ export interface UIChangePayload {
 export interface ReadAlongChangePayload {
   type: string;
   payload: {
-    key: "generateFromMarkup" | "readFromPointer" | "detachable" | "startInViewport";
+    key: "generateFromMarkup" | "readFromPointer" | "detachable" | "startInViewport" | "keepAwake";
     value: boolean;
   }
 }
@@ -94,6 +94,7 @@ export interface PreferencesReducerState {
     readFromPointer?: boolean;
     detachable?: boolean;
     startInViewport?: boolean;
+    keepAwake?: boolean;
   };
 }
 

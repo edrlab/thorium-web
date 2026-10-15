@@ -248,6 +248,7 @@ export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
   readFromPointer: boolean;
   detachable: boolean;
   startInViewport: boolean;
+  keepAwake: boolean;
   actions: {
     miniPlayer: {
       displayOrder: Array<ReadAlongActionKey<K>>;

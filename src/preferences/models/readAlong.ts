@@ -344,6 +344,7 @@ export const defaultReadAlongPreferences = {
   readFromPointer: true,
   detachable: true,
   startInViewport: true,
+  keepAwake: true,
   actions: {
     miniPlayer: {
       displayOrder: [
