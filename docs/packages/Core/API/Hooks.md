@@ -329,7 +329,7 @@ interface ReadAloudSettingsObject {
   volume: number | null;
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
-  voice: string | null;
+  voice: ReadAloudSettings["voice"] | null;
   languageOverride: string | null;
 }
 
@@ -349,7 +349,7 @@ function useReadAloudSettingsCache(
   volume: number | null,
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
   wordStyle: ReadAloudSettings["wordStyle"] | null,
-  voice: string | null,
+  voice: ReadAloudSettings["voice"] | null,
   languageOverride: string | null
 ): React.MutableRefObject<{ settings: ReadAloudSettingsObject }>
 ```

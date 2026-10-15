@@ -58,6 +58,7 @@ import { StatefulReadAlongProsodyGroup } from "../../ReadAlong/Settings/Prosody/
 import { StatefulReadAlongProsodyPresets } from "../../ReadAlong/Settings/Prosody/StatefulReadAlongProsodyPresets";
 import { StatefulReadAlongVerbosity } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosity";
 import { StatefulReadAlongVerbosityGroup } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosityGroup";
+import { StatefulReadAlongAdditionalVoices } from "../../ReadAlong/Settings/Voice/StatefulReadAlongAdditionalVoices";
 import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguage";
 import { StatefulReadAlongLanguageOverride } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguageOverride";
 import { StatefulReadAlongNotes } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongNotes";
@@ -259,6 +260,10 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThReadAlongKeys.languageOverride]: {
           Comp: StatefulReadAlongLanguageOverride,
+          type: "readAlongVoice"
+        },
+        [ThReadAlongKeys.additionalVoices]: {
+          Comp: StatefulReadAlongAdditionalVoices,
           type: "readAlongVoice"
         },
         [ThReadAlongKeys.notes]: {

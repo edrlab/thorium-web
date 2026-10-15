@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { getVoiceId, IReadAloudDefaults, PublicationGuidedNavigationProvider, ReadAloudListeners, ReadiumSpeechVoice } from "@readium/navigator";
 
@@ -18,6 +18,7 @@ import { useReadAlongVerbosity } from "./useReadAlongVerbosity";
 import { useSleepTimerCountdown } from "../../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 import { getMainVoiceId } from "../helpers/getMainVoiceId";
 import { getVoiceControls } from "../helpers/getVoiceControls";
+import { getStoredVoices, toVoicePreference } from "../helpers/voicePreference";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
 import { useProsodyPresets } from "../Settings/Prosody/hooks/useProsodyPresets";
 
@@ -56,10 +57,11 @@ export const useReadAlongInit = ({
   const volume = useAppSelector(state => state.readAlongSettings.volume);
   const utteranceStyle = useAppSelector(state => state.readAlongSettings.utteranceStyle);
   const wordStyle = useAppSelector(state => state.readAlongSettings.wordStyle);
-  const voice = useAppSelector(state => state.readAlongSettings.voice);
+  const storedVoices = useAppSelector(state => state.readAlongSettings.voice);
   const languageOverride = useAppSelector(state => state.readAlongSettings.languageOverride);
   const voiceControls = useAppSelector(state => state.readAlongPlayer.voiceControls);
   const publicationLanguage = useReadAlongLanguage();
+  const voice = useMemo(() => toVoicePreference(getStoredVoices(storedVoices), publicationLanguage), [storedVoices, publicationLanguage]);
 
   const cache = useReadAlongStatelessCache(
     format,

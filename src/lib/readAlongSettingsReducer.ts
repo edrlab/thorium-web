@@ -115,9 +115,19 @@ export interface ReadAlongVerbosityChangePayload {
   }
 }
 
+// Voice ids by base language, the navigator picking its own for a language without one
+export type ReadAlongVoiceStateObject = Record<string, string>;
+
+export interface ReadAlongVoiceChangePayload {
+  type: string;
+  payload: {
+    language: string;
+    voice: string;
+  }
+}
+
 export interface ReadAlongSettingsReducerState {
-  // Voice id of the publication's language, the navigator picking its own when null
-  voice: string | null;
+  voice: ReadAlongVoiceStateObject;
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
   keepCentered: boolean | null;
@@ -139,7 +149,7 @@ export interface ReadAlongSettingsReducerState {
 }
 
 const initialState: ReadAlongSettingsReducerState = {
-  voice: null,
+  voice: {},
   format: null,
   inlineContextualization: null,
   keepCentered: null,
@@ -164,8 +174,12 @@ export const readAlongSettingsSlice = createSlice({
   name: "readAlongSettings",
   initialState,
   reducers: {
-    setReadAlongVoice: (state, action) => {
-      state.voice = action.payload
+    setReadAlongVoice: (state, action: ReadAlongVoiceChangePayload) => {
+      // Persisted before voices were stored per language
+      if (!state.voice || typeof state.voice !== "object") {
+        state.voice = {};
+      }
+      state.voice[action.payload.language] = action.payload.voice;
     },
     setReadAlongFormat: (state, action) => {
       state.format = action.payload

@@ -28,7 +28,7 @@ export const useReadAlongStatelessCache = (
   volume: number | null,
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
   wordStyle: ReadAloudSettings["wordStyle"] | null,
-  voice: string | null,
+  voice: ReadAloudSettings["voice"] | null,
   languageOverride: string | null,
   voiceControls: ReadAlongVoiceControls,
   publicationLanguage: string | undefined

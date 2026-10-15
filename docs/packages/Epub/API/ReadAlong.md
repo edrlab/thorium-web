@@ -129,7 +129,15 @@ All settings components accept `standalone` (`true` by default), like the [EPUB 
 
 ### StatefulReadAlongVoice
 
-A dropdown of the voices for the publication’s main language, or its language override, as filtered and sorted by the TS-Toolkit.
+A dropdown of the voices for the publication’s main language, or its language override, as filtered and sorted by the TS-Toolkit. It shows the navigator’s own voice until one is chosen.
+
+### StatefulReadAlongAdditionalVoices
+
+A dropdown of voices for each language the publication declares besides its main one, or nothing when it declares only one.
+
+### StatefulReadAlongLanguageVoice
+
+The dropdown both are built with, for one `language` with its `label`. Voices are stored by base language, with the others, and submitted to the navigator as one `voice` preference. `onChange` receives the voice chosen.
 
 ### StatefulReadAlongRate, StatefulReadAlongPitch, StatefulReadAlongVolume, StatefulReadAlongPauseDuration
 

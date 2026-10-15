@@ -199,6 +199,9 @@
               "always": "Always, including inline phrases"
             }
           },
+          "additionalVoices": {
+            "label": "Voice for {{ language }}"
+          },
           "languageOverride": {
             "title": "Language of the publication",
             "values": {

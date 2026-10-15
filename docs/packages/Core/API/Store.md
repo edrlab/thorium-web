@@ -136,7 +136,7 @@ interface ProsodyStateObject {
 }
 
 interface ReadAlongSettingsReducerState {
-  voice: string | null;               // Voice id of the publication’s language, the navigator’s own voice when null
+  voice: Record<string, string>;      // Voice ids by base language, the navigator’s own voice for a language without one
   format: ReadAloudSettings["format"] | null;
   inlineContextualization: ReadAloudSettings["inlineContextualization"] | null; // Roles read inline, set by the notes and page breaks settings
   keepCentered: boolean | null;
@@ -159,7 +159,7 @@ interface ReadAlongSettingsReducerState {
 ```
 
 **Actions:**
-- `setReadAlongVoice`: Set the voice id (a voice’s `voiceURI`, or `identifier` for a server voice)
+- `setReadAlongVoice`: Set the voice of a language, with payload `{ language, voice }`: `language` is a base language (`und` for publications that don’t declare one), `voice` a voice id (`getVoiceId(voice)`)
 - `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongLanguageOverride`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
 - `setReadAlongVerbosity`: Set the verbosity preset of a format, with payload `{ key, value }`: `key` is `reflow` for reflowable EPUB and WebPub, `fxl` for fixed-layout EPUB, `divina` for Divina
 - `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values

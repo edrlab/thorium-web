@@ -48,6 +48,7 @@ const SETTINGS_KEY_TO_PREFERENCE = {
     [ThAudioKeys.volume]: "volume",
   },
   readAlong: {
+    [ThReadAlongKeys.additionalVoices]: "voice",
     [ThReadAlongKeys.autoPause]: "autoPause",
     [ThReadAlongKeys.keepCentered]: "keepCentered",
     [ThReadAlongKeys.language]: "language",

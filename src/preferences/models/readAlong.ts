@@ -16,6 +16,7 @@ export enum ThReadAlongActionKeys {
 
 export enum ThReadAlongKeys {
   voice = "voice",
+  additionalVoices = "additionalVoices",
   rate = "rate",
   pitch = "pitch",
   volume = "volume",
@@ -73,6 +74,7 @@ export enum ThReadAlongProsodyPresetKeys {
 
 export enum ThReadAlongVoiceKeys {
   voice = "voice",
+  additionalVoices = "additionalVoices",
   volume = "volume",
   pitch = "pitch",
   language = "language",
@@ -246,6 +248,7 @@ export const defaultReadAlongVoiceMain = [
 export const defaultReadAlongVoiceSubpanel = [
   ThReadAlongVoiceKeys.languageOverride,
   ThReadAlongVoiceKeys.voice,
+  ThReadAlongVoiceKeys.additionalVoices,
   ThReadAlongVoiceKeys.volume,
   ThReadAlongVoiceKeys.pitch,
   ThReadAlongVoiceKeys.language

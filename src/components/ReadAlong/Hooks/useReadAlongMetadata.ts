@@ -19,7 +19,8 @@ export const useReadAlongMetadata = (publication: Publication) => {
       subtitle: metadata.subtitle?.getTranslation("en"),
       authors: metadata.authors?.items.map(author => author.name.getTranslation("en")),
       coverUrl: publication.getCover()?.toURL(publication.baseURL),
-      language: metadata.languages?.[0]
+      language: metadata.languages?.[0],
+      languages: metadata.languages
     }));
 
     return () => {
