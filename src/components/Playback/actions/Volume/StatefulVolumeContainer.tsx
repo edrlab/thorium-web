@@ -14,8 +14,6 @@ import { StatefulSheetWrapper } from "@/components/Sheets/StatefulSheetWrapper";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setActionOpen } from "@/lib/actionsReducer";
 
-import { isIOSish } from "@/core/Helpers/getPlatform";
-
 export interface StatefulVolumeContainerProps extends StatefulActionContainerProps {
   className: string;
   compounds: {
@@ -49,8 +47,6 @@ export const StatefulVolumeContainer = ({ triggerRef, placement = "top", classNa
       dispatch(setActionOpen({ key: actionKey, isOpen: open, profile }));
     }
   }, [dispatch, profile, actionKey]);
-
-  if (isIOSish()) return null;
 
   return (
     <StatefulSheetWrapper

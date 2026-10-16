@@ -19,8 +19,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { toggleActionOpen } from "@/lib/actionsReducer";
 import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences";
 
-import { isIOSish } from "@/core/Helpers/getPlatform";
-
 export interface StatefulVolumeTriggerProps extends StatefulActionTriggerProps {
   className: string;
 }
@@ -42,8 +40,6 @@ export const StatefulVolumeTrigger = ({ ref, variant, className }: StatefulVolum
     if (volume <= (max / 3) * 2) return VolumeDownIcon;
     return VolumeUpIcon;
   }, [volume, range]);
-
-  if (isIOSish()) return null;
 
   const toggleOpen = () => {
     if (profile) {

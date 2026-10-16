@@ -113,7 +113,7 @@ They render the shared `StatefulVolumeTrigger` and `StatefulVolumeContainer` wit
 
 ### StatefulVolumeTrigger, StatefulVolumeContainer
 
-Shared by the audio and read-along players, and also exported from the `divina`, `epub`, `webpub` and `reader` packages. They render no class of their own, and use `useVolumeAction`, which reads and sets the volume of the current profile.
+Shared by the audio and read-along players, and also exported from the `divina`, `epub`, `webpub` and `reader` packages. They render no class of their own, and use `useVolumeAction`, which reads and sets the volume of the current profile. They render on iOS too: hiding them there is up to the audio actions, as it only applies to media element volume.
 
 ```typescript
 interface StatefulVolumeTriggerProps extends StatefulActionTriggerProps {
