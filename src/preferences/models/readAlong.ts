@@ -325,7 +325,7 @@ export const defaultReadAlongProsodyPresets = {
   ],
   keys: {
     [ThReadAlongProsodyPresetKeys.slow]: {
-      [ThReadAlongProsodyKeys.rate]: 0.85,
+      [ThReadAlongProsodyKeys.rate]: 0.75,
       [ThReadAlongProsodyKeys.pauseDuration]: 500
     },
     [ThReadAlongProsodyPresetKeys.fast]: {
