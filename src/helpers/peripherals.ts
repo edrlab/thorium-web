@@ -12,6 +12,10 @@ export const NavPeripheralType = {
   zoomReset:        "th_nav_zoom_reset",
 } as const;
 
+export const PlaybackPeripheralType = {
+  playPause: "th_playback_play_pause",
+} as const;
+
 // Ctrl/Cmd + = or Numpad+, covering Blink (187) and Gecko (61) key codes
 export const ZOOM_IN_KEY_COMBOS = [
   { keyCode: 187, ctrl: true  },

@@ -91,6 +91,7 @@ The Core package exposes several hooks specific to preferences management:
 
 - `usePreferenceKeys`: returns the keys of the preferences’ object e.g. `actions.reflowOrder`;
 - `usePreferences`: returns the preferences object and an update method;
+- `useReadAlongPreferences`: returns the read-along preferences, or their defaults when they aren’t set;
 - `useTheming`: sets up responsive breakpoints based on preferences, and accessibility hooks – this can then be stored in the `themeReducer` of `lib`.
 
 For instance, if your component needs to access the preferences, you can use the `usePreferences` hook:
@@ -145,4 +146,18 @@ const myEnum = {
 }
 ```
 
-Default `const`ants provides default preferences for multiple components, such as settings e.g. line-heights, font-size, word-spacing, etc. They also list settings components for text and spacing subpanels, see [Settings document in Customization](../../customization/HandlingPreferences.md#advanced-components) for more details.
+Read-along has its own models:
+
+- `ThReadAlongActionKeys`: the player’s actions (`volume`, `rate`, `sleepTimer`, `settings`);
+- `ThReadAlongKeys`: its settings, including the `voiceGroup`, `highlightGroup`, `highlightPresets`, `prosodyGroup`, `prosodyPresets` and `verbosityGroup` components;
+- `ThReadAlongVoiceKeys`: the voice group’s components;
+- `ThReadAlongVerbosityKeys`: the verbosity group’s components;
+- `ThReadAlongHighlightKeys` and `ThReadAlongHighlightPresetKeys`: the highlight group’s components and presets;
+- `ThReadAlongProsodyKeys` and `ThReadAlongProsodyPresetKeys`: the prosody group’s components and presets;
+- `ThReadAlongHighlightPresets<K>` and `ThReadAlongProsodyPresets<K>`: the presets of both groups, whose values accept the `readAlongHighlight` and `readAlongProsody` customizable keys;
+- `ThMiniPlayerTypes`: where the mini player shows (`bottomBar` or `bottomSheet`);
+- `defaultReadAlongPreferences` and the default constants it is built from, e.g. `defaultReadAlongAction`, `defaultReadAlongHighlightPresets` or `defaultReadAlongProsodyPresets`.
+
+Reader themes are typed with `ThReaderThemeTokens`, which extends the `ThemeTokens` shared with audio themes with the read-along highlight colors. See [Theming](../../customization/Theming.md#keys-and-tokens).
+
+Default `const`ants provides default preferences for multiple components, such as settings e.g. line-heights, font-size, word-spacing, etc. They also list settings components for text and spacing subpanels, see [Settings document in Customization](../../customization/Settings.md#advanced-components) for more details.

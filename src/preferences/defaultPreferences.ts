@@ -17,17 +17,19 @@ import {
   ThDocumentTitleFormat,
   ThArrowVariant,
   ThNavigationAffordance,
-  lightTheme,
-  darkTheme,
-  paperTheme,
-  sepiaTheme,
-  contrast1Theme,
-  contrast2Theme,
-  contrast3Theme,
+  lightReaderTheme,
+  darkReaderTheme,
+  paperReaderTheme,
+  sepiaReaderTheme,
+  contrast1ReaderTheme,
+  contrast2ReaderTheme,
+  contrast3ReaderTheme,
   defaultSettingsAction,
   defaultFullscreenAction,
   defaultTocAction,
   defaultJumpToPositionAction,
+  defaultReadAlongAction,
+  defaultReadAlongPreferences,
   defaultContentProtectionConfig,
   defaultFontCollection,
   defaultLetterSpacing,
@@ -267,13 +269,13 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
         dark: ThThemeKeys.dark
       },
       keys: {
-        [ThThemeKeys.light]: lightTheme,
-        [ThThemeKeys.dark]: darkTheme,
-        [ThThemeKeys.paper]: paperTheme,
-        [ThThemeKeys.sepia]: sepiaTheme,
-        [ThThemeKeys.contrast1]: contrast1Theme,
-        [ThThemeKeys.contrast2]: contrast2Theme,
-        [ThThemeKeys.contrast3]: contrast3Theme
+        [ThThemeKeys.light]: lightReaderTheme,
+        [ThThemeKeys.dark]: darkReaderTheme,
+        [ThThemeKeys.paper]: paperReaderTheme,
+        [ThThemeKeys.sepia]: sepiaReaderTheme,
+        [ThThemeKeys.contrast1]: contrast1ReaderTheme,
+        [ThThemeKeys.contrast2]: contrast2ReaderTheme,
+        [ThThemeKeys.contrast3]: contrast3ReaderTheme
       }
     },
   },
@@ -330,18 +332,21 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     reflowOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     fxlOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     webPubOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen
     ],
     divinaOrder: [
@@ -356,8 +361,10 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       [ThActionsKeys.fullscreen]: defaultFullscreenAction,
       [ThActionsKeys.toc]: defaultTocAction,
       [ThActionsKeys.jumpToPosition]: defaultJumpToPositionAction,
+      [ThActionsKeys.readAlong]: defaultReadAlongAction,
     }
   },
+  readAlong: defaultReadAlongPreferences,
   docking: {
     displayOrder: [
       ThDockingKeys.transient,
@@ -367,7 +374,7 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     dock: {
       [ThBreakpoints.compact]: ThDockingTypes.none,
       [ThBreakpoints.medium]: ThDockingTypes.none,
-      [ThBreakpoints.expanded]: ThDockingTypes.start,
+      [ThBreakpoints.expanded]: ThDockingTypes.end,
       [ThBreakpoints.large]: ThDockingTypes.both,
       [ThBreakpoints.xLarge]: ThDockingTypes.both
     },

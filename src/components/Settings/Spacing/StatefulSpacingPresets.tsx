@@ -56,11 +56,11 @@ export const StatefulSpacingPresets = ({ standalone }: StatefulSettingsItemProps
 
   const { submitPreferences } = useNavigator().visual;
 
-  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing);
-  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
-  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent);
-  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing);
-  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing);
+  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing, isWebPub ? "webPub" : "epub");
+  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight, isWebPub ? "webPub" : "epub");
+  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent, isWebPub ? "webPub" : "epub");
+  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing, isWebPub ? "webPub" : "epub");
+  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing, isWebPub ? "webPub" : "epub");
 
   const { values: lineHeightOptions, compensate: compensateLineHeight } = useLineHeight();
 

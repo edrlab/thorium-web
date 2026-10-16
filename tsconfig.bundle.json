@@ -18,7 +18,6 @@
     "declaration": true,
     "paths": {
       "@/*": ["./src/*"],
-      "react": [ "./node_modules/@types/react" ],
       "immer": ["./node_modules/immer"]
     }
   },

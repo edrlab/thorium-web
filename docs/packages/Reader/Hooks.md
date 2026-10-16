@@ -50,6 +50,8 @@ For `"divina"`, it also sets `isManifestScrolled` in the publication store when 
 
 Derives boolean transition flags from the reader's Redux state. Useful for reacting to state changes (e.g. entering/leaving immersive mode) without manually tracking previous values.
 
+The flags describe the latest change of any of these four states, and stay set until the next one: re-renders don't reset them.
+
 ```typescript
 import { useReaderTransitions } from "@edrlab/thorium-web/reader";
 
@@ -72,7 +74,7 @@ interface ReaderTransitions {
   wasScroll: boolean;
   wasUserNavigated: boolean;
 
-  // Transitions (previous → current)
+  // Transitions (latest change)
   fromImmersive: boolean;
   toImmersive: boolean;
   fromFullscreen: boolean;
@@ -109,6 +111,24 @@ const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKe
 - `setLocalData`: `(locator: Locator | null) => void`
 - `getLocalData`: `() => Locator | null`
 - `localData`: `Locator | null` — the current stored position
+
+### useSettingsStorage
+
+Stores the settings of a publication. Each publication keeps its glocal and local settings in IndexedDB, keyed by `localDataKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. The readers don’t render until it has loaded them, so navigators start with the publication’s settings.
+
+```typescript
+const isSettingsHydrated = useSettingsStorage(localDataKey, "epub", settingsStorage);
+```
+
+**Parameters**
+
+- `key`: `string | null` — the publication’s key in IndexedDB, when no custom storage is provided
+- `profile`: `"epub" | "webPub" | "divina" | "audio"` — which settings are stored
+- `customStorage`: `SettingsStorage` (optional) — a custom storage implementation
+
+**Returns**
+
+- `boolean` — whether the publication’s settings have been loaded
 
 ---
 

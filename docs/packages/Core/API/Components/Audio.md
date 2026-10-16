@@ -57,3 +57,4 @@ interface ThAudioProgressProps {
 - Hover tooltip showing a custom label at the hovered position
 - Optional segment ticks along the timeline (e.g. chapter markers)
 - Full compound components pattern for layout control
+

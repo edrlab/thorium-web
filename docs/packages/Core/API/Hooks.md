@@ -123,6 +123,7 @@ function useEpubNavigator(): {
   submitPreferences: (preferences: IEpubPreferences) => Promise<void>;
   getCframes: () => (FrameManager | FXLFrameManager | undefined)[] | undefined;
   onFXLPositionChange: (cb: (locator: Locator) => void) => void;
+  getInstance: () => EpubNavigator | null; // The loaded navigator, e.g. to load the read-aloud navigator on top of it
 };
 ```
 
@@ -205,6 +206,7 @@ function useWebPubNavigator(): {
   getSetting: <K extends keyof WebPubSettings>(settingKey: K) => WebPubSettings[K];
   submitPreferences: (preferences: IWebPubPreferences) => Promise<void>;
   getCframes: () => (FrameManager | FXLFrameManager | undefined)[] | undefined;
+  getInstance: () => ExperimentalWebPubNavigator | null; // The loaded navigator, e.g. to load the read-aloud navigator on top of it
 }
 ```
 
@@ -267,6 +269,107 @@ function useDivinaNavigator(): {
 - Preferences: `scrolled`, `spreads`, `stripWidth`, `quality`, `constraint`, and `backgroundColor` (set by themes)
 - Position tracking and locator management – the navigator synthesizes its own positions
 
+## Read Aloud Navigator Hook
+
+Manages read aloud (text-to-speech) on top of a loaded EPUB or WebPub navigator. The `ReadAloudNavigator` from the Readium TS-Toolkit reads utterances with `@readium/speech`, turns pages and highlights what is read.
+
+```typescript
+interface ReadAloudNavigatorLoadProps {
+  navigator: ConstructorParameters<typeof ReadAloudNavigator>[0]; // The loaded visual navigator
+  listeners: ReadAloudListeners;
+  preferences?: IReadAloudPreferences;
+  defaults?: IReadAloudDefaults;
+  engine?: ReadiumSpeechPlaybackEngine;
+  provider?: GuidedNavigationProvider;
+  keepAwake?: boolean; // Keeps the screen awake while playing, true by default
+}
+
+function useReadAloudNavigator(): {
+  ReadAloudNavigatorLoad: (config: ReadAloudNavigatorLoadProps, cb?: Function) => Promise<void>;
+  ReadAloudNavigatorDestroy: (cb?: Function) => Promise<void>;
+  isLoaded: boolean;
+  play: (from?: Locator) => Promise<void>;
+  pause: () => void;
+  stop: () => void;
+  next: () => Promise<boolean>;
+  previous: () => Promise<boolean>;
+  state: () => ReadAloudState;
+  getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
+  getLanguages: () => Promise<string[]>;
+  getPublicationLanguages: () => string[];
+  preferencesEditor: ReadAloudPreferencesEditor | undefined;
+  getSetting: <K extends keyof ReadAloudSettings>(settingKey: K) => ReadAloudSettings[K] | undefined;
+  settings: () => Readonly<ReadAloudSettings> | undefined;
+  submitPreferences: (preferences: IReadAloudPreferences) => Promise<void>;
+};
+```
+
+**Features:**
+- A single instance shared by every caller; `isLoaded` re-renders components when it is loaded or destroyed
+- Loading destroys the previous instance first, and a load superseded by another one is dropped
+- Playback by utterance: `next` and `previous` move to the adjacent utterance, there is no time-based seeking
+- Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with the `voice` preference, and `getSetting("voice")` falls back to the navigator’s own voice when it is unset
+- The publication’s languages as voices are loaded for them, the language override in place of the declared one (`getPublicationLanguages()`)
+- Errors are logged with `console.warn` instead of thrown
+
+## Read Aloud Settings Cache Hook
+
+Provides a stateless cache for read aloud settings, mapping React state to mutable refs. Values never go stale and do not trigger navigator re-initialization.
+
+```typescript
+interface ReadAloudSettingsObject {
+  format: ReadAloudSettings["format"] | null;
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
+  keepCentered: boolean | null;
+  verbosity: ReadAloudSettings["verbosity"] | null;
+  skip: ReadAloudSettings["skip"] | null;
+  contextualize: ReadAloudSettings["contextualize"] | null;
+  language: ReadAloudSettings["language"] | null;
+  segmentation: ReadAloudSettings["segmentation"] | null;
+  pauseDuration: number | null;
+  autoPause: ReadAloudSettings["autoPause"] | null;
+  rate: number | null;
+  pitch: number | null;
+  volume: number | null;
+  utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
+  wordStyle: ReadAloudSettings["wordStyle"] | null;
+  voice: ReadAloudSettings["voice"] | null;
+  languageOverride: string | null;
+}
+
+function useReadAloudSettingsCache(
+  format: ReadAloudSettings["format"] | null,
+  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null,
+  keepCentered: boolean | null,
+  verbosity: ReadAloudSettings["verbosity"] | null,
+  skip: ReadAloudSettings["skip"] | null,
+  contextualize: ReadAloudSettings["contextualize"] | null,
+  language: ReadAloudSettings["language"] | null,
+  segmentation: ReadAloudSettings["segmentation"] | null,
+  pauseDuration: number | null,
+  autoPause: ReadAloudSettings["autoPause"] | null,
+  rate: number | null,
+  pitch: number | null,
+  volume: number | null,
+  utteranceStyle: ReadAloudSettings["utteranceStyle"] | null,
+  wordStyle: ReadAloudSettings["wordStyle"] | null,
+  voice: ReadAloudSettings["voice"] | null,
+  languageOverride: string | null
+): React.MutableRefObject<{ settings: ReadAloudSettingsObject }>
+```
+
+## Navigator Context
+
+The EPUB and WebPub readers provide their visual navigator and the read-aloud navigator to Stateful Components, which read them with `useNavigator`.
+
+```typescript
+const { visual, media, readAloud, playback, unified } = useNavigator();
+```
+
+- `visual` and `media` throw when their navigator isn’t provided.
+- `readAloud` returns `null` until the read-aloud navigator is loaded, as it loads after the reader. Disable controls depending on it rather than expecting it.
+- `playback` exposes `play`, `pause`, `skipBackward` and `skipForward` of the read-aloud navigator once it is loaded, otherwise of the media navigator. With neither, they do nothing. Playback controls such as `StatefulPlayPauseButton` use it, so they work in both the audio and read-along players.
+
 ## Media Query Hooks
 
 ### useMediaQuery
@@ -308,6 +411,8 @@ function useBreakpoints(
   onChange?: (breakpoint: ThBreakpoints | null) => void
 ): ThBreakpointsObject
 ```
+
+Media queries are evaluated after mount, so `current` is `null` until one matches, and `onChange` is only called once a breakpoint is known. A breakpoint restored from a persisted store is therefore not overwritten with `null` on load.
 
 ## Accessibility Hooks
 
@@ -467,7 +572,7 @@ function useLocalStorage(
 
 ### usePrevious
 
-Stores and returns the previous value of a variable.
+Returns the value a variable had before its last change, or `null` until it first changes.
 
 ```typescript
 function usePrevious<T>(
@@ -477,8 +582,11 @@ function usePrevious<T>(
 
 **Features:**
 - Generic type support
-- Ref-based storage for performance
-- Updates only after render
+- Changes only when `value` changes, so unrelated re-renders don’t affect it and it is safe as an effect dependency
+- `previous !== value` stays true until the next change
+
+> [!IMPORTANT]
+> `value` must keep its identity across renders: pass a primitive or a memoized value. A new object on every render counts as a change on every render.
 
 ### usePublicationProgress
 

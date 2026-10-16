@@ -19,4 +19,5 @@ export * from "./useTimelineAdjacency";
 export * from "./Audio";
 export * from "./Divina";
 export * from "./Epub";
+export * from "./ReadAloud";
 export * from "./WebPub";

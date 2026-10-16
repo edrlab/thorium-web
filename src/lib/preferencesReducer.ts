@@ -43,6 +43,14 @@ export interface UIChangePayload {
   }
 }
 
+export interface ReadAlongChangePayload {
+  type: string;
+  payload: {
+    key: "generateFromMarkup" | "readFromPointer" | "detachable" | "startInViewport" | "keepAwake";
+    value: boolean;
+  }
+}
+
 export interface PaginatedAffordanceProperties {
   default?: ThPaginatedAffordancePrefValue;
   breakpoints?: {
@@ -80,7 +88,14 @@ export interface PreferencesReducerState {
     toggleOnMiddlePointer?: Array<"tap" | "click">;
     hideOnForwardScroll?: boolean;
     showOnBackwardScroll?: boolean;
-  }
+  };
+  readAlong?: {
+    generateFromMarkup?: boolean;
+    readFromPointer?: boolean;
+    detachable?: boolean;
+    startInViewport?: boolean;
+    keepAwake?: boolean;
+  };
 }
 
 const initialState: PreferencesReducerState = {}
@@ -144,6 +159,13 @@ export const preferencesSlice = createSlice({
         }
       };
     },
+    setReadAlong: (state, action: ReadAlongChangePayload) => {
+      const { key, value } = action.payload;
+      state.readAlong = {
+        ...state.readAlong,
+        [key]: value
+      };
+    },
     updateFromPreferences(state, action: PayloadAction<ThPreferences<CustomizableKeys>>) {
       const prefs = action.payload;
       return mapPreferencesToState(prefs);
@@ -158,6 +180,7 @@ export const {
   setUI,
   setScrollAffordances,
   setPaginatedAffordance,
+  setReadAlong,
   updateFromPreferences
 } = preferencesSlice.actions;
 

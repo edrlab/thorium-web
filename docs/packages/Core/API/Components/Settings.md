@@ -1,5 +1,25 @@
 # Settings Components API Documentation
 
+## ThDisclosure
+
+A collapsible section, like `<details>`, whose trigger is a heading ending with a chevron.
+
+### Props
+
+```typescript
+interface ThDisclosureProps extends Omit<DisclosureProps, "children"> {
+  ref?: React.ForwardedRef<HTMLDivElement>;
+  label: string;                       // Trigger text
+  icon?: ComponentType<SVGProps<SVGElement>>; // Trigger icon, a chevron by default
+  children?: React.ReactNode;          // Content of the panel
+  compounds?: {
+    heading?: HeadingProps;            // Props for the heading wrapping the trigger
+    button?: ButtonProps;              // Props for the trigger button
+    panel?: DisclosurePanelProps;      // Props for the panel
+  }
+}
+```
+
 ## ThDropdown
 
 A select component with customizable button, popover, and listbox functionality.
@@ -189,6 +209,34 @@ interface ThSwitchProps extends SwitchProps {
   }
 }
 ```
+
+## ThColorSwatchPicker
+
+A color picker limited to preset swatches, wrapping React Aria’s `ColorSwatchPicker`.
+
+### Props
+
+```typescript
+interface ThColorSwatchPickerProps extends Omit<ColorSwatchPickerProps, "children"> {
+  ref?: React.ForwardedRef<HTMLDivElement>;
+  swatches: string[];                  // CSS colors, one swatch each
+  heading?: string;                    // Optional heading, labelling the picker
+  isDisabled?: boolean;                // Disables every swatch
+  compounds?: {
+    wrapper?: HTMLAttributesWithRef<HTMLDivElement>;
+    heading?: WithRef<HeadingProps, HTMLHeadingElement>;
+    item?: Omit<ColorSwatchPickerItemProps, "color" | "children">;
+    swatch?: ColorSwatchProps;
+  }
+}
+```
+
+### Features
+
+- `value`, `defaultValue` and `onChange` pass through to `ColorSwatchPicker`; `onChange` receives a React Aria `Color`, which you can convert with `color.toString("hexa")`
+- The heading labels the picker through `aria-labelledby`, unless you pass an `aria-label`
+- `isDisabled` is applied to each swatch, as `ColorSwatchPicker` has no disabled state of its own
+- Keyboard navigation and color names for screen readers come from React Aria
 
 ## ThSettingsWrapper
 

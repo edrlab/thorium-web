@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 
 import { Publication, Locator } from "@readium/shared";
-import { getScriptMode } from "@readium/navigator";
+import { getScriptMode, GuidedNavigationProvider, ReadiumSpeechPlaybackEngine } from "@readium/navigator";
 import { ThThemeKeys, ThemeKeyType, useTheming } from "@/preferences";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
@@ -22,6 +22,13 @@ import {
   setReducedTransparency,
 } from "@/lib/themeReducer";
 import { setFontLanguage, setCoverTheme } from "@/lib/publicationReducer";
+import { SettingsReducerState } from "@/lib/settingsReducer";
+import { WebPubSettingsReducerState } from "@/lib/webPubSettingsReducer";
+import { DivinaSettingsReducerState } from "@/lib/divinaSettingsReducer";
+import { AudioSettingsState } from "@/lib/audioSettingsReducer";
+import { ReadAlongSettingsReducerState } from "@/lib/readAlongSettingsReducer";
+import { ReadAlongPlayerReducerState } from "@/lib/readAlongPlayerReducer";
+import { ThemeStateObject } from "@/lib/themeReducer";
 import { propsToCSSVars } from "@/core/Helpers/propsToCSSVars";
 import { prefixString } from "@/core/Helpers/prefixString";
 import { useCoverBlobUrl } from "@/hooks/useCoverBlobUrl";
@@ -43,11 +50,35 @@ export interface PositionStorage {
   set: (locator: Locator) => void | Promise<void>;
 }
 
+// Only the reader's profile settings that aren't global, see ThSettingsStorageStrategies
+export interface StoredSettings {
+  settings?: Partial<SettingsReducerState>;
+  webPubSettings?: Partial<WebPubSettingsReducerState>;
+  divinaSettings?: Partial<DivinaSettingsReducerState>;
+  audioSettings?: Partial<AudioSettingsState>;
+  readAlongSettings?: Partial<ReadAlongSettingsReducerState>;
+  readAlongPlayer?: Pick<ReadAlongPlayerReducerState, "isActive" | "layout">;
+  theme?: ThemeStateObject;
+}
+
+export interface SettingsStorage {
+  get: () => StoredSettings | undefined | Promise<StoredSettings | undefined>;
+  set: (settings: StoredSettings) => void | Promise<void>;
+}
+
+export interface ReadAlongConfig {
+  provider?: (publication: Publication) => GuidedNavigationProvider;
+  // Called on each start, as the read-aloud navigator destroys its engine when it stops
+  engine?: (publication: Publication) => ReadiumSpeechPlaybackEngine;
+}
+
 export interface StatefulReaderProps {
   publication: Publication;
   localDataKey: string | null;
   plugins?: ThPlugin[];
   positionStorage?: PositionStorage;
+  settingsStorage?: SettingsStorage;
+  readAlong?: ReadAlongConfig;
   containerRefSetter?: (el: Element | null) => void;
 }
 
@@ -69,6 +100,8 @@ export interface ReaderComponentProps<
   localDataKey: string | null;
   isLoading?: boolean;
   positionStorage?: PositionStorage;
+  settingsStorage?: SettingsStorage;
+  readAlong?: ReadAlongConfig;
   plugins?: ReaderPlugins;
   i18n?: Partial<InitOptions>;
   preferences?: P extends "audio"
@@ -138,11 +171,12 @@ interface AudioContentProps {
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
+  settingsStorage?: SettingsStorage;
   coverUrl?: string;
   externalLoading: boolean;
 }
 
-const StatefulAudioContent = ({ publication, localDataKey, positionStorage, coverUrl, externalLoading }: AudioContentProps) => {
+const StatefulAudioContent = ({ publication, localDataKey, positionStorage, settingsStorage, coverUrl, externalLoading }: AudioContentProps) => {
   const { preferences } = useAudioPreferences();
   const themeObject = useAppSelector(state => state.theming.theme);
   const dispatch = useAppDispatch();
@@ -177,7 +211,7 @@ const StatefulAudioContent = ({ publication, localDataKey, positionStorage, cove
   return (
     <StatefulLoader isLoading={ externalLoading || !themeResolved || !coverReady }>
       <Suspense>
-        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } />
+        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } settingsStorage={ settingsStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } />
       </Suspense>
     </StatefulLoader>
   );
@@ -190,6 +224,8 @@ interface ReaderContentProps {
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
+  settingsStorage?: SettingsStorage;
+  readAlong?: ReadAlongConfig;
   plugins?: ThPlugin[];
   coverUrl?: string;
 }

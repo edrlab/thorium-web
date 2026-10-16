@@ -120,6 +120,7 @@ When upgrading between major or breaking versions, refer to the migration guide 
 | 1.3.0 | [Migration Guide 1.3.0](./migrations/1.3.0.md) |
 | 1.3.1 | [Migration Guide 1.3.1](./migrations/1.3.1.md) |
 | 1.4.0 | [Migration Guide 1.4.0](./migrations/1.4.0.md) |
+| 1.8.0 | [Migration Guide 1.8.0](./migrations/1.8.0.md) |
 
 ## Prerequisites for implementation
 

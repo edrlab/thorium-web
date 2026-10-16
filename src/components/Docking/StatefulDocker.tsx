@@ -40,13 +40,15 @@ export interface StatefulDockerProps {
   keys: ThDockingKeys[];
   ref: React.ForwardedRef<HTMLButtonElement>;
   onClose: () => void;
+  actions?: React.ReactNode;
 }
 
 export const StatefulDocker = ({
   id,
   keys,
   ref,
-  onClose
+  onClose,
+  actions
 }: StatefulDockerProps) => {
   const preferences = useActionsPreferences();
   const { theming } = useSharedPreferences();
@@ -78,7 +80,9 @@ export const StatefulDocker = ({
         aria-label={ t("reader.app.docker.wrapper") }
       />
 
-      <ThCloseButton 
+      { actions }
+
+      <ThCloseButton
         ref={ ref }
         className={ readerSharedUI.dockerButton } 
         aria-label={ t("common.actions.close") } 

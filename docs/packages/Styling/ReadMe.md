@@ -82,7 +82,7 @@ Classes are following pattern `thorium_web_` + module name + component name e.g.
   - `thorium_web_container_isXLarge`
 
 > [!NOTE]
-> `StatefulPlayer` (Audio) uses its own layout independent of `StatefulReader`. None of the above layout classes or states (`thorium_web_stackedUI`, `thorium_web_layeredUI`, `thorium_web_isImmersive`, `thorium_web_isHovering`, etc.) apply to the audio player. See [Audio App Structure](./API.md#audio-app-structure) for audio-specific layout classes.
+> `StatefulPlayer` (Audio) uses its own layout independent of `StatefulReader`. None of the above layout classes or states (`thorium_web_stackedUI`, `thorium_web_layeredUI`, `thorium_web_isImmersive`, `thorium_web_isHovering`, etc.) apply to the audio player. See [Audio Components](./API.md#audio-components) for audio-specific layout classes.
 
 ### Component states
 

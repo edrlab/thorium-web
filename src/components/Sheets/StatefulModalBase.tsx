@@ -38,6 +38,7 @@ export const StatefulModalBase = ({
     onOpenChange,
     onClosePress,
     docker,
+    headerActions,
     children,
     resetFocus,
     focusWithinRef,
@@ -110,7 +111,7 @@ export const StatefulModalBase = ({
                 direction={ direction === "ltr" ? "left" : "right" }
                 label={ t("reader.app.back.trigger") }
                 ref={ sheetCloseRef }
-                className={ classNames(className, readerSharedUI.backButton) }
+                className={ readerSharedUI.backButton }
                 aria-label={ t("reader.app.back.trigger") }
                 onPress={ onClosePress }
               />
@@ -119,6 +120,7 @@ export const StatefulModalBase = ({
                 keys={ docker || [] }
                 ref={ sheetCloseRef }
                 onClose={ onClosePress }
+                actions={ headerActions }
               />
             }
         </ThContainerHeader>

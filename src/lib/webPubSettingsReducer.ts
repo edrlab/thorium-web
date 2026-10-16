@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 import { 
   ThLineHeightOptions, 
@@ -125,7 +126,8 @@ export const webPubSettingsSlice = createSlice({
     },
     setWebPubZoom: (state, action) => {
       state.zoom = action.payload
-    }
+    },
+    hydrateWebPubSettings: (state, action: PayloadAction<HydratePayload<WebPubSettingsReducerState>>) => hydrateState(state, initialState, action.payload)
   }
 });
 
@@ -147,7 +149,8 @@ export const {
   setWebPubTextNormalization,
   setWebPubNoRuby,
   setWebPubWordSpacing,
-  setWebPubZoom
+  setWebPubZoom,
+  hydrateWebPubSettings
 } = webPubSettingsSlice.actions;
 
 export default webPubSettingsSlice.reducer;

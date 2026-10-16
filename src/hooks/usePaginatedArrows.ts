@@ -81,14 +81,14 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
   const prevVariant = usePrevious(variant);
   const prevDiscard = usePrevious(discard);
 
-  // Handle state transitions
+  // Handle prefs changes
   useEffect(() => {
     // If navigation was just added to discard, reset navigation state
     if (!prevDiscard?.includes("navigation") && discard?.includes("navigation")) {
       dispatch(setUserNavigated(false));
       return;
     }
-    
+
     // If discard changed to "none", show the arrows and reset navigation state
     if (discard === "none" && prevDiscard !== "none") {
       dispatch(setHasArrows(true));
@@ -99,9 +99,11 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
     if (prevVariant === ThArrowVariant.none && variant !== ThArrowVariant.none) {
       dispatch(setHasArrows(true));
       dispatch(setUserNavigated(false));
-      return;
     }
+  }, [discard, prevDiscard, variant, prevVariant, dispatch]);
 
+  // Handle state transitions
+  useEffect(() => {
     // Check for discard transitions (false -> true)
     const shouldHide = 
       (discard?.includes("immersive") && toImmersive) ||
@@ -123,7 +125,7 @@ export const usePaginatedArrows = (): UsePaginatedArrowsReturn => {
     } else if (shouldShow) {
       dispatch(setHasArrows(true));
     }
-  }, [toImmersive, toFullscreen, toUserNavigation, fromImmersive, fromFullscreen, fromScroll, discard, hint, prevVariant, variant, prevDiscard, dispatch]);
+  }, [toImmersive, toFullscreen, toUserNavigation, fromImmersive, fromFullscreen, fromScroll, discard, hint, dispatch]);
 
   // Early return for special cases
   if (variant === ThArrowVariant.none || isScroll) {

@@ -40,6 +40,7 @@ export const StatefulPopoverSheet = ({
     onClosePress,
     placement,
     docker,
+    headerActions,
     children,
     resetFocus,
     focusWithinRef,
@@ -114,7 +115,7 @@ export const StatefulPopoverSheet = ({
                 direction={ direction === "ltr" ? "left" : "right" }
                 label={ t("reader.app.back.trigger") }
                 ref={ popoverCloseRef }
-                className={ classNames(className, readerSharedUI.backButton) } 
+                className={ readerSharedUI.backButton } 
                 aria-label={ t("reader.app.back.trigger") }
                 onPress={ onClosePress }
               />
@@ -123,6 +124,7 @@ export const StatefulPopoverSheet = ({
                 keys={ docker || [] }
                 ref={ popoverCloseRef }
                 onClose={ onClosePress }
+                actions={ headerActions }
               />
           }
         </ThContainerHeader>

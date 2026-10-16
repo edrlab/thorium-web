@@ -85,6 +85,7 @@ export interface ThDockingPref<T extends string> {
 export enum ThActionsKeys {
   fullscreen = "fullscreen",
   jumpToPosition = "jumpToPosition",
+  readAlong = "readAlong",
   settings = "settings",
   toc = "toc"
 }

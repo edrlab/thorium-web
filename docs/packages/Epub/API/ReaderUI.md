@@ -14,6 +14,8 @@ interface StatefulReaderProps {
   localDataKey: string | null;  // Key for storing reader state locally
   plugins?: ThPlugin[];         // Optional reader plugins
   positionStorage?: PositionStorage; // Custom storage for position data
+  settingsStorage?: SettingsStorage; // Custom storage for the publication’s settings
+  readAlong?: ReadAlongConfig;  // Read along provider and engine factories
 }
 ```
 

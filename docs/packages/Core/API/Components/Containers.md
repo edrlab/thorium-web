@@ -150,6 +150,7 @@ interface ThBottomSheetProps extends Omit<React.ComponentProps<typeof Sheet>, "c
 - Drag gesture support
 - Customizable snap points
 - Focus management
+- `isDismissable` (default `true`) controls both dismissal on outside interaction and focus containment. Set it to `false` for a sheet that leaves the page usable, e.g. a mini player: focus isn’t trapped and clicking the page doesn’t close it
 - Keyboard dismissal control
 - Compound components pattern
 - Backdrop support

@@ -121,3 +121,53 @@ export const contrast3Theme = {
   elevate: "0px 0px 2px #8c8c8c",
   immerse: "0.45"
 }
+
+// Reader themes also color read along, which audio themes don't need
+export const lightReaderTheme = {
+  ...lightTheme,
+  readAlongUtterance: "#fff4b3", // Color of the spoken sentence
+  readAlongWord: "#ffcf3f",      // Color of the spoken word
+  readAlongMask: "#ffffff99"     // Color dimming everything but the spoken sentence
+}
+
+export const darkReaderTheme = {
+  ...darkTheme,
+  readAlongUtterance: "#2b3d55",
+  readAlongWord: "#3d74b8",
+  readAlongMask: "#00000099"
+}
+
+export const paperReaderTheme = {
+  ...paperTheme,
+  readAlongUtterance: "#f3e2b0",
+  readAlongWord: "#e8c15a",
+  readAlongMask: "#faf4e899"
+}
+
+export const sepiaReaderTheme = {
+  ...sepiaTheme,
+  readAlongUtterance: "#dcc690",
+  readAlongWord: "#c9a24a",
+  readAlongMask: "#e9ddc899"
+}
+
+export const contrast1ReaderTheme = {
+  ...contrast1Theme,
+  readAlongUtterance: "#003366",
+  readAlongWord: "#0055aa",
+  readAlongMask: "#00000099"
+}
+
+export const contrast2ReaderTheme = {
+  ...contrast2Theme,
+  readAlongUtterance: "#2e2e6e",
+  readAlongWord: "#4f4fb0",
+  readAlongMask: "#18184299"
+}
+
+export const contrast3ReaderTheme = {
+  ...contrast3Theme,
+  readAlongUtterance: "#a6d8b2",
+  readAlongWord: "#6fc383",
+  readAlongMask: "#c5e7cd99"
+}

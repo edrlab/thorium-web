@@ -14,7 +14,7 @@ import { Locator, Publication } from "@readium/shared";
 import { ContextMenuEvent, SuspiciousActivityEvent } from "@readium/navigator-html-injectables";
 import { fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
 import { AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
-import { PositionStorage } from "../Reader/StatefulReaderWrapper";
+import { PositionStorage, SettingsStorage } from "../Reader/StatefulReaderWrapper";
 import { ThAudioPlayerComponent } from "@/preferences/models";
 
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
@@ -32,10 +32,12 @@ import { useAudioStatelessCache } from "./Hooks/useAudioStatelessCache";
 import { useI18n } from "@/i18n/useI18n";
 import { resolveAudioContentProtectionConfig } from "@/preferences/models/protection";
 import { usePositionStorage } from "@/hooks/usePositionStorage";
+import { useSettingsStorage } from "@/hooks/useSettingsStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { useAudioPlayerInit } from "./Hooks/useAudioPlayerInit";
 import { useAudioKeyboardPeripherals } from "./Hooks/useAudioKeyboardPeripherals";
 import { useFocusedDockableKey } from "../Docking/hooks/useFocusedDockableKey";
+import { useSleepTimerCountdown } from "../Playback/actions/SleepTimer/hooks/useSleepTimerCountdown";
 
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import {
@@ -71,6 +73,7 @@ export interface StatefulPlayerProps {
   localDataKey: string | null;
   plugins?: any[];
   positionStorage?: PositionStorage;
+  settingsStorage?: SettingsStorage;
   coverUrl?: string;
   containerRefSetter?: (el: Element | null) => void;
 }
@@ -80,10 +83,12 @@ export const StatefulPlayer = ({
   localDataKey,
   plugins,
   positionStorage,
+  settingsStorage,
   coverUrl,
   containerRefSetter
 }: StatefulPlayerProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
+  const isSettingsHydrated = useSettingsStorage(localDataKey, "audio", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
@@ -96,7 +101,7 @@ export const StatefulPlayer = ({
     setPluginsRegistered(true);
   }, [plugins]);
 
-  if (!pluginsRegistered) {
+  if (!pluginsRegistered || !isSettingsHydrated) {
     return null;
   }
 
@@ -151,6 +156,8 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
 
   const audioNavigator = useAudioNavigator();
   const { canGoBackward, canGoForward, submitPreferences, pause, isPlaying, timeline: getNavigatorTimeline } = audioNavigator;
+
+  useSleepTimerCountdown();
 
   const { setLocalData, getLocalData } = usePositionStorage(localDataKey, positionStorage);
 

@@ -50,7 +50,7 @@ import { useDivinaNavigator } from "@/core/Hooks/Divina/useDivinaNavigator";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useI18n } from "@/i18n/useI18n";
-import { usePositionStorage } from "@/hooks";
+import { usePositionStorage, useSettingsStorage } from "@/hooks";
 
 import { toggleActionOpen, dockAction } from "@/lib/actionsReducer";
 import { setDivinaScrolled } from "@/lib/divinaSettingsReducer";
@@ -102,9 +102,11 @@ export const StatefulDivinaReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  settingsStorage,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
+  const isSettingsHydrated = useSettingsStorage(localDataKey, "divina", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
@@ -117,7 +119,7 @@ export const StatefulDivinaReader = ({
     setPluginsRegistered(true);
   }, [plugins]);
 
-  if (!pluginsRegistered) {
+  if (!pluginsRegistered || !isSettingsHydrated) {
     return null;
   }
 
@@ -512,7 +514,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     const theme = themeObject.fxl ?? "auto";
 
     // Protecting against re-applying on theme change
-    if (theme !== "auto" && previousTheme !== theme) return;
+    if (theme !== "auto" && previousTheme !== null && previousTheme !== theme) return;
 
     const applyCurrentTheme = async () => {
       const themeKey = fxlThemeKeys.includes(theme as any) ? theme : "auto";

@@ -15,6 +15,7 @@ interface StatefulSheet {
   onOpenChange: (isOpen: boolean) => void;  // Open state change handler
   onPressClose: () => void;                 // Close button handler
   docker?: ThDockingKeys[];                // Optional docking positions
+  headerActions?: ReactNode;                // Extra buttons in the header, before the close button
   children?: ReactNode;                     // Sheet content
   resetFocus?: unknown;                     // Focus reset handler
   withinFocusRef?: RefObject<HTMLElement | null>; // Focus within handler
@@ -38,6 +39,27 @@ Features:
 - Custom detent modes (content-height, full-height)
 - Scrim customization
 - Focus management
+
+#### useBottomSheetSnap
+
+The snapping and drag indicator behavior of `StatefulBottomSheet`, as a hook, for sheets built directly on `ThBottomSheet` (the read-along sheet uses it).
+
+```typescript
+interface UseBottomSheetSnapProps {
+  sheetRef: RefObject<SheetRef | null>;
+  snapArray: number[];             // Snap points, starting with 0
+  onSnap?: (index: number) => void;
+  onClosePress?: () => void;       // Called when moving down from the lowest snap point
+}
+
+function useBottomSheetSnap(props: UseBottomSheetSnapProps): {
+  onSnapCallback: (index: number) => void;          // For ThBottomSheet’s onSnap
+  onDragPressCallback: () => void;                  // For the drag indicator’s onPress: cycles through snap points
+  onDragKeyCallback: (e: KeyboardEvent) => void;    // For the drag indicator’s onKeyDown: ArrowUp/Down, PageUp/Down
+}
+```
+
+Without `onClosePress`, moving down from the lowest snap point does nothing, so the sheet can’t be closed from its drag indicator.
 
 ### StatefulModalSheet
 

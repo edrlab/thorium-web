@@ -30,8 +30,22 @@ import {
   ThDockingSizeValue,
   ThSettingsGroupPref,
   ValidatedLanguageCollection,
+  ThReadAlongActionTokens,
+  ThReadAlongActionKeys,
+  ThReadAlongKeys,
+  ThReadAlongStylePref,
+  ThReadAlongHighlightKeys,
+  ThReadAlongHighlightPresetKeys,
+  ThReadAlongHighlightStyle,
+  ThReadAlongProsodyKeys,
+  ThReadAlongProsodyPresetKeys,
+  ThReadAlongVoiceKeys,
+  ThReadAlongVerbosityKeys,
+  ThAudioActionsTokens,
+  ThSettingsTimerPref,
+  CSSColor,
 } from "./models";
-import { DivinaQuality, ExperimentKey } from "@readium/navigator";
+import { DivinaQuality, ExperimentKey, ReadAloudAutoPause } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { ContentProtectionConfig } from "./models/protection";
 import { validateObjectKeys } from "./helpers";
@@ -42,6 +56,12 @@ export type CustomizableKeys = {
   settings?: string;
   text?: string;
   spacing?: string;
+  readAlongAction?: string;
+  readAlong?: string;
+  readAlongVoice?: string;
+  readAlongHighlight?: string;
+  readAlongProsody?: string;
+  readAlongVerbosity?: string;
 };
 
 // Default internal keys alias for convenience
@@ -51,6 +71,12 @@ export type DefaultKeys = {
   settings: ThSettingsKeys;
   text: ThTextSettingsKeys;
   spacing: ThSpacingSettingsKeys;
+  readAlongAction: ThReadAlongActionKeys;
+  readAlong: ThReadAlongKeys;
+  readAlongVoice: ThReadAlongVoiceKeys;
+  readAlongHighlight: ThReadAlongHighlightKeys;
+  readAlongProsody: ThReadAlongProsodyKeys;
+  readAlongVerbosity: ThReadAlongVerbosityKeys;
 };
 
 // Key types to better handle custom keys for external consumers
@@ -89,6 +115,41 @@ export type SpacingSettingsKey<K extends CustomizableKeys> =
       : ThSpacingSettingsKeys
     : ThSpacingSettingsKeys;
 
+export type ReadAlongActionKey<K extends CustomizableKeys> =
+  K extends { readAlongAction: infer A }
+    ? A extends string
+      ? ThReadAlongActionKeys | A
+      : ThReadAlongActionKeys
+    : ThReadAlongActionKeys;
+
+export type ReadAlongSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlong: infer R }
+    ? R extends string
+      ? ThReadAlongKeys | R
+      : ThReadAlongKeys
+    : ThReadAlongKeys;
+
+export type ReadAlongVoiceSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongVoice: infer V }
+    ? V extends string
+      ? ThReadAlongVoiceKeys | V
+      : ThReadAlongVoiceKeys
+    : ThReadAlongVoiceKeys;
+
+export type ReadAlongHighlightSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongHighlight: infer H }
+    ? H extends string
+      ? ThReadAlongHighlightKeys | H
+      : ThReadAlongHighlightKeys
+    : ThReadAlongHighlightKeys;
+
+export type ReadAlongProsodySettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongProsody: infer P }
+    ? P extends string
+      ? ThReadAlongProsodyKeys | P
+      : ThReadAlongProsodyKeys
+    : ThReadAlongProsodyKeys;
+
 
 export interface ThSettingsSpacingPresets<K extends CustomizableKeys = DefaultKeys> {
   reflowOrder: Array<ThSpacingPresetKeys>;
@@ -112,14 +173,108 @@ export type ThSpacingPreset<K extends CustomizableKeys = DefaultKeys> = {
     : {}
   : {});
 
+export type ReadAlongVerbositySettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongVerbosity: infer V }
+    ? V extends string
+      ? ThReadAlongVerbosityKeys | V
+      : ThReadAlongVerbosityKeys
+    : ThReadAlongVerbosityKeys;
+
+export interface ThReadAlongHighlightPresets<K extends CustomizableKeys = DefaultKeys> {
+  order: Array<ThReadAlongHighlightPresetKeys>;
+  // None and custom are not included as they are special cases
+  keys: {
+    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset<K>;
+  };
+}
+
+export type ThReadAlongHighlightPreset<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongHighlightKeys.utteranceStyle]: ThReadAlongHighlightStyle | false;
+  [ThReadAlongHighlightKeys.wordStyle]: (Omit<ThReadAlongHighlightStyle, "type"> & { type?: Exclude<ThReadAlongHighlightStyle["type"], "mask"> }) | false;
+} & (K extends { readAlongHighlight: infer H }
+  ? H extends string
+      ? { [key in Exclude<H, ThReadAlongHighlightKeys>]?: ThReadAlongHighlightStyle | false }
+    : {}
+  : {});
+
+export interface ThReadAlongProsodyPresets<K extends CustomizableKeys = DefaultKeys> {
+  order: Array<ThReadAlongProsodyPresetKeys>;
+  // Default and custom are not included as they are special cases
+  keys: {
+    [key in Exclude<ThReadAlongProsodyPresetKeys, ThReadAlongProsodyPresetKeys.default | ThReadAlongProsodyPresetKeys.custom>]?: ThReadAlongProsodyPreset<K>;
+  };
+}
+
+// Values left out fall back to the navigator's defaults
+export type ThReadAlongProsodyPreset<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongProsodyKeys.rate]?: number;
+  [ThReadAlongProsodyKeys.pauseDuration]?: number;
+  [ThReadAlongProsodyKeys.autoPause]?: ReadAloudAutoPause;
+} & (K extends { readAlongProsody: infer P }
+  ? P extends string
+      ? { [key in Exclude<P, ThReadAlongProsodyKeys>]?: number | ReadAloudAutoPause }
+    : {}
+  : {});
+
 export interface ThActionsPref<K extends CustomizableKeys> {
   reflowOrder: Array<ActionKey<K>>;
   fxlOrder: Array<ActionKey<K>>;
   webPubOrder: Array<ActionKey<K>>;
   divinaOrder: Array<ActionKey<K>>;
   collapse: ThCollapsibility;
-  keys: Record<ActionKey<K>, ThActionsTokens>;
+  keys: Record<ActionKey<K>, ThActionsTokens> & {
+    [ThActionsKeys.readAlong]: ThReadAlongActionTokens;
+  };
 };
+
+export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongKeys.rate]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pitch]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.volume]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pauseDuration]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.utteranceStyle]: ThReadAlongStylePref;
+  [ThReadAlongKeys.wordStyle]: ThReadAlongStylePref;
+  [ThReadAlongKeys.sleepTimer]: ThSettingsTimerPref;
+} & (
+  K extends { readAlong: infer R }
+    ? [R] extends [string]
+      ? { [key in Exclude<R, ThReadAlongKeys>]: ThSettingsRangePrefRequired }
+      : {}
+    : {}
+);
+
+export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
+  generateFromMarkup: boolean;
+  readFromPointer: boolean;
+  detachable: boolean;
+  startInViewport: boolean;
+  keepAwake: boolean;
+  actions: {
+    miniPlayer: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+      collapse: ThCollapsibility;
+    };
+    expanded: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+    };
+    keys: Record<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>;
+  };
+  settings: {
+    order: Array<ReadAlongSettingsKey<K>>;
+    keys: ThReadAlongSettingsKeyTypes<K>;
+    voice: ThSettingsGroupPref<ReadAlongVoiceSettingsKey<K>>;
+    highlight: ThSettingsGroupPref<ReadAlongHighlightSettingsKey<K>> & { presets?: ThReadAlongHighlightPresets<K> };
+    prosody: ThSettingsGroupPref<ReadAlongProsodySettingsKey<K>> & { presets?: ThReadAlongProsodyPresets<K> };
+    verbosity: ThSettingsGroupPref<ReadAlongVerbositySettingsKey<K>>;
+  };
+}
+
+// Read along colors are reader only, audio themes keep ThemeTokens
+export interface ThReaderThemeTokens extends ThemeTokens {
+  readAlongUtterance: CSSColor;
+  readAlongWord: CSSColor;
+  readAlongMask: CSSColor;
+}
 
 export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
   [ThSettingsKeys.fontFamily]: ThFontFamilyPref;
@@ -226,7 +381,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
         dark: ThemeKey<K>;
       };
       // keys never includes "auto"
-      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThemeTokens>;
+      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThReaderThemeTokens>;
     };
   };
   contentProtection?: ContentProtectionConfig;
@@ -245,6 +400,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     }
   };
   actions: ThActionsPref<K>;
+  readAlong: ThReadAlongPref<K>;
   shortcuts: ThShortcutsPref;
   docking: ThDockingPref<ThDockingKeys>;
   settings: {
@@ -280,16 +436,48 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
     );
   }
 
+  // Validate read along actions
+  if (params.readAlong?.actions?.keys) {
+    validateObjectKeys<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>(
+      [
+        params.readAlong.actions.miniPlayer.displayOrder,
+        params.readAlong.actions.expanded.displayOrder
+      ],
+      params.readAlong.actions.keys as Record<string, ThAudioActionsTokens | ThActionsTokens>,
+      "readAlong.actions"
+    );
+  }
+
   // Validate themes
   if (params.theming?.themes) {
-    validateObjectKeys<ThemeKey<K> | "auto", ThemeTokens>(
+    validateObjectKeys<ThemeKey<K> | "auto", ThReaderThemeTokens>(
       [
         params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
         params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
       ],
-      params.theming.themes.keys as Record<string, ThemeTokens>,
+      params.theming.themes.keys as Record<string, ThReaderThemeTokens>,
       "theming.themes",
       "auto" // Special case for themes
+    );
+  }
+
+  // Validate read along highlight presets
+  if (params.readAlong?.settings?.highlight?.presets) {
+    validateObjectKeys<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPreset>(
+      [params.readAlong.settings.highlight.presets.order],
+      params.readAlong.settings.highlight.presets.keys as Record<string, ThReadAlongHighlightPreset>,
+      "readAlong.settings.highlight.presets",
+      ["none", "custom"]
+    );
+  }
+
+  // Validate read along prosody presets
+  if (params.readAlong?.settings?.prosody?.presets) {
+    validateObjectKeys<ThReadAlongProsodyPresetKeys, ThReadAlongProsodyPreset>(
+      [params.readAlong.settings.prosody.presets.order],
+      params.readAlong.settings.prosody.presets.keys as Record<string, ThReadAlongProsodyPreset>,
+      "readAlong.settings.prosody.presets",
+      ["default", "custom"]
     );
   }
 
@@ -447,6 +635,12 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
   Object.entries(params.settings?.keys ?? {}).forEach(([key, pref]) => {
     if (pref && typeof pref === "object" && "variant" in pref) {
       validateRangePresets(pref as ThSettingsRangePrefRequired, `settings.keys.${ key }`);
+    }
+  });
+
+  Object.entries(params.readAlong?.settings?.keys ?? {}).forEach(([key, pref]) => {
+    if (pref && typeof pref === "object" && "variant" in pref && "range" in pref) {
+      validateRangePresets(pref as ThSettingsRangePrefRequired, `readAlong.settings.keys.${ key }`);
     }
   });
 
