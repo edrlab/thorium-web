@@ -200,11 +200,10 @@ export const defaultReadAlongSettingsAction: ThActionsTokens = {
 };
 
 export const defaultReadAlongRate: ThSettingsRangePrefRequired = {
-  variant: ThSettingsRangeVariant.sliderWithPresets,
+  variant: ThSettingsRangeVariant.slider,
   range: [0.5, 4],
   step: 0.05,
-  placeholder: ThSettingsRangePlaceholder.range,
-  presets: [0.75, 1, 1.25, 1.5, 1.75, 2]
+  placeholder: ThSettingsRangePlaceholder.range
 };
 
 export const defaultReadAlongPitch: ThSettingsRangePrefRequired = {
