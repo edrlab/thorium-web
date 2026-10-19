@@ -179,7 +179,7 @@
             }
           },
           "verbosity": {
-            "title": "Verbosity",
+            "title": "Announcements",
             "advanced": {
               "trigger": "Customize",
               "tooltip": "Customize what is announced and when"
