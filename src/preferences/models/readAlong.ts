@@ -325,11 +325,11 @@ export const defaultReadAlongProsodyPresets = {
   keys: {
     [ThReadAlongProsodyPresetKeys.slow]: {
       [ThReadAlongProsodyKeys.rate]: 0.75,
-      [ThReadAlongProsodyKeys.pauseDuration]: 500
+      [ThReadAlongProsodyKeys.pauseDuration]: 800
     },
     [ThReadAlongProsodyPresetKeys.fast]: {
-      [ThReadAlongProsodyKeys.rate]: 1.25,
-      [ThReadAlongProsodyKeys.pauseDuration]: 150
+      [ThReadAlongProsodyKeys.rate]: 1.15,
+      [ThReadAlongProsodyKeys.pauseDuration]: 300
     },
     // Pauses after each page outside fixed layout
     [ThReadAlongProsodyPresetKeys.relaxed]: {

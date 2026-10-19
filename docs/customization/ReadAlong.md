@@ -391,8 +391,8 @@ Its options are the same as the highlight group’s:
 Presets set the rate, pause duration and auto pause, using enum `ThReadAlongProsodyPresetKeys`:
 
 - `default`: the defaults of the TS-Toolkit, a rate of 1, a 300ms pause and no auto pause. Its values always come from the TS-Toolkit, so it can’t be set in `keys`, and isn’t meant to be: use another preset for your own values. It can be ordered or removed like the others;
-- `slow`: a rate of 0.85, with a 500ms pause;
-- `fast`: a rate of 1.25, with a 150ms pause;
+- `slow`: a rate of 0.75, with an 800ms pause;
+- `fast`: a rate of 1.15, with a 300ms pause;
 - `relaxed`: pauses after each spread in fixed layout, and after each page otherwise, at the default rate and pause duration;
 - `custom`: selected automatically when the user changes the rate, pause duration or auto pause, including from the rate action. It isn’t configured in `keys`, and is hidden when the submenu has no prosody components.
 
