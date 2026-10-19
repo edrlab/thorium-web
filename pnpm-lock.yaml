@@ -211,8 +211,8 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@readium/navigator':
-        specifier: ^2.13.1
-        version: 2.13.1(typescript@5.9.3)
+        specifier: ^2.13.2
+        version: 2.13.2(typescript@5.9.3)
       '@readium/navigator-html-injectables':
         specifier: ^2.9.1
         version: 2.9.1
@@ -2079,16 +2079,16 @@ packages:
     resolution: {integrity: sha512-aafxfX4D4Y4GmFdbddCWXNcTuoHxa8XkDOHPeAbRFfXo/JxA7VLoA85IzHnwYLGWs5JvntQ6J831KFk3HpRUqw==}
     engines: {node: '>=24'}
 
-  '@readium/navigator@2.13.1':
-    resolution: {integrity: sha512-7ymZqpDE7wJLexYxiAMZKdtOuSc9Ftq+uOOeK0fSrwCHPeOPIDjZ1HkIHfZYK8GAjXw0I6hIyY6mQO+nZVcrlg==}
+  '@readium/navigator@2.13.2':
+    resolution: {integrity: sha512-cIl0ONJMey7Of+w2We4R+D5y+343EvsuOwovwvrEjif9i9nErb7Xi00vY1wwn/zb0DI+h3M82FeVi1EePSjtyA==}
     engines: {node: '>=24'}
 
   '@readium/shared@2.8.0':
     resolution: {integrity: sha512-PQ31XF+FZmh4JIHoi6zVi4bCKalQXGD3F2ssiFb2iFKlM7dse2S3EEYZpnTQPdsYV/UN5mEpQmG3EIlgn7Mjuw==}
     engines: {node: '>=24'}
 
-  '@readium/speech@0.16.0':
-    resolution: {integrity: sha512-rIpN2e+g/d22xT0QHCc4sAVuTQ9Uu2dRkdp/UfKpKOzihm+dKJvdrLLuFSYjbKqxmvBsL4Gk6DDHiurlzgwA8A==}
+  '@readium/speech@0.16.1':
+    resolution: {integrity: sha512-OW2RlptRHTtjIP5WMlYvD3zhElco3n10bPUKz6IxTcp0GUeEtkPhaDA7IW0UScsMMT2JAAB01GMZ28EQWfJShw==}
     engines: {node: '>=24'}
 
   '@reduxjs/toolkit@2.12.0':
@@ -7005,14 +7005,14 @@ snapshots:
       '@readium/helpers': 1.2.1
       '@readium/shared': 2.8.0
 
-  '@readium/navigator@2.13.1(typescript@5.9.3)':
+  '@readium/navigator@2.13.2(typescript@5.9.3)':
     dependencies:
       '@readium/decorator': 1.3.1
       '@readium/guided-navigation': 1.1.3
       '@readium/helpers': 1.2.1
       '@readium/navigator-html-injectables': 2.9.1
       '@readium/shared': 2.8.0
-      '@readium/speech': 0.16.0(typescript@5.9.3)
+      '@readium/speech': 0.16.1(typescript@5.9.3)
     transitivePeerDependencies:
       - typescript
 
@@ -7020,7 +7020,7 @@ snapshots:
     dependencies:
       '@readium/helpers': 1.2.1
 
-  '@readium/speech@0.16.0(typescript@5.9.3)':
+  '@readium/speech@0.16.1(typescript@5.9.3)':
     dependencies:
       '@readium/decorator': 1.3.1
       '@readium/guided-navigation': 1.1.3
