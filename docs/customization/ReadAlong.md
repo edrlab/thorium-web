@@ -371,7 +371,7 @@ The colors of the presets come from the reading theme, so the highlight changes 
 
 The presets are only applied when `highlightGroup` is in `order` and `highlightPresets` is in its `main` or `subPanel`.
 
-`keepCentered` keeps the sentence being read in the middle of the screen when scrolling, instead of following it once it goes out of view. It is disabled in paginated mode.
+`keepCentered` keeps the sentence being read in the middle of the screen when scrolling, instead of following it once it goes out of view. It is not displayed for fixed-layout publications.
 
 ### Prosody
 

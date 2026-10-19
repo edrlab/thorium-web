@@ -11,7 +11,6 @@ import { StatefulSwitch } from "../../../Settings/StatefulSwitch";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { useIsScroll } from "@/hooks/useIsScroll";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setReadAlongKeepCentered } from "@/lib/readAlongSettingsReducer";
@@ -20,7 +19,7 @@ export const StatefulReadAlongKeepCentered = ({ standalone = true }: StatefulSet
   const { t } = useI18n();
 
   const keepCentered = useAppSelector(state => state.readAlongSettings.keepCentered);
-  const isScroll = useIsScroll();
+  const isFXL = useAppSelector(state => state.publication.isFXL);
   const dispatch = useAppDispatch();
 
   const readAloud = useNavigator().readAloud;
@@ -33,6 +32,10 @@ export const StatefulReadAlongKeepCentered = ({ standalone = true }: StatefulSet
     dispatch(setReadAlongKeepCentered(readAloud.getSetting(prefKey)));
   }, [prefKey, readAloud, dispatch]);
 
+  if (isFXL) {
+    return null;
+  }
+
   return(
     <>
     <StatefulSwitch
@@ -41,7 +44,7 @@ export const StatefulReadAlongKeepCentered = ({ standalone = true }: StatefulSet
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.keepCentered.label") }
       onChange={ async (isSelected: boolean) => await updatePreference(isSelected) }
       isSelected={ keepCentered ?? readAloud?.getSetting(prefKey) ?? false }
-      isDisabled={ !readAloud || !isScroll }
+      isDisabled={ !readAloud }
     />
     </>
   )
