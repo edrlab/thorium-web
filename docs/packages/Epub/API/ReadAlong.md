@@ -189,7 +189,7 @@ Presets that need word boundaries are hidden when no voice for the publication�
 
 ### StatefulReadAlongUtteranceStyle, StatefulReadAlongWordStyle
 
-A style dropdown and a color swatch picker, for the sentence and word highlights. Only the styles the browser supports are offered. The word style doesn’t offer `mask`, is disabled when the current voice doesn’t report word boundaries, and is hidden when no voice for the publication’s language does.
+A style dropdown, for the sentence and word highlights. Only the styles the browser supports are offered. The word style doesn’t offer `mask`, is disabled when the current voice doesn’t report word boundaries, and is hidden when no voice for the publication’s language does.
 
 Changing a style switches the highlight presets to custom.
 
@@ -277,4 +277,4 @@ A style without a tint takes the reading theme’s color: `readAlongWord` for th
 - Playback controls keep a left-to-right order, whatever the UI direction
 - The mini player’s expand button is named after the publication and chapter
 - The bottom sheet doesn’t trap focus while collapsed
-- Dropdowns, radio groups and swatch pickers support keyboard navigation
+- Dropdowns and radio groups support keyboard navigation

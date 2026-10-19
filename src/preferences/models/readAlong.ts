@@ -107,10 +107,6 @@ export interface ThReadAlongActionTokens extends ThActionsTokens {
   };
 }
 
-export interface ThReadAlongStylePref {
-  swatches: string[];
-}
-
 // Only which styles apply: their colors come from the reading theme
 // Contrast enforcement is always disabled when the style is resolved against the reading theme
 export type ThReadAlongHighlightStyle = Omit<BuiltinDecorationStyle, "enforceContrast">;
@@ -225,14 +221,6 @@ export const defaultReadAlongPauseDuration: ThSettingsRangePrefRequired = {
   range: [0, 5000],
   step: 100,
   placeholder: ThSettingsRangePlaceholder.range
-};
-
-export const defaultReadAlongUtteranceStyle: ThReadAlongStylePref = {
-  swatches: ["#ffeb3b80", "#8bc34a80", "#4fc3f780", "#f48fb180", "#ffb74d80"]
-};
-
-export const defaultReadAlongWordStyle: ThReadAlongStylePref = {
-  swatches: ["#e53935", "#1e88e5", "#43a047", "#8e24aa", "#212121"]
 };
 
 export const defaultReadAlongSleepTimer: ThSettingsTimerPref = {
@@ -377,8 +365,6 @@ export const defaultReadAlongPreferences = {
       [ThReadAlongKeys.pitch]: defaultReadAlongPitch,
       [ThReadAlongKeys.volume]: defaultReadAlongVolume,
       [ThReadAlongKeys.pauseDuration]: defaultReadAlongPauseDuration,
-      [ThReadAlongKeys.utteranceStyle]: defaultReadAlongUtteranceStyle,
-      [ThReadAlongKeys.wordStyle]: defaultReadAlongWordStyle,
       [ThReadAlongKeys.sleepTimer]: defaultReadAlongSleepTimer
     },
     voice: {

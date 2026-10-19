@@ -33,7 +33,6 @@ import {
   ThReadAlongActionTokens,
   ThReadAlongActionKeys,
   ThReadAlongKeys,
-  ThReadAlongStylePref,
   ThReadAlongHighlightKeys,
   ThReadAlongHighlightPresetKeys,
   ThReadAlongHighlightStyle,
@@ -232,8 +231,6 @@ export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys
   [ThReadAlongKeys.pitch]: ThSettingsRangePrefRequired;
   [ThReadAlongKeys.volume]: ThSettingsRangePrefRequired;
   [ThReadAlongKeys.pauseDuration]: ThSettingsRangePrefRequired;
-  [ThReadAlongKeys.utteranceStyle]: ThReadAlongStylePref;
-  [ThReadAlongKeys.wordStyle]: ThReadAlongStylePref;
   [ThReadAlongKeys.sleepTimer]: ThSettingsTimerPref;
 } & (
   K extends { readAlong: infer R }

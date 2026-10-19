@@ -1,6 +1,5 @@
 "use client";
 
-export * from "./ThColorSwatchPicker";
 export * from "./ThNumberField";
 export * from "./ThRadioGroup";
 export * from "./ThSlider";

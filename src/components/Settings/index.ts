@@ -1,6 +1,5 @@
 "use client";
 
-export * from "./StatefulColorSwatchPicker";
 export * from "./StatefulGroupWrapper";
 export * from "./StatefulLayout";
 export * from "./StatefulDisclosure";

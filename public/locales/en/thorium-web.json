@@ -264,13 +264,10 @@
           "decoration": {
             "utterance": "Sentence highlight",
             "word": "Word highlight",
-            "color": "Color",
             "styles": {
               "none": "None",
               "highlight": "Highlight",
-              "highlightUnderline": "Highlight and underline",
               "underline": "Underline",
-              "strikethrough": "Strikethrough",
               "outline": "Outline",
               "textColor": "Text color",
               "mask": "Dim the rest"

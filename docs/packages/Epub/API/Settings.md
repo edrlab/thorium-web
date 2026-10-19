@@ -125,20 +125,6 @@ interface StatefulSliderProps extends Omit<ThSliderProps, "classNames"> {
 - Accessible label and ARIA support
 - Integrated output display
 
-### StatefulColorSwatchPicker
-
-A color picker limited to preset swatches, with the settings styles applied to `ThColorSwatchPicker`.
-
-```typescript
-interface StatefulColorSwatchPickerProps extends Omit<ThColorSwatchPickerProps, "compounds"> {
-  standalone?: boolean;
-}
-```
-
-**Features:**
-- Standalone, `heading` is rendered as a visible heading; otherwise it labels the picker through `aria-label`
-- Keyboard navigation between swatches
-
 ### StatefulSwitch
 
 A toggle switch component for boolean settings.

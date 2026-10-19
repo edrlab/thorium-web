@@ -236,8 +236,6 @@ The `keys` object configures some of the settings.
 
 The range is limited to what the TS-Toolkit supports. `pauseDuration` is in milliseconds.
 
-`utteranceStyle` and `wordStyle` accept a `ThReadAlongStylePref` object, whose `swatches` are the colors offered for the sentence and word highlights.
-
 `sleepTimer` configures the sleep timer action, like the [audio sleep timer](./audio/Settings.md#sleep-timer), with durations only.
 
 For instance:
@@ -252,9 +250,6 @@ readAlong: {
         step: 0.05,
         placeholder: ThSettingsRangePlaceholder.range,
         presets: [0.75, 1, 1.25, 1.5, 2]
-      },
-      [ThReadAlongKeys.utteranceStyle]: {
-        swatches: ["#ffeb3b80", "#8bc34a80", "#4fc3f780"]
       },
       [ThReadAlongKeys.sleepTimer]: {
         variant: ThSettingsTimerVariant.presetList,
