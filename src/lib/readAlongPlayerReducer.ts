@@ -18,6 +18,7 @@ export interface ReadAlongMetadata {
 export interface ReadAlongVoiceControls {
   boundary: boolean;
   speed: boolean;
+  pitch: boolean;
 }
 
 export type ReadAlongLayout = "mini" | "expanded";
@@ -40,7 +41,7 @@ const initialState: ReadAlongPlayerReducerState = {
   metadata: null,
   status: "idle",
   isNavigationLocked: false,
-  voiceControls: { boundary: true, speed: true },
+  voiceControls: { boundary: true, speed: true, pitch: true },
   anyVoiceHasBoundaries: null,
   sleepTimer: { remainingSeconds: null },
   settingsContainer: ThReadAlongSettingsContainerKeys.initial

@@ -130,7 +130,7 @@ export const useReadAlongInit = ({
       if (!mainVoice) return;
       const voiceControls = getVoiceControls(mainVoice);
       const current = cache.current.voiceControls;
-      if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed) {
+      if (current.boundary !== voiceControls.boundary || current.speed !== voiceControls.speed || current.pitch !== voiceControls.pitch) {
         dispatch(setReadAlongVoiceControls(voiceControls));
       }
     };

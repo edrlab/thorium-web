@@ -141,7 +141,7 @@ The dropdown both are built with, for one `language` with its `label`. Voices ar
 
 ### StatefulReadAlongRate, StatefulReadAlongPitch, StatefulReadAlongVolume, StatefulReadAlongPauseDuration
 
-Range settings, rendered according to their `variant` in `readAlong.settings.keys`. Their range is limited to what the TS-Toolkit supports, and they show the navigator’s value until the user sets one.
+Range settings, rendered according to their `variant` in `readAlong.settings.keys`. Their range is limited to what the TS-Toolkit supports, and they show the navigator’s value until the user sets one. Rate and pitch are disabled when the current voice doesn’t support changing them.
 
 ### StatefulReadAlongAutoPause, StatefulReadAlongLanguage
 

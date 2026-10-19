@@ -28,6 +28,7 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
 
   const readAloud = useNavigator().readAloud;
   const rate = useAppSelector(state => state.readAlongSettings.rate);
+  const voiceSupportsRate = useAppSelector(state => state.readAlongPlayer.voiceControls.speed);
   const dispatch = useAppDispatch();
 
   const { range, presets } = useEffectiveRange(config.range, readAloud?.preferencesEditor?.rate?.supportedRange, config.presets);
@@ -42,6 +43,8 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
   const placeholderText = usePlaceholder(rateRangeConfig.placeholder, rateRangeConfig.range, "multiplier");
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.rate, "readAlong");
+
+  const isDisabled = !readAloud || !voiceSupportsRate;
 
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     if (!readAloud) return;
@@ -62,9 +65,10 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
         defaultValue={ undefined }
         value={ rate ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
-        onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
+        onReset={ rate !== null && !isDisabled ? async() => await updatePreference(null) : undefined }
         range={ rateRangeConfig.range }
         step={ rateRangeConfig.step }
+        isDisabled={ isDisabled }
         steppers={{
           decrementLabel: t("common.actions.decrease"),
           incrementLabel: t("common.actions.increase")
@@ -81,9 +85,10 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
           formatValue={ (v) => `${ v }×` }
           value={ rate ?? readAloud?.getSetting(prefKey) }
           onChange={ async(value) => await updatePreference(value as number) }
-          onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
+          onReset={ rate !== null && !isDisabled ? async() => await updatePreference(null) : undefined }
           range={ rateRangeConfig.range }
           step={ rateRangeConfig.step }
+          isDisabled={ isDisabled }
         />
         : <StatefulSlider
           standalone={ standalone }
@@ -93,9 +98,10 @@ export const StatefulReadAlongRate = ({ standalone = true }: StatefulSettingsIte
           defaultValue={ undefined }
           value={ rate ?? readAloud?.getSetting(prefKey) }
           onChange={ async(value) => await updatePreference(value as number) }
-          onReset={ rate !== null ? async() => await updatePreference(null) : undefined }
+          onReset={ rate !== null && !isDisabled ? async() => await updatePreference(null) : undefined }
           range={ rateRangeConfig.range }
           step={ rateRangeConfig.step }
+          isDisabled={ isDisabled }
         />
     }
     </>

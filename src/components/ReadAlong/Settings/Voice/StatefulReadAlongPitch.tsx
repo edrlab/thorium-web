@@ -27,6 +27,7 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
 
   const readAloud = useNavigator().readAloud;
   const pitch = useAppSelector(state => state.readAlongSettings.pitch);
+  const voiceSupportsPitch = useAppSelector(state => state.readAlongPlayer.voiceControls.pitch);
   const dispatch = useAppDispatch();
 
   const { range } = useEffectiveRange(config.range, readAloud?.preferencesEditor?.pitch?.supportedRange);
@@ -41,6 +42,8 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
   const placeholderText = usePlaceholder(pitchRangeConfig.placeholder, pitchRangeConfig.range, "number");
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.pitch, "readAlong");
+
+  const isDisabled = !readAloud || !voiceSupportsPitch;
 
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     if (!readAloud) return;
@@ -61,9 +64,10 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
         defaultValue={ undefined }
         value={ pitch ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
-        onReset={ pitch !== null ? async() => await updatePreference(null) : undefined }
+        onReset={ pitch !== null && !isDisabled ? async() => await updatePreference(null) : undefined }
         range={ pitchRangeConfig.range }
         step={ pitchRangeConfig.step }
+        isDisabled={ isDisabled }
         steppers={{
           decrementLabel: t("common.actions.decrease"),
           incrementLabel: t("common.actions.increase")
@@ -79,9 +83,10 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
         defaultValue={ undefined }
         value={ pitch ?? readAloud?.getSetting(prefKey) }
         onChange={ async(value) => await updatePreference(value as number) }
-        onReset={ pitch !== null ? async() => await updatePreference(null) : undefined }
+        onReset={ pitch !== null && !isDisabled ? async() => await updatePreference(null) : undefined }
         range={ pitchRangeConfig.range }
         step={ pitchRangeConfig.step }
+        isDisabled={ isDisabled }
       />
     }
     </>

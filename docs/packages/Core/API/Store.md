@@ -187,6 +187,7 @@ interface ReadAlongMetadata {
 interface ReadAlongVoiceControls {
   boundary: boolean; // The voice reports word boundaries, needed for word highlighting
   speed: boolean;    // The voice supports changing the rate
+  pitch: boolean;    // The voice supports changing the pitch
 }
 
 type ReadAlongLayout = "mini" | "expanded";

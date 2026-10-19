@@ -188,6 +188,7 @@ interface ThSliderWithPresetsProps extends Omit<ThSliderProps, "compounds"> {
 
 - Synchronizes slider value with preset radio selection
 - Preset radio deselects automatically when slider moves off a preset value
+- `isDisabled` disables both the slider and the presets
 - Inherits all `ThSlider` props (range, step, label, etc.) except `compounds`
 - Compound components pattern for full layout control
 
