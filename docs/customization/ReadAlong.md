@@ -210,8 +210,8 @@ readAlong: {
   settings: {
     order: [
       ThReadAlongKeys.voiceGroup,
-      ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.prosodyGroup,
+      ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.verbosityGroup
     ]
   }
@@ -219,8 +219,8 @@ readAlong: {
 ```
 
 - `voiceGroup`: the voice, with a submenu for the language override, voice, additional voices, volume, pitch and language, see [Voice](#voice).
-- `highlightGroup`: the highlight presets, with a submenu for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
 - `prosodyGroup`: the prosody presets, with a submenu for the rate, pause duration and auto pause, see [Prosody](#prosody).
+- `highlightGroup`: the highlight presets, with a submenu for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
 - `verbosityGroup`: the verbosity, with a submenu for the verbosity, notes and page breaks, see [Verbosity](#verbosity).
 
 The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings.

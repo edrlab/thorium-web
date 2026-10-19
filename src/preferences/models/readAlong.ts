@@ -356,8 +356,8 @@ export const defaultReadAlongPreferences = {
   settings: {
     order: [
       ThReadAlongKeys.voiceGroup,
-      ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.prosodyGroup,
+      ThReadAlongKeys.highlightGroup,
       ThReadAlongKeys.verbosityGroup
     ],
     keys: {
