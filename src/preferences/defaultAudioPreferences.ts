@@ -81,8 +81,8 @@ export const defaultAudioPreferences: ThAudioPreferences<AudioDefaultKeys> =
         },
         constraints: {
           [ThSheetTypes.bottomSheet]: 600,
-          [ThSheetTypes.popover]: 600,
-          [ThSheetTypes.modal]: 600,
+          [ThSheetTypes.popover]: { width: 600, height: null },
+          [ThSheetTypes.modal]: { width: 600, height: null },
           cover: 300,
         }
       },

@@ -1,10 +1,10 @@
 "use client";
 
 import { useContext } from "react";
-import { ThIconPref, ThLayoutDefaultsPref, ThShortcutsPref } from "../preferences";
+import { ThIconPref, ThLayoutDefaultsPref, ThSheetSizeConstraint, ThSheetSizeConstraintKeys, ThShortcutsPref } from "../preferences";
 import { ThAudioPreferencesContext } from "../ThAudioPreferencesContext";
 import { ThPreferencesContext } from "../ThPreferencesContext";
-import { ThBackLinkPref, ThDockingKeys, ThDockingPref } from "../models";
+import { ThBackLinkPref, ThDockingKeys, ThDockingPref, ThSheetTypes } from "../models";
 import { ThemeTokens } from "./useTheming";
 import { BreakpointsMap } from "@/core/Hooks/useBreakpoints";
 
@@ -25,6 +25,9 @@ export interface SharedPreferences {
     };
     layout: {
       defaults: ThLayoutDefaultsPref;
+      constraints: {
+        [key in ThSheetSizeConstraintKeys]?: ThSheetSizeConstraint;
+      };
     };
     breakpoints: BreakpointsMap<number | null>;
   };
@@ -62,6 +65,10 @@ export const useSharedPreferences = (): SharedPreferences => {
       },
       layout: {
         defaults: prefs.theming.layout.defaults,
+        constraints: {
+          [ThSheetTypes.popover]: prefs.theming.layout.constraints?.[ThSheetTypes.popover],
+          [ThSheetTypes.modal]: prefs.theming.layout.constraints?.[ThSheetTypes.modal],
+        },
       },
       breakpoints: prefs.theming.breakpoints,
     },

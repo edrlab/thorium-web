@@ -364,7 +364,6 @@ In both the mini and expanded players.
 
 - `.thorium_web_readAlong_readAlongSheet` - Sheet hosting the expanded player
 - `.thorium_web_readAlong_readAlongDialogSheet` - That sheet’s dialog, in modal and fullscreen sheets
-- `.thorium_web_readAlong_settingsSheet` - Settings sheet, in popover, compact popover and modal sheets
 - `.thorium_web_readAlong_pinnedBottomBar` - Reader’s bottom bar while it holds the mini player
 
 ### Volume Action

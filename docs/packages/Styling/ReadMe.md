@@ -120,8 +120,10 @@ For components themselves, you can use the `data` attribute referenced in [React
 #### Sheets:
 
 - `--th-sheet-sticky-header`: The height of the sticky header of sheets
-- `--th-layout-constraints-popover`: The max-width of popover sheets derived from preferences
-- `--th-layout-constraints-modal`: The max-width of modal sheets derived from preferences
+- `--th-layout-constraints-popover-width`: The max-width of popover sheets derived from preferences (`--th-layout-constraints-popover` when set as a number)
+- `--th-layout-constraints-popover-height`: The max-height of popover sheets derived from preferences
+- `--th-layout-constraints-modal-width`: The max-width of modal sheets derived from preferences (`--th-layout-constraints-modal` when set as a number)
+- `--th-layout-constraints-modal-height`: The max-height of modal sheets derived from preferences
 - `--th-layout-constraints-bottomSheet`: The max-width of draggable bottom sheets derived from preferences
 - `--th-layout-constraints-pagination`: The max-width for pagination components derived from preferences
 - `--th-layout-defaults-scrim`: The default scrim/underlay background-color of sheets derived from preferences

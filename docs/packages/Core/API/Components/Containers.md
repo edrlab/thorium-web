@@ -66,6 +66,8 @@ A modal dialog container component built on react-aria-components.
 
 ```typescript
 interface ThModalProps extends Omit<ModalOverlayProps, "children">, ThContainerProps {
+  maxHeight?: number;             // Max-height of the dialog in pixels, within the space the modal leaves it
+  uniformPanelHeightOptions?: Omit<UseUniformPanelHeightProps, "ref">; // Applied to the dialog
   compounds?: {
     dialog: DialogProps             // Props for the dialog component
   }
@@ -77,6 +79,7 @@ interface ThModalProps extends Omit<ModalOverlayProps, "children">, ThContainerP
 - Built-in focus management
 - Accessible dialog implementation
 - Compound component pattern for dialog configuration
+- Max-height and uniform panel height applied inline, without depending on a stylesheet
 - Integrates with ThContainer layout system
 
 ## ThPopover
@@ -88,6 +91,7 @@ A popover container component with positioning and focus management.
 ```typescript
 interface ThPopoverProps extends Omit<PopoverProps, "children">, ThContainerProps {
   triggerRef: React.RefObject<HTMLElement | null>;  // Reference to trigger element
+  uniformPanelHeightOptions?: Omit<UseUniformPanelHeightProps, "ref">;
   compounds?: {
     dialog: DialogProps                             // Props for the dialog component
   }
@@ -97,7 +101,8 @@ interface ThPopoverProps extends Omit<PopoverProps, "children">, ThContainerProp
 ### Features
 
 - Automatic positioning relative to trigger element
-- Dynamic max height calculation
+- Dynamic max height calculation, capped by `maxHeight`
+- Uniform panel height through `uniformPanelHeightOptions`
 - Focus management integration
 - Accessible dialog implementation
 

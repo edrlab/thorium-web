@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 
 import { StatefulSheet } from "./models/sheets";
-import { ThSheetHeaderVariant } from "@/preferences/models";
+import { ThSheetHeaderVariant, ThSheetTypes } from "@/preferences/models";
 
 import sheetStyles from "./assets/styles/thorium-web.sheets.module.css";
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
@@ -17,6 +17,8 @@ import { ThNavigationButton } from "@/core/Components/Buttons/ThNavigationButton
 import { StatefulDocker } from "../Docking/StatefulDocker";
 
 import { useI18n } from "@/i18n";
+import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
+import { getSheetSizeConstraint } from "@/preferences/helpers/getSheetSizeConstraint";
 import { useWebkitPatch } from "./hooks/useWebkitPatch";
 
 import { useAppSelector } from "@/lib/hooks";
@@ -26,6 +28,10 @@ import { prefixString } from "@/core/Helpers/prefixString";
 
 export interface StatefulPopoverSheetProps extends StatefulSheet {
   placement?: PopoverProps["placement"];
+  /**
+   * Subpanels take the height of the main panel, shown on open. A panel change is detected from `resetFocus`.
+   */
+  uniformPanelHeight?: boolean;
 }
 
 export const StatefulPopoverSheet = ({ 
@@ -46,10 +52,13 @@ export const StatefulPopoverSheet = ({
     focusWithinRef,
     focusSelector,
     scrollTopOnFocus,
-    dismissEscapeKeyClose
+    dismissEscapeKeyClose,
+    uniformPanelHeight
   }: StatefulPopoverSheetProps) => {
   const { t } = useI18n()
+  const sharedPreferences = useSharedPreferences();
   const direction = useAppSelector(state => state.reader.direction);
+  const maxHeight = getSheetSizeConstraint(sharedPreferences.theming.layout.constraints[ThSheetTypes.popover], "height");
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const popoverHeaderRef = useRef<HTMLDivElement | null>(null);
   const popoverBodyRef = useRef<HTMLDivElement | null>(null);
@@ -90,6 +99,12 @@ export const StatefulPopoverSheet = ({
           updateState: resetFocus
         }}
         placement={ placement || "bottom" }
+        maxHeight={ maxHeight }
+        uniformPanelHeightOptions={ {
+          isEnabled: uniformPanelHeight,
+          isOpen: !!isOpen,
+          panel: resetFocus
+        } }
         className={ classNames(sheetStyles.popover , className) }
         isOpen={ isOpen }
         onOpenChange={ onOpenChange } 

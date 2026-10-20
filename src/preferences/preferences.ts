@@ -292,6 +292,16 @@ export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
 
 export type ThConstraintKeys = Extract<ThSheetTypes, ThSheetTypes.bottomSheet | ThSheetTypes.popover | ThSheetTypes.modal> | "pagination" | "dropdown";
 
+export type ThSheetSizeConstraintKeys = Extract<ThSheetTypes, ThSheetTypes.popover | ThSheetTypes.modal>;
+
+export interface ThSizeConstraint {
+  width?: number | null;
+  height?: number | null;
+}
+
+// A number is a max-width
+export type ThSheetSizeConstraint = number | null | ThSizeConstraint;
+
 export type ThShortcutsDisplayIn = "tooltip" | "menuItem";
 
 export interface ThShortcutsPref {
@@ -366,7 +376,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
       spacing: number;
       defaults: ThLayoutDefaultsPref;
       constraints?: {
-        [key in ThConstraintKeys]?: number | null
+        [key in ThConstraintKeys]?: key extends ThSheetSizeConstraintKeys ? ThSheetSizeConstraint : number | null
       }
     };
     breakpoints: BreakpointsMap<number | null>;

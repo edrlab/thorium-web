@@ -57,7 +57,7 @@ Object `layout` allows to configure:
   - `scrim` or the CSS-valid string value for the bottom sheet’s underlay `background` – is overridable in each action’s `snapped` preference.
 - `constraints` for some components:
   - the `max-width` of the bottom sheet component – is overridable in each action’s `snapped` preference;
-  - the `max-width` of the popover sheet component.
+  - the size of the popover and modal sheet components: a number sets their `max-width`, an object `{ width, height }` their `max-width` and `max-height` (`null` for none). They stay within the viewport whatever their `max-height`.
 
 For instance: 
 
@@ -78,7 +78,7 @@ theming: {
     },
     constraints: {
       [ThSheetTypes.bottomSheet]: 600,
-      [ThSheetTypes.popover]: 400
+      [ThSheetTypes.popover]: { width: 400, height: 500 }
     }
   }
 }
@@ -93,7 +93,7 @@ This means:
 - the default for the docking width is `300px`;
 - the default scrim is color black with `20%` alpha;
 - the bottom sheets are constrained to `600px`, unless overridden for an action;
-- the popover sheets are constrained to `400px`.
+- the popover sheets are constrained to `400px` wide and `500px` tall.
 
 ## Header
 

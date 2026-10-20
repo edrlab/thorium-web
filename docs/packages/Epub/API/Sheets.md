@@ -66,12 +66,15 @@ Without `onClosePress`, moving down from the lowest snap point does nothing, so 
 A centered modal sheet component.
 
 ```typescript
-interface StatefulModalSheetProps extends StatefulSheet {}
+interface StatefulModalSheetProps extends StatefulSheet {
+  uniformPanelHeight?: boolean; // Subpanels take the height of the main panel, shown on open; a panel change is detected from `resetFocus`
+}
 ```
 
 Features:
 - Modal dialog implementation
-- Centered layout with configurable max-width via `--th-layout-constraints-modal`
+- Centered layout with configurable max-width and max-height via the `modal` constraint
+- With `uniformPanelHeight`, the header stays in place as panels switch; taller panels scroll
 - Header with navigation/close button
 - Focus management
 - Keyboard dismissal control
@@ -114,11 +117,13 @@ A popover-style sheet component.
 ```typescript
 interface StatefulPopoverSheetProps extends StatefulSheet {
   placement?: PopoverProps["placement"];
+  uniformPanelHeight?: boolean; // Subpanels take the height of the main panel, shown on open; a panel change is detected from `resetFocus`
 }
 ```
 
 Features:
 - Configurable placement
+- With `uniformPanelHeight`, the header stays in place as panels switch; taller panels scroll
 - Trigger element anchoring
 - Focus management
 - Accessibility support

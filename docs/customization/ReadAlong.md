@@ -195,11 +195,11 @@ The mini player’s `collapse` works like the [collapsibility of reader actions]
 
 The rate action is disabled when the current voice can’t change its rate.
 
-Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the voice, highlight, prosody and verbosity submenus.
+Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the voice, highlight, prosody and verbosity subpanels.
 
 ## Settings
 
-`readAlong.settings` configures the settings menu. Use enum `ThReadAlongKeys` to reference them.
+`readAlong.settings` configures the settings. Use enum `ThReadAlongKeys` to reference them.
 
 ### Display Order
 
@@ -218,10 +218,10 @@ readAlong: {
 }
 ```
 
-- `voiceGroup`: the voice, with a submenu for the language override, voice, additional voices, volume, pitch and language, see [Voice](#voice).
-- `prosodyGroup`: the prosody presets, with a submenu for the rate, pause duration and auto pause, see [Prosody](#prosody).
-- `highlightGroup`: the highlight presets, with a submenu for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
-- `verbosityGroup`: the verbosity, with a submenu for the verbosity, notes and page breaks, see [Verbosity](#verbosity).
+- `voiceGroup`: the voice, with a subpanel for the language override, voice, additional voices, volume, pitch and language, see [Voice](#voice).
+- `prosodyGroup`: the prosody presets, with a subpanel for the rate, pause duration and auto pause, see [Prosody](#prosody).
+- `highlightGroup`: the highlight presets, with a subpanel for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
+- `verbosityGroup`: the verbosity, with a subpanel for the verbosity, notes and page breaks, see [Verbosity](#verbosity).
 
 The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings.
 
@@ -272,9 +272,9 @@ readAlong: {
 
 Its options are the same as the highlight group’s, without presets:
 
-- `main`: the components shown in the settings menu. Defaults to the voice.
-- `subPanel`: the components shown in the voice submenu, opened with the group’s advanced button. Defaults to the language override, voice, additional voices, volume, pitch and language. Set it to `null` to remove the submenu.
-- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+- `main`: the components shown in the settings’ main panel. Defaults to the voice.
+- `subPanel`: the components shown in the voice subpanel, opened with the group’s advanced button. Defaults to the language override, voice, additional voices, volume, pitch and language. Set it to `null` to remove the subpanel.
+- `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 
 ```typescript
 readAlong: {
@@ -299,9 +299,9 @@ readAlong: {
 
 `readAlong.settings.highlight` configures the highlight group, like the [spacing group](./Settings.md#spacing-optional). Use enum `ThReadAlongHighlightKeys` to reference its components: `highlightPresets`, `utteranceStyle`, `wordStyle` and `keepCentered`.
 
-- `main`: the components shown in the settings menu. Defaults to the presets.
-- `subPanel`: the components shown in the highlight submenu, opened with the group’s advanced button. Defaults to the presets, the sentence and word styles, then keeping the sentence centered. Set it to `null` to remove the submenu.
-- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+- `main`: the components shown in the settings’ main panel. Defaults to the presets.
+- `subPanel`: the components shown in the highlight subpanel, opened with the group’s advanced button. Defaults to the presets, the sentence and word styles, then keeping the sentence centered. Set it to `null` to remove the subpanel.
+- `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 - `presets`: the highlight presets. Defaults to the ones below.
 
 Presets set the sentence and word styles, using enum `ThReadAlongHighlightPresetKeys`:
@@ -311,7 +311,7 @@ Presets set the sentence and word styles, using enum `ThReadAlongHighlightPreset
 - `word`: highlights the word only;
 - `mask`: dims everything but the sentence, and highlights the word;
 - `none`: highlights nothing. It can’t be set in `keys`, as it has nothing to configure, but can be ordered or removed like the others;
-- `custom`: selected automatically when the user changes a style in the submenu. It isn’t configured in `keys`, and is hidden when the submenu has no style components.
+- `custom`: selected automatically when the user changes a style in the subpanel. It isn’t configured in `keys`, and is hidden when the subpanel has no style components.
 
 A preset needs word boundaries when, without its word style, it highlights nothing or matches another preset. With the defaults, these are `sentenceAndWord` and `word`. They are hidden when no voice for the publication’s language reports word boundaries, e.g. on Android, and disabled when the current voice doesn’t.
 
@@ -362,7 +362,7 @@ readAlong: {
 
 A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the reading theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
 
-The colors of the presets come from the reading theme, so the highlight changes with it: see the `readAlong*` tokens in [Theming](./Theming.md#keys-and-tokens). A color the user picks in the submenu is used as-is, whatever the theme.
+The colors of the presets come from the reading theme, so the highlight changes with it: see the `readAlong*` tokens in [Theming](./Theming.md#keys-and-tokens). A color the user picks in the subpanel is used as-is, whatever the theme.
 
 The presets are only applied when `highlightGroup` is in `order` and `highlightPresets` is in its `main` or `subPanel`.
 
@@ -378,9 +378,9 @@ The presets are only applied when `highlightGroup` is in `order` and `highlightP
 
 Its options are the same as the highlight group’s:
 
-- `main`: the components shown in the settings menu. Defaults to the presets.
-- `subPanel`: the components shown in the prosody submenu, opened with the group’s advanced button. Defaults to the presets, then the rate, pause duration and auto pause. Set it to `null` to remove the submenu.
-- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+- `main`: the components shown in the settings’ main panel. Defaults to the presets.
+- `subPanel`: the components shown in the prosody subpanel, opened with the group’s advanced button. Defaults to the presets, then the rate, pause duration and auto pause. Set it to `null` to remove the subpanel.
+- `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 - `presets`: the prosody presets. Defaults to the ones below.
 
 Presets set the rate, pause duration and auto pause, using enum `ThReadAlongProsodyPresetKeys`:
@@ -389,7 +389,7 @@ Presets set the rate, pause duration and auto pause, using enum `ThReadAlongPros
 - `slow`: a rate of 0.75, with an 800ms pause;
 - `fast`: a rate of 1.15, with a 300ms pause;
 - `relaxed`: pauses after each spread in fixed layout, and after each page otherwise, at the default rate and pause duration;
-- `custom`: selected automatically when the user changes the rate, pause duration or auto pause, including from the rate action. It isn’t configured in `keys`, and is hidden when the submenu has no prosody components.
+- `custom`: selected automatically when the user changes the rate, pause duration or auto pause, including from the rate action. It isn’t configured in `keys`, and is hidden when the subpanel has no prosody components.
 
 A value a preset leaves out uses the TS-Toolkit’s default. An auto pause of `spread` pauses after each page outside fixed layout, and a preset pausing after each page or spread is disabled in scroll mode.
 
@@ -446,9 +446,9 @@ Reading notes or page breaks never, or again, switches verbosity to `custom`, st
 
 Its options are the same as the voice group’s:
 
-- `main`: the components shown in the settings menu. Defaults to the verbosity.
-- `subPanel`: the components shown in the verbosity submenu, opened with the group’s advanced button. Defaults to the verbosity, notes and page breaks. Set it to `null` to remove the submenu.
-- `header`: the header of the submenu, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
+- `main`: the components shown in the settings’ main panel. Defaults to the verbosity.
+- `subPanel`: the components shown in the verbosity subpanel, opened with the group’s advanced button. Defaults to the verbosity, notes and page breaks. Set it to `null` to remove the subpanel.
+- `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 
 ```typescript
 readAlong: {

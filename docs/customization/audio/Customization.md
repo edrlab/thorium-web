@@ -97,7 +97,7 @@ Additional layout configuration options:
 - `spacing`: Spacing between components
 - `progressBar`: Progress bar variant configuration
 - `defaults`: Default layout values (dockingWidth, scrim)
-- `constraints`: Size constraints for different sheet types
+- `constraints`: Size constraints for different sheet types; `popover` and `modal` accept a number (max-width) or `{ width, height }`
 
 #### Progress Bar Configuration
 

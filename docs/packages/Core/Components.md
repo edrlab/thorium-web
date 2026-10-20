@@ -173,7 +173,20 @@ const MyPopover = (triggerRef: RefObject<HTMLButtonElement>) => {
 }
 ```
 
-The package ships with a specific hook: `useFirstFocusable`, which can be used to focus or scroll to the first focusable element of a container on open.
+The package ships with specific hooks: `useFirstFocusable`, which can be used to focus or scroll to the first focusable element of a container on open, and `useUniformPanelHeight`, which keeps a container at the height of its main panel.
+
+### useUniformPanelHeight
+
+While `isEnabled` and `isOpen`, the panel shown on open sets the height of the container: other panels take that height, and scroll when taller. `panel` identifies the panel shown.
+
+```typescript
+useUniformPanelHeight({
+  ref: RefObject<HTMLElement | null>;
+  isEnabled?: boolean;
+  isOpen: boolean;
+  panel?: unknown;
+});
+```
 
 ### useFirstFocusable
 

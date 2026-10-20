@@ -95,7 +95,7 @@ Trigger of the `ThReadAlongActionKeys.settings` action.
 
 ### StatefulReadAlongSettingsContainer
 
-The read-along settings menu.
+The read-along settings.
 
 **Props:**
 - `triggerRef`: Reference to the trigger element
@@ -104,8 +104,9 @@ The read-along settings menu.
 **Features:**
 - Renders the settings in `readAlong.settings.order`
 - Leaves out the components of the voice, highlight, prosody and verbosity groups, which render them themselves
-- Switches to the voice, highlight, prosody or verbosity submenu, with a back button in its header; Escape returns to the menu
-- Returns to the menu when closed
+- Switches to the voice, highlight, prosody or verbosity subpanel, with a back button in its header; Escape returns to the main panel
+- In popover and modal sheets, subpanels take the main panel’s height, scrolling when taller, so the header stays in place
+- Returns to the main panel when closed
 
 ## Settings Components
 
@@ -137,7 +138,7 @@ A dropdown of the languages the TS-Toolkit’s `getLanguages()` lists, after the
 
 ### StatefulReadAlongVerbosity
 
-A radio group of the verbosity presets supported by the TS-Toolkit. `custom` is left out unless the verbosity submenu has other components, and starts from the current preset when picked without having been customized.
+A radio group of the verbosity presets supported by the TS-Toolkit. `custom` is left out unless the verbosity subpanel has other components, and starts from the current preset when picked without having been customized.
 
 ### StatefulReadAlongNotes, StatefulReadAlongPageBreaks
 
@@ -149,25 +150,25 @@ A switch keeping the sentence being read in the middle of the screen when scroll
 
 ### StatefulReadAlongVoiceGroup
 
-The voice group: the components in `readAlong.settings.voice.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+The voice group: the components in `readAlong.settings.voice.main`, and an advanced button opening the subpanel when `subPanel` isn’t `null`.
 
-`StatefulReadAlongVoiceGroupContainer` renders the submenu’s components, from `subPanel`.
+`StatefulReadAlongVoiceGroupContainer` renders the subpanel’s components, from `subPanel`.
 
 ### StatefulReadAlongVerbosityGroup
 
-The verbosity group: the components in `readAlong.settings.verbosity.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+The verbosity group: the components in `readAlong.settings.verbosity.main`, and an advanced button opening the subpanel when `subPanel` isn’t `null`.
 
-`StatefulReadAlongVerbosityGroupContainer` renders the submenu’s components, from `subPanel`.
+`StatefulReadAlongVerbosityGroupContainer` renders the subpanel’s components, from `subPanel`.
 
 ### StatefulReadAlongHighlightGroup
 
-The highlight group: the components in `readAlong.settings.highlight.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+The highlight group: the components in `readAlong.settings.highlight.main`, and an advanced button opening the subpanel when `subPanel` isn’t `null`.
 
-`StatefulReadAlongHighlightGroupContainer` renders the submenu’s components, from `subPanel`.
+`StatefulReadAlongHighlightGroupContainer` renders the subpanel’s components, from `subPanel`.
 
 ### StatefulReadAlongHighlightPresets
 
-A radio group of the highlight presets in `readAlong.settings.highlight.presets.order`, with icons. Custom is hidden when the submenu has no style components.
+A radio group of the highlight presets in `readAlong.settings.highlight.presets.order`, with icons. Custom is hidden when the subpanel has no style components.
 
 Presets that need word boundaries are hidden when no voice for the publication’s language reports them, and disabled when the current voice doesn’t. A hidden preset that is selected shows as the preset it matches without the word.
 
@@ -179,13 +180,13 @@ Changing a style switches the highlight presets to custom.
 
 ### StatefulReadAlongProsodyGroup
 
-The prosody group: the components in `readAlong.settings.prosody.main`, and an advanced button opening the submenu when `subPanel` isn’t `null`.
+The prosody group: the components in `readAlong.settings.prosody.main`, and an advanced button opening the subpanel when `subPanel` isn’t `null`.
 
-`StatefulReadAlongProsodyGroupContainer` renders the submenu’s components, from `subPanel`.
+`StatefulReadAlongProsodyGroupContainer` renders the subpanel’s components, from `subPanel`.
 
 ### StatefulReadAlongProsodyPresets
 
-A radio group of the prosody presets in `readAlong.settings.prosody.presets.order`, with icons. Custom is hidden when the submenu has no prosody components. Presets pausing after each page or spread are disabled in scroll mode.
+A radio group of the prosody presets in `readAlong.settings.prosody.presets.order`, with icons. Custom is hidden when the subpanel has no prosody components. Presets pausing after each page or spread are disabled in scroll mode.
 
 Changing the rate, pause duration or auto pause, including from the rate action, switches the prosody presets to custom.
 
