@@ -303,6 +303,7 @@ readAlong: {
 - `subPanel`: the components shown in the highlight subpanel, opened with the group’s advanced button. Defaults to the presets, the sentence and word styles, then keeping the sentence centered. Set it to `null` to remove the subpanel.
 - `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 - `presets`: the highlight presets. Defaults to the ones below.
+- `themes`: the highlight themes, giving the presets their colors. Defaults to `defaultReadAlongHighlightThemes`, see [Highlight Themes](#highlight-themes).
 
 Presets set the sentence and word styles, using enum `ThReadAlongHighlightPresetKeys`:
 
@@ -360,13 +361,60 @@ readAlong: {
 }
 ```
 
-A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the reading theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
+A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the highlight theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
 
-The colors of the presets come from the reading theme, so the highlight changes with it: see the `readAlong*` tokens in [Theming](./Theming.md#keys-and-tokens). A color the user picks in the subpanel is used as-is, whatever the theme.
-
-The presets are only applied when `highlightGroup` is in `order` and `highlightPresets` is in its `main` or `subPanel`.
+Unlike other presets, highlight presets apply even when `highlightPresets` isn’t displayed: the highlight starts from the stored preset, `sentenceAndWord` by default, so that the highlight theme colors it, and changes in the subpanel build on it.
 
 `keepCentered` keeps the sentence being read in the middle of the screen when scrolling, instead of following it once it goes out of view. It is not displayed for fixed-layout publications.
+
+#### Highlight Themes
+
+A highlight theme declares its colors for every reading theme, since the same highlight has to work on whichever reading theme is applied. The highlight changes with the reading theme. A color the user picks in the subpanel is used as-is, whatever the theme.
+
+- `default`: the highlight theme in use, from enum `ThReadAlongHighlightThemeKeys` or your own key;
+- `keys`: the highlight themes. Each one is a `ThReadAlongHighlightTheme<K>`: a `ThReadAlongHighlightColors` for every reading theme key in `theming.themes.keys`, custom keys included.
+
+`ThReadAlongHighlightColors` declares colors by kind of style: highlights are fills, underlines and outlines are lines, and text colors are text. Like a design system’s colors meant to sit on another color (`onPrimary`, `onSurface`…), every color is declared for what it is drawn on:
+
+- `utterance`: the sentence, drawn on the page: `fill`, `line`, `text`, and `mask`;
+- `word`: the word, drawn on top of the sentence, has a `fill`, `line` and `text`, each with a color for each kind of sentence style under it:
+  - `onPage`: the sentence has no style or is masked, which leaves the sentence itself untouched;
+  - `onFill`: the sentence is highlighted;
+  - `onLine`: the sentence is underlined or outlined;
+  - `onText`: the sentence has a text color.
+
+Nothing is computed: a word outline on a highlighted sentence takes `word.line.onFill`, a word highlight on an underlined sentence `word.fill.onLine`, so that the sentence’s line stays visible on it.
+
+```typescript
+readAlong: {
+  settings: {
+    highlight: {
+      themes: {
+        default: ThReadAlongHighlightThemeKeys.default,
+        keys: {
+          [ThReadAlongHighlightThemeKeys.default]: {
+            [ThThemeKeys.light]: {
+              utterance: { fill: "#fff0a0", line: "#b38f59", text: "#0b5fd6", mask: "#ffffff99" },
+              word: {
+                fill: { onPage: "#ffb300", onFill: "#ffb300", onLine: "#ffb300", onText: "#ffb300" },
+                line: { onPage: "#9c6d28", onFill: "#9c6d28", onLine: "#d35400", onText: "#9c6d28" },
+                text: { onPage: "#d4005c", onFill: "#d4005c", onLine: "#d4005c", onText: "#d4005c" }
+              }
+            },
+            // ... every other reading theme
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+The default highlight theme follows the marker pattern: a pale yellow sentence and an orange word on light, paper and sepia, and a dim amber sentence with an orange word on dark, so that the whole sentence doesn’t glare. Contrast themes keep their purpose: the sentence is inverted, filled with the theme’s text color, and the word gets a second saturated color, e.g. yellow and cyan on `contrast1`.
+
+A highlight renders its text in black or white, whatever the reading theme’s text color.
+
+Colors are passed to the navigator without contrast adjustment, so the ones you declare are used as-is. `@readium/helpers` provides `checkContrast` and `adjustColorForContrast` to check them.
 
 ### Prosody
 
@@ -473,6 +521,8 @@ readAlong: {
 - a key in either `displayOrder` has no entry in `readAlong.actions.keys`;
 - a preset in `highlight.presets.order` has no entry in its `keys`, except `none` and `custom`;
 - a preset in `prosody.presets.order` has no entry in its `keys`, except `default` and `custom`;
+- `highlight.themes.default` has no entry in `highlight.themes.keys`;
+- a reading theme in `theming.themes.reflowOrder` or `fxlOrder` has no entry in a highlight theme, except `auto`;
 - a range preset can’t be reached with its `range` and `step`.
 
 ## Extending Read Along

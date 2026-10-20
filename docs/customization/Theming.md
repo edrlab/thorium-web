@@ -391,12 +391,4 @@ The `keys` object contains the themes (key of `ThThemeKeys` enum as a property) 
 - `elevate`: the drop shadow of containers
 - `immerse`: the opacity of immersive mode (value in the range `[0...1]` as a string)
 
-Reader themes (`ThReaderThemeTokens`) also require the colors of the read-along highlight, so that it matches the reading theme:
-
-- `readAlongUtterance`: the color of the sentence being read
-- `readAlongWord`: the color of the word being read
-- `readAlongMask`: the color dimming everything but the sentence being read, in the Focus preset. The defaults use the theme’s background with transparency, e.g. `#ffffff99` for the light theme
-
-Audio themes don’t use them. A color the user picks for the highlight is kept as-is, whatever the theme.
-
-Like other tokens, they are also exposed as CSS variables, e.g. `--th-theme-readAlongUtterance`.
+The colors of the read-along highlight aren’t theme tokens: highlight themes declare them for each reading theme. If you add a reading theme, add it to every highlight theme too, see [Highlight Themes](./ReadAlong.md#highlight-themes).

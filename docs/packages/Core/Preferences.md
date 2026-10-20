@@ -155,9 +155,8 @@ Read-along has its own models:
 - `ThReadAlongHighlightKeys` and `ThReadAlongHighlightPresetKeys`: the highlight group’s components and presets;
 - `ThReadAlongProsodyKeys` and `ThReadAlongProsodyPresetKeys`: the prosody group’s components and presets;
 - `ThReadAlongHighlightPresets<K>` and `ThReadAlongProsodyPresets<K>`: the presets of both groups, whose values accept the `readAlongHighlight` and `readAlongProsody` customizable keys;
+- `ThReadAlongHighlightThemeKeys`, `ThReadAlongHighlightThemes<K>`, `ThReadAlongHighlightTheme<K>`, `ThReadAlongHighlightColors` and `ThReadAlongHighlightWordColors`: the highlight themes, declaring colors for every reading theme;
 - `ThMiniPlayerTypes`: what the mini player shows (`withMetadata` or `controlsOnly`);
-- `defaultReadAlongPreferences` and the default constants it is built from, e.g. `defaultReadAlongAction`, `defaultReadAlongHighlightPresets` or `defaultReadAlongProsodyPresets`.
-
-Reader themes are typed with `ThReaderThemeTokens`, which extends the `ThemeTokens` shared with audio themes with the read-along highlight colors. See [Theming](../../customization/Theming.md#keys-and-tokens).
+- `defaultReadAlongPreferences` and the default constants it is built from, e.g. `defaultReadAlongAction`, `defaultReadAlongHighlightPresets`, `defaultReadAlongHighlightThemes` or `defaultReadAlongProsodyPresets`.
 
 Default `const`ants provides default preferences for multiple components, such as settings e.g. line-heights, font-size, word-spacing, etc. They also list settings components for text and spacing subpanels, see [Settings document in Customization](../../customization/Settings.md#advanced-components) for more details.

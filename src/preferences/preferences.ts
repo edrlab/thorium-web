@@ -36,13 +36,13 @@ import {
   ThReadAlongHighlightKeys,
   ThReadAlongHighlightPresetKeys,
   ThReadAlongHighlightStyle,
+  ThReadAlongHighlightColors,
   ThReadAlongProsodyKeys,
   ThReadAlongProsodyPresetKeys,
   ThReadAlongVoiceKeys,
   ThReadAlongVerbosityKeys,
   ThAudioActionsTokens,
   ThSettingsTimerPref,
-  CSSColor,
 } from "./models";
 import { DivinaQuality, ExperimentKey, ReadAloudAutoPause } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
@@ -196,6 +196,14 @@ export type ThReadAlongHighlightPreset<K extends CustomizableKeys = DefaultKeys>
     : {}
   : {});
 
+// A highlight theme declares its colors for every reading theme
+export type ThReadAlongHighlightTheme<K extends CustomizableKeys = DefaultKeys> = Record<Exclude<ThemeKey<K>, "auto"> & string, ThReadAlongHighlightColors>;
+
+export interface ThReadAlongHighlightThemes<K extends CustomizableKeys = DefaultKeys> {
+  default: string;
+  keys: Record<string, ThReadAlongHighlightTheme<K>>;
+}
+
 export interface ThReadAlongProsodyPresets<K extends CustomizableKeys = DefaultKeys> {
   order: Array<ThReadAlongProsodyPresetKeys>;
   // Default and custom are not included as they are special cases
@@ -260,17 +268,10 @@ export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
     order: Array<ReadAlongSettingsKey<K>>;
     keys: ThReadAlongSettingsKeyTypes<K>;
     voice: ThSettingsGroupPref<ReadAlongVoiceSettingsKey<K>>;
-    highlight: ThSettingsGroupPref<ReadAlongHighlightSettingsKey<K>> & { presets?: ThReadAlongHighlightPresets<K> };
+    highlight: ThSettingsGroupPref<ReadAlongHighlightSettingsKey<K>> & { presets?: ThReadAlongHighlightPresets<K>; themes?: ThReadAlongHighlightThemes<K> };
     prosody: ThSettingsGroupPref<ReadAlongProsodySettingsKey<K>> & { presets?: ThReadAlongProsodyPresets<K> };
     verbosity: ThSettingsGroupPref<ReadAlongVerbositySettingsKey<K>>;
   };
-}
-
-// Read along colors are reader only, audio themes keep ThemeTokens
-export interface ThReaderThemeTokens extends ThemeTokens {
-  readAlongUtterance: CSSColor;
-  readAlongWord: CSSColor;
-  readAlongMask: CSSColor;
 }
 
 export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
@@ -388,7 +389,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
         dark: ThemeKey<K>;
       };
       // keys never includes "auto"
-      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThReaderThemeTokens>;
+      keys: Record<Exclude<ThemeKey<K>, "auto"> & string, ThemeTokens>;
     };
   };
   contentProtection?: ContentProtectionConfig;
@@ -457,15 +458,40 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
 
   // Validate themes
   if (params.theming?.themes) {
-    validateObjectKeys<ThemeKey<K> | "auto", ThReaderThemeTokens>(
+    validateObjectKeys<ThemeKey<K> | "auto", ThemeTokens>(
       [
         params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
         params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
       ],
-      params.theming.themes.keys as Record<string, ThReaderThemeTokens>,
+      params.theming.themes.keys as Record<string, ThemeTokens>,
       "theming.themes",
       "auto" // Special case for themes
     );
+  }
+
+  // Validate read along highlight themes, each declaring every reading theme
+  if (params.readAlong?.settings?.highlight?.themes) {
+    const highlightThemes = params.readAlong.settings.highlight.themes;
+    validateObjectKeys<string, ThReadAlongHighlightTheme<K>>(
+      [[highlightThemes.default]],
+      highlightThemes.keys,
+      "readAlong.settings.highlight.themes"
+    );
+
+    if (params.theming?.themes) {
+      const readingThemesOrders = [
+        params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
+        params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
+      ];
+      Object.entries(highlightThemes.keys).forEach(([key, highlightTheme]) => {
+        validateObjectKeys<ThemeKey<K> | "auto", ThReadAlongHighlightColors>(
+          readingThemesOrders,
+          highlightTheme as Record<string, ThReadAlongHighlightColors>,
+          `readAlong.settings.highlight.themes.keys.${ key }`,
+          "auto"
+        );
+      });
+    }
   }
 
   // Validate read along highlight presets

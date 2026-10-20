@@ -251,11 +251,11 @@ function useHighlightPresets(): {
   getStoredStyle: (key: HighlightStateKey) => ReadAloudDecorationStyle | undefined; // Style as the user picked it
   applyPreset: (preset: ThReadAlongHighlightPresetKeys) => Promise<void>;
   setStyle: (key: HighlightStateKey, value: ReadAloudDecorationStyle) => Promise<void>; // Switches to custom
-  applyTheme: () => Promise<void>;          // Recolors the styles with the reading theme
+  applyTheme: () => Promise<void>;          // Recolors the styles for the reading theme
 }
 ```
 
-A style without a tint takes the reading theme’s color: `readAlongWord` for the word, `readAlongMask` for the mask, `readAlongUtterance` otherwise. A tint set in a preset or picked by the user is kept as-is. The navigator receives the styles without contrast adjustment.
+A style without a tint takes its color from the default highlight theme for the reading theme, by the kind of style (fill, line, text or mask) and its role. The word’s color also depends on the kind of sentence style it is drawn on. See [Highlight Themes](../../../customization/ReadAlong.md#highlight-themes). A tint set in a preset or picked by the user is kept as-is. The navigator receives the styles without contrast adjustment.
 
 ## Accessibility
 

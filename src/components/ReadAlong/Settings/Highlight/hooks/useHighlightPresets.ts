@@ -3,13 +3,16 @@
 import { useCallback, useMemo } from "react";
 
 import { BuiltinDecorationStyle, DecorationStyleType, ReadAloudDecorationStyle } from "@readium/navigator";
-import { ThReadAlongHighlightPreset } from "@/preferences/preferences";
+import { ThReadAlongHighlightPreset, ThReadAlongHighlightThemes } from "@/preferences/preferences";
 import {
   ThReadAlongHighlightKeys,
   ThReadAlongHighlightPresetKeys,
   ThReadAlongKeys,
   ThThemeKeys,
-  defaultReadAlongHighlightPresets
+  ThReadAlongHighlightColors,
+  ThReadAlongHighlightWordColors,
+  defaultReadAlongHighlightPresets,
+  defaultReadAlongHighlightThemes
 } from "@/preferences/models";
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
 import { getPreferenceKey } from "../../../../Settings/helpers/settingsKeyMapping";
@@ -28,6 +31,50 @@ import {
 
 type HighlightStyles = Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
 
+type EffectiveStyles = Record<HighlightStateKey, ReadAloudDecorationStyle | null>;
+
+type HighlightKind = "fill" | "line" | "text" | "mask";
+
+const getHighlightKind = (style: ReadAloudDecorationStyle | null | undefined): HighlightKind | null => {
+  if (!style) return null;
+  switch (style.type ?? DecorationStyleType.Highlight) {
+    case DecorationStyleType.Highlight:
+    case DecorationStyleType.HighlightUnderline:
+      return "fill";
+    case DecorationStyleType.Underline:
+    case DecorationStyleType.Outline:
+    case DecorationStyleType.Strikethrough:
+      return "line";
+    case DecorationStyleType.TextColor:
+      return "text";
+    case DecorationStyleType.Mask:
+      return "mask";
+    default:
+      return null;
+  }
+};
+
+// A mask leaves the utterance itself untouched, so the word is on the page
+const getWordSurface = (utterance: ReadAloudDecorationStyle | null | undefined): keyof ThReadAlongHighlightWordColors => {
+  switch (getHighlightKind(utterance)) {
+    case "fill":
+      return "onFill";
+    case "line":
+      return "onLine";
+    case "text":
+      return "onText";
+    default:
+      return "onPage";
+  }
+};
+
+// Outlines are drawn 1px out and 2px wide, so the word's clears the utterance's
+const WORD_OUTLINE_ON_OUTLINE_EXPAND = 3;
+
+const isOutline = (style: ReadAloudDecorationStyle | null | undefined) => {
+  return !!style && (style as BuiltinDecorationStyle).type === DecorationStyleType.Outline;
+};
+
 type KeyedPresetKeys = Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>;
 
 const isSameStyle = (a: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle], b: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle]) => {
@@ -38,8 +85,9 @@ const isSameStyle = (a: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utte
 
 /**
  * Hook to apply highlight presets, and resolve styles against the reading theme
- * Styles without a tint take the reading theme's, tints set in a preset
- * or picked by the user are used as-is
+ * Styles without a tint take the highlight theme's color for the reading theme,
+ * the word's depending on the utterance style it is drawn on.
+ * Tints set in a preset or picked by the user are used as-is
  */
 export const useHighlightPresets = () => {
   const { preferences } = usePreferences();
@@ -59,10 +107,11 @@ export const useHighlightPresets = () => {
 
   const highlightPrefs = preferences.readAlong.settings.highlight;
   const presets = highlightPrefs?.presets ?? defaultReadAlongHighlightPresets;
+  const highlightThemes: ThReadAlongHighlightThemes = highlightPrefs?.themes ?? defaultReadAlongHighlightThemes;
 
   const preset = highlight?.preset ?? ThReadAlongHighlightPresetKeys.sentenceAndWord;
 
-  // Presets only apply when their component is displayed, like spacing presets
+  // Unlike spacing, styles always start from a preset so that the highlight theme colors them
   const shouldApplyPresets = useMemo(() => {
     if (!preferences.readAlong.settings.order.includes(ThReadAlongKeys.highlightGroup)) return false;
     const groupKeys = [...(highlightPrefs?.main ?? []), ...(highlightPrefs?.subPanel ?? [])];
@@ -117,16 +166,22 @@ export const useHighlightPresets = () => {
     : preset;
 
   // Same resolution as the reader's theme, auto following the color scheme
-  const themeTokens = useMemo(() => {
+  const highlightColors = useMemo((): ThReadAlongHighlightColors | undefined => {
     const storedTheme = profile === "epub" ? (isFXL ? themeObject.fxl : themeObject.reflow) : ThThemeKeys.light;
-    const { systemThemes, keys } = preferences.theming.themes;
+    const { systemThemes } = preferences.theming.themes;
     const resolvedTheme = storedTheme === "auto" && systemThemes
       ? (colorScheme === ThColorScheme.dark ? systemThemes.dark : systemThemes.light)
       : storedTheme;
-    return resolvedTheme ? keys[resolvedTheme as keyof typeof keys] : undefined;
-  }, [profile, isFXL, themeObject, colorScheme, preferences.theming.themes]);
+    const highlightTheme = highlightThemes.keys[highlightThemes.default];
+    return resolvedTheme && highlightTheme ? highlightTheme[resolvedTheme as keyof typeof highlightTheme] : undefined;
+  }, [profile, isFXL, themeObject, colorScheme, preferences.theming.themes, highlightThemes]);
 
-  const resolveStyle = useCallback((key: HighlightStateKey, style: ReadAloudDecorationStyle | undefined): ReadAloudDecorationStyle | null => {
+  // The word is resolved against the effective utterance it sits on
+  const resolveStyle = useCallback((
+    key: HighlightStateKey,
+    style: ReadAloudDecorationStyle | undefined,
+    utterance?: ReadAloudDecorationStyle | null
+  ): ReadAloudDecorationStyle | null => {
     if (style === undefined) return null;
     if (style === false) return false;
 
@@ -134,14 +189,30 @@ export const useHighlightPresets = () => {
     const builtinStyle: BuiltinDecorationStyle = { ...(style as BuiltinDecorationStyle), enforceContrast: false };
     if (builtinStyle.tint) return builtinStyle;
 
-    const themeTint = key === ThReadAlongHighlightKeys.wordStyle
-      ? themeTokens?.readAlongWord
-      : builtinStyle.type === DecorationStyleType.Mask
-        ? themeTokens?.readAlongMask
-        : themeTokens?.readAlongUtterance;
+    const kind = getHighlightKind(builtinStyle);
+    if (!highlightColors || !kind) return builtinStyle;
+
+    const themeTint = key === ThReadAlongHighlightKeys.utteranceStyle
+      ? highlightColors.utterance[kind]
+      : kind === "mask" ? undefined : highlightColors.word[kind][getWordSurface(utterance)];
 
     return themeTint ? { ...builtinStyle, tint: themeTint } : builtinStyle;
-  }, [themeTokens]);
+  }, [highlightColors]);
+
+  const resolveStyles = useCallback((values: HighlightStyles): EffectiveStyles => {
+    const utterance = resolveStyle(ThReadAlongHighlightKeys.utteranceStyle, values[ThReadAlongHighlightKeys.utteranceStyle]);
+    const word = resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle], utterance);
+
+    // Line by line, the utterance outline shares its edges with the word's
+    const wordWithExpand = isOutline(utterance) && isOutline(word) && (word as BuiltinDecorationStyle).expand === undefined
+      ? { ...(word as BuiltinDecorationStyle), expand: WORD_OUTLINE_ON_OUTLINE_EXPAND }
+      : word;
+
+    return {
+      [ThReadAlongHighlightKeys.utteranceStyle]: utterance,
+      [ThReadAlongHighlightKeys.wordStyle]: wordWithExpand
+    };
+  }, [resolveStyle]);
 
   const getPresetValues = useCallback((presetKey: ThReadAlongHighlightPresetKeys): HighlightStyles => {
     if (presetKey === ThReadAlongHighlightPresetKeys.custom) {
@@ -165,47 +236,47 @@ export const useHighlightPresets = () => {
 
   const applyPreset = useCallback(async (presetKey: ThReadAlongHighlightPresetKeys) => {
     const values = getPresetValues(presetKey);
-    const effective = {
-      [ThReadAlongHighlightKeys.utteranceStyle]: resolveStyle(ThReadAlongHighlightKeys.utteranceStyle, values[ThReadAlongHighlightKeys.utteranceStyle]),
-      [ThReadAlongHighlightKeys.wordStyle]: resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle])
-    };
+    const effective = resolveStyles(values);
 
     await submitPreferences({
       [utteranceStylePrefKey]: effective[ThReadAlongHighlightKeys.utteranceStyle],
       [wordStylePrefKey]: effective[ThReadAlongHighlightKeys.wordStyle]
     });
     dispatch(setReadAlongHighlightPreset({ preset: presetKey, values, effective }));
-  }, [getPresetValues, resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
+  }, [getPresetValues, resolveStyles, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
 
+  // Both styles are resolved again, as each one can depend on the other
   const setStyle = useCallback(async (key: HighlightStateKey, value: ReadAloudDecorationStyle) => {
-    const effective = resolveStyle(key, value);
-    const isUtterance = key === ThReadAlongHighlightKeys.utteranceStyle;
-    await submitPreferences({ [isUtterance ? utteranceStylePrefKey : wordStylePrefKey]: effective });
+    const baseline = getPresetValues(preset);
+    const effective = resolveStyles({ ...baseline, [key]: value });
 
-    const payload = { value, effective, preset: shouldApplyPresets ? preset : undefined };
-    if (isUtterance) {
+    await submitPreferences({
+      [utteranceStylePrefKey]: effective[ThReadAlongHighlightKeys.utteranceStyle],
+      [wordStylePrefKey]: effective[ThReadAlongHighlightKeys.wordStyle]
+    });
+
+    // Stored even without presets, so that the styles can be resolved again
+    const payload = { value, effective: effective[key], preset, baseline };
+    if (key === ThReadAlongHighlightKeys.utteranceStyle) {
       dispatch(setReadAlongUtteranceStyle(payload));
     } else {
       dispatch(setReadAlongWordStyle(payload));
     }
-  }, [resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, shouldApplyPresets, preset, dispatch]);
+    dispatch(setReadAlongHighlightEffective(effective));
+  }, [getPresetValues, resolveStyles, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, preset, dispatch]);
 
-  // Recolors the current styles, keeping the colors the user picked
+  // Recolors the current styles, keeping the colors the user picked, presets displayed or not
   const applyTheme = useCallback(async () => {
-    if (!isLoaded || !shouldApplyPresets) return;
+    if (!isLoaded) return;
 
-    const values = getPresetValues(preset);
-    const effective = {
-      [ThReadAlongHighlightKeys.utteranceStyle]: resolveStyle(ThReadAlongHighlightKeys.utteranceStyle, values[ThReadAlongHighlightKeys.utteranceStyle]),
-      [ThReadAlongHighlightKeys.wordStyle]: resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle])
-    };
+    const effective = resolveStyles(getPresetValues(preset));
 
     await submitPreferences({
       [utteranceStylePrefKey]: effective[ThReadAlongHighlightKeys.utteranceStyle],
       [wordStylePrefKey]: effective[ThReadAlongHighlightKeys.wordStyle]
     });
     dispatch(setReadAlongHighlightEffective(effective));
-  }, [isLoaded, shouldApplyPresets, getPresetValues, preset, resolveStyle, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
+  }, [isLoaded, getPresetValues, preset, resolveStyles, submitPreferences, utteranceStylePrefKey, wordStylePrefKey, dispatch]);
 
   return {
     preset,

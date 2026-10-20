@@ -19,6 +19,7 @@ export interface SetHighlightStylePayload {
     value: ReadAloudDecorationStyle;
     effective: ReadAloudDecorationStyle | null;
     preset?: ThReadAlongHighlightPresetKeys;
+    baseline?: Partial<Record<HighlightStateKey, ReadAloudDecorationStyle>>;
   }
 }
 
@@ -38,7 +39,7 @@ const initialHighlightState: HighlightStateObject = {
 };
 
 const handleHighlightStyle = (state: ReadAlongSettingsReducerState, action: SetHighlightStylePayload, key: HighlightStateKey) => {
-  const { value, effective, preset } = action.payload;
+  const { value, effective, preset, baseline } = action.payload;
 
   state[key] = effective;
 
@@ -51,7 +52,8 @@ const handleHighlightStyle = (state: ReadAlongSettingsReducerState, action: SetH
 
   if (state.highlight.preset !== ThReadAlongHighlightPresetKeys.custom) {
     state.highlight.preset = ThReadAlongHighlightPresetKeys.custom;
-    state.highlight.custom = state.highlight.baseline;
+    // The baseline is only stored when a preset is applied, so it is passed along
+    state.highlight.custom = { ...(baseline ?? state.highlight.baseline) };
   }
 
   state.highlight.custom[key] = value;
