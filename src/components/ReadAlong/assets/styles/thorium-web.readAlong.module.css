@@ -9,13 +9,14 @@
   gap: var(--readAlong-miniPlayer-zone-gap);
   width: 100%;
   min-width: 0;
+  padding-inline: var(--th-layout-spacing);
 }
 
-/* Grows as much as the actions, so the space after them mirrors this one and centers the visible unit */
-.miniPlayer::before {
+/* Grows as much as the actions, so the space before them mirrors this one and centers the visible unit */
+.miniPlayer::after {
   content: "";
   flex: 1 1 0;
-  margin-inline-end: calc(var(--readAlong-miniPlayer-zone-gap) * -1);
+  margin-inline-start: calc(var(--readAlong-miniPlayer-zone-gap) * -1);
 }
 
 /* Absorbs nearly all the shrinking, otherwise the actions shrink below their always visible actions and overflow menu */
@@ -90,7 +91,7 @@
   align-items: center;
 }
 
-/* Grows from its actions' width as much as the leading spacer, so its collapsible bar can fit actions in the space left */
+/* Grows from its actions' width as much as the trailing spacer, so its collapsible bar can fit actions in the space left */
 .miniPlayerActions {
   flex: 1 1 auto;
   min-width: calc(var(--th-icon-size, 24px) * 1.5);
@@ -98,6 +99,7 @@
 
 .miniPlayerActionsBar {
   flex: 1 1 auto;
+  justify-content: flex-end;
   min-width: 0;
 }
 

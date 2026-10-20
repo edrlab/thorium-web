@@ -23,10 +23,13 @@ export interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
    */
   cover?: React.ReactNode;
   /**
-   * Actions on the player itself, e.g. expand and close, rendered before the metadata.
+   * Actions on the player itself, e.g. expand and close, rendered after the controls.
    */
   playerActions?: React.ReactNode;
   controls?: React.ReactNode;
+  /**
+   * Rendered before the metadata.
+   */
   actions?: React.ReactNode;
   compounds?: {
     expandButton?: WithRef<Omit<ButtonProps, "onPress" | "aria-label">, HTMLButtonElement>;
@@ -67,7 +70,7 @@ export const ThMiniPlayer = ({
 
   return (
     <section ref={ ref } { ...props }>
-      { playerActions && <div { ...compounds?.playerActions }>{ playerActions }</div> }
+      { actions && <div { ...compounds?.actions }>{ actions }</div> }
       { onExpand ? (
         <Button
           { ...compounds?.expandButton }
@@ -82,7 +85,7 @@ export const ThMiniPlayer = ({
         </div>
       ) }
       { controls && <div { ...compounds?.controls }>{ controls }</div> }
-      { actions && <div { ...compounds?.actions }>{ actions }</div> }
+      { playerActions && <div { ...compounds?.playerActions }>{ playerActions }</div> }
     </section>
   );
 };

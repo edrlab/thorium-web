@@ -80,7 +80,7 @@ interface ThPlaybackControlsProps extends Omit<ThActionsBarProps, "children"> {
 
 ## ThMiniPlayer
 
-A compact player: actions on the player itself, a metadata area (cover, heading and subheading), then slots for playback controls and actions.
+A compact player: actions, a metadata area (cover, heading and subheading), playback controls, then actions on the player itself.
 
 ### Props
 
@@ -92,9 +92,9 @@ interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
   onExpand?: () => void;        // Makes the metadata area a button expanding the player
   expandLabel?: string;         // Prefix of that button’s accessible name, followed by heading and subheading
   cover?: React.ReactNode;      // Before the heading, inside the expand button if any, so phrasing content only
-  playerActions?: React.ReactNode; // Actions on the player itself, e.g. expand and close
+  playerActions?: React.ReactNode; // Actions on the player itself, e.g. expand and close, after the controls
   controls?: React.ReactNode;
-  actions?: React.ReactNode;
+  actions?: React.ReactNode;    // Before the metadata
   compounds?: {
     expandButton?: WithRef<Omit<ButtonProps, "onPress" | "aria-label">, HTMLButtonElement>;
     metadata?: HTMLAttributesWithRef<HTMLDivElement>;
@@ -110,6 +110,6 @@ interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
 
 ### Features
 
-- Renders a `<section>`: `playerActions`, metadata, `controls`, then `actions`
+- Renders a `<section>`: `actions`, metadata, `controls`, then `playerActions`
 - With `onExpand`, the metadata area is a React Aria `Button` named `expandLabel: heading, subheading`; without it, a `div` using `compounds.metadata`
 - Heading and subheading are `<span>`s, wrapped in a `<span>` using `compounds.text` after the cover, so they stay valid inside the button
