@@ -87,7 +87,7 @@ A compact player: actions, a metadata area (cover, heading and subheading), play
 ```typescript
 interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
   ref?: Ref<HTMLElement>;
-  heading: string;              // e.g. the publication title
+  heading?: string;             // e.g. the publication title
   subheading?: string;          // e.g. the current chapter
   onExpand?: () => void;        // Makes the metadata area a button expanding the player
   expandLabel?: string;         // Prefix of that button’s accessible name, followed by heading and subheading
@@ -110,6 +110,7 @@ interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
 
 ### Features
 
-- Renders a `<section>`: `actions`, metadata, `controls`, then `playerActions`
+- Renders a `<section>`: `actions`, metadata, `controls`, then `playerActions`. Give it an `aria-label` to make it a region landmark
+- The metadata area renders only with a `heading` or a `cover`
 - With `onExpand`, the metadata area is a React Aria `Button` named `expandLabel: heading, subheading`; without it, a `div` using `compounds.metadata`
 - Heading and subheading are `<span>`s, wrapped in a `<span>` using `compounds.text` after the cover, so they stay valid inside the button

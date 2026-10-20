@@ -8,7 +8,10 @@ import { HTMLAttributesWithRef, WithRef } from "../customTypes";
 
 export interface ThMiniPlayerProps extends React.HTMLAttributes<HTMLElement> {
   ref?: Ref<HTMLElement>;
-  heading: string;
+  /**
+   * The metadata area renders only with a heading or a cover.
+   */
+  heading?: string;
   subheading?: string;
   /**
    * Makes the metadata area a button expanding the player.
@@ -60,18 +63,19 @@ export const ThMiniPlayer = ({
     <>
       { cover }
       <span { ...compounds?.text }>
-        <span { ...compounds?.heading }>{ heading }</span>
+        { heading && <span { ...compounds?.heading }>{ heading }</span> }
         { subheading && <span { ...compounds?.subheading }>{ subheading }</span> }
       </span>
     </>
   );
 
+  const hasMetadata = !!(heading || cover);
   const accessibleName = [heading, subheading].filter(Boolean).join(", ");
 
   return (
     <section ref={ ref } { ...props }>
       { actions && <div { ...compounds?.actions }>{ actions }</div> }
-      { onExpand ? (
+      { hasMetadata && (onExpand ? (
         <Button
           { ...compounds?.expandButton }
           aria-label={ expandLabel ? `${ expandLabel }: ${ accessibleName }` : accessibleName }
@@ -83,7 +87,7 @@ export const ThMiniPlayer = ({
         <div { ...compounds?.metadata }>
           { metadataContent }
         </div>
-      ) }
+      )) }
       { controls && <div { ...compounds?.controls }>{ controls }</div> }
       { playerActions && <div { ...compounds?.playerActions }>{ playerActions }</div> }
     </section>

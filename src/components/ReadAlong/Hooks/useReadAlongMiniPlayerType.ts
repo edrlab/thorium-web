@@ -9,7 +9,7 @@ import { makeBreakpointsMap } from "@/core/Helpers/breakpointsMap";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 
-export const useReadAlongPlacement = () => {
+export const useReadAlongMiniPlayerType = () => {
   const { preferences } = usePreferences();
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
 
@@ -17,11 +17,11 @@ export const useReadAlongPlacement = () => {
 
   const defaultType = miniPlayerPref.defaultType;
   const breakpointsPref = miniPlayerPref.breakpoints;
-  const placementMap = useMemo(() => makeBreakpointsMap<ThMiniPlayerTypes>({
+  const typeMap = useMemo(() => makeBreakpointsMap<ThMiniPlayerTypes>({
     defaultValue: defaultType,
     fromEnum: ThMiniPlayerTypes,
     pref: breakpointsPref
   }), [defaultType, breakpointsPref]);
 
-  return breakpoint && placementMap[breakpoint] || defaultType;
+  return breakpoint && typeMap[breakpoint] || defaultType;
 };

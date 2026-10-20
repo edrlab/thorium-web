@@ -27,42 +27,26 @@ Target of the `ThActionsKeys.readAlong` action: the expanded player in the sheet
 - `triggerRef`: Reference to the trigger element
 
 **Features:**
-- Opens when the mini player in the bottom bar is expanded, with a collapse button in its header
+- Opens when the mini player is expanded, with a collapse button in its header
 - The close button stops read along
 - Reserves its dock slot only while read along is active
-- Stays closed when the mini player is in a bottom sheet, which hosts the expanded player itself
 
 ## Players
 
 ### StatefulReadAlongMiniPlayer
 
-The mini player: an expand button (bottom bar only) and a button stopping read along, cover, title, current chapter, previous sentence / play-pause / next sentence, and the mini player’s actions.
+The mini player, in place of the progression in the reader’s bottom bar: the mini player’s actions, cover, title, current chapter, previous sentence / play-pause / next sentence, and an expand button and a button stopping read along. With type `controlsOnly`, cover, title and chapter are left out, and the playback controls are centered.
 
 **Features:**
 - Expand and close buttons, and the actions, are toolbars navigated with arrow keys
 - Renders the actions in `readAlong.actions.miniPlayer.displayOrder`, collapsing them into an overflow menu per `readAlong.actions.miniPlayer.collapse`
 - When narrower than 480px, only the cover shows, the title and chapter staying available to assistive technologies
-- In the bottom bar, pressing the title or the expand button expands the player
-- In the bottom sheet, the title is plain text so that it can be dragged
+- Pressing the title or the expand button expands the player
+- A region landmark named “Read along”, whatever its type
 
 ### StatefulReadAlongPlayer
 
 The expanded player: cover, title, authors, current chapter, playback controls and the expanded player’s actions (`StatefulReadAlongMediaActions`).
-
-### StatefulReadAlongSheet
-
-A bottom sheet hosting both players, for the `bottomSheet` mini player placement. It doesn’t block the page while collapsed.
-
-**Props:**
-- `isOpen`: Whether the sheet is shown, i.e. read along is active and the placement is `bottomSheet`
-- `style`: Style of the sheet’s root. `zIndex` defaults to `9998`, one below other bottom sheets so they open on top of it; set it higher to keep the sheet on top
-
-**Features:**
-- Collapsed to the mini player’s height, measured as it renders
-- Expands to full height by dragging, or pressing the drag indicator, or with its arrow keys; collapses the same way, or with Escape
-- Shows the expanded player while dragging up, inert until it is expanded
-- Contains focus and locks page scrolling only while expanded
-- Labels the drag indicator with the action it performs (expand or collapse)
 
 ### StatefulReadAlongMediaActions
 
@@ -248,9 +232,9 @@ function useReadAlongState(): {
 
 Activating restores the layout read along was in when it was stopped (mini or expanded).
 
-### useReadAlongPlacement
+### useReadAlongMiniPlayerType
 
-Returns where the mini player shows at the current breakpoint, from enum `ThMiniPlayerTypes` (`bottomBar` or `bottomSheet`).
+Returns what the mini player shows at the current breakpoint, from enum `ThMiniPlayerTypes` (`withMetadata` or `controlsOnly`).
 
 ### useHighlightPresets
 

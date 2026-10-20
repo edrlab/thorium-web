@@ -96,8 +96,8 @@ export enum ThReadAlongSettingsContainerKeys {
 }
 
 export enum ThMiniPlayerTypes {
-  bottomSheet = "bottomSheet",
-  bottomBar = "bottomBar"
+  withMetadata = "withMetadata",
+  controlsOnly = "controlsOnly"
 }
 
 export interface ThReadAlongActionTokens extends ThActionsTokens {
@@ -118,15 +118,20 @@ export const defaultReadAlongAction: ThReadAlongActionTokens = {
     keyCombos: [{ keyCode: 82, shift: true, alt: true, suppressOnInteractiveElement: TEXT_INPUT_SELECTORS }]
   },
   miniPlayer: {
-    defaultType: ThMiniPlayerTypes.bottomBar,
+    defaultType: ThMiniPlayerTypes.withMetadata,
     breakpoints: {
-      [ThBreakpoints.compact]: ThMiniPlayerTypes.bottomSheet
+      [ThBreakpoints.compact]: ThMiniPlayerTypes.controlsOnly
     }
   },
   sheet: {
     defaultSheet: ThSheetTypes.dockedEnd,
     fallbackSheet: ThSheetTypes.popover,
-    breakpoints: {}
+    breakpoints: {
+      [ThBreakpoints.compact]: ThSheetTypes.bottomSheet
+    }
+  },
+  snapped: {
+    maxHeight: "full-height"
   },
   docked: {
     dockable: ThDockingTypes.end,

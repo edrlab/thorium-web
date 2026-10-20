@@ -111,12 +111,22 @@
   gap: var(--readAlong-miniPlayer-gap);
 }
 
+/* Equal side columns center the controls on their own, whatever the actions' widths */
+.miniPlayerControlsOnly {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.miniPlayerControlsOnly::after {
+  content: none;
+}
+
 /* Base size the playback buttons scale from */
 .miniPlayerPlaybackControls {
   --readAlong-icon-base: 18px;
 }
 
-/* Visually hidden rather than removed, it is the only accessible title when the metadata is not a button */
+/* Visually hidden rather than removed, so the title stays available to assistive technologies */
 @container (max-width: 400px) {
   .miniPlayerText {
     clip: rect(0 0 0 0);
@@ -133,30 +143,6 @@
   }
 }
 
-/* Reserves the height of the absolutely positioned drag indicator, which shares the close button's row */
-.playerSheetHeader {
-  box-sizing: border-box;
-  display: flex;
-  justify-content: flex-end;
-  min-height: calc(var(--th-icon-size, 40px) * 1.5 + var(--th-layout-spacing) / 2);
-  padding: calc(var(--th-layout-spacing) / 2) var(--th-layout-spacing) 0;
-  /* Covers the sheet's shadow layer */
-  background-color: var(--th-theme-background);
-  border-top-left-radius: 28px;
-  border-top-right-radius: 28px;
-  transition: border-radius 500ms;
-}
-
-/* Same top offset as the close button, both are 1.5 icon sizes tall so their centers line up */
-.playerSheet .playerSheetDragIndicator {
-  top: calc(var(--th-layout-spacing) / 2);
-}
-
-.playerSheet[data-full-height] .playerSheetHeader {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
 /* The bottom bar holding the mini player stays visible in immersive mode, doubled class to win over the reader's rules */
 :global(.thorium_web_layeredUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
   transform: translateY(0);
@@ -165,22 +151,6 @@
 
 :global(.thorium_web_stackedUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
   opacity: 1;
-}
-
-.miniPlayerSheetBody {
-  padding: 0 var(--th-layout-spacing) var(--th-layout-spacing);
-}
-
-/* Like the audio player, the cover shrinks so the expanded player fits the sheet, then the player scrolls */
-.playerSheetBody {
-  box-sizing: border-box;
-  height: 100%;
-}
-
-.playerSheetBody .player {
-  box-sizing: border-box;
-  height: 100%;
-  overflow-y: auto;
 }
 
 /* Sheet types nest the body differently, so every element between the sheet and the player flexes */
@@ -216,17 +186,6 @@
 
 .readAlongSheet .playerCoverFigure {
   height: 100cqh;
-}
-
-.playerSheetBody .playerCover {
-  flex: 1 1 auto;
-  height: auto;
-  min-height: 100px;
-  max-height: var(--th-layout-constraints-cover, 300px);
-}
-
-.miniPlayerSheetBackdrop {
-  display: none;
 }
 
 .player {

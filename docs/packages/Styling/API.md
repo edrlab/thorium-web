@@ -77,6 +77,7 @@ This document outlines the available styling classes and custom properties for t
 #### Draggable Sheet
 
 - `.thorium_web_sheets_draggableHeader` - Header for draggable sheets
+- `.thorium_web_sheets_draggableHeaderActions` - Wrapper of the header actions and close button, when there are header actions
 - `.thorium_web_sheets_dragIndicator` - Visual indicator for draggable sheets
 - `.thorium_web_sheets_draggableScrim` - Scrim behind draggable sheet
 - `.thorium_web_sheets_draggableContainer` - Container for draggable content
@@ -309,6 +310,7 @@ This document outlines the available styling classes and custom properties for t
 ### Mini Player
 
 - `.thorium_web_readAlong_miniPlayer` - Mini player root; an inline-size container whose zones are centered as a single unit
+- `.thorium_web_readAlong_miniPlayerControlsOnly` - Mini player of type `controlsOnly`, without metadata, its playback controls centered between the actions and player actions
 - `.thorium_web_readAlong_miniPlayerPlayerActions` - Wrapper of the player actions (expand and close)
 - `.thorium_web_readAlong_miniPlayerPlayerActionsBar` - Player actions toolbar
 - `.thorium_web_readAlong_miniPlayerMetadata` - Metadata area, cover and text; also applied to the expand button in the bottom bar
@@ -363,11 +365,6 @@ In both the mini and expanded players.
 - `.thorium_web_readAlong_readAlongSheet` - Sheet hosting the expanded player
 - `.thorium_web_readAlong_readAlongDialogSheet` - That sheet’s dialog, in modal and fullscreen sheets
 - `.thorium_web_readAlong_settingsSheet` - Settings sheet, in popover, compact popover and modal sheets
-- `.thorium_web_readAlong_playerSheet` - Bottom sheet hosting both players
-- `.thorium_web_readAlong_playerSheetHeader` - Header of that bottom sheet
-- `.thorium_web_readAlong_playerSheetDragIndicator` - Drag indicator of that bottom sheet
-- `.thorium_web_readAlong_playerSheetBody` - Body of that bottom sheet when it shows the expanded player
-- `.thorium_web_readAlong_miniPlayerSheetBody` - Body of that bottom sheet
 - `.thorium_web_readAlong_pinnedBottomBar` - Reader’s bottom bar while it holds the mini player
 
 ### Volume Action

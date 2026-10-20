@@ -60,6 +60,7 @@ const ThBottomSheetContainer = ({
   sheetRef,
   sheetState,
   isDraggable, 
+  hasPartialSnap,
   isDismissable,
   isKeyboardDismissDisabled,
   focusOptions,
@@ -71,6 +72,7 @@ const ThBottomSheetContainer = ({
   sheetState: OverlayTriggerState;
   onFullHeight?: Omit<React.ComponentProps<typeof Sheet.Container>, "children">;
   isDraggable?: boolean;
+  hasPartialSnap?: boolean;
   isDismissable?: boolean;
   isKeyboardDismissDisabled?: boolean;
   focusOptions?: UseFirstFocusableProps;
@@ -186,7 +188,7 @@ const ThBottomSheetContainer = ({
       <Sheet.Content 
         scrollRef={ scrollerRef }
         { ...compounds?.content }
-        { ...(isDraggable && compounds?.content?.disableDrag ? { style: { ...compounds?.content?.style, paddingBottom: autoPadding } as { [key: string]: any }} : {})}
+        { ...(hasPartialSnap && compounds?.content?.disableDrag ? { style: { ...compounds?.content?.style, paddingBottom: autoPadding } as { [key: string]: any }} : {})}
       >
         { Body }
       </Sheet.Content>
@@ -219,6 +221,8 @@ export const ThBottomSheet = ({
   });
 
   const isDraggable = useMemo(() => snapPoints && snapPoints.length > 1, [snapPoints]);
+  // Content is padded by the drag offset only to stay reachable at heights between closed and full
+  const hasPartialSnap = useMemo(() => !!snapPoints?.some(point => point !== 0 && point !== 1), [snapPoints]);
 
   return(
     <>
@@ -241,6 +245,7 @@ export const ThBottomSheet = ({
             sheetRef={ resolvedRef } 
             sheetState={ sheetState } 
             isDraggable= { isDraggable }
+            hasPartialSnap={ hasPartialSnap }
             isDismissable={ isDismissable }
             isKeyboardDismissDisabled={ isKeyboardDismissDisabled }
             focusOptions={ focusOptions }

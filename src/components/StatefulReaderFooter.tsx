@@ -6,7 +6,7 @@ import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
 import readAlongStyles from "./ReadAlong/assets/styles/thorium-web.readAlong.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance, ThMiniPlayerTypes } from "@/preferences/models";
+import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
@@ -14,7 +14,6 @@ import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOve
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 import { StatefulReadAlongMiniPlayer } from "./ReadAlong/StatefulReadAlongMiniPlayer";
-import { StatefulReadAlongSheet } from "./ReadAlong/StatefulReadAlongSheet";
 
 import { Link, Publication } from "@readium/shared";
 
@@ -27,7 +26,6 @@ import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll, useIsPageBased } from "@/hooks";
 import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
-import { useReadAlongPlacement } from "./ReadAlong/Hooks/useReadAlongPlacement";
 import { useReadAlongState } from "./ReadAlong/Hooks/useReadAlongState";
 
 import classNames from "classnames";
@@ -62,8 +60,7 @@ export const StatefulReaderFooter = ({
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
   const { isActive: isReadAlongActive, isExpanded: isReadAlongExpanded } = useReadAlongState();
-  const readAlongPlacement = useReadAlongPlacement();
-  const showReadAlong = isReadAlongProfile && isReadAlongActive && !isReadAlongExpanded && readAlongPlacement === ThMiniPlayerTypes.bottomBar;
+  const showReadAlong = isReadAlongProfile && isReadAlongActive && !isReadAlongExpanded;
 
   const dispatch = useAppDispatch();
 
@@ -211,8 +208,6 @@ export const StatefulReaderFooter = ({
             fallbackVariant={ progressionFormatFallback }
           /> }
     </ThFooter>
-
-    <StatefulReadAlongSheet isOpen={ isReadAlongActive && readAlongPlacement === ThMiniPlayerTypes.bottomSheet } />
     </>
   )
 }

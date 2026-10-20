@@ -114,17 +114,12 @@ The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, repla
 
 Once started, read along shows a mini player. Its tokens in `actions.keys.readAlong` extend the usual action tokens with `miniPlayer`:
 
-- `miniPlayer.defaultType`: where the mini player shows, from enum `ThMiniPlayerTypes`:
-  - `bottomBar`: in place of the progression in the reader’s bottom bar;
-  - `bottomSheet`: in a bottom sheet that doesn’t block the page.
+- `miniPlayer.defaultType`: what the mini player shows, from enum `ThMiniPlayerTypes`:
+  - `withMetadata`: the cover, title and current chapter, along with the playback controls and actions;
+  - `controlsOnly`: only the playback controls, centered, and actions.
 - `miniPlayer.breakpoints`: overrides of `defaultType` per breakpoint.
 
-The mini player expands into the full player (cover, metadata, playback controls and actions):
-
-- in the bottom bar, with its expand button or by pressing its title. The full player then opens in the sheet configured in `sheet` and `docked`, like any other action’s container;
-- in the bottom sheet, by dragging the sheet up or using its drag indicator. The sheet itself becomes the full player, so `sheet` and `docked` don’t apply.
-
-While the mini player is in the bottom bar, the bar stays visible in immersive mode.
+The mini player shows in place of the progression in the reader’s bottom bar, which stays visible in immersive mode. It expands into the full player (cover, metadata, playback controls and actions) with its expand button or by pressing its title. The full player then opens in the sheet configured in `sheet` and `docked`, like any other action’s container.
 
 For instance, the defaults:
 
@@ -136,15 +131,20 @@ For instance, the defaults:
     keyCombos: [{ keyCode: 82, shift: true, alt: true }]
   },
   miniPlayer: {
-    defaultType: ThMiniPlayerTypes.bottomBar,
+    defaultType: ThMiniPlayerTypes.withMetadata,
     breakpoints: {
-      [ThBreakpoints.compact]: ThMiniPlayerTypes.bottomSheet
+      [ThBreakpoints.compact]: ThMiniPlayerTypes.controlsOnly
     }
   },
   sheet: {
     defaultSheet: ThSheetTypes.dockedEnd,
     fallbackSheet: ThSheetTypes.popover,
-    breakpoints: {}
+    breakpoints: {
+      [ThBreakpoints.compact]: ThSheetTypes.bottomSheet
+    }
+  },
+  snapped: {
+    maxHeight: "full-height"
   },
   docked: {
     dockable: ThDockingTypes.end,

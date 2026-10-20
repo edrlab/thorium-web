@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect } from "react";
 
-import { ThActionsKeys, ThDockingKeys, ThMiniPlayerTypes, ThSheetTypes } from "@/preferences/models";
+import { ThActionsKeys, ThDockingKeys, ThSheetTypes } from "@/preferences/models";
 import { StatefulActionContainerProps } from "../Actions/models/actions";
 
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
@@ -16,7 +16,6 @@ import { StatefulReadAlongPlayer } from "./StatefulReadAlongPlayer";
 
 import { useDocking } from "../Docking/hooks/useDocking";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
-import { useReadAlongPlacement } from "./Hooks/useReadAlongPlacement";
 import { useI18n } from "@/i18n/useI18n";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -35,7 +34,6 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
   const { isActive, setActive } = useReadAlongState();
   const docking = useDocking(ThActionsKeys.readAlong, { canReserve: isActive });
   const sheetType = docking.sheetType;
-  const placement = useReadAlongPlacement();
   const isDialogSheet = sheetType === ThSheetTypes.modal || sheetType === ThSheetTypes.fullscreen;
 
   const setOpen = useCallback((value: boolean) => {
@@ -71,8 +69,7 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         heading: t("reader.actions.readAloud.compact"),
         className: classNames(readAlongStyles.readAlongSheet, isDialogSheet && readAlongStyles.readAlongDialogSheet),
         placement: "bottom",
-        // The compact bottom sheet hosts the expanded player itself
-        isOpen: (actionState?.isOpen && placement !== ThMiniPlayerTypes.bottomSheet) || false,
+        isOpen: actionState?.isOpen || false,
         onOpenChange: setOpen,
         onClosePress: () => setActive(false),
         docker: docking.getDocker(),

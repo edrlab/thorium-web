@@ -25,7 +25,7 @@ import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
 import { useReadAlongLanguage } from "./Hooks/useReadAlongLanguage";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
-import { useReadAlongPlacement } from "./Hooks/useReadAlongPlacement";
+import { useReadAlongMiniPlayerType } from "./Hooks/useReadAlongMiniPlayerType";
 import { usePlayPauseFocus } from "./Hooks/usePlayPauseFocus";
 import { useI18n } from "@/i18n/useI18n";
 
@@ -44,7 +44,7 @@ export const StatefulReadAlongMiniPlayer = () => {
   const scriptMode = useAppSelector(state => state.publication.scriptMode);
   const isLoading = useAppSelector(state => state.readAlongPlayer.status === "loading");
   const { setActive, setExpanded } = useReadAlongState();
-  const placement = useReadAlongPlacement();
+  const miniPlayerType = useReadAlongMiniPlayerType();
   const { preferences } = usePreferences();
   const { readAlongActionsMap } = usePlugins();
 
@@ -55,7 +55,7 @@ export const StatefulReadAlongMiniPlayer = () => {
   const metadataDir = scriptMode === "rtl" ? "rtl" : "ltr";
 
   const isDisabled = !readAloud || isLoading;
-  const isBottomBar = placement === ThMiniPlayerTypes.bottomBar;
+  const isControlsOnly = miniPlayerType === ThMiniPlayerTypes.controlsOnly;
   const playPauseRef = usePlayPauseFocus(isDisabled);
 
   const actionItems = useMemo(() => {
@@ -75,13 +75,13 @@ export const StatefulReadAlongMiniPlayer = () => {
 
   return (
     <ThMiniPlayer
-      className={ readAlongStyles.miniPlayer }
-      heading={ progress?.title || "" }
-      subheading={ progress?.progression?.currentChapter }
-      // The sheet's drag indicator expands it, and buttons would block dragging
-      onExpand={ isBottomBar ? () => setExpanded(true) : undefined }
+      className={ classNames(readAlongStyles.miniPlayer, isControlsOnly && readAlongStyles.miniPlayerControlsOnly) }
+      aria-label={ t("reader.actions.readAloud.compact") }
+      heading={ isControlsOnly ? undefined : progress?.title || "" }
+      subheading={ isControlsOnly ? undefined : progress?.progression?.currentChapter }
+      onExpand={ () => setExpanded(true) }
       expandLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
-      cover={ coverUrl
+      cover={ isControlsOnly ? undefined : coverUrl
         ? <img className={ readAlongStyles.miniPlayerCover } src={ proxyUrl(coverUrl) } alt="" crossOrigin="anonymous" />
         : <span className={ classNames(readAlongStyles.miniPlayerCover, readAlongStyles.miniPlayerCoverPlaceholder) }>
             <ReadAlongIcon aria-hidden="true" focusable="false" />
@@ -92,16 +92,14 @@ export const StatefulReadAlongMiniPlayer = () => {
           className={ readAlongStyles.miniPlayerPlayerActionsBar }
           aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.actions") }
         >
-          { isBottomBar &&
-            <StatefulActionIcon
-              aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
-              tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
-              placement="top"
-              onPress={ () => setExpanded(true) }
-            >
-              <ExpandIcon aria-hidden="true" focusable="false" />
-            </StatefulActionIcon>
-          }
+          <StatefulActionIcon
+            aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
+            tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
+            placement="top"
+            onPress={ () => setExpanded(true) }
+          >
+            <ExpandIcon aria-hidden="true" focusable="false" />
+          </StatefulActionIcon>
           <ThCloseButton
             className={ readerSharedUI.closeButton }
             aria-label={ t("_pendingThoriumLocales.reader.readAlong.close") }

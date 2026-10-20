@@ -221,6 +221,12 @@
   transition: border-radius 500ms;
 }
 
+.draggableHeaderActions {
+  margin-inline-start: auto;
+  display: flex;
+  gap: 2px;
+}
+
 .draggable[data-full-height] .draggableHeader {
   /* Otherwise covers the modal’s */
   border-top-left-radius: 0 !important;

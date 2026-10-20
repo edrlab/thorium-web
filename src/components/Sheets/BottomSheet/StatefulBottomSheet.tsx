@@ -12,6 +12,7 @@ import sheetStyles from "../assets/styles/thorium-web.sheets.module.css";
 import readerSharedUI from "../../assets/styles/thorium-web.button.module.css";
 
 import { SheetRef, SheetDetent } from "react-modal-sheet";
+import { Toolbar } from "react-aria-components";
 
 import { ThBottomSheet } from "@/core/Components/Containers/ThBottomSheet";
 import { ThContainerHeader } from "@/core/Components/Containers/ThContainerHeader";
@@ -88,6 +89,17 @@ export const StatefulBottomSheet = ({
 
     const snapPref = preferences.actionsKeys[id].snapped;
     if (snapPref) {
+      // A full height max alone opens at full height, dragging down closes the sheet
+      if (
+        !snapPref.minHeight &&
+        !snapPref.peekHeight &&
+        (snapPref.maxHeight === 100 || snapPref.maxHeight === "full-height")
+      ) {
+        detent.current = "full-height";
+        snapArray.push(1);
+        return snapArray;
+      }
+
       // We must start with minHeight to see if it’s 
       // constrained by a detent as it means
       // the bottom sheet is not draggable.
@@ -257,10 +269,10 @@ export const StatefulBottomSheet = ({
         }}
         onOpenChange={ onOpenChange }
         isKeyboardDismissDisabled={ dismissEscapeKeyClose }
-        { ...(snapArray.length > 2 
+        { ...(snapArray.length > 1 
           ? { 
             snapPoints: snapArray, 
-            initialSnap: 2,
+            initialSnap: Math.min(2, snapArray.length - 1),
             detent: convertDetent(detent.current)
           } 
           : {
@@ -314,15 +326,22 @@ export const StatefulBottomSheet = ({
               aria-label={ t("reader.app.back.trigger") }
               onPress={ onClosePress }
             />
-            : <>
-              { headerActions }
-              <ThCloseButton
-                ref={ bottomSheetCloseRef }
-                className={ readerSharedUI.closeButton }
-                aria-label={ t("common.actions.close") }
-                onPress={ onClosePress }
-              />
-            </>
+            : headerActions
+              ? <Toolbar className={ sheetStyles.draggableHeaderActions }>
+                  { headerActions }
+                  <ThCloseButton
+                    ref={ bottomSheetCloseRef }
+                    className={ readerSharedUI.closeButton }
+                    aria-label={ t("common.actions.close") }
+                    onPress={ onClosePress }
+                  />
+                </Toolbar>
+              : <ThCloseButton
+                  ref={ bottomSheetCloseRef }
+                  className={ readerSharedUI.closeButton }
+                  aria-label={ t("common.actions.close") }
+                  onPress={ onClosePress }
+                />
           }
         </ThContainerHeader>
         <ThContainerBody 

@@ -97,7 +97,7 @@ Sheet components provide different types of overlays and panels:
 
 Read-along components read the publication aloud, highlight what is read, and provide a mini player and an expanded player:
 
-- `StatefulReadAlongMiniPlayer`, `StatefulReadAlongPlayer`, `StatefulReadAlongSheet`: the players
+- `StatefulReadAlongMiniPlayer`, `StatefulReadAlongPlayer`: the players
 - `StatefulReadAlongMediaActions` and `StatefulReadAlongSettingsTrigger` / `StatefulReadAlongSettingsContainer`: the player’s actions
 - `StatefulReadAlongVoice`, `StatefulReadAlongRate`, `StatefulReadAlongHighlightGroup`, etc.: its settings
 
