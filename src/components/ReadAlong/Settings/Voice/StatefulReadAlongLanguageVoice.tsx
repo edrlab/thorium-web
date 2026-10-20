@@ -17,7 +17,8 @@ import { Collection, Header, ListBox, ListBoxItem, ListBoxSection } from "react-
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
 import { getMainVoiceId } from "../../helpers/getMainVoiceId";
-import { groupVoicesByLanguage } from "../../helpers/groupVoicesByLanguage";
+import { groupVoicesByRegion } from "../../helpers/groupVoicesByRegion";
+import { polyfillRegionFlags } from "../../helpers/polyfillRegionFlags";
 import { getStoredVoices, getVoiceLanguageKey, toVoicePreference } from "../../helpers/voicePreference";
 import { useReadAlongLanguage } from "../../Hooks/useReadAlongLanguage";
 
@@ -45,6 +46,10 @@ export const StatefulReadAlongLanguageVoice = ({ standalone = true, language, la
   const [voices, setVoices] = useState<ReadiumSpeechVoice[]>([]);
 
   useEffect(() => {
+    polyfillRegionFlags();
+  }, []);
+
+  useEffect(() => {
     if (!readAloud) return;
     let cancelled = false;
     readAloud.getVoices({ languages: language ? [language] : undefined }).then((list) => {
@@ -57,7 +62,7 @@ export const StatefulReadAlongLanguageVoice = ({ standalone = true, language, la
 
   const currentVoice = getStoredVoices(storedVoices)[languageKey] ?? getMainVoiceId(readAloud?.getSetting(prefKey), language);
 
-  const voiceGroups = groupVoicesByLanguage(voices, i18n.language);
+  const voiceGroups = groupVoicesByRegion(voices, i18n.language);
 
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!readAloud || !key || key === currentVoice) return;
@@ -92,6 +97,7 @@ export const StatefulReadAlongLanguageVoice = ({ standalone = true, language, la
                 key={ group.id }
               >
                 <Header className={ settingsStyles.dropdownListboxHeader }>
+                  { group.flag && <span className={ settingsStyles.dropdownListboxHeaderFlag } aria-hidden="true">{ group.flag }</span> }
                   { group.label }
                 </Header>
                 <Collection items={ group.voices }>

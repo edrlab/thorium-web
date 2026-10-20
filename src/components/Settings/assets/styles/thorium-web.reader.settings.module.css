@@ -499,6 +499,11 @@
   color: var(--th-theme-text);
 }
 
+.dropdownListboxHeaderFlag {
+  margin-inline-end: 0.25em;
+  font-family: "Twemoji Country Flags", sans-serif;
+}
+
 .dropdownListboxItem {
   padding: calc(var(--th-layout-spacing) / 4);
   border-radius: var(--th-layout-radius);

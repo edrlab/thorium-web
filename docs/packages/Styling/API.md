@@ -180,6 +180,7 @@ This document outlines the available styling classes and custom properties for t
 - `.thorium_web_reader_settings_dropdownListbox` - Dropdown list
 - `.thorium_web_reader_settings_dropdownListboxSection` - Dropdown group of items
 - `.thorium_web_reader_settings_dropdownListboxHeader` - Dropdown group header
+- `.thorium_web_reader_settings_dropdownListboxHeaderFlag` - Dropdown group header flag
 - `.thorium_web_reader_settings_dropdownListboxItem` - Dropdown item
 - `.thorium_web_reader_settings_dropdownPopover` - Dropdown popover
 - `.thorium_web_reader_settings_switch` - Toggle switch
