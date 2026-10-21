@@ -18,6 +18,7 @@ import { StatefulReadAlongSleepTimerTrigger } from "../../ReadAlong/actions/Slee
 import { StatefulReadAlongSleepTimerContainer } from "../../ReadAlong/actions/SleepTimer/StatefulReadAlongSleepTimerContainer";
 import { StatefulReadAlongSettingsTrigger } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsTrigger";
 import { StatefulReadAlongSettingsContainer } from "../../ReadAlong/actions/Settings/StatefulReadAlongSettingsContainer";
+import { StatefulReadAlongReattachTrigger } from "../../ReadAlong/actions/Reattach/StatefulReadAlongReattachTrigger";
 
 import { StatefulColumns } from "../../Epub/Settings/StatefulColumns";
 import { StatefulDivinaQuality } from "../../Divina/Settings/StatefulDivinaQuality";
@@ -108,6 +109,9 @@ export const createDefaultPlugin = (): ThPlugin => {
         [ThReadAlongActionKeys.settings]: {
           Trigger: StatefulReadAlongSettingsTrigger,
           Target: StatefulReadAlongSettingsContainer
+        },
+        [ThReadAlongActionKeys.reattach]: {
+          Trigger: StatefulReadAlongReattachTrigger
         }
       },
       settings: {

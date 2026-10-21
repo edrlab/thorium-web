@@ -144,6 +144,14 @@ export const useReadAloudNavigator = () => {
     return navigatorInstance?.detachable ?? true;
   }, []);
 
+  const isDetached = useCallback((): boolean => {
+    return navigatorInstance?.detached ?? false;
+  }, []);
+
+  const reattach = useCallback((): boolean => {
+    return navigatorInstance?.reattach() ?? false;
+  }, []);
+
   const getVoices = useCallback(async (options?: ReadAloudVoicesOptions): Promise<ReadiumSpeechVoice[]> => {
     return await navigatorInstance?.getVoices(options).catch((error) => {
       warn(error);
@@ -174,6 +182,8 @@ export const useReadAloudNavigator = () => {
     previous,
     state,
     isDetachable,
+    isDetached,
+    reattach,
     getVoices,
     getLanguages,
     getPublicationLanguages,

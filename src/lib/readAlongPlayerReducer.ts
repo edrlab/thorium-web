@@ -29,6 +29,7 @@ export interface ReadAlongPlayerReducerState {
   metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
   isNavigationLocked: boolean;
+  isDetached: boolean;
   voiceControls: ReadAlongVoiceControls;
   anyVoiceHasBoundaries: boolean | null;
   sleepTimer: ReadAlongSleepTimerState;
@@ -41,6 +42,7 @@ const initialState: ReadAlongPlayerReducerState = {
   metadata: null,
   status: "idle",
   isNavigationLocked: false,
+  isDetached: false,
   voiceControls: { boundary: true, speed: true, pitch: true },
   anyVoiceHasBoundaries: null,
   sleepTimer: { remainingSeconds: null },
@@ -62,6 +64,9 @@ export const readAlongPlayerSlice = createSlice({
     },
     setReadAlongNavigationLocked: (state, action: PayloadAction<boolean>) => {
       state.isNavigationLocked = action.payload;
+    },
+    setReadAlongDetached: (state, action: PayloadAction<boolean>) => {
+      state.isDetached = action.payload;
     },
     setReadAlongVoiceControls: (state, action: PayloadAction<ReadAlongVoiceControls>) => {
       state.voiceControls = action.payload;
@@ -92,6 +97,7 @@ export const {
   setReadAlongLayout,
   setReadAlongStatus,
   setReadAlongNavigationLocked,
+  setReadAlongDetached,
   setReadAlongVoiceControls,
   setReadAlongAnyVoiceHasBoundaries,
   setReadAlongSleepTimer,

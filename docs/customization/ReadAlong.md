@@ -61,7 +61,7 @@ While read along is active, Space pauses and resumes it instead of turning pages
 
 ## Navigating While Reading
 
-By default, users can scroll, turn pages and navigate while read along is playing. It then stops following what is read until they are back on it, or play, skip, or read from a press.
+By default, users can scroll, turn pages and navigate while read along is playing. It then stops following what is read until they are back on it, or play, skip, or read from a press. Meanwhile, the reattach action shows in the players to go back to what is read.
 
 Set `readAlong.detachable` to `false` to lock navigation while read along is playing or loading: scrolling, swiping and links in the content, as well as page turns, the table of contents, go to position, and previous/next links in the reader. Read along still turns pages as it goes, and pressing content still reads from there. Everything is unlocked when read along is paused or stopped.
 
@@ -161,7 +161,7 @@ The full player is docked at the end by default, and its slot is [reserved](./Do
 
 ## Player Actions
 
-`readAlong.actions` configures the buttons of the players. Use enum `ThReadAlongActionKeys` to reference them: `volume`, `rate`, `sleepTimer` and `settings`.
+`readAlong.actions` configures the buttons of the players. Use enum `ThReadAlongActionKeys` to reference them: `volume`, `rate`, `sleepTimer`, `settings` and `reattach`.
 
 The mini player and the expanded player each have their own display order, and share the same `keys`:
 
@@ -170,12 +170,14 @@ readAlong: {
   actions: {
     miniPlayer: {
       displayOrder: [
+        ThReadAlongActionKeys.reattach,
         ThReadAlongActionKeys.settings
       ],
       collapse: true
     },
     expanded: {
       displayOrder: [
+        ThReadAlongActionKeys.reattach,
         ThReadAlongActionKeys.volume,
         ThReadAlongActionKeys.sleepTimer,
         ThReadAlongActionKeys.settings
@@ -185,7 +187,8 @@ readAlong: {
       [ThReadAlongActionKeys.volume]: defaultReadAlongVolumeAction,
       [ThReadAlongActionKeys.rate]: defaultReadAlongRateAction,
       [ThReadAlongActionKeys.sleepTimer]: defaultReadAlongSleepTimerAction,
-      [ThReadAlongActionKeys.settings]: defaultReadAlongSettingsAction
+      [ThReadAlongActionKeys.settings]: defaultReadAlongSettingsAction,
+      [ThReadAlongActionKeys.reattach]: defaultReadAlongReattachAction
     }
   }
 }
@@ -193,7 +196,7 @@ readAlong: {
 
 The mini player’s `collapse` works like the [collapsibility of reader actions](./Customization.md#collapsibility-and-visibility). By default, it is `true`: the actions take the space left in the mini player, and those that don’t fit move to an overflow menu, depending on their `visibility`.
 
-The rate action is disabled when the current voice can’t change its rate.
+The rate action is disabled when the current voice can’t change its rate. The reattach action is only shown while the reader is away from what is read, so it never shows when `detachable` is `false`. It has no shortcut by default; one set in its key works like the other actions’.
 
 Each key accepts the tokens of reader actions or of audio primary actions, so a key can use either `popover` or `compactPopover` (see [`fallbackSheet`](./Docking.md#fallbacksheet)). By default, volume and rate use `compactPopover`, while the settings use `popover`, as its header holds the back button of the voice, highlight, prosody and verbosity subpanels.
 

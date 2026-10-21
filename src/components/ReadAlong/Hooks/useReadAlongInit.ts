@@ -10,7 +10,7 @@ import { ReadAloudNavigatorLoadProps, useReadAloudNavigator } from "@/core/Hooks
 import { useReadAlongPreferences } from "@/preferences/hooks/useReadAlongPreferences";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { resetReadAlongPlayer, setReadAlongAnyVoiceHasBoundaries, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
+import { resetReadAlongPlayer, setReadAlongAnyVoiceHasBoundaries, setReadAlongDetached, setReadAlongNavigationLocked, setReadAlongStatus, setReadAlongVoiceControls } from "@/lib/readAlongPlayerReducer";
 import { useReadAlongState } from "./useReadAlongState";
 import { useReadAlongStatelessCache } from "./useReadAlongStatelessCache";
 import { useReadAlongLanguage } from "./useReadAlongLanguage";
@@ -142,6 +142,7 @@ export const useReadAlongInit = ({
         dispatch(setReadAlongNavigationLocked(!isDetachable() && (state === "playing" || state === "loading")));
         syncVoiceControls();
       },
+      detachedChanged: (detached) => dispatch(setReadAlongDetached(detached)),
       error: (error) => console.warn("Read along:", error)
     };
 

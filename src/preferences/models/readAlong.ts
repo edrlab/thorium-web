@@ -13,7 +13,8 @@ export enum ThReadAlongActionKeys {
   volume = "readAlong.volume",
   rate = "readAlong.rate",
   sleepTimer = "readAlong.sleepTimer",
-  settings = "readAlong.settings"
+  settings = "readAlong.settings",
+  reattach = "readAlong.reattach"
 }
 
 export enum ThReadAlongKeys {
@@ -229,6 +230,11 @@ export const defaultReadAlongSettingsAction: ThActionsTokens = {
   docked: { dockable: ThDockingTypes.none }
 };
 
+export const defaultReadAlongReattachAction: ThActionsTokens = {
+  visibility: ThCollapsibilityVisibility.always,
+  shortcut: null
+};
+
 export const defaultReadAlongRate: ThSettingsRangePrefRequired = {
   variant: ThSettingsRangeVariant.slider,
   range: [0.5, 4],
@@ -435,12 +441,14 @@ export const defaultReadAlongPreferences = {
   actions: {
     miniPlayer: {
       displayOrder: [
+        ThReadAlongActionKeys.reattach,
         ThReadAlongActionKeys.settings
       ],
       collapse: true
     },
     expanded: {
       displayOrder: [
+        ThReadAlongActionKeys.reattach,
         ThReadAlongActionKeys.volume,
         ThReadAlongActionKeys.sleepTimer,
         ThReadAlongActionKeys.settings
@@ -450,7 +458,8 @@ export const defaultReadAlongPreferences = {
       [ThReadAlongActionKeys.volume]: defaultReadAlongVolumeAction,
       [ThReadAlongActionKeys.rate]: defaultReadAlongRateAction,
       [ThReadAlongActionKeys.sleepTimer]: defaultReadAlongSleepTimerAction,
-      [ThReadAlongActionKeys.settings]: defaultReadAlongSettingsAction
+      [ThReadAlongActionKeys.settings]: defaultReadAlongSettingsAction,
+      [ThReadAlongActionKeys.reattach]: defaultReadAlongReattachAction
     }
   },
   settings: {

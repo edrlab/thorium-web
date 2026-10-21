@@ -87,6 +87,16 @@ Trigger and container of the `ThReadAlongActionKeys.sleepTimer` action. They ren
 - Pause read along when the timer expires; the countdown runs only while it is playing
 - Disabled until read along has loaded, and while it is loading
 
+## Reattach Action
+
+### StatefulReadAlongReattachTrigger
+
+Trigger of the `ThReadAlongActionKeys.reattach` action. It has no container.
+
+**Features:**
+- Rendered only while the reader is away from the spoken text (`readAlongPlayer.isDetached`)
+- Goes back to the spoken text and follows it again, without changing playback
+
 ## Settings Action
 
 ### StatefulReadAlongSettingsTrigger
@@ -205,7 +215,7 @@ function useReadAlongInit(props: {
 
 **Features:**
 - Loads the navigator when read along is activated, with the stored preferences and voice; destroys it when deactivated
-- Keeps `readAlongPlayer.status` and the current voice’s capabilities up to date
+- Keeps `readAlongPlayer.status`, `readAlongPlayer.isDetached` and the current voice’s capabilities up to date
 - Runs the sleep timer countdown
 - Recolors the highlight when the reading theme changes
 - Resolves the auto pause of the prosody preset against the layout, pausing after each page outside fixed layout

@@ -17,7 +17,8 @@ import {
   ThProgressionFormat,
   ThSettingsKeys,
   ThDockingKeys,
-  ThActionsKeys
+  ThActionsKeys,
+  ThReadAlongActionKeys
 } from "../../preferences/models";
 
 import { ThPluginRegistry } from "../Plugins/PluginRegistry";
@@ -194,6 +195,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
   const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
   const isReadAlongPlaying = useAppSelector(state => state.readAlongPlayer.status === "playing");
+  const isReadAlongDetached = useAppSelector(state => state.readAlongPlayer.isDetached);
 
   const layoutUI = isFXL 
     ? preferences.theming.layout.ui?.fxl || ThLayoutUI.layered 
@@ -229,7 +231,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     arrowsOccupySpace,
     isReadAlongActive,
     isNavigationLocked,
-    isReadAlongPlaying
+    isReadAlongPlaying,
+    isReadAlongDetached
   );
 
   const atPublicationStart = useAppSelector(state => state.publication.atPublicationStart);
@@ -252,7 +255,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const epubNavigator = useEpubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
-  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong } = readAloudNavigator;
+  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong, reattach } = readAloudNavigator;
 
   const toggleReadAlongPlayback = useCallback(() => {
     if (cache.current.isReadAlongPlaying) {
@@ -261,6 +264,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       playReadAlong();
     }
   }, [cache, playReadAlong, pauseReadAlong]);
+
+  const reattachReadAlong = useCallback(() => {
+    if (cache.current.isReadAlongDetached) reattach();
+  }, [cache, reattach]);
 
   const {
     goLeft,
@@ -514,6 +521,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
             return;
           }
 
+          // Has no container to open, unlike the other read along actions
+          if (actionKey === ThReadAlongActionKeys.reattach) {
+            reattachReadAlong();
+            return;
+          }
+
           if (actionKey && profile) {
             dispatch(toggleActionOpen({ key: actionKey, profile }));
             return;
@@ -530,7 +543,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [navLayout, setLocalData, dispatch, handlePointer, handleTap, handleClick, cache, preferences.affordances.scroll, isScrollStart, isScrollEnd, updatePublicationNavigationState, moveTo, goProgression, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, reattachReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
   
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — EpubNavigator calls Timeline.locate() on this at startup, which

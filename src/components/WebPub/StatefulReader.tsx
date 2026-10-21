@@ -12,7 +12,8 @@ import {
   ThSpacingSettingsKeys,
   ThSettingsKeys,
   ThDockingKeys,
-  ThActionsKeys
+  ThActionsKeys,
+  ThReadAlongActionKeys
 } from "@/preferences/models";
 
 import { ThPluginRegistry } from "../Plugins/PluginRegistry";
@@ -151,6 +152,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
   const isReadAlongPlaying = useAppSelector(state => state.readAlongPlayer.status === "playing");
+  const isReadAlongDetached = useAppSelector(state => state.readAlongPlayer.isDetached);
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
   const containerBreakpoint = useAppSelector(state => state.theming.containerBreakpoint);
 
@@ -170,7 +172,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
     wordSpacing,
     zoom,
     isReadAlongActive,
-    isReadAlongPlaying
+    isReadAlongPlaying,
+    isReadAlongDetached
   );
 
   const layoutUI = preferences.theming.layout.ui?.webPub || ThLayoutUI.stacked;
@@ -189,7 +192,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
 
   const webPubNavigator = useWebPubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
-  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong } = readAloudNavigator;
+  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong, reattach } = readAloudNavigator;
 
   const toggleReadAlongPlayback = useCallback(() => {
     if (cache.current.isReadAlongPlaying) {
@@ -198,6 +201,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       playReadAlong();
     }
   }, [cache, playReadAlong, pauseReadAlong]);
+
+  const reattachReadAlong = useCallback(() => {
+    if (cache.current.isReadAlongDetached) reattach();
+  }, [cache, reattach]);
 
   const {
     currentPositions,
@@ -322,6 +329,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
             return;
           }
 
+          // Has no container to open, unlike the other read along actions
+          if (actionKey === ThReadAlongActionKeys.reattach) {
+            reattachReadAlong();
+            return;
+          }
+
           if (actionKey && profile) {
             dispatch(toggleActionOpen({ key: actionKey, profile }));
             return;
@@ -338,7 +351,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
         }
       }
     },
-  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, reattachReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which

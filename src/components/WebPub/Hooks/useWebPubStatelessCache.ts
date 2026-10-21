@@ -8,6 +8,7 @@ import { useWebPubSettingsCache, WebPubStatelessCache } from "@/core/Hooks/WebPu
 export interface WebPubReaderStatelessCache extends WebPubStatelessCache {
   isReadAlongActive: boolean;
   isReadAlongPlaying: boolean;
+  isReadAlongDetached: boolean;
 }
 
 export const useWebPubStatelessCache = (
@@ -26,7 +27,8 @@ export const useWebPubStatelessCache = (
   wordSpacing: number | null,
   zoom: number,
   isReadAlongActive: boolean,
-  isReadAlongPlaying: boolean
+  isReadAlongPlaying: boolean,
+  isReadAlongDetached: boolean
 ) => {
   const settingsCache = useWebPubSettingsCache(
     fontFamily,
@@ -48,13 +50,15 @@ export const useWebPubStatelessCache = (
   const cache = useRef<WebPubReaderStatelessCache>({
     settings: settingsCache.current.settings,
     isReadAlongActive,
-    isReadAlongPlaying
+    isReadAlongPlaying,
+    isReadAlongDetached
   });
 
   // Update cache synchronously on every render to ensure fresh values
   cache.current.settings = settingsCache.current.settings;
   cache.current.isReadAlongActive = isReadAlongActive;
   cache.current.isReadAlongPlaying = isReadAlongPlaying;
+  cache.current.isReadAlongDetached = isReadAlongDetached;
 
   return cache;
 };

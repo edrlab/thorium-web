@@ -19,6 +19,7 @@ export interface EPubStatelessCache {
   isReadAlongActive: boolean;
   isNavigationLocked: boolean;
   isReadAlongPlaying: boolean;
+  isReadAlongDetached: boolean;
 }
 
 export const useEpubStatelessCache = (
@@ -49,7 +50,8 @@ export const useEpubStatelessCache = (
   arrowsOccupySpace: boolean,
   isReadAlongActive: boolean,
   isNavigationLocked: boolean,
-  isReadAlongPlaying: boolean
+  isReadAlongPlaying: boolean,
+  isReadAlongDetached: boolean
 ) => {
   const settingsCache = useEpubSettingsCache(
     textAlign,
@@ -83,7 +85,8 @@ export const useEpubStatelessCache = (
     reducedMotion,
     isReadAlongActive,
     isNavigationLocked,
-    isReadAlongPlaying
+    isReadAlongPlaying,
+    isReadAlongDetached
   });
 
   // Update cache synchronously on every render to ensure fresh values
@@ -98,6 +101,7 @@ export const useEpubStatelessCache = (
   cache.current.isReadAlongActive = isReadAlongActive;
   cache.current.isNavigationLocked = isNavigationLocked;
   cache.current.isReadAlongPlaying = isReadAlongPlaying;
+  cache.current.isReadAlongDetached = isReadAlongDetached;
 
   return cache;
 };

@@ -294,6 +294,8 @@ function useReadAloudNavigator(): {
   next: () => Promise<boolean>;
   previous: () => Promise<boolean>;
   state: () => ReadAloudState;
+  isDetached: () => boolean;
+  reattach: () => boolean;
   getVoices: (options?: ReadAloudVoicesOptions) => Promise<ReadiumSpeechVoice[]>;
   getLanguages: () => Promise<string[]>;
   getPublicationLanguages: () => string[];
@@ -308,6 +310,7 @@ function useReadAloudNavigator(): {
 - A single instance shared by every caller; `isLoaded` re-renders components when it is loaded or destroyed
 - Loading destroys the previous instance first, and a load superseded by another one is dropped
 - Playback by utterance: `next` and `previous` move to the adjacent utterance, there is no time-based seeking
+- `isDetached` tells whether the reader moved away from the spoken text; `reattach` goes back to it and follows it again without changing playback, and returns `false` when nothing is being read
 - Voices filtered and sorted by the toolkit (`getVoices({ languages })`); the voice is set with the `voice` preference, and `getSetting("voice")` falls back to the navigator’s own voice when it is unset
 - The publication’s languages as voices are loaded for them, the language override in place of the declared one (`getPublicationLanguages()`)
 - Errors are logged with `console.warn` instead of thrown

@@ -155,7 +155,8 @@
           "expand": "Expand player",
           "collapse": "Collapse player",
           "actions": "Player actions",
-          "mediaActions": "Read aloud actions"
+          "mediaActions": "Read aloud actions",
+          "reattach": "Go to reading position"
         },
         "preferences": {
           "title": "Read aloud settings",
