@@ -68,13 +68,6 @@ const getWordSurface = (utterance: ReadAloudDecorationStyle | null | undefined):
   }
 };
 
-// Outlines are drawn 1px out and 2px wide, so the word's clears the utterance's
-const WORD_OUTLINE_ON_OUTLINE_EXPAND = 3;
-
-const isOutline = (style: ReadAloudDecorationStyle | null | undefined) => {
-  return !!style && (style as BuiltinDecorationStyle).type === DecorationStyleType.Outline;
-};
-
 type KeyedPresetKeys = Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>;
 
 const isSameStyle = (a: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle], b: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle]) => {
@@ -203,14 +196,9 @@ export const useHighlightPresets = () => {
     const utterance = resolveStyle(ThReadAlongHighlightKeys.utteranceStyle, values[ThReadAlongHighlightKeys.utteranceStyle]);
     const word = resolveStyle(ThReadAlongHighlightKeys.wordStyle, values[ThReadAlongHighlightKeys.wordStyle], utterance);
 
-    // Line by line, the utterance outline shares its edges with the word's
-    const wordWithExpand = isOutline(utterance) && isOutline(word) && (word as BuiltinDecorationStyle).expand === undefined
-      ? { ...(word as BuiltinDecorationStyle), expand: WORD_OUTLINE_ON_OUTLINE_EXPAND }
-      : word;
-
     return {
       [ThReadAlongHighlightKeys.utteranceStyle]: utterance,
-      [ThReadAlongHighlightKeys.wordStyle]: wordWithExpand
+      [ThReadAlongHighlightKeys.wordStyle]: word
     };
   }, [resolveStyle]);
 
