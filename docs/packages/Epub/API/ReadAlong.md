@@ -218,7 +218,7 @@ function useReadAlongInit(props: {
 - Keeps `readAlongPlayer.status`, `readAlongPlayer.isDetached` and the current voice’s capabilities up to date
 - Runs the sleep timer countdown
 - Recolors the highlight when the reading theme changes
-- Resolves the auto pause of the prosody preset against the layout, pausing after each page outside fixed layout
+- Resolves the auto pause of the prosody preset against the layout, pausing after each sentence outside fixed layout
 - Deactivates read along when the reader unmounts
 
 ### useReadAlongMetadata

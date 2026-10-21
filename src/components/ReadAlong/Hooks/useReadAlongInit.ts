@@ -104,7 +104,7 @@ export const useReadAlongInit = ({
     applyTheme();
   }, [applyTheme]);
 
-  // Pausing after each spread becomes pausing after each page outside fixed layout
+  // Pausing after each spread becomes pausing after each sentence outside fixed layout
   useEffect(() => {
     applyLayout();
   }, [applyLayout]);

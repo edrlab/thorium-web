@@ -258,7 +258,7 @@
               "default": "Default",
               "slow": "Slow",
               "fast": "Fast",
-              "relaxed": "Relaxed",
+              "autoPause": "Auto pause",
               "custom": "Custom"
             }
           },

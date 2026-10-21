@@ -75,7 +75,7 @@ export enum ThReadAlongProsodyPresetKeys {
   default = "default",
   slow = "slow",
   fast = "fast",
-  relaxed = "relaxed",
+  autoPause = "autoPause",
   custom = "custom"
 }
 
@@ -413,7 +413,7 @@ export const defaultReadAlongProsodyPresets = {
     ThReadAlongProsodyPresetKeys.default,
     ThReadAlongProsodyPresetKeys.slow,
     ThReadAlongProsodyPresetKeys.fast,
-    ThReadAlongProsodyPresetKeys.relaxed,
+    ThReadAlongProsodyPresetKeys.autoPause,
     ThReadAlongProsodyPresetKeys.custom
   ],
   keys: {
@@ -425,8 +425,8 @@ export const defaultReadAlongProsodyPresets = {
       [ThReadAlongProsodyKeys.rate]: 1.15,
       [ThReadAlongProsodyKeys.pauseDuration]: 300
     },
-    // Pauses after each page outside fixed layout
-    [ThReadAlongProsodyPresetKeys.relaxed]: {
+    // Pauses after each sentence outside fixed layout
+    [ThReadAlongProsodyPresetKeys.autoPause]: {
       [ThReadAlongProsodyKeys.autoPause]: ReadAloudAutoPause.spread
     }
   }

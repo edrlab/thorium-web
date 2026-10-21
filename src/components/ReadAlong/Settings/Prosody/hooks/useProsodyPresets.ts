@@ -33,7 +33,7 @@ const toValues = (preset: ThReadAlongProsodyPreset | ProsodyValues | undefined):
 
 /**
  * Hook to apply prosody presets, and resolve their auto pause against the layout
- * Pausing after each spread only applies to fixed layout, it pauses after each page otherwise
+ * Pausing after each spread only applies to fixed layout, it pauses after each sentence otherwise
  */
 export const useProsodyPresets = () => {
   const { preferences } = usePreferences();
@@ -83,14 +83,14 @@ export const useProsodyPresets = () => {
   }, [presets.keys, prosody?.custom]);
 
   const resolveAutoPause = useCallback((value: ReadAloudAutoPause | null) => {
-    return value === ReadAloudAutoPause.spread && !isFXL ? ReadAloudAutoPause.page : value;
+    return value === ReadAloudAutoPause.spread && !isFXL ? ReadAloudAutoPause.utterance : value;
   }, [isFXL]);
 
   // There are no pages to pause at when scrolling
   const requiresPages = useCallback((presetKey: ThReadAlongProsodyPresetKeys) => {
-    const value = getPresetValues(presetKey)[ThReadAlongProsodyKeys.autoPause];
+    const value = resolveAutoPause(getPresetValues(presetKey)[ThReadAlongProsodyKeys.autoPause]);
     return value === ReadAloudAutoPause.page || value === ReadAloudAutoPause.spread;
-  }, [getPresetValues]);
+  }, [getPresetValues, resolveAutoPause]);
 
   const applyPreset = useCallback(async (presetKey: ThReadAlongProsodyPresetKeys) => {
     const values = getPresetValues(presetKey);

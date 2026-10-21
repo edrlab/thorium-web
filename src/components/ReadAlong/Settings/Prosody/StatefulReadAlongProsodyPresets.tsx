@@ -7,7 +7,7 @@ import { ThReadAlongProsodyPresetKeys } from "@/preferences/models";
 import DefaultIcon from "./assets/icons/directions_walk.svg";
 import SlowIcon from "./assets/icons/hiking.svg";
 import FastIcon from "./assets/icons/sprint.svg";
-import RelaxedIcon from "./assets/icons/self_improvement.svg";
+import AutoPauseIcon from "./assets/icons/follow_the_signs.svg";
 import TuneIcon from "../../../Settings/Spacing/assets/icons/tune.svg";
 
 import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
@@ -23,7 +23,7 @@ const iconMap = {
   [ThReadAlongProsodyPresetKeys.default]: DefaultIcon,
   [ThReadAlongProsodyPresetKeys.slow]: SlowIcon,
   [ThReadAlongProsodyPresetKeys.fast]: FastIcon,
-  [ThReadAlongProsodyPresetKeys.relaxed]: RelaxedIcon,
+  [ThReadAlongProsodyPresetKeys.autoPause]: AutoPauseIcon,
   [ThReadAlongProsodyPresetKeys.custom]: TuneIcon
 };
 
