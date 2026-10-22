@@ -394,11 +394,11 @@ const defaultReadAlongHighlightTheme: Record<ThThemeKeys, ThReadAlongHighlightCo
     }
   },
   [ThThemeKeys.contrast3]: {
-    utterance: { fill: "#000000", line: "#3087a6", text: "#9c446a", mask: "#c5e7cd99" },
+    utterance: { fill: "#fff44f", line: "#3087a6", text: "#9c446a", mask: "#c5e7cd99" },
     word: {
       fill: { onPage: "#ff4f5e", onFill: "#ff4f5e", onLine: "#45c4f0", onText: "#45c4f0" },
-      line: { onPage: "#c75788", onFill: "#ff6fae", onLine: "#c75788", onText: "#3087a6" },
-      text: { onPage: "#9c446a", onFill: "#ff6fae", onLine: "#9c446a", onText: "#256a82" }
+      line: { onPage: "#c75788", onFill: "#db5f96", onLine: "#c75788", onText: "#3087a6" },
+      text: { onPage: "#9c446a", onFill: "#ad4b76", onLine: "#9c446a", onText: "#256a82" }
     }
   }
 };

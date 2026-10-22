@@ -49,7 +49,7 @@ const THEME_CONFIG = {
   sepia: { exclude: [], fills: ["#ffef3a"] },
   contrast1: { exclude: ["yellow"], fills: "dim" },
   contrast2: { exclude: ["blue"], fills: "dim+inks" },
-  contrast3: { exclude: ["green"], fills: "black+inks" }
+  contrast3: { exclude: ["green"], fills: "inks" }
 };
 
 // Colors
@@ -202,7 +202,7 @@ const fillCandidates = (fills, inks) => {
   switch (fills) {
     case "dim": return dims;
     case "dim+inks": return [...dims, ...all];
-    case "black+inks": return ["#000000", ...all];
+    case "inks": return all;
     default: throw new Error(`Unknown fills: "${ fills }"`);
   }
 };
@@ -213,6 +213,8 @@ const solveTheme = ({ page, pageText }, { exclude, fills }) => {
 
   for (const fill of fillCandidates(fills, inks)) {
     if (contrast(textOn(fill), fill) < TEXT_CONTRAST) continue;
+    // The DOM overlay multiplies fills on light pages, so a dark fill would blacken its own text
+    if (isLight(page) && textOn(fill) !== "#000000") continue;
 
     for (const [lineName, lineInk] of inks) {
       for (const [textName, textInk] of inks) {

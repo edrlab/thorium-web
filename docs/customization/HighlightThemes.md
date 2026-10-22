@@ -48,7 +48,8 @@ A new reading theme needs an entry in the script’s `THEME_CONFIG`, with the in
 - Word fills are inks, as they are.
 - Lines and text colors are inks, darkened toward black on light surfaces, or lightened toward white on dark ones, by steps of 1% until they reach 3:1 for lines and 4.5:1 for text colors against what they are drawn on: the page, or the sentence fill for `onFill`. An ink that already reaches it is used as it is, e.g. on dark pages.
 - Yellow and orange are never darkened, as they turn olive and brown: on light pages, they are only used as fills.
-- The sentence fill is yellow on light pages, a slightly more saturated `#ffef3a` on sepia, as its page is close to yellow. On dark pages, it is a dim ink, the ink with its channels scaled down to 28%, 34% or 40%, that renders its text in white, so that inks can be used at full strength on it. `contrast3` inverts the sentence instead, filling it with the theme’s black text color.
+- The sentence fill is an ink on light pages: yellow, or a slightly more saturated `#ffef3a` on sepia, as its page is close to yellow. On dark pages, it is a dim ink, the ink with its channels scaled down to 28%, 34% or 40%, that renders its text in white, so that inks can be used at full strength on it.
+- On light pages, fills must be light enough to render their text in black: when a highlight goes through the navigator’s DOM overlay instead of the CSS Custom Highlight API, it is blended with `mix-blend-mode: multiply`, which turns the text under a dark fill as dark as the fill.
 - A contrast theme never uses the ink of its own color: no yellow on `contrast1`, whose text is yellow, no blue on `contrast2`, whose page is navy, and no green on `contrast3`, whose page is green.
 
 ## What Each Color Must Satisfy
@@ -146,9 +147,9 @@ Colors are named after their ink: “dark” is an ink darkened or lightened for
 
 | | Fill | Line | Text |
 |---|---|---|---|
-| Sentence | black `#000000` | dark blue `#3087a6` | dark pink `#9c446a` |
+| Sentence | yellow `#fff44f` | dark blue `#3087a6` | dark pink `#9c446a` |
 | Word, `onPage` | red `#ff4f5e` | dark pink `#c75788` | dark pink `#9c446a` |
-| Word, `onFill` | red `#ff4f5e` | pink `#ff6fae` | pink `#ff6fae` |
+| Word, `onFill` | red `#ff4f5e` | dark pink `#db5f96` | dark pink `#ad4b76` |
 | Word, `onLine` | blue `#45c4f0` | dark pink `#c75788` | dark pink `#9c446a` |
 | Word, `onText` | blue `#45c4f0` | dark blue `#3087a6` | dark blue `#256a82` |
 
