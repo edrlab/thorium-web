@@ -241,6 +241,14 @@ Available `ThProgressionFormat` variants:
 - `progressionOfResource`: "x% of y" (e.g. "75% of Chapter 1")
 - `none`: Hides the progression display
 
+Where space is limited, e.g. next to the read-along mini player, a compact form of the format is shown, using the same strings:
+- `positionsPercentOfTotal`: "x-y of z"
+- `positionsOfTotal`: "x-y"
+- `positionsLeft`: "x left"
+- `progressionOfResource`: "x%" (resource)
+- `readingOrderIndex`: "x%" (publication), or "x of y" when unavailable
+- The other formats are already compact.
+
 Example configuration:
 
 ```typescript

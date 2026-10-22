@@ -111,6 +111,7 @@ export interface ThReadAlongActionTokens extends ThActionsTokens {
   miniPlayer: {
     defaultType: ThMiniPlayerTypes;
     breakpoints: BreakpointsMap<ThMiniPlayerTypes>;
+    progression: boolean;
   };
 }
 
@@ -151,7 +152,8 @@ export const defaultReadAlongAction: ThReadAlongActionTokens = {
     defaultType: ThMiniPlayerTypes.withMetadata,
     breakpoints: {
       [ThBreakpoints.compact]: ThMiniPlayerTypes.controlsOnly
-    }
+    },
+    progression: true
   },
   sheet: {
     defaultSheet: ThSheetTypes.dockedEnd,

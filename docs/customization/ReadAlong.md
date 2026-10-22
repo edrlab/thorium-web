@@ -118,6 +118,7 @@ Once started, read along shows a mini player. Its tokens in `actions.keys.readAl
   - `withMetadata`: the cover, title and current chapter, along with the playback controls and actions;
   - `controlsOnly`: only the playback controls, centered, and actions.
 - `miniPlayer.breakpoints`: overrides of `defaultType` per breakpoint.
+- `miniPlayer.progression`: whether the progression shows after the mini player when it fits. It uses the reader’s progression format (see [Theming](./Theming.md)), falls back to a compact form when it doesn’t fit, and hides when neither fits. The mini player’s own sizing is unaffected.
 
 The mini player shows in place of the progression in the reader’s bottom bar, which stays visible in immersive mode. It expands into the full player (cover, metadata, playback controls and actions) with its expand button or by pressing its title. The full player then opens in the sheet configured in `sheet` and `docked`, like any other action’s container.
 
@@ -134,7 +135,8 @@ For instance, the defaults:
     defaultType: ThMiniPlayerTypes.withMetadata,
     breakpoints: {
       [ThBreakpoints.compact]: ThMiniPlayerTypes.controlsOnly
-    }
+    },
+    progression: true
   },
   sheet: {
     defaultSheet: ThSheetTypes.dockedEnd,

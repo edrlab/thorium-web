@@ -3,6 +3,7 @@
 export * from "./StatefulReadAlongContainer";
 export * from "./StatefulReadAlongMediaActions";
 export * from "./StatefulReadAlongMiniPlayer";
+export * from "./StatefulReadAlongMiniPlayerProgression";
 export * from "./StatefulReadAlongPlayer";
 export * from "./StatefulReadAlongTrigger";
 

@@ -325,6 +325,9 @@ This document outlines the available styling classes and custom properties for t
 - `.thorium_web_readAlong_miniPlayerPlaybackControls` - Playback controls toolbar
 - `.thorium_web_readAlong_miniPlayerActions` - Wrapper of the mini player’s actions
 - `.thorium_web_readAlong_miniPlayerActionsBar` - Mini player’s actions toolbar, collapsing into an overflow menu
+- `.thorium_web_readAlong_miniPlayerContainer` - Wrapper of the mini player and its progression in the bottom bar
+- `.thorium_web_readAlong_miniPlayerProgression` - Progression shown in the space after the player actions, in its normal or compact form when it fits
+- `.thorium_web_readAlong_miniPlayerProgressionGhost` - Hidden copy of the progression’s normal and compact forms, used to measure them
 
 #### Custom Properties
 

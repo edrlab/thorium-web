@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { Ref, useMemo } from "react";
 
 import readAlongStyles from "./assets/styles/thorium-web.readAlong.module.css";
 import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
@@ -35,7 +35,13 @@ import { proxyUrl } from "@/helpers/proxyUrl";
 
 import classNames from "classnames";
 
-export const StatefulReadAlongMiniPlayer = () => {
+export const StatefulReadAlongMiniPlayer = ({
+  ref,
+  playerActionsRef
+}: {
+  ref?: Ref<HTMLElement>;
+  playerActionsRef?: Ref<HTMLDivElement>;
+}) => {
   const { t } = useI18n();
   const { readAloud } = useNavigator();
   const progress = useAppSelector(state => state.publication.progress);
@@ -75,6 +81,7 @@ export const StatefulReadAlongMiniPlayer = () => {
 
   return (
     <ThMiniPlayer
+      ref={ ref }
       className={ classNames(readAlongStyles.miniPlayer, isControlsOnly && readAlongStyles.miniPlayerControlsOnly) }
       aria-label={ t("reader.actions.readAloud.compact") }
       heading={ isControlsOnly ? undefined : progress?.title || "" }
@@ -89,6 +96,7 @@ export const StatefulReadAlongMiniPlayer = () => {
       }
       playerActions={
         <ThActionsBar
+          ref={ playerActionsRef }
           className={ readAlongStyles.miniPlayerPlayerActionsBar }
           aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.actions") }
         >

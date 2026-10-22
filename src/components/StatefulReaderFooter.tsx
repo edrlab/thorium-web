@@ -6,7 +6,7 @@ import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
 import readAlongStyles from "./ReadAlong/assets/styles/thorium-web.readAlong.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
+import { ThActionsKeys, ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance, defaultReadAlongAction } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
@@ -14,6 +14,7 @@ import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOve
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
 import { StatefulReadAlongMiniPlayer } from "./ReadAlong/StatefulReadAlongMiniPlayer";
+import { StatefulReadAlongMiniPlayerProgression } from "./ReadAlong/StatefulReadAlongMiniPlayerProgression";
 
 import { Link, Publication } from "@readium/shared";
 
@@ -44,6 +45,9 @@ export const StatefulReaderFooter = ({
   const { t } = useI18n();
   const { direction } = useLocale();
   const footerRef = useRef<HTMLDivElement>(null);
+  const miniPlayerContainerRef = useRef<HTMLDivElement>(null);
+  const miniPlayerRef = useRef<HTMLElement>(null);
+  const miniPlayerActionsRef = useRef<HTMLDivElement>(null);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const hasScrollAffordance = useAppSelector(state => state.reader.hasScrollAffordance);
@@ -61,6 +65,7 @@ export const StatefulReaderFooter = ({
   const affordance = preferences.affordances.scroll.affordance;
   const { isActive: isReadAlongActive, isExpanded: isReadAlongExpanded } = useReadAlongState();
   const showReadAlong = isReadAlongProfile && isReadAlongActive && !isReadAlongExpanded;
+  const showMiniPlayerProgression = (preferences.actions.keys[ThActionsKeys.readAlong]?.miniPlayer ?? defaultReadAlongAction.miniPlayer).progression;
 
   const dispatch = useAppDispatch();
 
@@ -173,9 +178,20 @@ export const StatefulReaderFooter = ({
       { ...focusWithinProps }
     >
       { showReadAlong
-        ? <FocusScope restoreFocus={ true }>
-            <StatefulReadAlongMiniPlayer />
-          </FocusScope>
+        ? <div ref={ miniPlayerContainerRef } className={ readAlongStyles.miniPlayerContainer }>
+            <FocusScope restoreFocus={ true }>
+              <StatefulReadAlongMiniPlayer ref={ miniPlayerRef } playerActionsRef={ miniPlayerActionsRef } />
+            </FocusScope>
+            { showMiniPlayerProgression && (
+              <StatefulReadAlongMiniPlayerProgression
+                containerRef={ miniPlayerContainerRef }
+                miniPlayerRef={ miniPlayerRef }
+                playerActionsRef={ miniPlayerActionsRef }
+                formatPref={ progressionFormatPref }
+                fallbackVariant={ progressionFormatFallback }
+              />
+            ) }
+          </div>
         : (isScroll)
         ? <StatefulReaderPagination
             aria-label={ t("reader.navigation.scroll.wrapper") }

@@ -44,6 +44,14 @@ The mini player, in place of the progression in the reader’s bottom bar: the m
 - Pressing the title or the expand button expands the player
 - A region landmark named “Read along”, whatever its type
 
+### StatefulReadAlongMiniPlayerProgression
+
+The reader’s progression, shown in the space the mini player leaves after its player actions when `miniPlayer.progression` is `true`. Rendered by the reader’s bottom bar next to `StatefulReadAlongMiniPlayer`.
+
+**Features:**
+- Uses the reader’s progression format, in its normal form if it fits, then its compact form, and hides when neither fits
+- Measures the space with ResizeObserver, so the mini player’s own sizing and layout are unaffected
+
 ### StatefulReadAlongPlayer
 
 The expanded player: cover, title, authors, current chapter, playback controls and the expanded player’s actions (`StatefulReadAlongMediaActions`).
