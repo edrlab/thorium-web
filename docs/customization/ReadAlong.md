@@ -366,7 +366,7 @@ readAlong: {
 }
 ```
 
-A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the highlight theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries.
+A style is a `BuiltinDecorationStyle` from `@readium/navigator`, without `enforceContrast`, or `false` for none: its `type`, and optionally its `tint`, `layout`, `width` and `expand`. A style without a `tint` takes the highlight theme’s color. The word style can’t be `mask`, and is disabled when the current voice doesn’t report word boundaries. A word underline on an underlined sentence is drawn as `HighlightUnderline`, in the same color, so that the word stands out from the sentence’s underline, and the word style’s underline option is labeled “Highlight and underline” then.
 Unlike other presets, highlight presets apply even when `highlightPresets` isn’t displayed: the highlight starts from the stored preset, `sentenceAndWord` by default, so that the highlight theme colors it, and changes in the subpanel build on it.
 
 `keepCentered` keeps the sentence being read in the middle of the screen when scrolling, instead of following it once it goes out of view. It is not displayed for fixed-layout publications.

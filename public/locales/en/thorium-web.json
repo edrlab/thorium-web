@@ -294,7 +294,8 @@
               "underline": "Underline",
               "outline": "Outline",
               "textColor": "Text color",
-              "mask": "Dim the rest"
+              "mask": "Dim the rest",
+              "highlightUnderline": "Highlight and underline"
             }
           }
         }

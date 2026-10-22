@@ -68,6 +68,16 @@ const getWordSurface = (utterance: ReadAloudDecorationStyle | null | undefined):
   }
 };
 
+// The word's underline would merge with the utterance's, so it is drawn with a translucent fill
+export const isUnderlineOnUnderline = (
+  word: ReadAloudDecorationStyle | null | undefined,
+  utterance: ReadAloudDecorationStyle | null | undefined
+): boolean => {
+  return !!word && !!utterance
+    && (word as BuiltinDecorationStyle).type === DecorationStyleType.Underline
+    && (utterance as BuiltinDecorationStyle).type === DecorationStyleType.Underline;
+};
+
 type KeyedPresetKeys = Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>;
 
 const isSameStyle = (a: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle], b: ThReadAlongHighlightPreset[ThReadAlongHighlightKeys.utteranceStyle]) => {
@@ -180,16 +190,23 @@ export const useHighlightPresets = () => {
 
     // Theme tints are picked for their background and user tints are used as-is
     const builtinStyle: BuiltinDecorationStyle = { ...(style as BuiltinDecorationStyle), enforceContrast: false };
-    if (builtinStyle.tint) return builtinStyle;
+
+    // Keeps the line color picked for the underline
+    const withType = (resolved: BuiltinDecorationStyle): BuiltinDecorationStyle =>
+      key === ThReadAlongHighlightKeys.wordStyle && isUnderlineOnUnderline(builtinStyle, utterance)
+        ? { ...resolved, type: DecorationStyleType.HighlightUnderline }
+        : resolved;
+
+    if (builtinStyle.tint) return withType(builtinStyle);
 
     const kind = getHighlightKind(builtinStyle);
-    if (!highlightColors || !kind) return builtinStyle;
+    if (!highlightColors || !kind) return withType(builtinStyle);
 
     const themeTint = key === ThReadAlongHighlightKeys.utteranceStyle
       ? highlightColors.utterance[kind]
       : kind === "mask" ? undefined : highlightColors.word[kind][getWordSurface(utterance)];
 
-    return themeTint ? { ...builtinStyle, tint: themeTint } : builtinStyle;
+    return withType(themeTint ? { ...builtinStyle, tint: themeTint } : builtinStyle);
   }, [highlightColors]);
 
   const resolveStyles = useCallback((values: HighlightStyles): EffectiveStyles => {

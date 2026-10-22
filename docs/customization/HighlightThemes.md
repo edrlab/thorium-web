@@ -18,7 +18,7 @@ A fill renders its text in black or white, whichever contrasts most with it. The
 | Word ↓ · Sentence → | none or mask: `onPage` | fill: `onFill` | line: `onLine` | text: `onText` |
 |---|---|---|---|---|
 | fill | on the page | on the sentence fill | under the sentence’s line, which must stay visible on it | among the sentence’s colored text |
-| line | on the page | on the sentence fill | on the page, next to the sentence’s line | on the page, around the sentence’s colored text |
+| line | on the page | on the sentence fill | on the page, next to the sentence’s line; an underline on an underline also gets a 30% fill of this color, see [Highlight](./ReadAlong.md#highlight) | on the page, around the sentence’s colored text |
 | text | on the page, next to the page’s text | on the sentence fill, next to its black or white text | on the page, above the sentence’s line | on the page, next to the sentence’s colored text |
 
 Each reading theme has 16 colors: the sentence’s fill, line, text and mask, and the 12 cells of the matrix. Each cell has to be readable on one surface and stand out from different neighbors, so a color that works in one cell fails in another: a text color that reads on the page may not read on a sentence fill, or may match the fill’s own text. The sentence’s colors constrain every cell drawn on them, so they are picked together with the word’s, see [How Colors Are Picked](#how-colors-are-picked).

@@ -14,7 +14,7 @@ import { ListBox, ListBoxItem } from "react-aria-components";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { useHighlightPresets } from "./hooks/useHighlightPresets";
+import { isUnderlineOnUnderline, useHighlightPresets } from "./hooks/useHighlightPresets";
 import { getDecorationStyleTypes } from "../../helpers/getDecorationStyleTypes";
 
 import { useAppSelector } from "@/lib/hooks";
@@ -31,6 +31,7 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
 
   const style = getStoredStyle(ThReadAlongHighlightKeys.wordStyle) ?? false;
   const builtinStyle = style === false ? undefined : style as BuiltinDecorationStyle;
+  const utteranceStyle = getStoredStyle(ThReadAlongHighlightKeys.utteranceStyle);
 
   const isDisabled = !readAloud || !currentVoiceHasBoundaries;
 
@@ -43,7 +44,9 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
     ...getDecorationStyleTypes([DecorationStyleType.Mask])
       .map((type) => ({
         id: type,
-        label: t(`_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.${ type }`)
+        label: isUnderlineOnUnderline({ type }, utteranceStyle)
+          ? t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.highlightUnderline")
+          : t(`_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.${ type }`)
       }))
   ];
 
