@@ -72,7 +72,8 @@
     "check-locales": "node scripts/check-locales.mjs",
     "update-locales": "node scripts/update-locales.mjs && pnpm check-locales --summary --show-missing",
     "bundle": "tsup --config tsup.config.ts && pnpm copy-locales && pnpm copy-fonts",
-    "increment": "node scripts/increment.mjs"
+    "increment": "node scripts/increment.mjs",
+    "highlight-themes": "node scripts/highlight-themes.mjs"
   },
   "peerDependencies": {
     "@readium/css": "^2.0.5",
