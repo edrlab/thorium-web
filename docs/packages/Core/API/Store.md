@@ -138,11 +138,9 @@ interface ProsodyStateObject {
 interface ReadAlongSettingsReducerState {
   voice: Record<string, string>;      // Voice ids by base language, the navigator’s own voice for a language without one
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null; // Roles read inline, set by the notes and page breaks settings
+  interruptions: ReadAloudSettings["interruptions"] | null; // How each role is read where it interrupts the text, set by the notes, page breaks, abbreviations, glossary and bibliography settings
   keepCentered: boolean | null;
   verbosity: Partial<Record<"reflow" | "fxl" | "divina", ReadAloudSettings["verbosity"]>>; // Per format, like the reading theme
-  skip: ReadAloudSettings["skip"] | null;
-  contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
   languageOverride: string | null;    // Local to the publication
   segmentation: ReadAloudSettings["segmentation"] | null;
@@ -160,7 +158,7 @@ interface ReadAlongSettingsReducerState {
 
 **Actions:**
 - `setReadAlongVoice`: Set the voice of a language, with payload `{ language, voice }`: `language` is a base language (`und` for publications that don’t declare one), `voice` a voice id (`getVoiceId(voice)`)
-- `setReadAlongFormat`, `setReadAlongInlineContextualization`, `setReadAlongKeepCentered`, `setReadAlongSkip`, `setReadAlongContextualize`, `setReadAlongLanguage`, `setReadAlongLanguageOverride`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
+- `setReadAlongFormat`, `setReadAlongInterruptions`, `setReadAlongKeepCentered`, `setReadAlongLanguage`, `setReadAlongLanguageOverride`, `setReadAlongSegmentation`, `setReadAlongPitch`, `setReadAlongVolume`: Set the matching preference
 - `setReadAlongVerbosity`: Set the verbosity preset of a format, with payload `{ key, value }`: `key` is `reflow` for reflowable EPUB and WebPub, `fxl` for fixed-layout EPUB, `divina` for Divina
 - `setReadAlongRate`, `setReadAlongPauseDuration`, `setReadAlongAutoPause`: Set the matching preference, and switch the prosody to the custom preset, starting from the current preset’s values
 - `setReadAlongUtteranceStyle`, `setReadAlongWordStyle`: Set a highlight style. The payload is `{ value, effective, preset? }`: `value` is the style as the user picked it, `effective` the style submitted to the navigator. With `preset`, the highlight switches to the custom preset, starting from the current preset’s styles

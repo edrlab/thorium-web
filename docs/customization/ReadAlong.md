@@ -226,7 +226,7 @@ readAlong: {
 - `voiceGroup`: the voice, with a subpanel for the language override, voice, additional voices, volume, pitch and language, see [Voice](#voice).
 - `prosodyGroup`: the prosody presets, with a subpanel for the rate, pause duration and auto pause, see [Prosody](#prosody).
 - `highlightGroup`: the highlight presets, with a subpanel for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
-- `verbosityGroup`: the verbosity, with a subpanel for the verbosity, notes and page breaks, see [Verbosity](#verbosity).
+- `verbosityGroup`: the verbosity, with a subpanel for the verbosity, abbreviations, notes, glossary, bibliography and page breaks, see [Verbosity](#verbosity).
 
 The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings.
 
@@ -491,16 +491,19 @@ The presets are only applied when `prosodyGroup` is in `order` and `prosodyPrese
 
 `readAlong.settings.verbosity` configures the verbosity group, like the voice group. Use enum `ThReadAlongVerbosityKeys` to reference its components:
 
-- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable. It is kept separately for reflowable and fixed-layout publications, like the reading theme. `custom` is offered when `subPanel` has components to customize it with, and appears once one of them is changed;
-- `notes`: whether notes are read never, where they are referenced, or after the sentence referencing them;
-- `pageBreaks`: whether page breaks are read never, where they appear, or after the sentence they appear in.
+- `verbosity`: how much is announced besides the text, such as images, figures or tables. Its values are the TS-Toolkit’s verbosity presets, and aren’t configurable. It is kept separately for reflowable and fixed-layout publications, like the reading theme. It defaults to `none`, and the TS-Toolkit’s `custom` isn’t offered;
+- `notes`: whether notes are read never, where they are referenced, or after the sentence referencing them, after by default;
+- `pageBreaks`: whether page breaks are read never, where they appear, or after the sentence they appear in, never by default;
+- `abbreviations`: whether abbreviations are read as written, replaced with their expansion, or followed by it, followed by default;
+- `glossary`: whether the definitions of glossary references are read never, where they are referenced, or after the sentence, never by default;
+- `bibliography`: whether the entries of bibliographic references are read never, where they are referenced, or after the sentence, never by default.
 
-Reading notes or page breaks never, or again, switches verbosity to `custom`, starting from what the current preset reads. Picking a preset again resets them to that preset’s.
+These are set apart from verbosity: changing one doesn’t change the other. Expansions, definitions and entries are read when the publication provides them, such as an `abbr` with a `title`, or a glossary or bibliography in the same document.
 
 Its options are the same as the voice group’s:
 
 - `main`: the components shown in the settings’ main panel. Defaults to the verbosity.
-- `subPanel`: the components shown in the verbosity subpanel, opened with the group’s advanced button. Defaults to the verbosity, notes and page breaks. Set it to `null` to remove the subpanel.
+- `subPanel`: the components shown in the verbosity subpanel, opened with the group’s advanced button. Defaults to the verbosity, abbreviations, notes, glossary, bibliography and page breaks. Set it to `null` to remove the subpanel.
 - `header`: the header of the subpanel, from enum `ThSheetHeaderVariant`. Defaults to `previous`, a back button.
 
 ```typescript
@@ -511,7 +514,10 @@ readAlong: {
       main: [ThReadAlongVerbosityKeys.verbosity],
       subPanel: [
         ThReadAlongVerbosityKeys.verbosity,
+        ThReadAlongVerbosityKeys.abbreviations,
         ThReadAlongVerbosityKeys.notes,
+        ThReadAlongVerbosityKeys.glossary,
+        ThReadAlongVerbosityKeys.bibliography,
         ThReadAlongVerbosityKeys.pageBreaks
       ]
     }

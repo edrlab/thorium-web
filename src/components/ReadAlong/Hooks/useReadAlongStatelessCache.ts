@@ -14,11 +14,9 @@ export interface ReadAlongStatelessCache {
 
 export const useReadAlongStatelessCache = (
   format: ReadAloudSettings["format"] | null,
-  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null,
+  interruptions: ReadAloudSettings["interruptions"] | null,
   keepCentered: boolean | null,
   verbosity: ReadAloudSettings["verbosity"] | null,
-  skip: ReadAloudSettings["skip"] | null,
-  contextualize: ReadAloudSettings["contextualize"] | null,
   language: ReadAloudSettings["language"] | null,
   segmentation: ReadAloudSettings["segmentation"] | null,
   pauseDuration: number | null,
@@ -35,11 +33,9 @@ export const useReadAlongStatelessCache = (
 ) => {
   const settingsCache = useReadAloudSettingsCache(
     format,
-    inlineContextualization,
+    interruptions,
     keepCentered,
     verbosity,
-    skip,
-    contextualize,
     language,
     segmentation,
     pauseDuration,

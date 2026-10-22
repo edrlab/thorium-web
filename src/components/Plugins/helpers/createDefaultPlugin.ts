@@ -64,6 +64,9 @@ import { StatefulReadAlongLanguage } from "../../ReadAlong/Settings/Voice/Statef
 import { StatefulReadAlongLanguageOverride } from "../../ReadAlong/Settings/Voice/StatefulReadAlongLanguageOverride";
 import { StatefulReadAlongNotes } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongNotes";
 import { StatefulReadAlongPageBreaks } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongPageBreaks";
+import { StatefulReadAlongAbbreviations } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongAbbreviations";
+import { StatefulReadAlongBibliography } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongBibliography";
+import { StatefulReadAlongGlossary } from "../../ReadAlong/Settings/Verbosity/StatefulReadAlongGlossary";
 
 export const createDefaultPlugin = (): ThPlugin => {
   return {
@@ -276,6 +279,18 @@ export const createDefaultPlugin = (): ThPlugin => {
         },
         [ThReadAlongKeys.pageBreaks]: {
           Comp: StatefulReadAlongPageBreaks,
+          type: "readAlongVerbosity"
+        },
+        [ThReadAlongKeys.abbreviations]: {
+          Comp: StatefulReadAlongAbbreviations,
+          type: "readAlongVerbosity"
+        },
+        [ThReadAlongKeys.bibliography]: {
+          Comp: StatefulReadAlongBibliography,
+          type: "readAlongVerbosity"
+        },
+        [ThReadAlongKeys.glossary]: {
+          Comp: StatefulReadAlongGlossary,
           type: "readAlongVerbosity"
         }
       }

@@ -48,13 +48,16 @@ const SETTINGS_KEY_TO_PREFERENCE = {
     [ThAudioKeys.volume]: "volume",
   },
   readAlong: {
+    [ThReadAlongKeys.abbreviations]: "interruptions",
     [ThReadAlongKeys.additionalVoices]: "voice",
     [ThReadAlongKeys.autoPause]: "autoPause",
+    [ThReadAlongKeys.bibliography]: "interruptions",
+    [ThReadAlongKeys.glossary]: "interruptions",
     [ThReadAlongKeys.keepCentered]: "keepCentered",
     [ThReadAlongKeys.language]: "language",
     [ThReadAlongKeys.languageOverride]: "languageOverride",
-    [ThReadAlongKeys.notes]: "inlineContextualization",
-    [ThReadAlongKeys.pageBreaks]: "inlineContextualization",
+    [ThReadAlongKeys.notes]: "interruptions",
+    [ThReadAlongKeys.pageBreaks]: "interruptions",
     [ThReadAlongKeys.pauseDuration]: "pauseDuration",
     [ThReadAlongKeys.pitch]: "pitch",
     [ThReadAlongKeys.rate]: "rate",
@@ -71,12 +74,6 @@ const SETTINGS_KEY_TO_PREFERENCE = {
   audio: Partial<Record<ThAudioKeys, string>>;
   readAlong: Partial<Record<ThReadAlongKeys, string>>;
 };
-
-// The tables of the custom verbosity, which the notes and page breaks settings also write
-export const CUSTOM_VERBOSITY_PREFERENCES = {
-  skip: "skip",
-  contextualize: "contextualize"
-} as const;
 
 type PreferenceScope = keyof typeof SETTINGS_KEY_TO_PREFERENCE;
 

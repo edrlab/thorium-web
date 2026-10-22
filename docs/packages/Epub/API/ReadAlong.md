@@ -156,11 +156,17 @@ A dropdown of the languages the TS-Toolkit’s `getLanguages()` lists, after the
 
 ### StatefulReadAlongVerbosity
 
-A radio group of the verbosity presets supported by the TS-Toolkit. `custom` is left out unless the verbosity subpanel has other components, and starts from the current preset when picked without having been customized.
+A dropdown of the verbosity presets supported by the TS-Toolkit, except `custom`.
 
-### StatefulReadAlongNotes, StatefulReadAlongPageBreaks
+### StatefulReadAlongNotes, StatefulReadAlongPageBreaks, StatefulReadAlongAbbreviations, StatefulReadAlongGlossary, StatefulReadAlongBibliography
 
-Dropdowns reading notes and page breaks never, inline (where they are referenced or appear), or after the sentence. Their value is derived from the navigator’s current settings, so it matches any preset. Changing whether they are read switches verbosity to `custom`, starting from the current preset’s tables.
+Dropdowns reading notes, page breaks, abbreviation expansions, glossary definitions and bibliography entries never, inline (where they are referenced or appear), or after the sentence. They set the `noteref`, `pagebreak`, `abbreviation`, `glossref` and `biblioref` entries of the TS-Toolkit’s `interruptions` preference, whatever the verbosity. Abbreviations read never are read as written, and inline are replaced with their expansion.
+
+Each renders `StatefulReadAlongInterruption`, which takes the setting key, whose locale strings it uses, and the role it sets:
+
+```typescript
+<StatefulReadAlongInterruption settingKey={ ThReadAlongKeys.notes } role="noteref" />
+```
 
 ### StatefulReadAlongKeepCentered
 

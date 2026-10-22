@@ -189,8 +189,7 @@
               "none": "None",
               "few": "Few",
               "some": "Some",
-              "most": "Most",
-              "custom": "Custom"
+              "most": "Most"
             }
           },
           "language": {
@@ -224,6 +223,30 @@
             "values": {
               "never": "Never",
               "inline": "Where they appear",
+              "after": "After the sentence"
+            }
+          },
+          "abbreviations": {
+            "title": "Abbreviations",
+            "values": {
+              "never": "As written",
+              "inline": "Expanded",
+              "after": "With their expansion"
+            }
+          },
+          "bibliography": {
+            "title": "Bibliographic references",
+            "values": {
+              "never": "Never",
+              "inline": "Where they are referenced",
+              "after": "After the sentence"
+            }
+          },
+          "glossary": {
+            "title": "Glossary definitions",
+            "values": {
+              "never": "Never",
+              "inline": "Where they are referenced",
               "after": "After the sentence"
             }
           },

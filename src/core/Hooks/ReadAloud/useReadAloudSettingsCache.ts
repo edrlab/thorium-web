@@ -6,11 +6,9 @@ import { ReadAloudSettings } from "@readium/navigator";
 
 export interface ReadAloudSettingsObject {
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
+  interruptions: ReadAloudSettings["interruptions"] | null;
   keepCentered: boolean | null;
   verbosity: ReadAloudSettings["verbosity"] | null;
-  skip: ReadAloudSettings["skip"] | null;
-  contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
   segmentation: ReadAloudSettings["segmentation"] | null;
   pauseDuration: number | null;
@@ -30,11 +28,9 @@ export interface ReadAloudSettingsCache {
 
 export const useReadAloudSettingsCache = (
   format: ReadAloudSettings["format"] | null,
-  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null,
+  interruptions: ReadAloudSettings["interruptions"] | null,
   keepCentered: boolean | null,
   verbosity: ReadAloudSettings["verbosity"] | null,
-  skip: ReadAloudSettings["skip"] | null,
-  contextualize: ReadAloudSettings["contextualize"] | null,
   language: ReadAloudSettings["language"] | null,
   segmentation: ReadAloudSettings["segmentation"] | null,
   pauseDuration: number | null,
@@ -50,11 +46,9 @@ export const useReadAloudSettingsCache = (
   const cache = useRef<ReadAloudSettingsCache>({
     settings: {
       format,
-      inlineContextualization,
+      interruptions,
       keepCentered,
       verbosity,
-      skip,
-      contextualize,
       language,
       segmentation,
       pauseDuration,
@@ -72,11 +66,9 @@ export const useReadAloudSettingsCache = (
   const memoizedCache = useMemo(() => ({
     settings: {
       format,
-      inlineContextualization,
+      interruptions,
       keepCentered,
       verbosity,
-      skip,
-      contextualize,
       language,
       segmentation,
       pauseDuration,
@@ -91,11 +83,9 @@ export const useReadAloudSettingsCache = (
     },
   }), [
     format,
-    inlineContextualization,
+    interruptions,
     keepCentered,
     verbosity,
-    skip,
-    contextualize,
     language,
     segmentation,
     pauseDuration,

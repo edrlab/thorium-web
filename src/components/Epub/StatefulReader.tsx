@@ -31,7 +31,7 @@ import {
   FrameClickEvent,
   SuspiciousActivityEvent
 } from "@readium/navigator-html-injectables";
-import { EpubNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
+import { EpubNavigatorListeners, KeyboardPeripheralEventData, VisualNavigatorViewport } from "@readium/navigator";
 import {
   Locator,
   Publication,
@@ -491,6 +491,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       }
       return false;
     },
+    viewportChanged: function (_viewport: VisualNavigatorViewport): void {},
     textSelected: function (_selection: BasicTextSelection): void {},
     contentProtection: function (_type: string, _data: SuspiciousActivityEvent): void {},
     contextMenu: function (_data: ContextMenuEvent): void {},

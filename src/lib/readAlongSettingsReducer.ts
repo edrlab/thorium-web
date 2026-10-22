@@ -131,11 +131,9 @@ export interface ReadAlongVoiceChangePayload {
 export interface ReadAlongSettingsReducerState {
   voice: ReadAlongVoiceStateObject;
   format: ReadAloudSettings["format"] | null;
-  inlineContextualization: ReadAloudSettings["inlineContextualization"] | null;
+  interruptions: ReadAloudSettings["interruptions"] | null;
   keepCentered: boolean | null;
   verbosity: ReadAlongVerbosityStateObject;
-  skip: ReadAloudSettings["skip"] | null;
-  contextualize: ReadAloudSettings["contextualize"] | null;
   language: ReadAloudSettings["language"] | null;
   languageOverride: string | null;
   segmentation: ReadAloudSettings["segmentation"] | null;
@@ -153,11 +151,9 @@ export interface ReadAlongSettingsReducerState {
 const initialState: ReadAlongSettingsReducerState = {
   voice: {},
   format: null,
-  inlineContextualization: null,
+  interruptions: null,
   keepCentered: null,
   verbosity: {},
-  skip: null,
-  contextualize: null,
   language: null,
   languageOverride: null,
   segmentation: null,
@@ -186,8 +182,8 @@ export const readAlongSettingsSlice = createSlice({
     setReadAlongFormat: (state, action) => {
       state.format = action.payload
     },
-    setReadAlongInlineContextualization: (state, action) => {
-      state.inlineContextualization = action.payload
+    setReadAlongInterruptions: (state, action) => {
+      state.interruptions = action.payload
     },
     setReadAlongKeepCentered: (state, action) => {
       state.keepCentered = action.payload
@@ -198,12 +194,6 @@ export const readAlongSettingsSlice = createSlice({
         state.verbosity = {};
       }
       state.verbosity[action.payload.key] = action.payload.value ?? undefined;
-    },
-    setReadAlongSkip: (state, action) => {
-      state.skip = action.payload
-    },
-    setReadAlongContextualize: (state, action) => {
-      state.contextualize = action.payload
     },
     setReadAlongLanguage: (state, action) => {
       state.language = action.payload
@@ -301,11 +291,9 @@ export const readAlongSettingsSlice = createSlice({
 export const {
   setReadAlongVoice,
   setReadAlongFormat,
-  setReadAlongInlineContextualization,
+  setReadAlongInterruptions,
   setReadAlongKeepCentered,
   setReadAlongVerbosity,
-  setReadAlongSkip,
-  setReadAlongContextualize,
   setReadAlongLanguage,
   setReadAlongLanguageOverride,
   setReadAlongSegmentation,

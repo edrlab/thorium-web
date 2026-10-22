@@ -1,81 +1,76 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { Key, useCallback } from "react";
 
 import { VerbosityPreset } from "@readium/navigator";
 import { ThReadAlongKeys } from "@/preferences";
-import { defaultReadAlongVerbositySubpanel, ThReadAlongVerbosityKeys } from "@/preferences/models";
-import { CUSTOM_VERBOSITY_PREFERENCES, getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
+import { getPreferenceKey } from "../../../Settings/helpers/settingsKeyMapping";
 
 import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
-import { StatefulRadioGroup } from "../../../Settings/StatefulRadioGroup";
+import settingsStyles from "../../../Settings/assets/styles/thorium-web.reader.settings.module.css";
+
+import { StatefulDropdown } from "../../../Settings/StatefulDropdown";
+import { ListBox, ListBoxItem } from "react-aria-components";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { usePreferences } from "@/preferences/hooks/usePreferences";
 
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { setReadAlongContextualize, setReadAlongSkip, setReadAlongVerbosity } from "@/lib/readAlongSettingsReducer";
+import { useAppDispatch } from "@/lib/hooks";
+import { setReadAlongVerbosity } from "@/lib/readAlongSettingsReducer";
 import { useReadAlongVerbosity } from "../../Hooks/useReadAlongVerbosity";
 
 export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettingsItemProps) => {
   const { t } = useI18n();
 
-  const { preferences } = usePreferences();
   const { verbosityKey, verbosity } = useReadAlongVerbosity();
-  const skip = useAppSelector(state => state.readAlongSettings.skip);
-  const contextualize = useAppSelector(state => state.readAlongSettings.contextualize);
   const dispatch = useAppDispatch();
 
   const readAloud = useNavigator().readAloud;
 
-  // Custom is only reachable with components to customize it with, like prosody presets
-  const hasCustomizableValues = useMemo(() => {
-    const subPanel = preferences.readAlong.settings.verbosity?.subPanel ?? defaultReadAlongVerbositySubpanel;
-    return subPanel.some((key) => key !== ThReadAlongVerbosityKeys.verbosity);
-  }, [preferences.readAlong.settings.verbosity]);
-
+  // Custom tables aren't offered, the components of the subpanel set what verbosity doesn't cover
   const supportedValues = (readAloud?.preferencesEditor?.verbosity.supportedValues ?? [])
-    .filter((value) => value !== "custom" || hasCustomizableValues);
+    .filter((value) => value !== "custom");
 
   const items = supportedValues.map((value) => ({
     id: value,
-    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.verbosity.values.${ value }`),
-    value: value
+    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.verbosity.values.${ value }`)
   }));
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.verbosity, "readAlong");
-  const { skip: skipPrefKey, contextualize: contextualizePrefKey } = CUSTOM_VERBOSITY_PREFERENCES;
 
-  const updatePreference = useCallback(async (value: string) => {
-    if (!readAloud) return;
-    if (value === "custom") {
-      // Never customized yet, it starts from the current preset's tables
-      await readAloud.submitPreferences({
-        [prefKey]: value,
-        [skipPrefKey]: skip ?? readAloud.getSetting(skipPrefKey),
-        [contextualizePrefKey]: contextualize ?? readAloud.getSetting(contextualizePrefKey)
-      });
-      dispatch(setReadAlongSkip(readAloud.getSetting(skipPrefKey)));
-      dispatch(setReadAlongContextualize(readAloud.getSetting(contextualizePrefKey)));
-    } else {
-      await readAloud.submitPreferences({ [prefKey]: value as VerbosityPreset });
-    }
+  const updatePreference = useCallback(async (key: Key | null) => {
+    if (!readAloud || !key) return;
+    await readAloud.submitPreferences({ [prefKey]: key as VerbosityPreset });
     dispatch(setReadAlongVerbosity({ key: verbosityKey, value: readAloud.getSetting(prefKey) }));
-  }, [prefKey, skipPrefKey, contextualizePrefKey, readAloud, skip, contextualize, verbosityKey, dispatch]);
+  }, [prefKey, readAloud, verbosityKey, dispatch]);
 
   return (
-    <>
-    <StatefulRadioGroup
+    <StatefulDropdown
       standalone={ standalone }
       label={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title") }
-      orientation="horizontal"
-      value={ verbosity ?? readAloud?.getSetting(prefKey) ?? undefined }
-      onChange={ async (val: string) => await updatePreference(val) }
-      items={ items }
+      selectedKey={ verbosity ?? readAloud?.getSetting(prefKey) ?? null }
+      onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }
+      compounds={ {
+        listbox: (
+          <ListBox
+            className={ settingsStyles.dropdownListbox }
+            items={ items }
+          >
+            { (item) => (
+              <ListBoxItem
+                className={ settingsStyles.dropdownListboxItem }
+                id={ item.id }
+                key={ item.id }
+                textValue={ item.label }
+              >
+                { item.label }
+              </ListBoxItem>
+            )}
+          </ListBox>
+        )
+      }}
     />
-    </>
   )
 }

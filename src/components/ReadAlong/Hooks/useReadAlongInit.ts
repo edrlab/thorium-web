@@ -22,10 +22,18 @@ import { getStoredVoices, toVoicePreference } from "../helpers/voicePreference";
 import { useHighlightPresets } from "../Settings/Highlight/hooks/useHighlightPresets";
 import { useProsodyPresets } from "../Settings/Prosody/hooks/useProsodyPresets";
 
-// Not settings, so pinned rather than left to the navigator's own defaults
+// Pinned rather than left to the navigator's own defaults
 const readAlongDefaults: IReadAloudDefaults = {
   segmentation: "sentence",
-  format: "plain"
+  format: "plain",
+  verbosity: "none",
+  interruptions: {
+    abbreviation: "after",
+    biblioref: "never",
+    glossref: "never",
+    noteref: "after",
+    pagebreak: "never"
+  }
 };
 
 interface UseReadAlongInitProps {
@@ -43,11 +51,9 @@ export const useReadAlongInit = ({
   const dispatch = useAppDispatch();
 
   const format = useAppSelector(state => state.readAlongSettings.format);
-  const inlineContextualization = useAppSelector(state => state.readAlongSettings.inlineContextualization);
+  const interruptions = useAppSelector(state => state.readAlongSettings.interruptions);
   const keepCentered = useAppSelector(state => state.readAlongSettings.keepCentered);
   const { verbosity } = useReadAlongVerbosity();
-  const skip = useAppSelector(state => state.readAlongSettings.skip);
-  const contextualize = useAppSelector(state => state.readAlongSettings.contextualize);
   const language = useAppSelector(state => state.readAlongSettings.language);
   const segmentation = useAppSelector(state => state.readAlongSettings.segmentation);
   const pauseDuration = useAppSelector(state => state.readAlongSettings.pauseDuration);
@@ -65,11 +71,9 @@ export const useReadAlongInit = ({
 
   const cache = useReadAlongStatelessCache(
     format,
-    inlineContextualization,
+    interruptions,
     keepCentered,
     verbosity,
-    skip,
-    contextualize,
     language,
     segmentation,
     pauseDuration,
