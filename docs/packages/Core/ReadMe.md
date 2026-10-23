@@ -48,4 +48,4 @@ Please refer to the [Preferences documentation](./Preferences.md) for more infor
 
 ## Related Documentation
 
-- [Epub Package](./Epub.md)
+- [Epub Package](../Epub/ReadMe.md)

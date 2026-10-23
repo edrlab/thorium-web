@@ -18,6 +18,7 @@ const eslintConfig = [
       "next-env.d.ts",
       ".vercel/**",
       ".wrangler/**",
+      ".open-next/**",
       ".rollup.cache/**",
     ],
   },

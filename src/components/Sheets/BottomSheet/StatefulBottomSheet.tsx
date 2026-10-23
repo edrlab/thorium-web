@@ -1,15 +1,18 @@
 "use client";
 
-import React, { CSSProperties, KeyboardEvent, useCallback, useMemo, useRef } from "react";
+import React, { CSSProperties, useMemo, useRef } from "react";
 
 import { ThBottomSheetDetent, ThSheetHeaderVariant } from "@/preferences";
 
-import { StatefulSheet } from "./models/sheets";
+import { StatefulSheet } from "../models/sheets";
 
-import sheetStyles from "./assets/styles/thorium-web.sheets.module.css";
-import readerSharedUI from "../assets/styles/thorium-web.button.module.css";
+import { useBottomSheetSnap } from "./hooks";
+
+import sheetStyles from "../assets/styles/thorium-web.sheets.module.css";
+import readerSharedUI from "../../assets/styles/thorium-web.button.module.css";
 
 import { SheetRef, SheetDetent } from "react-modal-sheet";
+import { Toolbar } from "react-aria-components";
 
 import { ThBottomSheet } from "@/core/Components/Containers/ThBottomSheet";
 import { ThContainerHeader } from "@/core/Components/Containers/ThContainerHeader";
@@ -47,6 +50,7 @@ export const StatefulBottomSheet = ({
   isOpen,
   onOpenChange, 
   onClosePress,
+  headerActions,
   children,
   resetFocus,
   focusWithinRef,
@@ -85,6 +89,17 @@ export const StatefulBottomSheet = ({
 
     const snapPref = preferences.actionsKeys[id].snapped;
     if (snapPref) {
+      // A full height max alone opens at full height, dragging down closes the sheet
+      if (
+        !snapPref.minHeight &&
+        !snapPref.peekHeight &&
+        (snapPref.maxHeight === 100 || snapPref.maxHeight === "full-height")
+      ) {
+        detent.current = "full-height";
+        snapArray.push(1);
+        return snapArray;
+      }
+
       // We must start with minHeight to see if it’s 
       // constrained by a detent as it means
       // the bottom sheet is not draggable.
@@ -171,42 +186,11 @@ export const StatefulBottomSheet = ({
     return snapArray;
   }, [id, preferences]);
 
-  const snapIdx = useRef<number | null>(null);
-
-  const onDragPressCallback = useCallback(() => {
-    if (snapIdx.current !== null) {
-      // In [0, min, peek, max] order, cycle to next index but skip index 0
-      const nextIdx = snapIdx.current === snapArray.length - 1 ? 1 : snapIdx.current + 1;
-      sheetRef.current?.snapTo(nextIdx);
-    }
-  }, [snapArray]);
-
-  const onDragKeyCallback = useCallback((e: KeyboardEvent) => {
-    if (snapIdx.current !== null) {
-      switch(e.code) {
-        case "PageUp":
-          if (snapIdx.current === snapArray.length - 1) return;
-          sheetRef.current?.snapTo(snapArray.length - 1);
-          break;
-        case "ArrowUp":
-          if (snapIdx.current === snapArray.length - 1) return;
-          sheetRef.current?.snapTo(snapIdx.current + 1);
-          break;
-        case "PageDown":
-          onClosePress();
-          break;
-        case "ArrowDown":
-          if (snapIdx.current === 1) {
-            onClosePress();
-            break;
-          }
-          sheetRef.current?.snapTo(snapIdx.current - 1)
-          break;
-        default:
-          break;
-      }
-    }
-  }, [snapArray, onClosePress]);
+  const { onSnapCallback, onDragPressCallback, onDragKeyCallback } = useBottomSheetSnap({
+    sheetRef,
+    snapArray,
+    onClosePress
+  });
 
   const maxWidthPref = useMemo(() => {
     const maxWidth = preferences.actionsKeys[id].snapped?.maxWidth;
@@ -285,17 +269,17 @@ export const StatefulBottomSheet = ({
         }}
         onOpenChange={ onOpenChange }
         isKeyboardDismissDisabled={ dismissEscapeKeyClose }
-        { ...(snapArray.length > 2 
+        { ...(snapArray.length > 1 
           ? { 
             snapPoints: snapArray, 
-            initialSnap: 2,
+            initialSnap: Math.min(2, snapArray.length - 1),
             detent: convertDetent(detent.current)
           } 
           : {
             detent: convertDetent(detent.current)
           }) 
         }
-        onSnap={ (index) => { snapIdx.current = index }}
+        onSnap={ onSnapCallback }
         prefersReducedMotion={ prefersReducedMotion }
         compounds={ {
           container: {
@@ -338,16 +322,26 @@ export const StatefulBottomSheet = ({
               direction={ direction === "ltr" ? "left" : "right" }
               label={ t("reader.app.back.trigger") }
               ref={ bottomSheetCloseRef }
-              className={ classNames(className, readerSharedUI.backButton) } 
+              className={ readerSharedUI.backButton } 
               aria-label={ t("reader.app.back.trigger") }
               onPress={ onClosePress }
-            /> 
-            : <ThCloseButton
-              ref={ bottomSheetCloseRef }
-              className={ readerSharedUI.closeButton } 
-              aria-label={ t("common.actions.close") } 
-              onPress={ onClosePress }
             />
+            : headerActions
+              ? <Toolbar className={ sheetStyles.draggableHeaderActions }>
+                  { headerActions }
+                  <ThCloseButton
+                    ref={ bottomSheetCloseRef }
+                    className={ readerSharedUI.closeButton }
+                    aria-label={ t("common.actions.close") }
+                    onPress={ onClosePress }
+                  />
+                </Toolbar>
+              : <ThCloseButton
+                  ref={ bottomSheetCloseRef }
+                  className={ readerSharedUI.closeButton }
+                  aria-label={ t("common.actions.close") }
+                  onPress={ onClosePress }
+                />
           }
         </ThContainerHeader>
         <ThContainerBody 

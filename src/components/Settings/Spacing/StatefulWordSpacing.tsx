@@ -18,6 +18,8 @@ import { useSpacingPresets } from "./hooks/useSpacingPresets";
 import { usePlaceholder } from "../hooks/usePlaceholder";
 import { useEffectiveRange } from "../hooks/useEffectiveRange";
 
+import { useAppSelector } from "@/lib/hooks";
+
 export const StatefulWordSpacing = ({ standalone = true }: StatefulSettingsItemProps) => {
   const { preferences } = usePreferences();
   const { t } = useI18n();
@@ -41,7 +43,10 @@ export const StatefulWordSpacing = ({ standalone = true }: StatefulSettingsItemP
 
   const wordSpacing = getEffectiveSpacingValue(ThSpacingSettingsKeys.wordSpacing);
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.wordSpacing);
+  const profile = useAppSelector(state => state.reader.profile);
+  const isWebPub = profile === "webPub";
+
+  const prefKey = getPreferenceKey(ThSettingsKeys.wordSpacing, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: number | number[] | null) => {
     await submitPreferences({

@@ -46,7 +46,10 @@ export const useActionsPreferences = (): ActionsPreferences => {
     if (!readerCtx) return null;
     return {
       docking: readerCtx.preferences.docking,
-      actionsKeys: readerCtx.preferences.actions.keys as Record<string, ThActionsTokens>,
+      actionsKeys: {
+        ...readerCtx.preferences.readAlong?.actions.keys,
+        ...readerCtx.preferences.actions.keys
+      } as Record<string, ThActionsTokens | ThAudioActionsTokens>,
     };
   }, [readerCtx]);
 

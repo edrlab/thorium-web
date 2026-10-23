@@ -12,7 +12,8 @@ import {
   ThSpacingSettingsKeys,
   ThSettingsKeys,
   ThDockingKeys,
-  ThActionsKeys
+  ThActionsKeys,
+  ThReadAlongActionKeys
 } from "@/preferences/models";
 
 import { ThPluginRegistry } from "../Plugins/PluginRegistry";
@@ -26,7 +27,7 @@ import {
   FrameClickEvent,
   SuspiciousActivityEvent,
 } from "@readium/navigator-html-injectables";
-import { WebPubNavigatorListeners } from "@readium/navigator";
+import { VisualNavigatorViewport, WebPubNavigatorListeners } from "@readium/navigator";
 import {
   Locator,
   Publication,
@@ -36,13 +37,15 @@ import {
 import { StatefulDockingWrapper } from "../Docking/StatefulDockingWrapper";
 import { StatefulReaderHeader } from "../StatefulReaderHeader";
 import { StatefulReaderFooter } from "../StatefulReaderFooter";
-import { PositionStorage } from "../Reader/StatefulReaderWrapper";
+import { PositionStorage, ReadAlongConfig } from "../Reader/StatefulReaderWrapper";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 import { useSettingsComponentStatus } from "@/components/Settings/hooks/useSettingsComponentStatus";
 import { useWebPubNavigator } from "@/core/Hooks/WebPub";
-import { useWebPubSettingsCache } from "@/core/Hooks/WebPub/useWebPubSettingsCache";
+import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud";
+import { useReadAlongInit, useReadAlongMetadata, useReadAlongState } from "@/components/ReadAlong/Hooks";
 import { useWebPubReaderInit } from "./Hooks/useReaderInit";
+import { useWebPubStatelessCache } from "./Hooks/useWebPubStatelessCache";
 import { useWebPubKeyboardPeripherals } from "./Hooks/useWebPubKeyboardPeripherals";
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { useI18n } from "@/i18n/useI18n";
@@ -51,6 +54,7 @@ import { useTimelineAdjacency } from "@/core/Hooks/useTimelineAdjacency";
 import { useTocEntryTracking } from "@/components/Actions/Toc/useTocEntryTracking";
 import { useTocTreeBuilder } from "@/core/Hooks/useTocTreeBuilder";
 import { usePositionStorage } from "@/hooks/usePositionStorage";
+import { useSettingsStorage } from "@/hooks/useSettingsStorage";
 import { useDocumentTitle } from "@/core/Hooks/useDocumentTitle";
 import { resolveDocumentTitle } from "@/helpers/resolveDocumentTitle";
 import { useSpacingPresets } from "../Settings/Spacing/hooks/useSpacingPresets";
@@ -62,6 +66,7 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { 
   setLoading,
   setHovering, 
+  setImmersive,
   toggleImmersive, 
   setFullscreen,
 } from "@/lib/readerReducer";
@@ -76,16 +81,19 @@ import classNames from "classnames";
 import { createDefaultPlugin } from "../Plugins/helpers/createDefaultPlugin";
 import { getReaderClassNames } from "../Helpers/getReaderClassNames";
 import { resolveContentProtectionConfig } from "@/preferences/models/protection";
-import { NavPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
+import { NavPeripheralType, PlaybackPeripheralType, fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
 
 export const ExperimentalWebPubStatefulReader = ({
   publication,
   localDataKey,
   plugins,
   positionStorage,
+  settingsStorage,
+  readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
+  const isSettingsHydrated = useSettingsStorage(localDataKey, "webPub", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
@@ -98,20 +106,20 @@ export const ExperimentalWebPubStatefulReader = ({
     setPluginsRegistered(true);
   }, [plugins]);
 
-  if (!pluginsRegistered) {
+  if (!pluginsRegistered || !isSettingsHydrated) {
     return null;
   }
 
   return (
     <>
       <ThPluginProvider>
-        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } containerRefSetter={ containerRefSetter } />
+        <StatefulReaderInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } readAlong={ readAlong } containerRefSetter={ containerRefSetter } />
       </ThPluginProvider>
     </>
   );
 };
 
-const StatefulReaderInner = ({ publication, localDataKey, positionStorage, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; containerRefSetter?: (el: Element | null) => void }) => {
+const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readAlong, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; readAlong?: ReadAlongConfig; containerRefSetter?: (el: Element | null) => void }) => {
   const { preferences, getFontMetadata, getFontInjectables } = usePreferences();
   const { t } = useI18n();
   const { getEffectiveSpacingValue } = useSpacingPresets();
@@ -143,10 +151,13 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   const hasDisplayTransformability = useAppSelector(state => state.publication.hasDisplayTransformability);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
+  const isReadAlongPlaying = useAppSelector(state => state.readAlongPlayer.status === "playing");
+  const isReadAlongDetached = useAppSelector(state => state.readAlongPlayer.isDetached);
   const breakpoint = useAppSelector(state => state.theming.breakpoint);
   const containerBreakpoint = useAppSelector(state => state.theming.containerBreakpoint);
 
-  const cache = useWebPubSettingsCache(
+  const cache = useWebPubStatelessCache(
     fontFamily,
     fontWeight,
     hyphens,
@@ -160,7 +171,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
     textAlign,
     textNormalization,
     wordSpacing,
-    zoom
+    zoom,
+    isReadAlongActive,
+    isReadAlongPlaying,
+    isReadAlongDetached
   );
 
   const layoutUI = preferences.theming.layout.ui?.webPub || ThLayoutUI.stacked;
@@ -175,8 +189,25 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   }, [dispatch]);
   
   const { handleFullscreen } = useFullscreen(onFsChange);
+  const { toggleActive: toggleReadAlong } = useReadAlongState();
 
   const webPubNavigator = useWebPubNavigator();
+  const readAloudNavigator = useReadAloudNavigator();
+  const { readFromPointer, play: playReadAlong, pause: pauseReadAlong, reattach } = readAloudNavigator;
+
+  const toggleReadAlongPlayback = useCallback(() => {
+    if (cache.current.isReadAlongPlaying) {
+      pauseReadAlong();
+    } else {
+      playReadAlong();
+      dispatch(setImmersive(true));
+    }
+  }, [cache, playReadAlong, pauseReadAlong, dispatch]);
+
+  const reattachReadAlong = useCallback(() => {
+    if (cache.current.isReadAlongDetached) reattach();
+  }, [cache, reattach]);
+
   const {
     currentPositions,
     canGoBackward,
@@ -215,6 +246,15 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
 
   const { zoomIn, zoomOut } = useZoomCallbacks(webPubNavigator);
 
+  // While read along is active, a press on content reads from there, other presses are handled as usual.
+  const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
+    if (!cache.current.isReadAlongActive) return fallback(event);
+    readFromPointer(event).then((handled) => {
+      if (!handled) return fallback(event);
+      dispatch(setImmersive(true));
+    });
+  }, [cache, readFromPointer, dispatch]);
+
   const listeners: WebPubNavigatorListeners = useMemo(() => ({
     frameLoaded: async function (_wnd: Window): Promise<void> {},
     timelineItemChanged: function (item: TimelineItem | undefined): void {
@@ -245,11 +285,12 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       }
     },
     tap: function (_e: FrameClickEvent): boolean {
-      toggleIsImmersive();
+      handlePointer(_e, toggleIsImmersive);
       return true;
     },
     click: function (_e: FrameClickEvent): boolean {
-      return false;
+      handlePointer(_e, () => {});
+      return true;
     },
     zoom: function (_scale: number): void { },
     scroll: function (_delta: number): void { },
@@ -269,6 +310,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       }
       return false;
     },
+    viewportChanged: function (_viewport: VisualNavigatorViewport): void {},
     textSelected: function (_selection: BasicTextSelection): void {},
     contentProtection: function (_type: string, _data: SuspiciousActivityEvent): void {},
     contextMenu: function (_data: ContextMenuEvent): void {},
@@ -276,11 +318,24 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
       switch (data.type) {
         case NavPeripheralType.zoomIn:  zoomIn();  break;
         case NavPeripheralType.zoomOut: zoomOut(); break;
+        case PlaybackPeripheralType.playPause: toggleReadAlongPlayback(); break;
         default: {
           const actionKey = fromActionPeripheralType(data.type);
 
           if (actionKey === ThActionsKeys.fullscreen) {
             handleFullscreen();
+            return;
+          }
+
+          // Starts or stops read along like its trigger, rather than expanding the player
+          if (actionKey === ThActionsKeys.readAlong) {
+            toggleReadAlong();
+            return;
+          }
+
+          // Has no container to open, unlike the other read along actions
+          if (actionKey === ThReadAlongActionKeys.reattach) {
+            reattachReadAlong();
             return;
           }
 
@@ -300,7 +355,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
         }
       }
     },
-  }), [setLocalData, canGoBackward, canGoForward, dispatch, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
+  }), [setLocalData, canGoBackward, canGoForward, dispatch, handlePointer, toggleIsImmersive, zoomIn, zoomOut, profile, handleFullscreen, toggleReadAlong, toggleReadAlongPlayback, reattachReadAlong, getFocusedDockableKey, updateAdjacentItems, clearAdjacentItems, updateCurrentTocEntry, clearCurrentTocEntry]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
@@ -333,10 +388,15 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, conta
   });
 
   useTocTreeBuilder(publication, navigatorReady, getNavigatorTimeline);
+  useReadAlongInit({ navigatorReady, config: readAlong, getVisualNavigator: webPubNavigator.getInstance });
+  useReadAlongMetadata(publication);
 
   return (
     <>
-    <NavigatorProvider visualNavigator={ webPubNavigator }>
+    <NavigatorProvider
+      visualNavigator={ webPubNavigator }
+      readAloudNavigator={ navigatorReady ? readAloudNavigator : undefined }
+    >
       <main className={ readerStyles.main }>
         <StatefulDockingWrapper>
           <div

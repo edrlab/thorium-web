@@ -30,8 +30,21 @@ import {
   ThDockingSizeValue,
   ThSettingsGroupPref,
   ValidatedLanguageCollection,
+  ThReadAlongActionTokens,
+  ThReadAlongActionKeys,
+  ThReadAlongKeys,
+  ThReadAlongHighlightKeys,
+  ThReadAlongHighlightPresetKeys,
+  ThReadAlongHighlightStyle,
+  ThReadAlongHighlightColors,
+  ThReadAlongProsodyKeys,
+  ThReadAlongProsodyPresetKeys,
+  ThReadAlongVoiceKeys,
+  ThReadAlongVerbosityKeys,
+  ThAudioActionsTokens,
+  ThSettingsTimerPref,
 } from "./models";
-import { DivinaQuality, ExperimentKey } from "@readium/navigator";
+import { DivinaQuality, ExperimentKey, ReadAloudAutoPause } from "@readium/navigator";
 import { ThCollapsibility } from "@/core/Components/Actions/hooks/useCollapsibility";
 import { ContentProtectionConfig } from "./models/protection";
 import { validateObjectKeys } from "./helpers";
@@ -42,6 +55,12 @@ export type CustomizableKeys = {
   settings?: string;
   text?: string;
   spacing?: string;
+  readAlongAction?: string;
+  readAlong?: string;
+  readAlongVoice?: string;
+  readAlongHighlight?: string;
+  readAlongProsody?: string;
+  readAlongVerbosity?: string;
 };
 
 // Default internal keys alias for convenience
@@ -51,6 +70,12 @@ export type DefaultKeys = {
   settings: ThSettingsKeys;
   text: ThTextSettingsKeys;
   spacing: ThSpacingSettingsKeys;
+  readAlongAction: ThReadAlongActionKeys;
+  readAlong: ThReadAlongKeys;
+  readAlongVoice: ThReadAlongVoiceKeys;
+  readAlongHighlight: ThReadAlongHighlightKeys;
+  readAlongProsody: ThReadAlongProsodyKeys;
+  readAlongVerbosity: ThReadAlongVerbosityKeys;
 };
 
 // Key types to better handle custom keys for external consumers
@@ -89,6 +114,41 @@ export type SpacingSettingsKey<K extends CustomizableKeys> =
       : ThSpacingSettingsKeys
     : ThSpacingSettingsKeys;
 
+export type ReadAlongActionKey<K extends CustomizableKeys> =
+  K extends { readAlongAction: infer A }
+    ? A extends string
+      ? ThReadAlongActionKeys | A
+      : ThReadAlongActionKeys
+    : ThReadAlongActionKeys;
+
+export type ReadAlongSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlong: infer R }
+    ? R extends string
+      ? ThReadAlongKeys | R
+      : ThReadAlongKeys
+    : ThReadAlongKeys;
+
+export type ReadAlongVoiceSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongVoice: infer V }
+    ? V extends string
+      ? ThReadAlongVoiceKeys | V
+      : ThReadAlongVoiceKeys
+    : ThReadAlongVoiceKeys;
+
+export type ReadAlongHighlightSettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongHighlight: infer H }
+    ? H extends string
+      ? ThReadAlongHighlightKeys | H
+      : ThReadAlongHighlightKeys
+    : ThReadAlongHighlightKeys;
+
+export type ReadAlongProsodySettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongProsody: infer P }
+    ? P extends string
+      ? ThReadAlongProsodyKeys | P
+      : ThReadAlongProsodyKeys
+    : ThReadAlongProsodyKeys;
+
 
 export interface ThSettingsSpacingPresets<K extends CustomizableKeys = DefaultKeys> {
   reflowOrder: Array<ThSpacingPresetKeys>;
@@ -112,14 +172,107 @@ export type ThSpacingPreset<K extends CustomizableKeys = DefaultKeys> = {
     : {}
   : {});
 
+export type ReadAlongVerbositySettingsKey<K extends CustomizableKeys> =
+  K extends { readAlongVerbosity: infer V }
+    ? V extends string
+      ? ThReadAlongVerbosityKeys | V
+      : ThReadAlongVerbosityKeys
+    : ThReadAlongVerbosityKeys;
+
+export interface ThReadAlongHighlightPresets<K extends CustomizableKeys = DefaultKeys> {
+  order: Array<ThReadAlongHighlightPresetKeys>;
+  // None and custom are not included as they are special cases
+  keys: {
+    [key in Exclude<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPresetKeys.none | ThReadAlongHighlightPresetKeys.custom>]?: ThReadAlongHighlightPreset<K>;
+  };
+}
+
+export type ThReadAlongHighlightPreset<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongHighlightKeys.utteranceStyle]: ThReadAlongHighlightStyle | false;
+  [ThReadAlongHighlightKeys.wordStyle]: (Omit<ThReadAlongHighlightStyle, "type"> & { type?: Exclude<ThReadAlongHighlightStyle["type"], "mask"> }) | false;
+} & (K extends { readAlongHighlight: infer H }
+  ? H extends string
+      ? { [key in Exclude<H, ThReadAlongHighlightKeys>]?: ThReadAlongHighlightStyle | false }
+    : {}
+  : {});
+
+// A highlight theme declares its colors for every reading theme
+export type ThReadAlongHighlightTheme<K extends CustomizableKeys = DefaultKeys> = Record<Exclude<ThemeKey<K>, "auto"> & string, ThReadAlongHighlightColors>;
+
+export interface ThReadAlongHighlightThemes<K extends CustomizableKeys = DefaultKeys> {
+  default: string;
+  keys: Record<string, ThReadAlongHighlightTheme<K>>;
+}
+
+export interface ThReadAlongProsodyPresets<K extends CustomizableKeys = DefaultKeys> {
+  order: Array<ThReadAlongProsodyPresetKeys>;
+  // Default and custom are not included as they are special cases
+  keys: {
+    [key in Exclude<ThReadAlongProsodyPresetKeys, ThReadAlongProsodyPresetKeys.default | ThReadAlongProsodyPresetKeys.custom>]?: ThReadAlongProsodyPreset<K>;
+  };
+}
+
+// Values left out fall back to the navigator's defaults
+export type ThReadAlongProsodyPreset<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongProsodyKeys.rate]?: number;
+  [ThReadAlongProsodyKeys.pauseDuration]?: number;
+  [ThReadAlongProsodyKeys.autoPause]?: ReadAloudAutoPause;
+} & (K extends { readAlongProsody: infer P }
+  ? P extends string
+      ? { [key in Exclude<P, ThReadAlongProsodyKeys>]?: number | ReadAloudAutoPause }
+    : {}
+  : {});
+
 export interface ThActionsPref<K extends CustomizableKeys> {
   reflowOrder: Array<ActionKey<K>>;
   fxlOrder: Array<ActionKey<K>>;
   webPubOrder: Array<ActionKey<K>>;
   divinaOrder: Array<ActionKey<K>>;
   collapse: ThCollapsibility;
-  keys: Record<ActionKey<K>, ThActionsTokens>;
+  keys: Record<ActionKey<K>, ThActionsTokens> & {
+    [ThActionsKeys.readAlong]: ThReadAlongActionTokens;
+  };
 };
+
+export type ThReadAlongSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
+  [ThReadAlongKeys.rate]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pitch]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.volume]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.pauseDuration]: ThSettingsRangePrefRequired;
+  [ThReadAlongKeys.sleepTimer]: ThSettingsTimerPref;
+} & (
+  K extends { readAlong: infer R }
+    ? [R] extends [string]
+      ? { [key in Exclude<R, ThReadAlongKeys>]: ThSettingsRangePrefRequired }
+      : {}
+    : {}
+);
+
+export interface ThReadAlongPref<K extends CustomizableKeys = DefaultKeys> {
+  generateFromMarkup: boolean;
+  readFromPointer: boolean;
+  detachable: boolean;
+  startInViewport: boolean;
+  keepAwake: boolean;
+  actions: {
+    miniPlayer: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+      collapse: ThCollapsibility;
+    };
+    expanded: {
+      displayOrder: Array<ReadAlongActionKey<K>>;
+    };
+    keys: Record<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>;
+  };
+  settings: {
+    order: Array<ReadAlongSettingsKey<K>>;
+    keys: ThReadAlongSettingsKeyTypes<K>;
+    voice: ThSettingsGroupPref<ReadAlongVoiceSettingsKey<K>>;
+    highlight: ThSettingsGroupPref<ReadAlongHighlightSettingsKey<K>> & { presets?: ThReadAlongHighlightPresets<K>; themes?: ThReadAlongHighlightThemes<K> };
+    prosody: ThSettingsGroupPref<ReadAlongProsodySettingsKey<K>> & { presets?: ThReadAlongProsodyPresets<K> };
+    verbosity: ThSettingsGroupPref<ReadAlongVerbositySettingsKey<K>>;
+  };
+}
 
 export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
   [ThSettingsKeys.fontFamily]: ThFontFamilyPref;
@@ -139,6 +292,16 @@ export type ThSettingsKeyTypes<K extends CustomizableKeys = DefaultKeys> = {
 );
 
 export type ThConstraintKeys = Extract<ThSheetTypes, ThSheetTypes.bottomSheet | ThSheetTypes.popover | ThSheetTypes.modal> | "pagination" | "dropdown";
+
+export type ThSheetSizeConstraintKeys = Extract<ThSheetTypes, ThSheetTypes.popover | ThSheetTypes.modal>;
+
+export interface ThSizeConstraint {
+  width?: number | null;
+  height?: number | null;
+}
+
+// A number is a max-width
+export type ThSheetSizeConstraint = number | null | ThSizeConstraint;
 
 export type ThShortcutsDisplayIn = "tooltip" | "menuItem";
 
@@ -214,7 +377,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
       spacing: number;
       defaults: ThLayoutDefaultsPref;
       constraints?: {
-        [key in ThConstraintKeys]?: number | null
+        [key in ThConstraintKeys]?: key extends ThSheetSizeConstraintKeys ? ThSheetSizeConstraint : number | null
       }
     };
     breakpoints: BreakpointsMap<number | null>;
@@ -245,6 +408,7 @@ export interface ThPreferences<K extends CustomizableKeys = {}> {
     }
   };
   actions: ThActionsPref<K>;
+  readAlong: ThReadAlongPref<K>;
   shortcuts: ThShortcutsPref;
   docking: ThDockingPref<ThDockingKeys>;
   settings: {
@@ -280,6 +444,18 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
     );
   }
 
+  // Validate read along actions
+  if (params.readAlong?.actions?.keys) {
+    validateObjectKeys<ReadAlongActionKey<K>, ThAudioActionsTokens | ThActionsTokens>(
+      [
+        params.readAlong.actions.miniPlayer.displayOrder,
+        params.readAlong.actions.expanded.displayOrder
+      ],
+      params.readAlong.actions.keys as Record<string, ThAudioActionsTokens | ThActionsTokens>,
+      "readAlong.actions"
+    );
+  }
+
   // Validate themes
   if (params.theming?.themes) {
     validateObjectKeys<ThemeKey<K> | "auto", ThemeTokens>(
@@ -290,6 +466,51 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
       params.theming.themes.keys as Record<string, ThemeTokens>,
       "theming.themes",
       "auto" // Special case for themes
+    );
+  }
+
+  // Validate read along highlight themes, each declaring every reading theme
+  if (params.readAlong?.settings?.highlight?.themes) {
+    const highlightThemes = params.readAlong.settings.highlight.themes;
+    validateObjectKeys<string, ThReadAlongHighlightTheme<K>>(
+      [[highlightThemes.default]],
+      highlightThemes.keys,
+      "readAlong.settings.highlight.themes"
+    );
+
+    if (params.theming?.themes) {
+      const readingThemesOrders = [
+        params.theming.themes.reflowOrder as Array<ThemeKey<K> | "auto">,
+        params.theming.themes.fxlOrder as Array<ThemeKey<K> | "auto">,
+      ];
+      Object.entries(highlightThemes.keys).forEach(([key, highlightTheme]) => {
+        validateObjectKeys<ThemeKey<K> | "auto", ThReadAlongHighlightColors>(
+          readingThemesOrders,
+          highlightTheme as Record<string, ThReadAlongHighlightColors>,
+          `readAlong.settings.highlight.themes.keys.${ key }`,
+          "auto"
+        );
+      });
+    }
+  }
+
+  // Validate read along highlight presets
+  if (params.readAlong?.settings?.highlight?.presets) {
+    validateObjectKeys<ThReadAlongHighlightPresetKeys, ThReadAlongHighlightPreset>(
+      [params.readAlong.settings.highlight.presets.order],
+      params.readAlong.settings.highlight.presets.keys as Record<string, ThReadAlongHighlightPreset>,
+      "readAlong.settings.highlight.presets",
+      ["none", "custom"]
+    );
+  }
+
+  // Validate read along prosody presets
+  if (params.readAlong?.settings?.prosody?.presets) {
+    validateObjectKeys<ThReadAlongProsodyPresetKeys, ThReadAlongProsodyPreset>(
+      [params.readAlong.settings.prosody.presets.order],
+      params.readAlong.settings.prosody.presets.keys as Record<string, ThReadAlongProsodyPreset>,
+      "readAlong.settings.prosody.presets",
+      ["default", "custom"]
     );
   }
 
@@ -447,6 +668,12 @@ export const createPreferences = <K extends CustomizableKeys = {}>(
   Object.entries(params.settings?.keys ?? {}).forEach(([key, pref]) => {
     if (pref && typeof pref === "object" && "variant" in pref) {
       validateRangePresets(pref as ThSettingsRangePrefRequired, `settings.keys.${ key }`);
+    }
+  });
+
+  Object.entries(params.readAlong?.settings?.keys ?? {}).forEach(([key, pref]) => {
+    if (pref && typeof pref === "object" && "variant" in pref && "range" in pref) {
+      validateRangePresets(pref as ThSettingsRangePrefRequired, `readAlong.settings.keys.${ key }`);
     }
   });
 

@@ -221,6 +221,18 @@ function usePreferences<K extends CustomizableKeys = DefaultKeys>(): {
 - Font service integration for font management
 - Preferences update functionality
 
+### useReadAlongPreferences
+
+Hook for accessing the read-along preferences (`preferences.readAlong`).
+
+```typescript
+function useReadAlongPreferences<K extends CustomizableKeys = DefaultKeys>(): ThReadAlongPref<K>
+```
+
+**Features:**
+- Falls back to `defaultReadAlongPreferences` when `readAlong` isn’t set, or outside a `ThPreferencesProvider`
+- Never throws
+
 ### usePreferenceKeys
 
 Hook for accessing ordered preference keys from the current preferences.
@@ -328,7 +340,7 @@ function useTheming<T extends string>(props: useThemingProps<T>): {
 - Cover-based automatic theme generation (`autoThemeSource: "cover"`)
 - CSS variable handling
 - Viewport media query breakpoints (`onBreakpointChange`) and container-width breakpoints (`onContainerBreakpointChange`) via ResizeObserver
-- `setContainerRef` — callback ref to attach to the reader's root container element; drives `onContainerBreakpointChange` (see [Theming — Wiring the container breakpoint](../../../customization/Theming.md#wiring-the-container-breakpoint))
+- `setContainerRef` — callback ref to attach to the reader's root container element; drives `onContainerBreakpointChange` (see [Theming — Window breakpoint vs. container breakpoint](../../../customization/Theming.md#window-breakpoint-vs-container-breakpoint))
 - Automatic theme color meta tag updates
 - `themeResolved` flag to defer rendering until cover theme extraction completes
 

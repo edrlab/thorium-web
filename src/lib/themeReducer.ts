@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
 import { ThContrast } from "@/core/Hooks/useContrast";
@@ -76,6 +77,9 @@ export const themeSlice = createSlice({
     },
     setContainerBreakpoint: (state, action) => {
       state.containerBreakpoint = action.payload
+    },
+    hydrateTheme: (state, action: PayloadAction<HydratePayload<ThemeStateObject>>) => {
+      state.theme = hydrateState(state.theme, initialState.theme, action.payload)
     }
   }
 })
@@ -91,6 +95,7 @@ export const {
   setForcedColors, 
   setBreakpoint,
   setContainerBreakpoint,
+  hydrateTheme,
 } = themeSlice.actions;
 
 export default themeSlice.reducer;

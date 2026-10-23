@@ -81,8 +81,8 @@ export const useFirstFocusable = (props?: UseFirstFocusableProps) => {
   useEffect(() => {
     if (!withinRef) return;
     
-    // If trackedState is false and updateState hasn't changed, do nothing
-    if (!trackedState && updateState === previousUpdateState) return;
+    // Nothing to focus while closed
+    if (trackedState === false) return;
     
     // Determine what triggered this effect
     const isTrackedStateUpdate = trackedState && (previousTrackedState !== trackedState);

@@ -74,7 +74,6 @@ export const StatefulActionIcon = ({
   };
 
   const blurOnEsc = (event: React.KeyboardEvent) => {
-  // TODO: handle Tooltip cos first time you press esc, it’s the tooltip that is closed.
     if (triggerRef.current && isActiveElement(triggerRef.current) && event.code === "Escape") {
       triggerRef.current.blur();
     }

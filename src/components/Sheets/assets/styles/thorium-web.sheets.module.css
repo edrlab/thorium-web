@@ -39,7 +39,7 @@
   scroll-padding-bottom: var(--th-layout-spacing);
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--th-layout-constraints-modal, 600px);
+  max-width: var(--th-layout-constraints-modal-width, var(--th-layout-constraints-modal, 600px));
   max-height: 90dvh;
   background-color: var(--th-theme-background);
   color: var(--th-theme-text);
@@ -54,7 +54,7 @@
   scroll-padding-bottom: var(--th-layout-spacing);
   box-sizing: border-box;
   width: calc(340px + (2 * var(--th-layout-spacing)));
-  max-width: var(--th-layout-constraints-popover, 500px);
+  max-width: var(--th-layout-constraints-popover-width, var(--th-layout-constraints-popover, 500px));
   max-height: 100%;
   max-height: var(--visual-viewport-height, 100dvh);
   padding: 0;
@@ -71,7 +71,7 @@
   scroll-padding-bottom: var(--th-layout-spacing);
   box-sizing: border-box;
   width: calc(340px + (2 * var(--th-layout-spacing)));
-  max-width: var(--th-layout-constraints-popover, 500px);
+  max-width: var(--th-layout-constraints-popover-width, var(--th-layout-constraints-popover, 500px));
   max-height: 100%;
   max-height: var(--visual-viewport-height, 100dvh);
   padding: 0;
@@ -219,6 +219,12 @@
   border-top-left-radius: 28px !important;
   border-top-right-radius: 28px !important;
   transition: border-radius 500ms;
+}
+
+.draggableHeaderActions {
+  margin-inline-start: auto;
+  display: flex;
+  gap: 2px;
 }
 
 .draggable[data-full-height] .draggableHeader {

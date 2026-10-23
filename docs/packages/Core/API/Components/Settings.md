@@ -1,5 +1,25 @@
 # Settings Components API Documentation
 
+## ThDisclosure
+
+A collapsible section, like `<details>`, whose trigger is a heading ending with a chevron.
+
+### Props
+
+```typescript
+interface ThDisclosureProps extends Omit<DisclosureProps, "children"> {
+  ref?: React.ForwardedRef<HTMLDivElement>;
+  label: string;                       // Trigger text
+  icon?: ComponentType<SVGProps<SVGElement>>; // Trigger icon, a chevron by default
+  children?: React.ReactNode;          // Content of the panel
+  compounds?: {
+    heading?: HeadingProps;            // Props for the heading wrapping the trigger
+    button?: ButtonProps;              // Props for the trigger button
+    panel?: DisclosurePanelProps;      // Props for the panel
+  }
+}
+```
+
 ## ThDropdown
 
 A select component with customizable button, popover, and listbox functionality.
@@ -168,6 +188,7 @@ interface ThSliderWithPresetsProps extends Omit<ThSliderProps, "compounds"> {
 
 - Synchronizes slider value with preset radio selection
 - Preset radio deselects automatically when slider moves off a preset value
+- `isDisabled` disables both the slider and the presets
 - Inherits all `ThSlider` props (range, step, label, etc.) except `compounds`
 - Compound components pattern for full layout control
 

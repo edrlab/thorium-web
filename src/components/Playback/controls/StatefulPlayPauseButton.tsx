@@ -1,37 +1,48 @@
 "use client";
 
-import { useCallback } from "react";
+import { Ref, useCallback } from "react";
 
 import PauseIcon from "./assets/icons/pause.svg";
 import PlayIcon from "./assets/icons/play_arrow.svg";
 
 import { StatefulActionIcon } from "../../Actions/Triggers/StatefulActionIcon";
-import audioStyles from "./assets/styles/thorium-web.audioPlayback.module.css";
 
 import { useNavigator } from "@/core/Navigator";
-import { useAppSelector } from "@/lib/hooks";
+import { usePlaybackStatus } from "../hooks/usePlaybackStatus";
 import { useI18n } from "@/i18n/useI18n";
 
-export const StatefulPlayPauseButton = ({ isDisabled }: { isDisabled?: boolean }) => {
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setImmersive, setUserNavigated } from "@/lib/readerReducer";
+
+export const StatefulPlayPauseButton = ({ ref, id, className, isDisabled }: { ref?: Ref<HTMLButtonElement>, id?: string, className: string, isDisabled?: boolean }) => {
   const { t } = useI18n();
-  const { play, pause } = useNavigator().media;
-  const isPlaying = useAppSelector(state => state.player.status === "playing");
+  const { playback } = useNavigator();
+  const { play, pause } = playback;
+  const { isPlaying } = usePlaybackStatus();
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
+  const dispatch = useAppDispatch();
 
   const handlePress = useCallback(() => {
     if (isPlaying) {
       pause();
     } else {
       play();
+      if (!isAudio) {
+        dispatch(setImmersive(true));
+        dispatch(setUserNavigated(true));
+      }
     }
-  }, [isPlaying, play, pause]);
+  }, [isPlaying, play, pause, isAudio, dispatch]);
 
   return (
     <StatefulActionIcon
+      ref={ ref }
+      id={ id }
       onPress={ handlePress }
       isDisabled={ isDisabled }
       aria-label={ isPlaying ? t("reader.playback.actions.pause") : t("reader.playback.actions.play") }
       tooltipLabel={ isPlaying ? t("reader.playback.actions.pause") : t("reader.playback.actions.play") }
-      className={ audioStyles.audioPlayPauseButton }
+      className={ className }
     >
       {isPlaying ? (
         <PauseIcon aria-hidden="true" focusable="false" />

@@ -15,6 +15,7 @@ interface StatefulSheet {
   onOpenChange: (isOpen: boolean) => void;  // Open state change handler
   onPressClose: () => void;                 // Close button handler
   docker?: ThDockingKeys[];                // Optional docking positions
+  headerActions?: ReactNode;                // Extra buttons in the header, before the close button
   children?: ReactNode;                     // Sheet content
   resetFocus?: unknown;                     // Focus reset handler
   withinFocusRef?: RefObject<HTMLElement | null>; // Focus within handler
@@ -39,17 +40,41 @@ Features:
 - Scrim customization
 - Focus management
 
+#### useBottomSheetSnap
+
+The snapping and drag indicator behavior of `StatefulBottomSheet`, as a hook, for sheets built directly on `ThBottomSheet` (the read-along sheet uses it).
+
+```typescript
+interface UseBottomSheetSnapProps {
+  sheetRef: RefObject<SheetRef | null>;
+  snapArray: number[];             // Snap points, starting with 0
+  onSnap?: (index: number) => void;
+  onClosePress?: () => void;       // Called when moving down from the lowest snap point
+}
+
+function useBottomSheetSnap(props: UseBottomSheetSnapProps): {
+  onSnapCallback: (index: number) => void;          // For ThBottomSheet’s onSnap
+  onDragPressCallback: () => void;                  // For the drag indicator’s onPress: cycles through snap points
+  onDragKeyCallback: (e: KeyboardEvent) => void;    // For the drag indicator’s onKeyDown: ArrowUp/Down, PageUp/Down
+}
+```
+
+Without `onClosePress`, moving down from the lowest snap point does nothing, so the sheet can’t be closed from its drag indicator.
+
 ### StatefulModalSheet
 
 A centered modal sheet component.
 
 ```typescript
-interface StatefulModalSheetProps extends StatefulSheet {}
+interface StatefulModalSheetProps extends StatefulSheet {
+  uniformPanelHeight?: boolean; // Subpanels take the height of the main panel, shown on open; a panel change is detected from `resetFocus`
+}
 ```
 
 Features:
 - Modal dialog implementation
-- Centered layout with configurable max-width via `--th-layout-constraints-modal`
+- Centered layout with configurable max-width and max-height via the `modal` constraint
+- With `uniformPanelHeight`, the header stays in place as panels switch; taller panels scroll
 - Header with navigation/close button
 - Focus management
 - Keyboard dismissal control
@@ -92,11 +117,13 @@ A popover-style sheet component.
 ```typescript
 interface StatefulPopoverSheetProps extends StatefulSheet {
   placement?: PopoverProps["placement"];
+  uniformPanelHeight?: boolean; // Subpanels take the height of the main panel, shown on open; a panel change is detected from `resetFocus`
 }
 ```
 
 Features:
 - Configurable placement
+- With `uniformPanelHeight`, the header stays in place as panels switch; taller panels scroll
 - Trigger element anchoring
 - Focus management
 - Accessibility support

@@ -25,6 +25,11 @@ import { prefixString } from "@/core/Helpers/prefixString";
 export interface StatefulModalBaseProps extends StatefulSheet {
   sheetClassName: string;
   dialogClassName?: string;
+  /**
+   * Subpanels take the height of the main panel, shown on open. A panel change is detected from `resetFocus`.
+   */
+  uniformPanelHeight?: boolean;
+  maxHeight?: number;
 };
 
 export const StatefulModalBase = ({
@@ -38,12 +43,15 @@ export const StatefulModalBase = ({
     onOpenChange,
     onClosePress,
     docker,
+    headerActions,
     children,
     resetFocus,
     focusWithinRef,
     focusSelector,
     scrollTopOnFocus,
-    dismissEscapeKeyClose
+    dismissEscapeKeyClose,
+    uniformPanelHeight,
+    maxHeight
   }: StatefulModalBaseProps) => {
   const { t } = useI18n()
   const direction = useAppSelector(state => state.reader.direction);
@@ -84,6 +92,12 @@ export const StatefulModalBase = ({
           },
           updateState: resetFocus
         }}
+        maxHeight={ maxHeight }
+        uniformPanelHeightOptions={ {
+          isEnabled: uniformPanelHeight,
+          isOpen: !!isOpen,
+          panel: resetFocus
+        } }
         compounds={{
           dialog: {
             className: classNames(sheetStyles.dialog, dialogClassName, className)
@@ -110,7 +124,7 @@ export const StatefulModalBase = ({
                 direction={ direction === "ltr" ? "left" : "right" }
                 label={ t("reader.app.back.trigger") }
                 ref={ sheetCloseRef }
-                className={ classNames(className, readerSharedUI.backButton) }
+                className={ readerSharedUI.backButton }
                 aria-label={ t("reader.app.back.trigger") }
                 onPress={ onClosePress }
               />
@@ -119,6 +133,7 @@ export const StatefulModalBase = ({
                 keys={ docker || [] }
                 ref={ sheetCloseRef }
                 onClose={ onClosePress }
+                actions={ headerActions }
               />
             }
         </ThContainerHeader>

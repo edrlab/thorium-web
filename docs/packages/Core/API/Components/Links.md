@@ -2,7 +2,7 @@
 
 ## ThLink
 
-A base link component that extends the Link component from react-aria-components with additional tooltip support.
+A base link component that extends the Link component from react-aria-components with additional tooltip support. The tooltip is rendered with [`ThTooltip`](./Tooltips.md).
 
 ### Props
 

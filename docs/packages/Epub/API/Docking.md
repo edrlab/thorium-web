@@ -17,7 +17,7 @@ interface StatefulDockerProps {
 }
 ```
 
-This is considered an action toolbar, and behaves as [StatefulCollapsibleActionsBar](./Actions.md#statefulCollapsibleActionsBar)
+This is considered an action toolbar, and behaves as [StatefulCollapsibleActionsBar](./Actions.md#statefulcollapsibleactionsbar)
 
 ### StatefulDockingWrapper
 
@@ -73,7 +73,7 @@ Features:
 A React hook that manages docking state and behavior for a component. This hook handles the complex logic of determining whether and how a component can be docked based on preferences, breakpoints, and current state.
 
 ```typescript
-const useDocking = <T extends string>(key: T) => {
+const useDocking = <T extends string>(key: T, { canReserve = true }: { canReserve?: boolean } = {}) => {
   return {
     getDocker: () => ThDockingKeys[],  // Returns available docking positions
     sheetType: ThSheetTypes            // Current sheet display type
@@ -83,6 +83,7 @@ const useDocking = <T extends string>(key: T) => {
 
 **Parameters:**
 - `key`: A unique identifier for the dockable component
+- `canReserve`: whether a [reserved](../../../customization/Docking.md#reserved-actions) action holds its dock slot right now. The read-along player only reserves its slot while read-along is active
 
 **Returns:**
 - `getDocker`: Function that returns an array of available docking positions based on:
@@ -90,6 +91,8 @@ const useDocking = <T extends string>(key: T) => {
   - Current breakpoint configuration
   - Sheet type compatibility
   - Display order preferences
+
+  It is empty when a single option is left, as there is nothing to choose, e.g. a reserved action with one dockable slot
 - `sheetType`: Current sheet display type (docked, transient, etc.)
 
 **Features:**

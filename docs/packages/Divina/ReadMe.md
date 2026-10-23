@@ -143,6 +143,7 @@ The `StatefulDivinaReader` accepts the same props as the other visual readers:
 - `localDataKey`: `string | null` — unique key for storing local reading data (position, etc.).
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `positionStorage`: `PositionStorage` (optional) — custom interface for persisting the reading position.
+- `settingsStorage`: `SettingsStorage` (optional) — custom interface for persisting the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
 - `containerRefSetter`: `(el: Element | null) => void` (optional) — attach the reader’s root container, e.g. `setContainerRef` from `useTheming`, so that container breakpoints are resolved against it.
 
 > [!CAUTION]

@@ -148,6 +148,10 @@ export const useWebPubNavigator = () => {
     return navigatorInstance?.timeline;
   }, []);
 
+  const getInstance = useCallback(() => {
+    return navigatorInstance;
+  }, []);
+
   return {
     WebPubNavigatorLoad, 
     WebPubNavigatorDestroy, 
@@ -169,5 +173,6 @@ export const useWebPubNavigator = () => {
     getCframes,
     getScriptMode: currentScriptMode,
     timeline,
+    getInstance,
   }
 }

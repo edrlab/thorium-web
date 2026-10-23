@@ -61,6 +61,7 @@ The `StatefulPlayer` accepts the following props:
 - `publication`: `Publication` — the Readium Publication object.
 - `localDataKey`: `string | null` — unique key for storing local reading data (position, etc.).
 - `positionStorage`: `PositionStorage` (optional) — custom interface for persisting the playback position.
+- `settingsStorage`: `SettingsStorage` (optional) — custom interface for persisting the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `coverUrl`: `string` (optional) — explicit cover image URL (falls back to publication metadata).
 

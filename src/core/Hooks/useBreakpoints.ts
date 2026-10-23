@@ -99,6 +99,9 @@ export const useBreakpoints = (map: BreakpointsMap<number | null>, onChange?: (b
       newBreakpoint = ThBreakpoints.xLarge;
     }
 
+    // Media queries are only evaluated after mount, so null means not measured yet, not no breakpoint
+    if (newBreakpoint === null) return;
+
     setCurrentBreakpoint(newBreakpoint);
     onChange && onChange(newBreakpoint);
   }, [currentBreakpoint, compactMatches, mediumMatches, expandedMatches, largeMatches, xLargeMatches, onChange]);

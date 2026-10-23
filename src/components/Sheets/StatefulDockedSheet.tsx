@@ -32,7 +32,8 @@ export const StatefulDockedSheet = ({
     className, 
     isOpen,
     onClosePress,
-    docker, 
+    docker,
+    headerActions,
     flow,
     children,
     resetFocus,
@@ -115,7 +116,7 @@ export const StatefulDockedSheet = ({
               direction={ direction === "ltr" ? "left" : "right" } 
               label={ t("reader.app.back.trigger") }
               ref={ dockedSheetCloseRef }
-              className={ classNames(className, readerSharedUI.backButton) } 
+              className={ readerSharedUI.backButton } 
               aria-label={ t("reader.app.back.trigger") }
               onPress={ onClosePress }
             /> 
@@ -124,6 +125,7 @@ export const StatefulDockedSheet = ({
               keys={ docker || [] }
               ref={ dockedSheetCloseRef }
               onClose={ onClosePress }
+              actions={ headerActions }
             />
           } 
         </ThContainerHeader>

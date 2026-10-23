@@ -29,7 +29,7 @@ export const StatefulTextNormalize = ({ standalone = true }: StatefulSettingsIte
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.textNormalize);
+  const prefKey = getPreferenceKey(ThSettingsKeys.textNormalize, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });
