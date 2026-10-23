@@ -41,15 +41,19 @@ const MASK_ALPHA = "99";
 
 const SURFACES = ["onPage", "onFill", "onLine", "onText"];
 
-// Every reading theme needs an entry: the inks it can't use, and the sentence fills to try
+// A highlighted word on a highlighted sentence is orange on yellow, as in most reading apps
+const SENTENCE_FILL_INK = "yellow";
+const WORD_ON_SENTENCE_FILL_INK = "orange";
+
+// Every reading theme needs an entry: the inks it can't use otherwise, and the sentence fills to try
 const THEME_CONFIG = {
   light: { exclude: [], fills: ["#fff44f"] },
   dark: { exclude: [], fills: "dim" },
   paper: { exclude: [], fills: ["#fff44f"] },
   sepia: { exclude: [], fills: ["#ffef3a"] },
   contrast1: { exclude: ["yellow"], fills: "dim" },
-  contrast2: { exclude: ["blue"], fills: "dim+inks" },
-  contrast3: { exclude: ["green"], fills: "inks" }
+  contrast2: { exclude: ["blue"], fills: "dim" },
+  contrast3: { exclude: ["green"], fills: ["#fff44f"] }
 };
 
 // Colors
@@ -147,7 +151,7 @@ const wordCells = ({ page, pageText, fill, line, text }) => {
   return {
     fill: {
       onPage: (_, ink) => [ink, distinctFill(ink, page)],
-      onFill: (_, ink) => [ink, distinctFill(ink, fill)],
+      onFill: (name, ink) => [ink, name === WORD_ON_SENTENCE_FILL_INK ? distinctFill(ink, fill) : 0],
       onLine: (_, ink) => [ink, Math.min(ratio(contrast(line, ink), LINE_CONTRAST), distinctFill(ink, page), isRedGreen(line, ink) ? 0 : 1)],
       onText: (_, ink) => [ink, distinctFill(ink, text)]
     },
@@ -195,23 +199,17 @@ const bestPair = (cells, inks) => {
   return best;
 };
 
-const fillCandidates = (fills, inks) => {
+const fillCandidates = (fills) => {
   if (Array.isArray(fills)) return fills;
-  const dims = inks.flatMap(([, ink]) => DIM_FACTORS.map((f) => dim(ink, f)));
-  const all = inks.map(([, ink]) => ink);
-  switch (fills) {
-    case "dim": return dims;
-    case "dim+inks": return [...dims, ...all];
-    case "inks": return all;
-    default: throw new Error(`Unknown fills: "${ fills }"`);
-  }
+  if (fills === "dim") return DIM_FACTORS.map((f) => dim(INKS[SENTENCE_FILL_INK], f));
+  throw new Error(`Unknown fills: "${ fills }"`);
 };
 
 const solveTheme = ({ page, pageText }, { exclude, fills }) => {
   const inks = Object.entries(INKS).filter(([name]) => !exclude.includes(name));
   let best = null;
 
-  for (const fill of fillCandidates(fills, inks)) {
+  for (const fill of fillCandidates(fills)) {
     if (contrast(textOn(fill), fill) < TEXT_CONTRAST) continue;
     // The DOM overlay multiplies fills on light pages, so a dark fill would blacken its own text
     if (isLight(page) && textOn(fill) !== "#000000") continue;

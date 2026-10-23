@@ -348,23 +348,23 @@ const defaultReadAlongHighlightTheme: Record<ThThemeKeys, ThReadAlongHighlightCo
   [ThThemeKeys.light]: {
     utterance: { fill: "#fff44f", line: "#eb66a0", text: "#ba517f", mask: "#ffffff99" },
     word: {
-      fill: { onPage: "#ff6fae", onFill: "#ff6fae", onLine: "#fff44f", onText: "#fff44f" },
+      fill: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#fff44f", onText: "#fff44f" },
       line: { onPage: "#389fc2", onFill: "#3493b4", onLine: "#389fc2", onText: "#389fc2" },
       text: { onPage: "#2d7f9c", onFill: "#29748e", onLine: "#2d7f9c", onText: "#2d7f9c" }
     }
   },
   [ThThemeKeys.dark]: {
-    utterance: { fill: "#474416", line: "#ff4f5e", text: "#ffa040", mask: "#00000099" },
+    utterance: { fill: "#474416", line: "#ff4f5e", text: "#ff6fae", mask: "#00000099" },
     word: {
-      fill: { onPage: "#fff44f", onFill: "#fff44f", onLine: "#fff44f", onText: "#ff6fae" },
-      line: { onPage: "#45c4f0", onFill: "#45c4f0", onLine: "#45c4f0", onText: "#45c4f0" },
+      fill: { onPage: "#fff44f", onFill: "#ffa040", onLine: "#fff44f", onText: "#fff44f" },
+      line: { onPage: "#fff44f", onFill: "#fff44f", onLine: "#fff44f", onText: "#fff44f" },
       text: { onPage: "#45c4f0", onFill: "#45c4f0", onLine: "#45c4f0", onText: "#45c4f0" }
     }
   },
   [ThThemeKeys.paper]: {
     utterance: { fill: "#fff44f", line: "#3597b9", text: "#b04d78", mask: "#faf4e899" },
     word: {
-      fill: { onPage: "#ff6fae", onFill: "#ff6fae", onLine: "#3fd97a", onText: "#3fd97a" },
+      fill: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#3fd97a", onText: "#ffa040" },
       line: { onPage: "#e06299", onFill: "#db5f96", onLine: "#e06299", onText: "#3597b9" },
       text: { onPage: "#b04d78", onFill: "#ad4b76", onLine: "#b04d78", onText: "#2a7892" }
     }
@@ -372,31 +372,31 @@ const defaultReadAlongHighlightTheme: Record<ThThemeKeys, ThReadAlongHighlightCo
   [ThThemeKeys.sepia]: {
     utterance: { fill: "#ffef3a", line: "#3087a6", text: "#9c446a", mask: "#e9ddc899" },
     word: {
-      fill: { onPage: "#ff4f5e", onFill: "#ff4f5e", onLine: "#3fd97a", onText: "#3fd97a" },
+      fill: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#3fd97a", onText: "#ffa040" },
       line: { onPage: "#c75788", onFill: "#d65d92", onLine: "#c75788", onText: "#3087a6" },
       text: { onPage: "#9c446a", onFill: "#a84973", onLine: "#9c446a", onText: "#256a82" }
     }
   },
   [ThThemeKeys.contrast1]: {
-    utterance: { fill: "#472d12", line: "#ff4f5e", text: "#ff6fae", mask: "#00000099" },
+    utterance: { fill: "#474416", line: "#ff4f5e", text: "#ff6fae", mask: "#00000099" },
     word: {
-      fill: { onPage: "#45c4f0", onFill: "#45c4f0", onLine: "#45c4f0", onText: "#45c4f0" },
+      fill: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#45c4f0", onText: "#ffa040" },
       line: { onPage: "#45c4f0", onFill: "#45c4f0", onLine: "#45c4f0", onText: "#45c4f0" },
       text: { onPage: "#45c4f0", onFill: "#45c4f0", onLine: "#45c4f0", onText: "#45c4f0" }
     }
   },
   [ThThemeKeys.contrast2]: {
-    utterance: { fill: "#474416", line: "#ffa040", text: "#ffa040", mask: "#18184299" },
+    utterance: { fill: "#474416", line: "#ffa040", text: "#3fd97a", mask: "#18184299" },
     word: {
-      fill: { onPage: "#fff44f", onFill: "#fff44f", onLine: "#fff44f", onText: "#ff6fae" },
-      line: { onPage: "#3fd97a", onFill: "#3fd97a", onLine: "#3fd97a", onText: "#3fd97a" },
-      text: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#3fd97a", onText: "#3fd97a" }
+      fill: { onPage: "#fff44f", onFill: "#ffa040", onLine: "#fff44f", onText: "#fff44f" },
+      line: { onPage: "#fff44f", onFill: "#fff44f", onLine: "#3fd97a", onText: "#fff44f" },
+      text: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#3fd97a", onText: "#ffa040" }
     }
   },
   [ThThemeKeys.contrast3]: {
     utterance: { fill: "#fff44f", line: "#3087a6", text: "#9c446a", mask: "#c5e7cd99" },
     word: {
-      fill: { onPage: "#ff4f5e", onFill: "#ff4f5e", onLine: "#45c4f0", onText: "#45c4f0" },
+      fill: { onPage: "#ffa040", onFill: "#ffa040", onLine: "#45c4f0", onText: "#ffa040" },
       line: { onPage: "#c75788", onFill: "#db5f96", onLine: "#c75788", onText: "#3087a6" },
       text: { onPage: "#9c446a", onFill: "#ad4b76", onLine: "#9c446a", onText: "#256a82" }
     }
