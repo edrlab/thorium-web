@@ -228,7 +228,7 @@ readAlong: {
 - `highlightGroup`: the highlight presets, with a subpanel for the highlight styles and keeping the sentence centered, see [Highlight](#highlight).
 - `verbosityGroup`: the verbosity, with a subpanel for the verbosity, abbreviations, notes, glossary, bibliography and page breaks, see [Verbosity](#verbosity).
 
-The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings.
+The options of these settings come from what the TS-Toolkit supports. The segmentation (by sentence) and the text format (plain) are pinned by Thorium and aren’t offered as settings. Sentences split across elements are joined in fixed layout only.
 
 ### Keys
 

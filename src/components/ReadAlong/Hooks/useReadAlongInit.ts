@@ -50,6 +50,8 @@ export const useReadAlongInit = ({
   const { isActive, setActive } = useReadAlongState();
   const dispatch = useAppDispatch();
 
+  const isFXL = useAppSelector(state => state.publication.isFXL);
+
   const format = useAppSelector(state => state.readAlongSettings.format);
   const interruptions = useAppSelector(state => state.readAlongSettings.interruptions);
   const keepCentered = useAppSelector(state => state.readAlongSettings.keepCentered);
@@ -156,7 +158,8 @@ export const useReadAlongInit = ({
 
     let cancelled = false;
 
-    const defaults: IReadAloudDefaults = { ...readAlongDefaults, detachable, readFromPointer, startInViewport };
+    // Fixed layout splits sentences into positioned text fragments
+    const defaults: IReadAloudDefaults = { ...readAlongDefaults, reconstruct: isFXL, detachable, readFromPointer, startInViewport };
 
     ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults, provider, engine, keepAwake }, async () => {
       // Same voices as the voice selector, an empty list leaves it unknown
@@ -172,7 +175,7 @@ export const useReadAlongInit = ({
       ReadAloudNavigatorDestroy();
       dispatch(resetReadAlongPlayer());
     };
-  }, [navigatorReady, isActive, getVisualNavigator, generateFromMarkup, detachable, readFromPointer, startInViewport, keepAwake, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, getSetting]);
+  }, [navigatorReady, isActive, getVisualNavigator, isFXL, generateFromMarkup, detachable, readFromPointer, startInViewport, keepAwake, cache, dispatch, ReadAloudNavigatorLoad, ReadAloudNavigatorDestroy, isDetachable, getVoices, getSetting]);
 
   // So that the next publication doesn't start reading on its own
   useEffect(() => {
