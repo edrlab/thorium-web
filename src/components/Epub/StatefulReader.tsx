@@ -262,8 +262,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       pauseReadAlong();
     } else {
       playReadAlong();
+      dispatch(setImmersive(true));
+      dispatch(setUserNavigated(true));
     }
-  }, [cache, playReadAlong, pauseReadAlong]);
+  }, [cache, playReadAlong, pauseReadAlong, dispatch]);
 
   const reattachReadAlong = useCallback(() => {
     if (cache.current.isReadAlongDetached) reattach();
@@ -363,9 +365,11 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
     if (!cache.current.isReadAlongActive) return fallback(event);
     readFromPointer(event).then((handled) => {
-      if (!handled) fallback(event);
+      if (!handled) return fallback(event);
+      dispatch(setUserNavigated(true));
+      activateImmersiveOnAction();
     });
-  }, [cache, readFromPointer]);
+  }, [cache, readFromPointer, dispatch, activateImmersiveOnAction]);
 
   // We could use canGoBackward() and canGoForward() directly on arrows
   // but maybe we will need to sync the state for other features in the future

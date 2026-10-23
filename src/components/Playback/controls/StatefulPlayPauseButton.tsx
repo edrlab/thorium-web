@@ -11,19 +11,28 @@ import { useNavigator } from "@/core/Navigator";
 import { usePlaybackStatus } from "../hooks/usePlaybackStatus";
 import { useI18n } from "@/i18n/useI18n";
 
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setImmersive, setUserNavigated } from "@/lib/readerReducer";
+
 export const StatefulPlayPauseButton = ({ ref, id, className, isDisabled }: { ref?: Ref<HTMLButtonElement>, id?: string, className: string, isDisabled?: boolean }) => {
   const { t } = useI18n();
   const { playback } = useNavigator();
   const { play, pause } = playback;
   const { isPlaying } = usePlaybackStatus();
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
+  const dispatch = useAppDispatch();
 
   const handlePress = useCallback(() => {
     if (isPlaying) {
       pause();
     } else {
       play();
+      if (!isAudio) {
+        dispatch(setImmersive(true));
+        dispatch(setUserNavigated(true));
+      }
     }
-  }, [isPlaying, play, pause]);
+  }, [isPlaying, play, pause, isAudio, dispatch]);
 
   return (
     <StatefulActionIcon

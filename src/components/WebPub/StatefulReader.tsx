@@ -66,6 +66,7 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { 
   setLoading,
   setHovering, 
+  setImmersive,
   toggleImmersive, 
   setFullscreen,
 } from "@/lib/readerReducer";
@@ -199,8 +200,9 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
       pauseReadAlong();
     } else {
       playReadAlong();
+      dispatch(setImmersive(true));
     }
-  }, [cache, playReadAlong, pauseReadAlong]);
+  }, [cache, playReadAlong, pauseReadAlong, dispatch]);
 
   const reattachReadAlong = useCallback(() => {
     if (cache.current.isReadAlongDetached) reattach();
@@ -248,9 +250,10 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   const handlePointer = useCallback((event: FrameClickEvent, fallback: (event: FrameClickEvent) => void) => {
     if (!cache.current.isReadAlongActive) return fallback(event);
     readFromPointer(event).then((handled) => {
-      if (!handled) fallback(event);
+      if (!handled) return fallback(event);
+      dispatch(setImmersive(true));
     });
-  }, [cache, readFromPointer]);
+  }, [cache, readFromPointer, dispatch]);
 
   const listeners: WebPubNavigatorListeners = useMemo(() => ({
     frameLoaded: async function (_wnd: Window): Promise<void> {},
