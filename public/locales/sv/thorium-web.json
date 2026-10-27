@@ -103,6 +103,18 @@
                     "trigger": "Fler avståndsalternativ"
                 }
             }
+        },
+        "preferences": {
+            "divinaQuality": {
+                "title": "Bildkvalitet",
+                "auto": "Automatisk",
+                "low": "Låg",
+                "high": "Hög",
+                "max": "Max"
+            },
+            "divinaSpreads": {
+                "label": "Visa uppslag som två sidor"
+            }
         }
     },
     "audio": {
