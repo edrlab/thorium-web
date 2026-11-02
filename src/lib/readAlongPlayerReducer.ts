@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { ReadAloudState } from "@readium/navigator";
+import { ReadAloudSettings, ReadAloudState } from "@readium/navigator";
 import { ThReadAlongSettingsContainerKeys } from "@/preferences/models";
 
 export interface ReadAlongSleepTimerState {
@@ -31,6 +31,8 @@ export interface ReadAlongPlayerReducerState {
   isNavigationLocked: boolean;
   isDetached: boolean;
   voiceControls: ReadAlongVoiceControls;
+  // The navigator's voice for each language, picked when none is stored
+  navigatorVoice: ReadAloudSettings["voice"];
   anyVoiceHasBoundaries: boolean | null;
   sleepTimer: ReadAlongSleepTimerState;
   settingsContainer: ThReadAlongSettingsContainerKeys;
@@ -44,6 +46,7 @@ const initialState: ReadAlongPlayerReducerState = {
   isNavigationLocked: false,
   isDetached: false,
   voiceControls: { boundary: true, speed: true, pitch: true },
+  navigatorVoice: null,
   anyVoiceHasBoundaries: null,
   sleepTimer: { remainingSeconds: null },
   settingsContainer: ThReadAlongSettingsContainerKeys.initial
@@ -70,6 +73,9 @@ export const readAlongPlayerSlice = createSlice({
     },
     setReadAlongVoiceControls: (state, action: PayloadAction<ReadAlongVoiceControls>) => {
       state.voiceControls = action.payload;
+    },
+    setReadAlongNavigatorVoice: (state, action: PayloadAction<ReadAloudSettings["voice"]>) => {
+      state.navigatorVoice = action.payload;
     },
     setReadAlongAnyVoiceHasBoundaries: (state, action: PayloadAction<boolean | null>) => {
       state.anyVoiceHasBoundaries = action.payload;
@@ -99,6 +105,7 @@ export const {
   setReadAlongNavigationLocked,
   setReadAlongDetached,
   setReadAlongVoiceControls,
+  setReadAlongNavigatorVoice,
   setReadAlongAnyVoiceHasBoundaries,
   setReadAlongSleepTimer,
   setReadAlongMetadata,

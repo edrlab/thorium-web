@@ -37,6 +37,7 @@ export const StatefulReadAlongLanguageVoice = ({ standalone = true, language, la
 
   const readAloud = useNavigator().readAloud;
   const storedVoices = useAppSelector(state => state.readAlongSettings.voice);
+  const navigatorVoice = useAppSelector(state => state.readAlongPlayer.navigatorVoice);
   const mainLanguage = useReadAlongLanguage();
   const dispatch = useAppDispatch();
 
@@ -60,7 +61,7 @@ export const StatefulReadAlongLanguageVoice = ({ standalone = true, language, la
     };
   }, [readAloud, language]);
 
-  const currentVoice = getStoredVoices(storedVoices)[languageKey] ?? getMainVoiceId(readAloud?.getSetting(prefKey), language);
+  const currentVoice = getStoredVoices(storedVoices)[languageKey] ?? getMainVoiceId(navigatorVoice, language);
 
   const voiceGroups = groupVoicesByRegion(voices, i18n.language);
 

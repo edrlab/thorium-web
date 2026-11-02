@@ -196,6 +196,7 @@ interface ReadAlongPlayerReducerState {
   metadata: ReadAlongMetadata | null;
   status: ReadAloudState;
   voiceControls: ReadAlongVoiceControls;
+  navigatorVoice: ReadAloudSettings["voice"]; // The navigator's voice for each language, picked when none is stored
   anyVoiceHasBoundaries: boolean | null; // Any voice for the publication's language reports word boundaries, null until known
   sleepTimer: { remainingSeconds: number | null };
   settingsContainer: ThReadAlongSettingsContainerKeys;
@@ -207,6 +208,7 @@ interface ReadAlongPlayerReducerState {
 - `setReadAlongLayout`: Set the layout restored on activation
 - `setReadAlongStatus`: Set the navigator state
 - `setReadAlongVoiceControls`: Set what the current voice supports
+- `setReadAlongNavigatorVoice`: Set the navigator's voice for each language, from its `voicesChanged` listener
 - `setReadAlongAnyVoiceHasBoundaries`: Set whether any voice for the publication's language reports word boundaries
 - `setReadAlongSleepTimer`: Update the sleep timer
 - `setReadAlongMetadata`: Set the publication metadata shown by the player
