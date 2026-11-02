@@ -117,7 +117,7 @@ export interface ReadAlongVerbosityChangePayload {
   }
 }
 
-// Voice ids by base language, the navigator picking its own for a language without one
+// Voice ids by publication language, the navigator picking its own for a language without one
 export type ReadAlongVoiceStateObject = Record<string, string>;
 
 export interface ReadAlongVoiceChangePayload {

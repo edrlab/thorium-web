@@ -140,7 +140,7 @@ A dropdown of voices for each language the publication declares besides its main
 
 ### StatefulReadAlongLanguageVoice
 
-The dropdown both are built with, for one `language` with its `label`. Voices are stored by base language, with the others, and submitted to the navigator as one `voice` preference. `onChange` receives the voice chosen.
+The dropdown both are built with, for one `language` with its `label`. Voices are stored by publication language, as declared, with the others, and submitted to the navigator as one `voice` preference. `onChange` receives the voice chosen.
 
 ### StatefulReadAlongRate, StatefulReadAlongPitch, StatefulReadAlongVolume, StatefulReadAlongPauseDuration
 

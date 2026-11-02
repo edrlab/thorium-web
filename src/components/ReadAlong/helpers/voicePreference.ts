@@ -1,12 +1,12 @@
-import { ReadAloudSettings, extractLangRegionFromBCP47 } from "@readium/navigator";
+import { ReadAloudSettings } from "@readium/navigator";
 
 import { ReadAlongVoiceStateObject } from "@/lib/readAlongSettingsReducer";
 
 // Undetermined, for publications that don't declare their language
 const UNDETERMINED = "und";
 
-// By base language, as the navigator matches it against content
-export const getVoiceLanguageKey = (language?: string): string => language ? extractLangRegionFromBCP47(language)[0] : UNDETERMINED;
+// As the publication declares it, since the navigator's voice for a language and region wins over one for the language alone
+export const getVoiceLanguageKey = (language?: string): string => language || UNDETERMINED;
 
 // Persisted before voices were stored per language
 export const getStoredVoices = (voices: ReadAlongVoiceStateObject | string | null | undefined): ReadAlongVoiceStateObject => {
