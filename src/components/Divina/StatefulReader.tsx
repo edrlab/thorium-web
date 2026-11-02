@@ -102,11 +102,12 @@ export const StatefulDivinaReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  publicationKey,
   settingsStorage,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
-  const isSettingsHydrated = useSettingsStorage(localDataKey, "divina", settingsStorage);
+  const isSettingsHydrated = useSettingsStorage(publicationKey ?? null, "divina", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {

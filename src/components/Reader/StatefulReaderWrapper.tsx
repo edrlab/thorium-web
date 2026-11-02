@@ -77,6 +77,7 @@ export interface StatefulReaderProps {
   localDataKey: string | null;
   plugins?: ThPlugin[];
   positionStorage?: PositionStorage;
+  publicationKey?: string | null;
   settingsStorage?: SettingsStorage;
   readAlong?: ReadAlongConfig;
   containerRefSetter?: (el: Element | null) => void;
@@ -100,6 +101,7 @@ export interface ReaderComponentProps<
   localDataKey: string | null;
   isLoading?: boolean;
   positionStorage?: PositionStorage;
+  publicationKey?: string | null;
   settingsStorage?: SettingsStorage;
   readAlong?: ReadAlongConfig;
   plugins?: ReaderPlugins;
@@ -171,12 +173,13 @@ interface AudioContentProps {
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
+  publicationKey?: string | null;
   settingsStorage?: SettingsStorage;
   coverUrl?: string;
   externalLoading: boolean;
 }
 
-const StatefulAudioContent = ({ publication, localDataKey, positionStorage, settingsStorage, coverUrl, externalLoading }: AudioContentProps) => {
+const StatefulAudioContent = ({ publication, localDataKey, positionStorage, publicationKey, settingsStorage, coverUrl, externalLoading }: AudioContentProps) => {
   const { preferences } = useAudioPreferences();
   const themeObject = useAppSelector(state => state.theming.theme);
   const dispatch = useAppDispatch();
@@ -211,7 +214,7 @@ const StatefulAudioContent = ({ publication, localDataKey, positionStorage, sett
   return (
     <StatefulLoader isLoading={ externalLoading || !themeResolved || !coverReady }>
       <Suspense>
-        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } settingsStorage={ settingsStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } />
+        <StatefulPlayer publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } publicationKey={ publicationKey } settingsStorage={ settingsStorage } coverUrl={ coverBlobUrl } containerRefSetter={ setContainerRef } />
       </Suspense>
     </StatefulLoader>
   );
@@ -224,6 +227,7 @@ interface ReaderContentProps {
   publication: Publication;
   localDataKey: string | null;
   positionStorage?: PositionStorage;
+  publicationKey?: string | null;
   settingsStorage?: SettingsStorage;
   readAlong?: ReadAlongConfig;
   plugins?: ThPlugin[];

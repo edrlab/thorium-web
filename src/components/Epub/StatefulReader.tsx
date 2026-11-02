@@ -110,12 +110,13 @@ export const StatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  publicationKey,
   settingsStorage,
   readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
-  const isSettingsHydrated = useSettingsStorage(localDataKey, "epub", settingsStorage);
+  const isSettingsHydrated = useSettingsStorage(publicationKey ?? null, "epub", settingsStorage);
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {
       plugins.forEach(plugin => {

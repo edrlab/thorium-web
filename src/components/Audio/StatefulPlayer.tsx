@@ -73,6 +73,7 @@ export interface StatefulPlayerProps {
   localDataKey: string | null;
   plugins?: any[];
   positionStorage?: PositionStorage;
+  publicationKey?: string | null;
   settingsStorage?: SettingsStorage;
   coverUrl?: string;
   containerRefSetter?: (el: Element | null) => void;
@@ -83,12 +84,13 @@ export const StatefulPlayer = ({
   localDataKey,
   plugins,
   positionStorage,
+  publicationKey,
   settingsStorage,
   coverUrl,
   containerRefSetter
 }: StatefulPlayerProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
-  const isSettingsHydrated = useSettingsStorage(localDataKey, "audio", settingsStorage);
+  const isSettingsHydrated = useSettingsStorage(publicationKey ?? null, "audio", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {

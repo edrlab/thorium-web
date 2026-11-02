@@ -114,10 +114,10 @@ const { setLocalData, getLocalData, localData } = usePositionStorage(localDataKe
 
 ### useSettingsStorage
 
-Stores the settings of a publication. Each publication keeps its glocal and local settings in IndexedDB, keyed by `localDataKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. The readers don’t render until it has loaded them, so navigators start with the publication’s settings.
+Stores the settings of a publication. Each publication keeps its glocal and local settings in IndexedDB, keyed by `publicationKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. The readers don’t render until it has loaded them, so navigators start with the publication’s settings.
 
 ```typescript
-const isSettingsHydrated = useSettingsStorage(localDataKey, "epub", settingsStorage);
+const isSettingsHydrated = useSettingsStorage(publicationKey, "epub", settingsStorage);
 ```
 
 **Parameters**

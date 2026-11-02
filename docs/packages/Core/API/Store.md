@@ -28,7 +28,7 @@ Settings are stored according to a strategy, from enum `ThSettingsStorageStrateg
 - `glocal`: per publication, a publication without its own value starting from the last one used in any publication;
 - `local`: per publication only, never stored globally, a publication without its own value starting from the default.
 
-Publications are only told apart with a `localDataKey` or a `settingsStorage` on the reader, see [SettingsStorage Interface](../../Reader/ReadMe.md#settingsstorage-interface). Without them, every setting is global.
+Publications are only told apart with a `publicationKey` or a `settingsStorage` on the reader, see [SettingsStorage Interface](../../Reader/ReadMe.md#settingsstorage-interface). Without them, every setting is global.
 
 `ThSettingsStorageStrategies` maps settings keys to strategies, per scope, like the settings orders (`reflowOrder`, `fxlOrder`, `webPubOrder`, `divinaOrder`): `reflow`, `fxl`, `webPub` and `divina` take `ThSettingsKeys`, `audio` takes `ThAudioKeys` and `readAlong` takes `ThReadAlongKeys`. A setting left out is global. `defaultSettingsStorageStrategies` follows Thorium Mobile: reflowable settings are glocal but the theme, which is always global; fixed-layout and Divina settings are glocal, theme included; audio settings are global; read along’s voice, volume and pitch are global, its language override is local, while switching voices for other languages, highlights, prosody and verbosity are glocal.
 

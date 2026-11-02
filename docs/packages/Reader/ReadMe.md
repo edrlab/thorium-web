@@ -25,7 +25,7 @@ You can use it like this:
 import { StatefulReaderWrapper, ThStoreProvider, usePublication } from "@edrlab/thorium-web/reader";
 
 const App = ({ manifestUrl }) => {
-  const { publication, profile, localDataKey, isLoading, error } = usePublication({
+  const { publication, profile, selfLink, localDataKey, isLoading, error } = usePublication({
     url: manifestUrl,
     onError: (error) => console.error("Publication loading error:", error)
   });
@@ -39,6 +39,7 @@ const App = ({ manifestUrl }) => {
         profile={ profile }
         publication={ publication }
         localDataKey={ localDataKey }
+        publicationKey={ selfLink }
         positionStorage={{
           get: () => getStoredPosition(localDataKey),
           set: (locator) => storePosition(localDataKey, locator)
@@ -56,6 +57,7 @@ The Reader expects the following props:
 - `profile`: `"epub" | "webPub" | "audio" | "divina" | undefined | null` — the publication profile to determine which reader to render
 - `publication`: `Publication` — the Readium Publication object
 - `localDataKey`: `string | null` — a unique key for storing local reading data (bookmarks, positions, etc.)
+- `publicationKey`: `string | null` (optional) — the publication’s key for its settings in IndexedDB, e.g. `usePublication`’s `selfLink`
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
 - `settingsStorage`: `SettingsStorage` (optional) — an interface for persisting each publication’s settings, instead of IndexedDB (see [SettingsStorage Interface](#settingsstorage-interface))
 - `readAlong`: `ReadAlongConfig` (optional) — factories for read along’s Guided Navigation provider and speech engine, for `"epub"` and `"webPub"` (see [Read Along](../../customization/ReadAlong.md#provider-and-engine))
@@ -188,7 +190,7 @@ interface PositionStorage {
 
 ### SettingsStorage Interface
 
-Each publication keeps its glocal and local settings in IndexedDB, keyed by `localDataKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. Without `localDataKey` nor `settingsStorage`, settings are only stored globally.
+Each publication keeps its glocal and local settings in IndexedDB, keyed by `publicationKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. Without `publicationKey` nor `settingsStorage`, settings are only stored globally.
 
 ```typescript
 interface SettingsStorage {

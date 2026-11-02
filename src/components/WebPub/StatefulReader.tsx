@@ -88,12 +88,13 @@ export const ExperimentalWebPubStatefulReader = ({
   localDataKey,
   plugins,
   positionStorage,
+  publicationKey,
   settingsStorage,
   readAlong,
   containerRefSetter
 }: StatefulReaderProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
-  const isSettingsHydrated = useSettingsStorage(localDataKey, "webPub", settingsStorage);
+  const isSettingsHydrated = useSettingsStorage(publicationKey ?? null, "webPub", settingsStorage);
 
   useLayoutEffect(() => {
     if (plugins && plugins.length > 0) {

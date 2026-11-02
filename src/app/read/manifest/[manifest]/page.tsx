@@ -44,6 +44,7 @@ export default function ManifestPage({ params }: Props) {
     error, 
     publication, 
     profile,
+    selfLink,
     localDataKey
   } = usePublication({
     url: manifestUrl,
@@ -69,6 +70,7 @@ export default function ManifestPage({ params }: Props) {
           profile={ profile }
           publication={ publication }
           localDataKey={ localDataKey }
+          publicationKey={ selfLink }
           isLoading={ isLoading || publicationLoading }
         />
       ) : null }
