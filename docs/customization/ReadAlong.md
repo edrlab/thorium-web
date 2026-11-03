@@ -373,7 +373,7 @@ Unlike other presets, highlight presets apply even when `highlightPresets` isnâ€
 
 #### Highlight Themes
 
-A highlight theme declares its colors for every reading theme, since the same highlight has to work on whichever reading theme is applied. The highlight changes with the reading theme. A color the user picks in the subpanel is used as-is, whatever the theme.
+A highlight theme declares its colors for every reading theme, since the same highlight has to work on whichever reading theme is applied. The highlight changes with the reading theme of reflowable publications. Fixed-layout and WebPub content keeps its own colors whatever the reading theme, so its highlights always take the `light` colors. A color the user picks in the subpanel is used as-is, whatever the theme.
 
 - `default`: the highlight theme in use, from enum `ThReadAlongHighlightThemeKeys` or your own key;
 - `keys`: the highlight themes. Each one is a `ThReadAlongHighlightTheme<K>`: a `ThReadAlongHighlightColors` for every reading theme key in `theming.themes.keys`, custom keys included.

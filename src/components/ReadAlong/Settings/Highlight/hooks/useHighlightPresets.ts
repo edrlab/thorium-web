@@ -169,8 +169,9 @@ export const useHighlightPresets = () => {
     : preset;
 
   // Same resolution as the reader's theme, auto following the color scheme
+  // Fixed-layout pages keep their own colors whatever the theme, like WebPub's
   const highlightColors = useMemo((): ThReadAlongHighlightColors | undefined => {
-    const storedTheme = profile === "epub" ? (isFXL ? themeObject.fxl : themeObject.reflow) : ThThemeKeys.light;
+    const storedTheme = profile === "epub" && !isFXL ? themeObject.reflow : ThThemeKeys.light;
     const { systemThemes } = preferences.theming.themes;
     const resolvedTheme = storedTheme === "auto" && systemThemes
       ? (colorScheme === ThColorScheme.dark ? systemThemes.dark : systemThemes.light)
