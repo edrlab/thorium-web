@@ -114,7 +114,8 @@
             },
             "divinaSpreads": {
                 "label": "Visa uppslag som två sidor"
-            }
+            },
+            "divinaStripWidth": "Seriebredd"
         }
     },
     "audio": {
