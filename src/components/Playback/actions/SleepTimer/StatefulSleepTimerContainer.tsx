@@ -134,7 +134,7 @@ export const StatefulSleepTimerContainer = ({ triggerRef, placement = "top", cla
           return {
             id: "endOfFragment",
             value: "endOfFragment",
-            label: t("reader.playback.preferences.sleepTimer.presets.endOfFragment"),
+            label: t("reader.playback.preferences.sleepTimer.presets.endOfChapter"),
           };
         } else {
           return {

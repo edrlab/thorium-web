@@ -1,29 +1,29 @@
 Locale Completion Status
 Reference language: en
-Generated: 2026-10-07T15:58:16.776Z
+Generated: 2026-11-05T16:34:59.361Z
 
 
 Locale Completion Summary:
 ----------------------------------------
 EN     [■■■■■■■■■■■■■■■■■■■■] 100%
-AR     [■■■■■■■■■■■■■■■■■■■□]  97%
-DA     [■■■■■■■■■■■■■■■■■■■□]  97%
-ES     [■■■■■■■■■■■■■■■■■■■□]  97%
-ET     [■■■■■■■■■■■■■■■■■■■□]  97%
-FI     [■■■■■■■■■■■■■■■■■■■□]  97%
-FR     [■■■■■■■■■■■■■■■■■■■□]  97%
-IT     [■■■■■■■■■■■■■■■■■■■□]  97%
-LT     [■■■■■■■■■■■■■■■■■■■□]  97%
-SV     [■■■■■■■■■■■■■■■■■■■□]  97%
-PL     [■■■■■■■■■■■■■■■■■■□□]  93%
-PT-PT  [■■■■■■■■■■■■■■■■■□□□]  87%
-SL     [■■■■■■■■■■■■■■□□□□□□]  73%
-PT-BR  [■■■■■■■■■■■■□□□□□□□□]  60%
-TA     [■■■■■■■■□□□□□□□□□□□□]  41%
-TR     [■■■■■■■□□□□□□□□□□□□□]  39%
-EL     [■■■■□□□□□□□□□□□□□□□□]  23%
-BG     [■□□□□□□□□□□□□□□□□□□□]   5%
-HE     [□□□□□□□□□□□□□□□□□□□□]   3%
+AR     [■■■■■■■■■■■■■□□□□□□□]  67%
+DA     [■■■■■■■■■■■■■□□□□□□□]  67%
+ES     [■■■■■■■■■■■■■□□□□□□□]  67%
+ET     [■■■■■■■■■■■■■□□□□□□□]  67%
+FI     [■■■■■■■■■■■■■□□□□□□□]  67%
+FR     [■■■■■■■■■■■■■□□□□□□□]  67%
+IT     [■■■■■■■■■■■■■□□□□□□□]  67%
+LT     [■■■■■■■■■■■■■□□□□□□□]  67%
+SV     [■■■■■■■■■■■■■□□□□□□□]  67%
+PL     [■■■■■■■■■■■■■□□□□□□□]  65%
+PT-PT  [■■■■■■■■■■■■□□□□□□□□]  61%
+SL     [■■■■■■■■■■□□□□□□□□□□]  51%
+PT-BR  [■■■■■■■■□□□□□□□□□□□□]  42%
+TA     [■■■■■□□□□□□□□□□□□□□□]  28%
+TR     [■■■■■□□□□□□□□□□□□□□□]  27%
+EL     [■■■□□□□□□□□□□□□□□□□□]  16%
+BG     [□□□□□□□□□□□□□□□□□□□□]   3%
+HE     [□□□□□□□□□□□□□□□□□□□□]   2%
 BN     [□□□□□□□□□□□□□□□□□□□□]   0%
 BRH    [□□□□□□□□□□□□□□□□□□□□]   0%
 FA     [□□□□□□□□□□□□□□□□□□□□]   0%
@@ -34,24 +34,24 @@ UK     [□□□□□□□□□□□□□□□□□□□□]   0%
 Inferred Usage Summary:
 ----------------------------------------
 EN     [■■■■■■■■■■■■■■■■■■■■] 100%
-AR     [■■■■■■■■■■■■■■■■■■□□]  93%
-DA     [■■■■■■■■■■■■■■■■■■□□]  93%
-ES     [■■■■■■■■■■■■■■■■■■□□]  93%
-ET     [■■■■■■■■■■■■■■■■■■□□]  93%
-FI     [■■■■■■■■■■■■■■■■■■□□]  93%
-FR     [■■■■■■■■■■■■■■■■■■□□]  93%
-IT     [■■■■■■■■■■■■■■■■■■□□]  93%
-LT     [■■■■■■■■■■■■■■■■■■□□]  93%
-SV     [■■■■■■■■■■■■■■■■■■□□]  93%
-PL     [■■■■■■■■■■■■■■■■■■□□]  93%
-PT-PT  [■■■■■■■■■■■■■■■□□□□□]  79%
-PT-BR  [■■■■■■■■■■■■□□□□□□□□]  64%
-TA     [■■■■■■■■■■■□□□□□□□□□]  59%
-SL     [■■■■■■■■■■■□□□□□□□□□]  55%
-EL     [■■■■■■■□□□□□□□□□□□□□]  39%
-TR     [■■■■■□□□□□□□□□□□□□□□]  27%
-BG     [■□□□□□□□□□□□□□□□□□□□]   9%
-HE     [□□□□□□□□□□□□□□□□□□□□]   4%
+AR     [■■■■■■■■■■■■■■■□□□□□]  75%
+DA     [■■■■■■■■■■■■■■■□□□□□]  75%
+ES     [■■■■■■■■■■■■■■■□□□□□]  75%
+ET     [■■■■■■■■■■■■■■■□□□□□]  75%
+FI     [■■■■■■■■■■■■■■■□□□□□]  75%
+FR     [■■■■■■■■■■■■■■■□□□□□]  75%
+IT     [■■■■■■■■■■■■■■■□□□□□]  75%
+LT     [■■■■■■■■■■■■■■■□□□□□]  75%
+SV     [■■■■■■■■■■■■■■■□□□□□]  75%
+PL     [■■■■■■■■■■■■■■■□□□□□]  75%
+PT-PT  [■■■■■■■■■■■■□□□□□□□□]  63%
+PT-BR  [■■■■■■■■■□□□□□□□□□□□]  49%
+SL     [■■■■■■■■■□□□□□□□□□□□]  45%
+TA     [■■■■■■■■■□□□□□□□□□□□]  45%
+EL     [■■■■■■□□□□□□□□□□□□□□]  30%
+TR     [■■■■□□□□□□□□□□□□□□□□]  23%
+BG     [■□□□□□□□□□□□□□□□□□□□]   7%
+HE     [□□□□□□□□□□□□□□□□□□□□]   3%
 BN     [□□□□□□□□□□□□□□□□□□□□]   0%
 BRH    [□□□□□□□□□□□□□□□□□□□□]   0%
 FA     [□□□□□□□□□□□□□□□□□□□□]   0%
@@ -62,21 +62,21 @@ Locale Breakdown:
 ----------------------------------------
 
 EN (100% complete, 100% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■■■ 100%  (70/70)
-   TOTAL                 ■■■■■■■■■■ 100%  (260/260)
-   USED                  ■■■■■■■■■■ 100%  (135/135)
+   thorium-shared.json   ■■■■■■■■■■ 100%  (292/292)
+   thorium-web.json      ■■■■■■■■■■ 100%  (80/80)
+   TOTAL                 ■■■■■■■■■■ 100%  (372/372)
+   USED                  ■■■■■■■■■■ 100%  (177/177)
 
-AR (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+AR (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -86,18 +86,56 @@ AR (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-DA (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+DA (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -107,18 +145,56 @@ DA (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-ES (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+ES (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -128,18 +204,56 @@ ES (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-ET (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+ET (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -149,18 +263,56 @@ ET (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-FI (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+FI (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -170,18 +322,56 @@ FI (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-FR (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+FR (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -191,18 +381,56 @@ FR (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-IT (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+IT (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -212,18 +440,56 @@ IT (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-LT (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+LT (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -233,18 +499,56 @@ LT (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-SV (97% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  97%  (251/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+SV (67% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  67%  (251/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -254,18 +558,56 @@ SV (97% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-PL (93% complete, 93% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  95%  (180/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■■■■■■■■□  93%  (241/260)
-   USED                  ■■■■■■■■■□  93%  (126/135)
+PL (65% complete, 75% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  62%  (180/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■■■■■■□□□□  65%  (241/372)
+   USED                  ■■■■■■■□□□  75%  (132/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -275,29 +617,61 @@ PL (93% complete, 93% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-PT-PT (87% complete, 79% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■□  93%  (177/190)
-   thorium-web.json      ■■■■■■■□□□  70%  (49/70)
-   TOTAL                 ■■■■■■■■□□  87%  (226/260)
-   USED                  ■■■■■■■□□□  79%  (106/135)
+PT-PT (61% complete, 63% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  61%  (177/292)
+   thorium-web.json      ■■■■■■□□□□  61%  (49/80)
+   TOTAL                 ■■■■■■□□□□  61%  (226/372)
+   USED                  ■■■■■■□□□□  63%  (111/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (20 keys):
+   WEB (31 keys):
    • home.title
    • home.description
-   • audio.player.coverAlt
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -307,29 +681,72 @@ PT-PT (87% complete, 79% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
 
-   SHARED (9 keys):
+   SHARED (35 keys):
    • reader.playback.preferences.audio.title
    • reader.playback.preferences.audio.skipBackwardInterval
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
    • reader.playback.preferences.sleepTimer.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.ligatures.title
    • reader.preferences.ligatures.label
    • reader.preferences.noRuby.title
    • reader.preferences.noRuby.label
 
 
-SL (73% complete, 55% of inferred usage)
-   thorium-shared.json   ■■■■■■■■■■ 100%  (190/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/72)
-   TOTAL                 ■■■■■■■□□□  73%  (190/262)
-   USED                  ■■■■■□□□□□  55%  (74/135)
+SL (51% complete, 45% of inferred usage)
+   thorium-shared.json   ■■■■■■□□□□  65%  (190/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/82)
+   TOTAL                 ■■■■■□□□□□  51%  (190/374)
+   USED                  ■■■■□□□□□□  45%  (79/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -341,16 +758,10 @@ SL (73% complete, 55% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -378,6 +789,24 @@ SL (73% complete, 55% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -388,33 +817,54 @@ SL (73% complete, 55% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
+
+   SHARED (26 keys):
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
 
 
-PT-BR (60% complete, 64% of inferred usage)
-   thorium-shared.json   ■■■■■■□□□□  61%  (116/190)
-   thorium-web.json      ■■■■■□□□□□  57%  (40/70)
-   TOTAL                 ■■■■■■□□□□  60%  (156/260)
-   USED                  ■■■■■■□□□□  64%  (86/135)
+PT-BR (42% complete, 49% of inferred usage)
+   thorium-shared.json   ■■■■□□□□□□  40%  (116/292)
+   thorium-web.json      ■■■■■□□□□□  50%  (40/80)
+   TOTAL                 ■■■■□□□□□□  42%  (156/372)
+   USED                  ■■■■□□□□□□  49%  (87/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (28 keys):
+   WEB (39 keys):
    • home.title
    • home.description
    • reader.jumpToPosition.error.notFound
-   • audio.player.coverAlt
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -431,53 +881,94 @@ PT-BR (60% complete, 64% of inferred usage)
    • reader.app.errors.clientError
    • reader.app.errors.generic
    • reader.app.errors.title
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
 
-   SHARED (21 keys):
+   SHARED (51 keys):
    • reader.playback.preferences.audio.title
    • reader.playback.preferences.autoPlay.title
    • reader.playback.preferences.autoPlay.label
    • reader.playback.preferences.audio.skipBackwardInterval
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
+   • reader.actions.goToNextResource.descriptive
+   • reader.actions.goToPreviousResource.descriptive
+   • reader.preferences.spread.title
    • reader.playback.preferences.playbackRate.descriptive
    • reader.playback.preferences.sleepTimer.presets.endOfResource
    • reader.playback.preferences.sleepTimer.descriptive
    • reader.playback.preferences.audio.volume
-   • reader.actions.goToNextResource.descriptive
    • reader.playback.actions.pause
    • reader.playback.actions.play
-   • reader.actions.goToPreviousResource.descriptive
    • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
    • reader.playback.actions.skipForward.descriptive
-   • reader.preferences.spread.title
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.ligatures.title
    • reader.preferences.ligatures.label
    • reader.preferences.noRuby.title
    • reader.preferences.noRuby.label
+   • reader.progression.positionsLeft.compact
 
 
-TA (41% complete, 59% of inferred usage)
-   thorium-shared.json   ■■■□□□□□□□  35%  (66/190)
-   thorium-web.json      ■■■■■□□□□□  57%  (40/70)
-   TOTAL                 ■■■■□□□□□□  41%  (106/260)
-   USED                  ■■■■■□□□□□  59%  (79/135)
+TA (28% complete, 45% of inferred usage)
+   thorium-shared.json   ■■□□□□□□□□  23%  (66/292)
+   thorium-web.json      ■■■■■□□□□□  50%  (40/80)
+   TOTAL                 ■■□□□□□□□□  28%  (106/372)
+   USED                  ■■■■□□□□□□  45%  (79/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (28 keys):
+   WEB (39 keys):
    • home.title
    • home.description
    • reader.jumpToPosition.error.notFound
-   • audio.player.coverAlt
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -494,28 +985,74 @@ TA (41% complete, 59% of inferred usage)
    • reader.app.errors.clientError
    • reader.app.errors.generic
    • reader.app.errors.title
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
 
-   SHARED (28 keys):
+   SHARED (59 keys):
    • reader.playback.preferences.audio.title
    • reader.playback.preferences.autoPlay.title
    • reader.playback.preferences.autoPlay.label
    • reader.playback.preferences.audio.skipBackwardInterval
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
+   • reader.actions.goToNextResource.descriptive
+   • reader.actions.goToPreviousResource.descriptive
+   • reader.preferences.spread.title
+   • reader.preferences.columns.single.compact
+   • reader.preferences.columns.dual.compact
    • reader.playback.preferences.playbackRate.descriptive
    • reader.playback.preferences.sleepTimer.presets.endOfResource
    • reader.playback.preferences.sleepTimer.descriptive
    • common.actions.cancel
    • reader.playback.preferences.audio.volume
-   • reader.actions.goToNextResource.descriptive
    • reader.playback.actions.pause
    • reader.playback.actions.play
-   • reader.actions.goToPreviousResource.descriptive
    • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
    • reader.playback.actions.skipForward.descriptive
-   • reader.preferences.spread.title
-   • reader.preferences.columns.single.compact
-   • reader.preferences.columns.dual.compact
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.spacing.presets.title
    • common.actions.reset
    • reader.preferences.fontWeight.normal
@@ -524,18 +1061,20 @@ TA (41% complete, 59% of inferred usage)
    • reader.preferences.ligatures.label
    • reader.preferences.noRuby.title
    • reader.preferences.noRuby.label
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
-TR (39% complete, 27% of inferred usage)
-   thorium-shared.json   ■■■■■□□□□□  53%  (101/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/72)
-   TOTAL                 ■■■□□□□□□□  39%  (101/262)
-   USED                  ■■□□□□□□□□  27%  (37/135)
+TR (27% complete, 23% of inferred usage)
+   thorium-shared.json   ■■■□□□□□□□  35%  (101/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/82)
+   TOTAL                 ■■□□□□□□□□  27%  (101/374)
+   USED                  ■■□□□□□□□□  23%  (41/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -547,16 +1086,10 @@ TR (39% complete, 27% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -584,6 +1117,24 @@ TR (39% complete, 27% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -594,16 +1145,41 @@ TR (39% complete, 27% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (37 keys):
+   SHARED (64 keys):
    • reader.preferences.text
    • reader.preferences.spacing.title
    • reader.tableOfContents.title
    • reader.tableOfContents.emptyState.description
    • reader.preferences.spread.title
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -636,18 +1212,19 @@ TR (39% complete, 27% of inferred usage)
    • reader.preferences.textAlign.title
    • reader.preferences.textNormalization.title
    • reader.preferences.textNormalization.label
+   • reader.progression.positionsLeft.compact
 
 
-EL (23% complete, 39% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      ■■■■■■■■□□  87%  (61/70)
-   TOTAL                 ■■□□□□□□□□  23%  (61/260)
-   USED                  ■■■□□□□□□□  39%  (52/135)
+EL (16% complete, 30% of inferred usage)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      ■■■■■■■□□□  76%  (61/80)
+   TOTAL                 ■□□□□□□□□□  16%  (61/372)
+   USED                  ■■■□□□□□□□  30%  (53/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (9 keys):
+   WEB (19 keys):
    • home.title
    • home.description
    • reader.preferences.divinaQuality.auto
@@ -657,8 +1234,18 @@ EL (23% complete, 39% of inferred usage)
    • reader.preferences.divinaQuality.title
    • reader.preferences.divinaSpreads.label
    • reader.preferences.divinaStripWidth
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -676,23 +1263,52 @@ EL (23% complete, 39% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -733,18 +1349,20 @@ EL (23% complete, 39% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
-BG (5% complete, 9% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      ■□□□□□□□□□  19%  (13/70)
-   TOTAL                 □□□□□□□□□□   5%  (13/260)
-   USED                  □□□□□□□□□□   9%  (12/135)
+BG (3% complete, 7% of inferred usage)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      ■□□□□□□□□□  16%  (13/80)
+   TOTAL                 □□□□□□□□□□   3%  (13/372)
+   USED                  □□□□□□□□□□   7%  (12/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (49 keys):
+   WEB (60 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -756,16 +1374,10 @@ BG (5% complete, 9% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -781,6 +1393,24 @@ BG (5% complete, 9% of inferred usage)
    • reader.app.docker.popover.tooltip
    • reader.app.docker.wrapper
    • reader.app.docking.dockingClosed
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -791,11 +1421,10 @@ BG (5% complete, 9% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -813,23 +1442,52 @@ BG (5% complete, 9% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -870,18 +1528,20 @@ BG (5% complete, 9% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
-HE (3% complete, 4% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   2%  (4/190)
-   thorium-web.json      □□□□□□□□□□   4%  (3/70)
-   TOTAL                 □□□□□□□□□□   3%  (7/260)
-   USED                  □□□□□□□□□□   4%  (5/135)
+HE (2% complete, 3% of inferred usage)
+   thorium-shared.json   □□□□□□□□□□   1%  (4/292)
+   thorium-web.json      □□□□□□□□□□   4%  (3/80)
+   TOTAL                 □□□□□□□□□□   2%  (7/372)
+   USED                  □□□□□□□□□□   3%  (5/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (59 keys):
+   WEB (70 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -893,16 +1553,10 @@ HE (3% complete, 4% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -928,6 +1582,24 @@ HE (3% complete, 4% of inferred usage)
    • reader.app.errors.clientError
    • reader.app.errors.generic
    • reader.app.errors.title
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -938,11 +1610,10 @@ HE (3% complete, 4% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (71 keys):
+   SHARED (102 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -959,21 +1630,50 @@ HE (3% complete, 4% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1014,18 +1714,20 @@ HE (3% complete, 4% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 BN (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/72)
-   TOTAL                 □□□□□□□□□□   0%  (0/262)
-   USED                  □□□□□□□□□□   0%  (0/135)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/82)
+   TOTAL                 □□□□□□□□□□   0%  (0/374)
+   USED                  □□□□□□□□□□   0%  (0/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -1037,16 +1739,10 @@ BN (0% complete, 0% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -1074,6 +1770,24 @@ BN (0% complete, 0% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -1084,11 +1798,10 @@ BN (0% complete, 0% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -1106,23 +1819,52 @@ BN (0% complete, 0% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1163,18 +1905,20 @@ BN (0% complete, 0% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 BRH (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/70)
-   TOTAL                 □□□□□□□□□□   0%  (0/260)
-   USED                  □□□□□□□□□□   0%  (0/135)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/80)
+   TOTAL                 □□□□□□□□□□   0%  (0/372)
+   USED                  □□□□□□□□□□   0%  (0/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -1186,16 +1930,10 @@ BRH (0% complete, 0% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -1223,6 +1961,24 @@ BRH (0% complete, 0% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -1233,11 +1989,10 @@ BRH (0% complete, 0% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -1255,23 +2010,52 @@ BRH (0% complete, 0% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1312,18 +2096,20 @@ BRH (0% complete, 0% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 FA (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/72)
-   TOTAL                 □□□□□□□□□□   0%  (0/262)
-   USED                  □□□□□□□□□□   0%  (0/135)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/82)
+   TOTAL                 □□□□□□□□□□   0%  (0/374)
+   USED                  □□□□□□□□□□   0%  (0/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -1335,16 +2121,10 @@ FA (0% complete, 0% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -1372,6 +2152,24 @@ FA (0% complete, 0% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -1382,11 +2180,10 @@ FA (0% complete, 0% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -1404,23 +2201,52 @@ FA (0% complete, 0% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1461,18 +2287,20 @@ FA (0% complete, 0% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 NB-NO (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/72)
-   TOTAL                 □□□□□□□□□□   0%  (0/262)
-   USED                  □□□□□□□□□□   0%  (0/135)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/82)
+   TOTAL                 □□□□□□□□□□   0%  (0/374)
+   USED                  □□□□□□□□□□   0%  (0/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -1484,16 +2312,10 @@ NB-NO (0% complete, 0% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -1521,6 +2343,24 @@ NB-NO (0% complete, 0% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -1531,11 +2371,10 @@ NB-NO (0% complete, 0% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -1553,23 +2392,52 @@ NB-NO (0% complete, 0% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1610,18 +2478,20 @@ NB-NO (0% complete, 0% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 UK (0% complete, 0% of inferred usage)
-   thorium-shared.json   □□□□□□□□□□   0%  (0/190)
-   thorium-web.json      □□□□□□□□□□   0%  (0/70)
-   TOTAL                 □□□□□□□□□□   0%  (0/260)
-   USED                  □□□□□□□□□□   0%  (0/135)
+   thorium-shared.json   □□□□□□□□□□   0%  (0/292)
+   thorium-web.json      □□□□□□□□□□   0%  (0/80)
+   TOTAL                 □□□□□□□□□□   0%  (0/372)
+   USED                  □□□□□□□□□□   0%  (0/177)
 
    ----------------------------------------
    Missing Keys:
 
-   WEB (61 keys):
+   WEB (72 keys):
    • home.title
    • home.description
    • reader.fullscreen.close
@@ -1633,16 +2503,10 @@ UK (0% complete, 0% of inferred usage)
    • reader.overflowMenu.active.trigger
    • reader.overflowMenu.active.tooltip
    • reader.toc.entries
-   • audio.player.coverAlt
    • reader.app.header.actions
    • audio.remotePlayback.connected
    • audio.remotePlayback.trigger
-   • audio.settings.sleepTimer.minutes
-   • audio.settings.sleepTimer.seconds
-   • audio.settings.sleepTimer.hours
-   • audio.settings.sleepTimer.remaining
-   • audio.settings.sleepTimer.instruction
-   • audio.settings.sleepTimer.start
+   • audio.player.mediaControls
    • audio.player.controls
    • audio.player.progress
    • reader.preferences.divinaQuality.auto
@@ -1670,6 +2534,24 @@ UK (0% complete, 0% of inferred usage)
    • reader.app.errors.generic
    • reader.app.errors.title
    • reader.app.loading
+   • audio.player.coverAlt
+   • audio.settings.sleepTimer.minutes
+   • audio.settings.sleepTimer.seconds
+   • audio.settings.sleepTimer.hours
+   • audio.settings.sleepTimer.remaining
+   • audio.settings.sleepTimer.instruction
+   • audio.settings.sleepTimer.start
+   • reader.readAlong.settings.highlight.advanced.trigger
+   • reader.readAlong.settings.highlight.advanced.tooltip
+   • reader.readAlong.settings.prosody.advanced.trigger
+   • reader.readAlong.settings.prosody.advanced.tooltip
+   • reader.readAlong.settings.verbosity.advanced.trigger
+   • reader.readAlong.settings.verbosity.advanced.tooltip
+   • reader.readAlong.settings.voice.advanced.trigger
+   • reader.readAlong.settings.voice.advanced.tooltip
+   • reader.readAlong.player.mediaActions
+   • reader.readAlong.player.actions
+   • reader.app.progression.wrapper
    • reader.settings.spacing.advanced.trigger
    • reader.settings.spacing.advanced.tooltip
    • reader.settings.text.advanced.trigger
@@ -1680,11 +2562,10 @@ UK (0% complete, 0% of inferred usage)
    • reader.app.footer.label
    • reader.navigation.scroll.wrapper
    • reader.app.header.label
-   • reader.app.progression.referenceFallback
-   • reader.app.progression.wrapper
    • reader.app.header.runningHead
+   • reader.app.progression.referenceFallback
 
-   SHARED (74 keys):
+   SHARED (105 keys):
    • reader.actions.goToPosition.descriptive
    • reader.actions.goToPosition.compact
    • reader.playback.preferences.audio.title
@@ -1702,23 +2583,52 @@ UK (0% complete, 0% of inferred usage)
    • common.actions.increase
    • reader.playback.preferences.audio.skipForwardInterval
    • reader.playback.preferences.audio.skipInterval
-   • reader.playback.preferences.playbackRate.descriptive
-   • reader.playback.preferences.sleepTimer.presets.endOfResource
-   • reader.playback.preferences.sleepTimer.descriptive
-   • common.actions.cancel
-   • reader.playback.preferences.audio.volume
    • reader.actions.goToNextResource.descriptive
-   • reader.playback.actions.pause
-   • reader.playback.actions.play
    • reader.actions.goToPreviousResource.descriptive
-   • reader.playback.actions.skipBackward.descriptive
-   • reader.playback.actions.skipForward.descriptive
    • reader.preferences.spread.title
    • common.actions.close
    • reader.preferences.columns.auto
    • reader.preferences.columns.single.compact
    • reader.preferences.columns.dual.compact
    • reader.preferences.columns.title
+   • reader.playback.preferences.playbackRate.descriptive
+   • reader.playback.preferences.sleepTimer.presets.endOfResource
+   • reader.playback.preferences.sleepTimer.descriptive
+   • common.actions.cancel
+   • reader.playback.preferences.audio.volume
+   • reader.playback.actions.pause
+   • reader.playback.actions.play
+   • reader.playback.actions.skipBackward.descriptive
+   • reader.actions.goToPreviousSentence.descriptive
+   • reader.playback.actions.skipForward.descriptive
+   • reader.actions.goToNextSentence.descriptive
+   • reader.playback.preferences.readAloud.highlight.title
+   • reader.playback.preferences.readAloud.highlight.presets.title
+   • reader.playback.preferences.readAloud.keepCentered.title
+   • reader.playback.preferences.readAloud.keepCentered.label
+   • reader.playback.preferences.readAloud.highlight.styles.none
+   • reader.playback.preferences.readAloud.highlight.sentenceStyle
+   • reader.playback.preferences.readAloud.highlight.styles.highlightUnderline
+   • reader.playback.preferences.readAloud.highlight.wordStyle
+   • reader.playback.preferences.readAloud.autoPause.title
+   • reader.playback.preferences.readAloud.pauseDuration
+   • reader.playback.preferences.readAloud.prosody.title
+   • reader.playback.preferences.readAloud.prosody.presets.title
+   • reader.playback.preferences.readAloud.verbosity.title
+   • reader.playback.preferences.readAloud.additionalLanguages
+   • reader.playback.preferences.readAloud.language.title
+   • reader.playback.preferences.readAloud.languageOverride.declared
+   • reader.playback.preferences.readAloud.languageOverride.undeclared
+   • reader.playback.preferences.readAloud.languageOverride.title
+   • reader.playback.preferences.readAloud.pitch
+   • reader.playback.preferences.readAloud.voice.title
+   • reader.actions.readAloud.compact
+   • reader.playback.actions.collapsePlayer.descriptive
+   • reader.playback.actions.expandPlayer.descriptive
+   • reader.actions.stopReadAloud.compact
+   • reader.actions.goToReadAloudPosition.compact
+   • reader.actions.goToReadAloudPosition.descriptive
+   • reader.playback.preferences.readAloud.title
    • reader.preferences.letterSpacing
    • reader.preferences.lineHeight.small
    • reader.preferences.lineHeight.medium
@@ -1759,6 +2669,8 @@ UK (0% complete, 0% of inferred usage)
    • reader.actions.goBackward
    • reader.progression.xOfY.compact
    • reader.progression.xOfY.descriptive
+   • reader.progression.positionsLeft.compact
+   • reader.progression.positionsLeftInChapter.descriptive
 
 
 
@@ -1766,7 +2678,7 @@ UK (0% complete, 0% of inferred usage)
 DYNAMIC TEMPLATE LITERALS WARNING
 ==================================================
 
-⚠️  Found 7 dynamic template literal(s) that need manual checking:
+⚠️  Found 16 dynamic template literal(s) that need manual checking:
    📄 components/Docking/StatefulDockEnd.tsx:31
       t(`${ translationKey }.trigger`)
    📄 components/Docking/StatefulDockEnd.tsx:32
@@ -1777,6 +2689,24 @@ DYNAMIC TEMPLATE LITERALS WARNING
       t(`${ translationKey }.tooltip`)
    📄 components/Docking/StatefulDockingWrapper.tsx:111
       t(`reader.${ actionKey }.heading`)
+   📄 components/ReadAlong/Settings/Highlight/StatefulReadAlongHighlightPresets.tsx:45
+      t(`reader.playback.preferences.readAloud.highlight.presets.${ key }`)
+   📄 components/ReadAlong/Settings/Highlight/StatefulReadAlongUtteranceStyle.tsx:39
+      t(`reader.playback.preferences.readAloud.highlight.styles.${ type }`)
+   📄 components/ReadAlong/Settings/Highlight/StatefulReadAlongWordStyle.tsx:49
+      t(`reader.playback.preferences.readAloud.highlight.styles.${ type }`)
+   📄 components/ReadAlong/Settings/Prosody/StatefulReadAlongAutoPause.tsx:36
+      t(`reader.playback.preferences.readAloud.autoPause.${ value }`)
+   📄 components/ReadAlong/Settings/Prosody/StatefulReadAlongProsodyPresets.tsx:42
+      t(`reader.playback.preferences.readAloud.prosody.presets.${ key }`)
+   📄 components/ReadAlong/Settings/Verbosity/StatefulReadAlongInterruption.tsx:31
+      t(`reader.playback.preferences.readAloud.${ settingKey }.${ value }`)
+   📄 components/ReadAlong/Settings/Verbosity/StatefulReadAlongInterruption.tsx:42
+      t(`reader.playback.preferences.readAloud.${ settingKey }.title`)
+   📄 components/ReadAlong/Settings/Verbosity/StatefulReadAlongVerbosity.tsx:37
+      t(`reader.playback.preferences.readAloud.verbosity.${ value }`)
+   📄 components/ReadAlong/Settings/Voice/StatefulReadAlongLanguage.tsx:34
+      t(`reader.playback.preferences.readAloud.language.${ value === "block-level" ? "blockLevel" : value }`)
    📄 components/Settings/Spacing/StatefulSpacingPresets.tsx:171
       t(`reader.preferences.spacing.presets.${ key === ThSpacingPresetKeys.publisher ? "default" : key }`)
    📄 components/Settings/StatefulTheme.tsx:184

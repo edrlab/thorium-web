@@ -31,7 +31,7 @@ export const StatefulReadAlongReattachTrigger = ({ ref, variant }: StatefulActio
   if (variant === ThActionsTriggerVariant.menu) {
     return (
       <StatefulOverflowMenuItem
-        label={ t("_pendingThoriumLocales.reader.readAlong.player.reattach") }
+        label={ t("reader.actions.goToReadAloudPosition.compact") }
         SVGIcon={ UndoIcon }
         shortcut={ shortcut ?? null }
         id={ ThReadAlongActionKeys.reattach }
@@ -43,8 +43,8 @@ export const StatefulReadAlongReattachTrigger = ({ ref, variant }: StatefulActio
   return (
     <StatefulActionIcon
       ref={ ref }
-      aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.reattach") }
-      tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.reattach") }
+      aria-label={ t("reader.actions.goToReadAloudPosition.descriptive") }
+      tooltipLabel={ t("reader.actions.goToReadAloudPosition.descriptive") }
       shortcut={ shortcut }
       placement="top"
       onPress={ reattach }

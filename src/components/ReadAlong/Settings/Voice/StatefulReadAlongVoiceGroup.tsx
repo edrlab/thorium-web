@@ -34,9 +34,9 @@ export const StatefulReadAlongVoiceGroup = () => {
   return (
     <>
     <StatefulGroupWrapper<ThReadAlongVoiceKeys>
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice.title") }
-      moreLabel={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice.advanced.trigger") }
-      moreTooltip={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice.advanced.tooltip") }
+      label={ t("reader.playback.preferences.readAloud.voice.title") }
+      moreLabel={ t("reader.readAlong.settings.voice.advanced.trigger") }
+      moreTooltip={ t("reader.readAlong.settings.voice.advanced.tooltip") }
       onPressMore={ setVoiceContainer }
       componentsMap={ readAlongVoiceSettingsComponentsMap }
       prefs={ {

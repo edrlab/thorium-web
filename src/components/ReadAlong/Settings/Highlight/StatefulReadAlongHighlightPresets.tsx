@@ -42,7 +42,7 @@ export const StatefulReadAlongHighlightPresets = ({ standalone }: StatefulSettin
       id: key,
       icon: iconMap[key],
       value: key,
-      label: t(`_pendingThoriumLocales.reader.readAlong.preferences.highlight.presets.${ key }`),
+      label: t(`reader.playback.preferences.readAloud.highlight.presets.${ key }`),
       isDisabled: !readAloud || (!currentVoiceHasBoundaries && requiresWordBoundaries(key))
     }));
   }, [presetKeys, readAloud, currentVoiceHasBoundaries, requiresWordBoundaries, t]);
@@ -55,7 +55,7 @@ export const StatefulReadAlongHighlightPresets = ({ standalone }: StatefulSettin
     <>
     <StatefulRadioGroup
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.presets.title") }
+      label={ t("reader.playback.preferences.readAloud.highlight.presets.title") }
       orientation="horizontal"
       value={ displayedPreset }
       onChange={ async (val: string) => await applyPreset(val as ThReadAlongHighlightPresetKeys) }

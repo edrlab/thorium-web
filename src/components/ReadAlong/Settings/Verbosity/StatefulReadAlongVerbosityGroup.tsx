@@ -34,9 +34,9 @@ export const StatefulReadAlongVerbosityGroup = () => {
   return (
     <>
     <StatefulGroupWrapper<ThReadAlongVerbosityKeys>
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title") }
-      moreLabel={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.advanced.trigger") }
-      moreTooltip={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.advanced.tooltip") }
+      label={ t("reader.playback.preferences.readAloud.verbosity.title") }
+      moreLabel={ t("reader.readAlong.settings.verbosity.advanced.trigger") }
+      moreTooltip={ t("reader.readAlong.settings.verbosity.advanced.tooltip") }
       onPressMore={ setVerbosityContainer }
       componentsMap={ readAlongVerbositySettingsComponentsMap }
       prefs={ {

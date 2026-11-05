@@ -28,7 +28,7 @@ export const StatefulReadAlongInterruption = ({ standalone = true, settingKey, r
 
   const items = interruptionValues.map((value) => ({
     id: value,
-    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.${ settingKey }.values.${ value }`)
+    label: t(`reader.playback.preferences.readAloud.${ settingKey }.${ value }`)
   }));
 
   const updatePreference = useCallback(async (key: Key | null) => {
@@ -39,7 +39,7 @@ export const StatefulReadAlongInterruption = ({ standalone = true, settingKey, r
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t(`_pendingThoriumLocales.reader.readAlong.preferences.${ settingKey }.title`) }
+      label={ t(`reader.playback.preferences.readAloud.${ settingKey }.title`) }
       selectedKey={ interruption }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud }

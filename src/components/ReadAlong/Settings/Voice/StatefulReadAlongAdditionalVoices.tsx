@@ -36,7 +36,7 @@ export const StatefulReadAlongAdditionalVoices = ({ standalone = true }: Statefu
   return (
     <StatefulDisclosure
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.additionalVoices.title") }
+      label={ t("reader.playback.preferences.readAloud.additionalLanguages") }
     >
       { additionalLanguages.map((language) => (
         <StatefulReadAlongLanguageVoice

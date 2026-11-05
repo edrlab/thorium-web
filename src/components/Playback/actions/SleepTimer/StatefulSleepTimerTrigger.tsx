@@ -40,7 +40,7 @@ export const StatefulSleepTimerTrigger = ({ ref, variant, className, compounds }
 
   const sleepTimerLabel = (() => {
     if (onTrackEnd) return t("reader.playback.preferences.sleepTimer.presets.endOfResource");
-    if (onFragmentEnd) return t("reader.playback.preferences.sleepTimer.presets.endOfFragment");
+    if (onFragmentEnd) return t("reader.playback.preferences.sleepTimer.presets.endOfChapter");
     return formatBadge(remainingSeconds!);
   })();
 

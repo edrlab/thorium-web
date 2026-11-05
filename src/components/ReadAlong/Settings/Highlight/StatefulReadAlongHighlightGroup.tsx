@@ -34,9 +34,9 @@ export const StatefulReadAlongHighlightGroup = () => {
   return (
     <>
     <StatefulGroupWrapper<ThReadAlongHighlightKeys>
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.title") }
-      moreLabel={ t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.advanced.trigger") }
-      moreTooltip={ t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.advanced.tooltip") }
+      label={ t("reader.playback.preferences.readAloud.highlight.title") }
+      moreLabel={ t("reader.readAlong.settings.highlight.advanced.trigger") }
+      moreTooltip={ t("reader.readAlong.settings.highlight.advanced.tooltip") }
       onPressMore={ setHighlightContainer }
       componentsMap={ readAlongHighlightSettingsComponentsMap }
       prefs={ {

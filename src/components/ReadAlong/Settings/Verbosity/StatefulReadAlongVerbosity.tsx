@@ -34,7 +34,7 @@ export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettin
 
   const items = supportedValues.map((value) => ({
     id: value,
-    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.verbosity.values.${ value }`)
+    label: t(`reader.playback.preferences.readAloud.verbosity.${ value }`)
   }));
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.verbosity, "readAlong");
@@ -48,7 +48,7 @@ export const StatefulReadAlongVerbosity = ({ standalone = true }: StatefulSettin
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title") }
+      label={ t("reader.playback.preferences.readAloud.verbosity.title") }
       selectedKey={ verbosity ?? readAloud?.getSetting(prefKey) ?? null }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }

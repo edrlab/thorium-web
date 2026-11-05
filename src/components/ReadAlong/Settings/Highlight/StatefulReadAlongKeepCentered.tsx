@@ -40,8 +40,8 @@ export const StatefulReadAlongKeepCentered = ({ standalone = true }: StatefulSet
     <>
     <StatefulSwitch
       standalone={ standalone }
-      heading={ t("_pendingThoriumLocales.reader.readAlong.preferences.keepCentered.title") }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.keepCentered.label") }
+      heading={ t("reader.playback.preferences.readAloud.keepCentered.title") }
+      label={ t("reader.playback.preferences.readAloud.keepCentered.label") }
       onChange={ async (isSelected: boolean) => await updatePreference(isSelected) }
       isSelected={ keepCentered ?? readAloud?.getSetting(prefKey) ?? false }
       isDisabled={ !readAloud }

@@ -77,8 +77,8 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         headerActions: (
           <StatefulActionIcon
             className={ readerSharedUI.dockerButton }
-            aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.collapse") }
-            tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.collapse") }
+            aria-label={ t("reader.playback.actions.collapsePlayer.descriptive") }
+            tooltipLabel={ t("reader.playback.actions.collapsePlayer.descriptive") }
             placement="bottom"
             onPress={ () => setOpen(false) }
           >

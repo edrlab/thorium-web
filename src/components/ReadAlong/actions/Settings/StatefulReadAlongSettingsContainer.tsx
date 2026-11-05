@@ -115,20 +115,20 @@ export const StatefulReadAlongSettingsContainer = ({ triggerRef, placement = "to
   const getHeading = useCallback(() => {
     switch (contains) {
       case ThReadAlongSettingsContainerKeys.voice:
-        return t("_pendingThoriumLocales.reader.readAlong.preferences.voice.title");
+        return t("reader.playback.preferences.readAloud.voice.title");
 
       case ThReadAlongSettingsContainerKeys.highlight:
-        return t("_pendingThoriumLocales.reader.readAlong.preferences.highlight.title");
+        return t("reader.playback.preferences.readAloud.highlight.title");
 
       case ThReadAlongSettingsContainerKeys.prosody:
-        return t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.title");
+        return t("reader.playback.preferences.readAloud.prosody.title");
 
       case ThReadAlongSettingsContainerKeys.verbosity:
-        return t("_pendingThoriumLocales.reader.readAlong.preferences.verbosity.title");
+        return t("reader.playback.preferences.readAloud.verbosity.title");
 
       case ThReadAlongSettingsContainerKeys.initial:
       default:
-        return t("_pendingThoriumLocales.reader.readAlong.preferences.title");
+        return t("reader.playback.preferences.readAloud.title");
     }
   }, [contains, t]);
 

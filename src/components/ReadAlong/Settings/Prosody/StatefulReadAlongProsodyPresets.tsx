@@ -39,7 +39,7 @@ export const StatefulReadAlongProsodyPresets = ({ standalone }: StatefulSettings
       id: key,
       icon: iconMap[key],
       value: key,
-      label: t(`_pendingThoriumLocales.reader.readAlong.preferences.prosody.presets.${ key }`),
+      label: t(`reader.playback.preferences.readAloud.prosody.presets.${ key }`),
       isDisabled: !readAloud || (isScroll && requiresPages(key))
     }));
   }, [presetKeys, readAloud, isScroll, requiresPages, t]);
@@ -52,7 +52,7 @@ export const StatefulReadAlongProsodyPresets = ({ standalone }: StatefulSettings
     <>
     <StatefulRadioGroup
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.presets.title") }
+      label={ t("reader.playback.preferences.readAloud.prosody.presets.title") }
       orientation="horizontal"
       value={ preset }
       onChange={ async (val: string) => await applyPreset(val as ThReadAlongProsodyPresetKeys) }

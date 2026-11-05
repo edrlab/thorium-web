@@ -56,7 +56,7 @@ export const StatefulReadAlongPauseDuration = ({ standalone = true }: StatefulSe
     { pauseDurationRangeConfig.variant === ThSettingsRangeVariant.numberField
       ? <StatefulNumberField
         standalone={ standalone }
-        label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pauseDuration") }
+        label={ t("reader.playback.preferences.readAloud.pauseDuration") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
         value={ pauseDuration ?? readAloud?.getSetting(prefKey) }
@@ -74,7 +74,7 @@ export const StatefulReadAlongPauseDuration = ({ standalone = true }: StatefulSe
       : <StatefulSlider
         standalone={ standalone }
         displayTicks={ pauseDurationRangeConfig.variant === ThSettingsRangeVariant.incrementedSlider }
-        label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pauseDuration") }
+        label={ t("reader.playback.preferences.readAloud.pauseDuration") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
         value={ pauseDuration ?? readAloud?.getSetting(prefKey) }

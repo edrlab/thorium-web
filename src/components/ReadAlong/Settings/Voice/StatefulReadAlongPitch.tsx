@@ -59,7 +59,7 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
     { pitchRangeConfig.variant === ThSettingsRangeVariant.numberField
       ? <StatefulNumberField
         standalone={ standalone }
-        label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pitch") }
+        label={ t("reader.playback.preferences.readAloud.pitch") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
         value={ pitch ?? readAloud?.getSetting(prefKey) }
@@ -78,7 +78,7 @@ export const StatefulReadAlongPitch = ({ standalone = true }: StatefulSettingsIt
       : <StatefulSlider
         standalone={ standalone }
         displayTicks={ pitchRangeConfig.variant === ThSettingsRangeVariant.incrementedSlider }
-        label={ t("_pendingThoriumLocales.reader.readAlong.preferences.pitch") }
+        label={ t("reader.playback.preferences.readAloud.pitch") }
         placeholder={ placeholderText }
         defaultValue={ undefined }
         value={ pitch ?? readAloud?.getSetting(prefKey) }

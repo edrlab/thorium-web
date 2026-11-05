@@ -55,8 +55,8 @@ export const StatefulReadAlongLanguageOverride = ({ standalone = true }: Statefu
       {
         id: DECLARED,
         label: metadataLanguage
-          ? t("_pendingThoriumLocales.reader.readAlong.preferences.languageOverride.values.declared", { language: getLanguageLabel(metadataLanguage, i18n.language) })
-          : t("_pendingThoriumLocales.reader.readAlong.preferences.languageOverride.values.undeclared")
+          ? t("reader.playback.preferences.readAloud.languageOverride.declared", { language: getLanguageLabel(metadataLanguage, i18n.language) })
+          : t("reader.playback.preferences.readAloud.languageOverride.undeclared")
       },
       ...overrides
     ];
@@ -71,7 +71,7 @@ export const StatefulReadAlongLanguageOverride = ({ standalone = true }: Statefu
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.languageOverride.title") }
+      label={ t("reader.playback.preferences.readAloud.languageOverride.title") }
       selectedKey={ languageOverride ?? readAloud?.getSetting(prefKey) ?? DECLARED }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length <= 1 }

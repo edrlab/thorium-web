@@ -30,7 +30,7 @@ export const StatefulReadAlongVoice = ({ standalone = true }: StatefulSettingsIt
     <StatefulReadAlongLanguageVoice
       standalone={ standalone }
       language={ language }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.voice.title") }
+      label={ t("reader.playback.preferences.readAloud.voice.title") }
       onChange={ updateVoiceControls }
     />
   )

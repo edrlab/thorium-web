@@ -20,7 +20,7 @@ export const StatefulReadAlongTrigger = ({ variant }: StatefulActionTriggerProps
   const { isActive, setActive } = useReadAlongState();
 
   const label = isActive
-    ? t("_pendingThoriumLocales.reader.readAlong.close")
+    ? t("reader.actions.stopReadAloud.compact")
     : t("reader.actions.readAloud.compact");
 
   const toggle = () => {

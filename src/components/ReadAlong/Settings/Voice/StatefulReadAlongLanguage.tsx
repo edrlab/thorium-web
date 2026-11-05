@@ -31,7 +31,7 @@ export const StatefulReadAlongLanguage = ({ standalone = true }: StatefulSetting
 
   const items = supportedValues.map((value) => ({
     id: value,
-    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.language.values.${ value }`)
+    label: t(`reader.playback.preferences.readAloud.language.${ value === "block-level" ? "blockLevel" : value }`)
   }));
 
   const prefKey = getPreferenceKey(ThReadAlongKeys.language, "readAlong");
@@ -45,7 +45,7 @@ export const StatefulReadAlongLanguage = ({ standalone = true }: StatefulSetting
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.language.title") }
+      label={ t("reader.playback.preferences.readAloud.language.title") }
       selectedKey={ language ?? readAloud?.getSetting(prefKey) ?? null }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }

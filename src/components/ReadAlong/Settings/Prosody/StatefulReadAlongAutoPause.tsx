@@ -33,7 +33,7 @@ export const StatefulReadAlongAutoPause = ({ standalone = true }: StatefulSettin
 
   const items = supportedValues.map((value) => ({
     id: value,
-    label: t(`_pendingThoriumLocales.reader.readAlong.preferences.autoPause.values.${ value }`)
+    label: t(`reader.playback.preferences.readAloud.autoPause.${ value }`)
   }));
 
   // There are no pages to pause at when scrolling
@@ -50,7 +50,7 @@ export const StatefulReadAlongAutoPause = ({ standalone = true }: StatefulSettin
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.autoPause.title") }
+      label={ t("reader.playback.preferences.readAloud.autoPause.title") }
       selectedKey={ autoPause ?? readAloud?.getSetting(prefKey) ?? ReadAloudAutoPause.none }
       onSelectionChange={ updatePreference }
       isDisabled={ !readAloud || items.length === 0 }

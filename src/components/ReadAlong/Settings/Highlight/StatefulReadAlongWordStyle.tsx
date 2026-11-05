@@ -39,14 +39,14 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
   const styleOptions = [
     {
       id: NO_STYLE,
-      label: t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.none")
+      label: t("reader.playback.preferences.readAloud.highlight.styles.none")
     },
     ...getDecorationStyleTypes([DecorationStyleType.Mask])
       .map((type) => ({
         id: type,
         label: isUnderlineOnUnderline({ type }, utteranceStyle)
-          ? t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.highlightUnderline")
-          : t(`_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.${ type }`)
+          ? t("reader.playback.preferences.readAloud.highlight.styles.highlightUnderline")
+          : t(`reader.playback.preferences.readAloud.highlight.styles.${ type }`)
       }))
   ];
 
@@ -64,7 +64,7 @@ export const StatefulReadAlongWordStyle = ({ standalone = true }: StatefulSettin
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.word") }
+      label={ t("reader.playback.preferences.readAloud.highlight.wordStyle") }
       selectedKey={ style === false ? NO_STYLE : builtinStyle?.type ?? null }
       onSelectionChange={ updateType }
       isDisabled={ isDisabled }

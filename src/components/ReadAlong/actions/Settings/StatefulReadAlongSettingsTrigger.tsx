@@ -32,7 +32,7 @@ export const StatefulReadAlongSettingsTrigger = ({ ref, variant }: StatefulActio
   if (variant === ThActionsTriggerVariant.menu) {
     return (
       <StatefulOverflowMenuItem
-        label={ t("_pendingThoriumLocales.reader.readAlong.preferences.title") }
+        label={ t("reader.playback.preferences.readAloud.title") }
         SVGIcon={ TuneIcon }
         shortcut={ shortcut ?? null }
         id={ ThReadAlongActionKeys.settings }
@@ -44,8 +44,8 @@ export const StatefulReadAlongSettingsTrigger = ({ ref, variant }: StatefulActio
   return (
     <StatefulActionIcon
       ref={ ref }
-      aria-label={ t("_pendingThoriumLocales.reader.readAlong.preferences.title") }
-      tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.preferences.title") }
+      aria-label={ t("reader.playback.preferences.readAloud.title") }
+      tooltipLabel={ t("reader.playback.preferences.readAloud.title") }
       shortcut={ shortcut }
       placement="top"
       onPress={ toggleOpen }

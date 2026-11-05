@@ -34,9 +34,9 @@ export const StatefulReadAlongProsodyGroup = () => {
   return (
     <>
     <StatefulGroupWrapper<ThReadAlongProsodyKeys>
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.title") }
-      moreLabel={ t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.advanced.trigger") }
-      moreTooltip={ t("_pendingThoriumLocales.reader.readAlong.preferences.prosody.advanced.tooltip") }
+      label={ t("reader.playback.preferences.readAloud.prosody.title") }
+      moreLabel={ t("reader.readAlong.settings.prosody.advanced.trigger") }
+      moreTooltip={ t("reader.readAlong.settings.prosody.advanced.tooltip") }
       onPressMore={ setProsodyContainer }
       componentsMap={ readAlongProsodySettingsComponentsMap }
       prefs={ {

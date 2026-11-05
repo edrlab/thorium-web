@@ -87,7 +87,7 @@ export const StatefulReadAlongMiniPlayer = ({
       heading={ isControlsOnly ? undefined : progress?.title || "" }
       subheading={ isControlsOnly ? undefined : progress?.progression?.currentChapter }
       onExpand={ () => setExpanded(true) }
-      expandLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
+      expandLabel={ t("reader.playback.actions.expandPlayer.descriptive") }
       cover={ isControlsOnly ? undefined : coverUrl
         ? <img className={ readAlongStyles.miniPlayerCover } src={ proxyUrl(coverUrl) } alt="" crossOrigin="anonymous" />
         : <span className={ classNames(readAlongStyles.miniPlayerCover, readAlongStyles.miniPlayerCoverPlaceholder) }>
@@ -98,11 +98,11 @@ export const StatefulReadAlongMiniPlayer = ({
         <ThActionsBar
           ref={ playerActionsRef }
           className={ readAlongStyles.miniPlayerPlayerActionsBar }
-          aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.actions") }
+          aria-label={ t("reader.readAlong.player.actions") }
         >
           <StatefulActionIcon
-            aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
-            tooltipLabel={ t("_pendingThoriumLocales.reader.readAlong.player.expand") }
+            aria-label={ t("reader.playback.actions.expandPlayer.descriptive") }
+            tooltipLabel={ t("reader.playback.actions.expandPlayer.descriptive") }
             placement="top"
             onPress={ () => setExpanded(true) }
           >
@@ -110,7 +110,7 @@ export const StatefulReadAlongMiniPlayer = ({
           </StatefulActionIcon>
           <ThCloseButton
             className={ readerSharedUI.closeButton }
-            aria-label={ t("_pendingThoriumLocales.reader.readAlong.close") }
+            aria-label={ t("reader.actions.stopReadAloud.compact") }
             onPress={ () => setActive(false) }
           />
         </ThActionsBar>
@@ -131,7 +131,7 @@ export const StatefulReadAlongMiniPlayer = ({
           items={ actionItems }
           prefs={ { ...miniPlayerActions, keys: actionsKeys } }
           targetPlacement="top"
-          aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.mediaActions") }
+          aria-label={ t("reader.readAlong.player.mediaActions") }
         />
       }
       compounds={ {

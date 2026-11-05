@@ -17,7 +17,7 @@ export const StatefulReadAlongMediaActions = () => {
   const displayOrder = preferences.readAlong.actions.expanded.displayOrder;
 
   return (
-    <ThActionsBar className={ readAlongStyles.readAlongExpandedActions } aria-label={ t("_pendingThoriumLocales.reader.readAlong.player.mediaActions") }>
+    <ThActionsBar className={ readAlongStyles.readAlongExpandedActions } aria-label={ t("reader.readAlong.player.mediaActions") }>
       { displayOrder.map(key => {
         const action = readAlongActionsMap[key];
         if (!action) return null;

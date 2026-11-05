@@ -31,12 +31,12 @@ export const StatefulReadAlongUtteranceStyle = ({ standalone = true }: StatefulS
   const styleOptions = [
     {
       id: NO_STYLE,
-      label: t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.none")
+      label: t("reader.playback.preferences.readAloud.highlight.styles.none")
     },
     ...getDecorationStyleTypes()
       .map((type) => ({
         id: type,
-        label: t(`_pendingThoriumLocales.reader.readAlong.preferences.decoration.styles.${ type }`)
+        label: t(`reader.playback.preferences.readAloud.highlight.styles.${ type }`)
       }))
   ];
 
@@ -50,7 +50,7 @@ export const StatefulReadAlongUtteranceStyle = ({ standalone = true }: StatefulS
   return (
     <StatefulDropdown
       standalone={ standalone }
-      label={ t("_pendingThoriumLocales.reader.readAlong.preferences.decoration.utterance") }
+      label={ t("reader.playback.preferences.readAloud.highlight.sentenceStyle") }
       selectedKey={ style === false ? NO_STYLE : builtinStyle?.type ?? null }
       onSelectionChange={ updateType }
       isDisabled={ !readAloud }
