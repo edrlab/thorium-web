@@ -103,6 +103,19 @@
                     "trigger": "Opzioni avanzate di spaziatura"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Mostra due pagine affiancate"
+            },
+            "divinaStripWidth": "Larghezza della striscia",
+            "divinaQuality": {
+                "title": "Qualità dell'immagine",
+                "auto": "Auto",
+                "low": "Bassa",
+                "high": "Alta",
+                "max": "Max"
+            }
         }
     },
     "audio": {
@@ -126,5 +139,13 @@
                 "remaining": "Arresto in {{ remaining }}"
             }
         }
+    },
+    "home": {
+        "description": [
+            "Thorium Web è un lettore web open source per ebook, audiolibri e fumetti che chiunque può utilizzare.",
+            "Questa istanza è progettata per supportare la lettura di pubblicazioni di pubblico dominio e open access sul Web e in futuro fornirà un'API specifica per tali pubblicazioni.",
+            "Nel frattempo, stiamo pubblicando una serie di pubblicazioni test per comprendere cosa è in grado di fare."
+        ],
+        "title": "Benvenuti su Thorium Web"
     }
 }

@@ -43,7 +43,7 @@
                 },
                 "fullscreen": {
                     "trigger": "Vis over indholdet",
-                    "tooltip": "Overlay"
+                    "tooltip": "Overlejring"
                 }
             },
             "back": {
@@ -103,6 +103,19 @@
                     "trigger": "Flere afstands-indstillinger"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Vis to sider ved siden af hinanden"
+            },
+            "divinaStripWidth": "Stribebredde",
+            "divinaQuality": {
+                "title": "Billedekvalitet",
+                "auto": "Auto",
+                "low": "Lav",
+                "high": "Høj",
+                "max": "Maks"
+            }
         }
     },
     "audio": {
@@ -126,5 +139,13 @@
                 "remaining": "Sætter på pause om {{ remaining }}"
             }
         }
+    },
+    "home": {
+        "title": "Velkommen til Thorium Web",
+        "description": [
+            "Thorium Web er en open-source web-læser til e-bøger, lydbøger og tegneserier, som alle kan køre.",
+            "Denne instans er designet til at understøtte læsning af bøger i det offentlige domæne og open-access bøger på nettet og vil i fremtiden tilbyde et API, der er specifikt rettet mod disse.",
+            "I mellemtiden udgiver vi nogle test-bøger, som kan bruges til at udforske hvad den er i stand til."
+        ]
     }
 }

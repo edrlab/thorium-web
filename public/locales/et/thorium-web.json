@@ -103,6 +103,19 @@
                     "trigger": "Täiendavad sõrendamise valikud"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Näita kahte lehte kõrvuti"
+            },
+            "divinaStripWidth": "Riba laius",
+            "divinaQuality": {
+                "title": "Pildikvaliteet",
+                "auto": "Automaatne",
+                "low": "Madal",
+                "high": "Kõrge",
+                "max": "Maksimaalne"
+            }
         }
     },
     "audio": {
@@ -126,5 +139,13 @@
                 "remaining": "Peatumiseni on jäänud {{ remaining }}"
             }
         }
+    },
+    "home": {
+        "title": "Tere tulemast - see on Thoriumi veebiversioon",
+        "description": [
+            "Thoriumi veebiversioon on avatud lähtekoodiga e-raamatute, heliraamatute ja koomiksite lugeja, mida igaüks võib kasutusele võtta.",
+            "See rakendus on loodud selleks, et toetada veebis vabakasutusteoste ja avatud juurdepääsuga väljaannete lugemist ning pakub tulevikus spetsiaalselt nende jaoks mõeldud API-t.",
+            "Aga seni me avaldame mõned testteosed ja saad proovida, mida see veebirakendus teha oskab."
+        ]
     }
 }
