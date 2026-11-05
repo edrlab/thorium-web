@@ -44,6 +44,7 @@ export const StatefulPopoverSheet = ({
     isOpen,
     onOpenChange, 
     onClosePress,
+    closeLabel,
     placement,
     docker,
     headerActions,
@@ -139,6 +140,7 @@ export const StatefulPopoverSheet = ({
                 keys={ docker || [] }
                 ref={ popoverCloseRef }
                 onClose={ onClosePress }
+                closeLabel={ closeLabel }
                 actions={ headerActions }
               />
           }

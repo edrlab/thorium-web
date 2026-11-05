@@ -14,6 +14,7 @@ interface StatefulSheet {
   isOpen: boolean;                          // Sheet visibility state
   onOpenChange: (isOpen: boolean) => void;  // Open state change handler
   onPressClose: () => void;                 // Close button handler
+  closeLabel?: string;                      // Close button label and tooltip, "Close" by default
   docker?: ThDockingKeys[];                // Optional docking positions
   headerActions?: ReactNode;                // Extra buttons in the header, before the close button
   children?: ReactNode;                     // Sheet content

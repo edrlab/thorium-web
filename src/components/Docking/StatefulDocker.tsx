@@ -40,6 +40,7 @@ export interface StatefulDockerProps {
   keys: ThDockingKeys[];
   ref: React.ForwardedRef<HTMLButtonElement>;
   onClose: () => void;
+  closeLabel?: string;
   actions?: React.ReactNode;
 }
 
@@ -48,6 +49,7 @@ export const StatefulDocker = ({
   keys,
   ref,
   onClose,
+  closeLabel,
   actions
 }: StatefulDockerProps) => {
   const preferences = useActionsPreferences();
@@ -85,7 +87,7 @@ export const StatefulDocker = ({
       <ThCloseButton
         ref={ ref }
         className={ readerSharedUI.dockerButton } 
-        aria-label={ t("common.actions.close") } 
+        aria-label={ closeLabel ?? t("common.actions.close") }
         onPress={ onClose }
         compounds={ {
           tooltipTrigger: {
@@ -95,7 +97,7 @@ export const StatefulDocker = ({
           tooltip: {
             className: readerSharedUI.tooltip
           },
-          label: t("common.actions.close")
+          label: closeLabel ?? t("common.actions.close")
         }}
       />
     </Toolbar>

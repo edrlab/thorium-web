@@ -72,6 +72,7 @@ export const StatefulReadAlongContainer = ({ triggerRef }: StatefulActionContain
         isOpen: actionState?.isOpen || false,
         onOpenChange: setOpen,
         onClosePress: () => setActive(false),
+        closeLabel: t("reader.actions.stopReadAloud.compact"),
         docker: docking.getDocker(),
         focusSelector: `#${ PLAY_PAUSE_ID }`,
         headerActions: (

@@ -42,6 +42,7 @@ export const StatefulModalBase = ({
     isOpen,
     onOpenChange,
     onClosePress,
+    closeLabel,
     docker,
     headerActions,
     children,
@@ -133,6 +134,7 @@ export const StatefulModalBase = ({
                 keys={ docker || [] }
                 ref={ sheetCloseRef }
                 onClose={ onClosePress }
+                closeLabel={ closeLabel }
                 actions={ headerActions }
               />
             }

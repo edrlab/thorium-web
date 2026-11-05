@@ -22,6 +22,7 @@ import { StatefulSkipForwardButton } from "../Playback/controls/StatefulSkipForw
 
 import { useNavigator } from "@/core/Navigator";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
+import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
 import { usePlugins } from "@/components/Plugins/PluginProvider";
 import { useReadAlongLanguage } from "./Hooks/useReadAlongLanguage";
 import { useReadAlongState } from "./Hooks/useReadAlongState";
@@ -52,6 +53,7 @@ export const StatefulReadAlongMiniPlayer = ({
   const { setActive, setExpanded } = useReadAlongState();
   const miniPlayerType = useReadAlongMiniPlayerType();
   const { preferences } = usePreferences();
+  const { theming } = useSharedPreferences();
   const { readAlongActionsMap } = usePlugins();
 
   const miniPlayerActions = preferences.readAlong.actions.miniPlayer;
@@ -112,6 +114,17 @@ export const StatefulReadAlongMiniPlayer = ({
             className={ readerSharedUI.closeButton }
             aria-label={ t("reader.actions.stopReadAloud.compact") }
             onPress={ () => setActive(false) }
+            compounds={ {
+              tooltipTrigger: {
+                delay: theming.icon.tooltipDelay,
+                closeDelay: theming.icon.tooltipDelay
+              },
+              tooltip: {
+                className: readerSharedUI.tooltip,
+                placement: "top"
+              },
+              label: t("reader.actions.stopReadAloud.compact")
+            } }
           />
         </ThActionsBar>
       }
