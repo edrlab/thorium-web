@@ -68,8 +68,10 @@ const getWordSurface = (utterance: ReadAloudDecorationStyle | null | undefined):
   }
 };
 
-// The word's underline would merge with the utterance's, so it is drawn with a translucent fill
-export const isUnderlineOnUnderline = (
+// The word's underline would merge with the utterance's, so it is drawn thicker, in CSS pixels
+const UNDERLINE_ON_UNDERLINE_THICKNESS = 3;
+
+const isUnderlineOnUnderline = (
   word: ReadAloudDecorationStyle | null | undefined,
   utterance: ReadAloudDecorationStyle | null | undefined
 ): boolean => {
@@ -192,22 +194,21 @@ export const useHighlightPresets = () => {
     // Theme tints are picked for their background and user tints are used as-is
     const builtinStyle: BuiltinDecorationStyle = { ...(style as BuiltinDecorationStyle), enforceContrast: false };
 
-    // Keeps the line color picked for the underline
-    const withType = (resolved: BuiltinDecorationStyle): BuiltinDecorationStyle =>
+    const withThickness = (resolved: BuiltinDecorationStyle): BuiltinDecorationStyle =>
       key === ThReadAlongHighlightKeys.wordStyle && isUnderlineOnUnderline(builtinStyle, utterance)
-        ? { ...resolved, type: DecorationStyleType.HighlightUnderline }
+        ? { ...resolved, thickness: resolved.thickness ?? UNDERLINE_ON_UNDERLINE_THICKNESS }
         : resolved;
 
-    if (builtinStyle.tint) return withType(builtinStyle);
+    if (builtinStyle.tint) return withThickness(builtinStyle);
 
     const kind = getHighlightKind(builtinStyle);
-    if (!highlightColors || !kind) return withType(builtinStyle);
+    if (!highlightColors || !kind) return withThickness(builtinStyle);
 
     const themeTint = key === ThReadAlongHighlightKeys.utteranceStyle
       ? highlightColors.utterance[kind]
       : kind === "mask" ? undefined : highlightColors.word[kind][getWordSurface(utterance)];
 
-    return withType(themeTint ? { ...builtinStyle, tint: themeTint } : builtinStyle);
+    return withThickness(themeTint ? { ...builtinStyle, tint: themeTint } : builtinStyle);
   }, [highlightColors]);
 
   const resolveStyles = useCallback((values: HighlightStyles): EffectiveStyles => {
