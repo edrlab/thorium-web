@@ -7,5 +7,6 @@ export * from "./Settings";
 export { StatefulPlayer } from "./StatefulPlayer";
 
 export {
-  useAudioNavigator
+  useAudioNavigator,
+  ThCoverUrlResolverContext
 } from "../../core/Hooks";

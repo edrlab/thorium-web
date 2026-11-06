@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import { proxyUrl } from "@/helpers/proxyUrl";
+import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
 export const useCoverBlobUrl = (coverUrl: string | undefined): { coverBlobUrl: string | undefined; coverReady: boolean } => {
   const [coverBlobUrl, setCoverBlobUrl] = useState<string | undefined>(undefined);
   const [coverFailed, setCoverFailed] = useState(false);
   const revokeRef = useRef<(() => void) | undefined>(undefined);
+  const resolveCoverUrl = useCoverUrlResolver();
 
   useEffect(() => {
     if (!coverUrl) return;
-    const fetched = proxyUrl(coverUrl) ?? coverUrl;
+    const fetched = resolveCoverUrl(coverUrl) ?? coverUrl;
 
     // Deliberately not aborted on cleanup: aborting this fetch on unmount
     // (React StrictMode's dev double-mount does this immediately) poisons
@@ -36,7 +37,7 @@ export const useCoverBlobUrl = (coverUrl: string | undefined): { coverBlobUrl: s
       revokeRef.current?.();
       revokeRef.current = undefined;
     };
-  }, [coverUrl]);
+  }, [coverUrl, resolveCoverUrl]);
 
   return {
     coverBlobUrl,
