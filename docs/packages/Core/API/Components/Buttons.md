@@ -23,7 +23,7 @@ interface ThActionButtonProps extends ButtonProps {
 ### Features
 
 - Supports all standard button functionality from react-aria-components
-- Optional tooltip integration with customizable trigger behavior
+- Optional tooltip integration with customizable trigger behavior, rendered with [`ThTooltip`](./Tooltips.md)
 - Compound component pattern for tooltip configuration
 - Accessible by default through react-aria integration
 

@@ -2,13 +2,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   box-sizing: border-box;
   gap: var(--th-layout-spacing);
   padding: var(--th-layout-spacing);
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .audioPlayerWrapperExpanded {
@@ -29,9 +28,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   flex: 1 1 0;
   min-width: 0;
+  overflow-y: auto;
   gap: var(--th-layout-spacing);
   container-type: inline-size;
 }
@@ -40,11 +39,24 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   flex: 1 1 0;
   min-width: 0;
+  overflow-y: auto;
   gap: var(--th-layout-spacing);
   container-type: inline-size;
+}
+
+/* Auto margins instead of justify-content: center, which would clip the top once content overflows */
+.audioPlayerWrapper > :first-child,
+.audioPlayerExpandedStart > :first-child,
+.audioPlayerExpandedEnd > :first-child {
+  margin-top: auto;
+}
+
+.audioPlayerWrapper > :last-child,
+.audioPlayerExpandedStart > :last-child,
+.audioPlayerExpandedEnd > :last-child {
+  margin-bottom: auto;
 }
 
 .coverMetadataGroup {

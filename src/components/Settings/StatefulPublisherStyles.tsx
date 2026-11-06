@@ -17,6 +17,8 @@ import { useSettingsComponentStatus } from "./hooks/useSettingsComponentStatus";
 
 import { useReaderSetting } from "./hooks/useReaderSetting";
 
+import { useAppSelector } from "@/lib/hooks";
+
 export const StatefulPublisherStyles = ({ standalone = true }: StatefulSettingsItemProps) => {
   const { t } = useI18n();
   const publisherStyles = useReaderSetting("publisherStyles");
@@ -55,11 +57,14 @@ export const StatefulPublisherStyles = ({ standalone = true }: StatefulSettingsI
 
   const { submitPreferences } = useNavigator().visual;
 
-  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
-  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent);
-  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing);
-  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing);
-  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing);
+  const profile = useAppSelector(state => state.reader.profile);
+  const isWebPub = profile === "webPub";
+
+  const lineHeightPrefKey = getPreferenceKey(ThSettingsKeys.lineHeight, isWebPub ? "webPub" : "epub");
+  const paragraphIndentPrefKey = getPreferenceKey(ThSettingsKeys.paragraphIndent, isWebPub ? "webPub" : "epub");
+  const paragraphSpacingPrefKey = getPreferenceKey(ThSettingsKeys.paragraphSpacing, isWebPub ? "webPub" : "epub");
+  const letterSpacingPrefKey = getPreferenceKey(ThSettingsKeys.letterSpacing, isWebPub ? "webPub" : "epub");
+  const wordSpacingPrefKey = getPreferenceKey(ThSettingsKeys.wordSpacing, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (isSelected: boolean) => {
     const values: any = {};

@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 
 import { StatefulSheet } from "./models/sheets";
+import { ThSheetTypes } from "@/preferences/models";
 
 import sheetStyles from "./assets/styles/thorium-web.sheets.module.css";
 
@@ -10,6 +11,8 @@ import { Popover, PopoverProps, Dialog } from "react-aria-components";
 
 import { useWebkitPatch } from "./hooks/useWebkitPatch";
 import { useFirstFocusable } from "@/core/Components/Containers/hooks/useFirstFocusable";
+import { useSharedPreferences } from "@/preferences/hooks/useSharedPreferences";
+import { getSheetSizeConstraint } from "@/preferences/helpers/getSheetSizeConstraint";
 
 import classNames from "classnames";
 
@@ -32,8 +35,10 @@ export const StatefulCompactPopoverSheet = ({
     scrollTopOnFocus,
     dismissEscapeKeyClose
   }: StatefulCompactPopoverSheetProps) => {
+  const sharedPreferences = useSharedPreferences();
   const popoverRef = useRef<HTMLDivElement | null>(null);
   const popoverBodyRef = useRef<HTMLDivElement | null>(null);
+  const maxHeight = getSheetSizeConstraint(sharedPreferences.theming.layout.constraints[ThSheetTypes.popover], "height");
 
   useFirstFocusable({
     withinRef: focusWithinRef ?? popoverBodyRef,
@@ -59,6 +64,7 @@ export const StatefulCompactPopoverSheet = ({
         ref={ popoverRef }
         triggerRef={ triggerRef }
         placement={ placement || "bottom" }
+        maxHeight={ maxHeight }
         isOpen={ isOpen }
         onOpenChange={ onOpenChange }
         isKeyboardDismissDisabled={ dismissEscapeKeyClose }

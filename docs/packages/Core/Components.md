@@ -40,7 +40,7 @@ const MySwitch = () => {
 }
 ```
 
-[Stateful components](../../src/components/) are making extensive use of this property if you need more complex examples.
+[Stateful components](../../../src/components/) are making extensive use of this property if you need more complex examples.
 
 ## Categories
 
@@ -52,13 +52,15 @@ The Core package provides various UI components organized into categories:
 - `Containers`: Components that are used for modals, popovers, etc.
 - `Forms`: Components that are used for collecting user input.
 - `Menu`: Components for creating menus and menus items.
+- `Playback`: Components shared by the audio and read-along players.
 - `Reader`: Components for the general interface of the reader.
 - `Settings`: Components for settings (switche, slider, numberfield, etc.).
+- `Tooltips`: Components for tooltips.
 
 
 ## Audio Components
 
-A core primitive for building audio player interfaces.
+Core primitives for building audio player interfaces.
 
 ```tsx
 import { ThAudioProgress } from "@edrlab/thorium-web/core/components";
@@ -67,6 +69,26 @@ import { ThAudioProgress } from "@edrlab/thorium-web/core/components";
 - `ThAudioProgress`: A seekable progress bar displaying elapsed time, remaining time, an optional chapter label, and seekable range overlays.
 
 Please refer to the [Audio Components API documentation](./API/Components/Audio.md) for more information.
+
+## Playback Components
+
+Core primitives shared by the audio and read-along players.
+
+```tsx
+import {
+  ThCover,
+  ThMiniPlayer,
+  ThPlaybackControls,
+  ThPublicationMetadata
+} from "@edrlab/thorium-web/core/components";
+```
+
+- `ThCover`: A publication cover with a placeholder and an optional loading indicator.
+- `ThMiniPlayer`: A compact player with metadata and an optional cover, optionally a button expanding the player, and slots for player actions, controls and actions.
+- `ThPlaybackControls`: An actions bar laying out playback buttons in a fixed, left-to-right order.
+- `ThPublicationMetadata`: Title, subtitle and authors in a configurable order.
+
+Please refer to the [Playback Components API documentation](./API/Components/Playback.md) for more information.
 
 ## Actions Components
 
@@ -151,7 +173,20 @@ const MyPopover = (triggerRef: RefObject<HTMLButtonElement>) => {
 }
 ```
 
-The package ships with a specific hook: `useFirstFocusable`, which can be used to focus or scroll to the first focusable element of a container on open.
+The package ships with specific hooks: `useFirstFocusable`, which can be used to focus or scroll to the first focusable element of a container on open, and `useUniformPanelHeight`, which keeps a container at the height of its main panel.
+
+### useUniformPanelHeight
+
+While `isEnabled` and `isOpen`, the panel shown on open sets the height of the container: other panels take that height, and scroll when taller. `panel` identifies the panel shown.
+
+```typescript
+useUniformPanelHeight({
+  ref: RefObject<HTMLElement | null>;
+  isEnabled?: boolean;
+  isOpen: boolean;
+  panel?: unknown;
+});
+```
 
 ### useFirstFocusable
 
@@ -327,6 +362,7 @@ These components are used for creating settings:
 
 ```tsx
 import {
+  ThDisclosure,
   ThDropdown,
   ThNumberField,
   ThRadioGroup,
@@ -342,6 +378,23 @@ TBD.
 The package also contains a wrapper component that can be used to create a group/collection of settings, `<ThSettingsWrapper>`. It accepts an `items` prop to build entries of the settings list dynamically.
 
 TBD.
+
+## Tooltips Components
+
+Components for creating tooltips:
+
+```tsx
+import { ThTooltip } from "@edrlab/thorium-web/core/components";
+```
+
+`<ThTooltip>` replaces the Tooltip component from react-aria-components inside a `TooltipTrigger`. It adds two things:
+
+- Pressing Escape while the tooltip is open also removes focus from its trigger.
+- Tooltips no longer get stuck in the top-left corner of the viewport after you move quickly from one trigger to another.
+
+`ThActionButton` and `ThLink` already use it for their tooltips.
+
+Please refer to the [Tooltips Components API documentation](./API/Components/Tooltips.md) for more information.
 
 ## Misc Components
 

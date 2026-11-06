@@ -28,7 +28,7 @@ export const StatefulNoRuby = ({ standalone = true }: StatefulSettingsItemProps)
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.noRuby);
+  const prefKey = getPreferenceKey(ThSettingsKeys.noRuby, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

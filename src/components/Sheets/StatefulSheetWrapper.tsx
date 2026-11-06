@@ -7,7 +7,7 @@ import { ThDockingKeys, ThSheetTypes } from "@/preferences/models";
 import { ThTypedComponentRenderer } from "@/core/Components/Containers/ThTypedComponentRenderer";
 import { StatefulPopoverSheet, StatefulPopoverSheetProps } from "./StatefulPopoverSheet";
 import { StatefulModalSheet, StatefulModalSheetProps } from "./StatefulModalSheet";
-import { StatefulBottomSheet, StatefulBottomSheetProps } from "./StatefulBottomSheet";
+import { StatefulBottomSheet, StatefulBottomSheetProps } from "./BottomSheet";
 import { StatefulFullScreenSheet, StatefulFullScreenSheetProps } from "./StatefulFullScreenSheet";
 import { StatefulDockedSheet, StatefulDockedSheetProps } from "./StatefulDockedSheet";
 import { StatefulCompactPopoverSheet } from "./StatefulCompactPopoverSheet";

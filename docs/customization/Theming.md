@@ -57,7 +57,7 @@ Object `layout` allows to configure:
   - `scrim` or the CSS-valid string value for the bottom sheet’s underlay `background` – is overridable in each action’s `snapped` preference.
 - `constraints` for some components:
   - the `max-width` of the bottom sheet component – is overridable in each action’s `snapped` preference;
-  - the `max-width` of the popover sheet component.
+  - the size of the popover and modal sheet components: a number sets their `max-width`, an object `{ width, height }` their `max-width` and `max-height` (`null` for none). They stay within the viewport whatever their `max-height`.
 
 For instance: 
 
@@ -78,7 +78,7 @@ theming: {
     },
     constraints: {
       [ThSheetTypes.bottomSheet]: 600,
-      [ThSheetTypes.popover]: 400
+      [ThSheetTypes.popover]: { width: 400, height: 500 }
     }
   }
 }
@@ -93,7 +93,7 @@ This means:
 - the default for the docking width is `300px`;
 - the default scrim is color black with `20%` alpha;
 - the bottom sheets are constrained to `600px`, unless overridden for an action;
-- the popover sheets are constrained to `400px`.
+- the popover sheets are constrained to `400px` wide and `500px` tall.
 
 ## Header
 
@@ -241,6 +241,14 @@ Available `ThProgressionFormat` variants:
 - `progressionOfResource`: "x% of y" (e.g. "75% of Chapter 1")
 - `none`: Hides the progression display
 
+Where space is limited, e.g. next to the read-along mini player, a compact form of the format is shown, using the same strings:
+- `positionsPercentOfTotal`: "x-y of z"
+- `positionsOfTotal`: "x-y"
+- `positionsLeft`: "x left"
+- `progressionOfResource`: "x%" (resource)
+- `readingOrderIndex`: "x%" (publication), or "x of y" when unavailable
+- The other formats are already compact.
+
 Example configuration:
 
 ```typescript
@@ -311,7 +319,7 @@ As a matter of fact, this user setting is created dynamically from these prefere
 > **Although not recommended**, this means creating a theme took 4 steps if you were forking the project.
 
 - add it to the `ThThemeKeys` enum;
-- add its display string to `settings.themes` in [resources/locales](../../resources/locales/en.json);
+- add its display string to `settings.themes` in [public/locales](../../public/locales/en/thorium-shared.json);
 - add it to `reflowOrder` and/or `fxlOrder`;
 - add and configure them in `themes.keys`.
 
@@ -390,3 +398,5 @@ The `keys` object contains the themes (key of `ThThemeKeys` enum as a property) 
 - `focus`: the color of the outline on `:focus-visible`
 - `elevate`: the drop shadow of containers
 - `immerse`: the opacity of immersive mode (value in the range `[0...1]` as a string)
+
+The colors of the read-along highlight aren’t theme tokens: highlight themes declare them for each reading theme. If you add a reading theme, add it to every highlight theme too, see [Highlight Themes](./ReadAlong.md#highlight-themes).

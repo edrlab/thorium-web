@@ -28,7 +28,7 @@ export const StatefulDivinaSpreads = () => {
   // Spreads are only effective in paged mode
   const isScrolled = getSetting("scrolled") ?? scrolledPref ?? false;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.divinaSpreads);
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaSpreads, "divina");
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

@@ -409,6 +409,54 @@
   fill: currentColor;
 }
 
+.disclosure {}
+
+.disclosureHeading {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.disclosureButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--th-layout-spacing) / 2);
+  width: 100%;
+  box-sizing: border-box;
+  padding: calc(var(--th-layout-spacing) / 2);
+  border-radius: var(--th-layout-radius);
+  font-weight: bold;
+  text-align: start;
+}
+
+.disclosureButton[data-hovered] {
+  background-color: var(--th-theme-hover);
+  color: var(--th-theme-onHover);
+}
+
+.disclosureButton[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+.disclosureButton[data-disabled] {
+  color: var(--th-theme-disable);
+}
+
+.disclosureButton svg {
+  width: calc(var(--th-icon-size, 24px) * 5/6);
+  height: calc(var(--th-icon-size, 24px) * 5/6);
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.disclosure[data-expanded] .disclosureButton svg {
+  rotate: 180deg;
+}
+
+.disclosurePanel {
+  padding: var(--th-layout-spacing) calc(var(--th-layout-spacing) / 2) 0;
+}
+
 .dropdownPopover {
   background-color: var(--th-theme-background);
   color: var(--th-theme-text);
@@ -427,6 +475,33 @@
   display: flex;
   flex-direction: column;
   gap: calc(var(--th-layout-spacing) / 2);
+}
+
+.dropdownListboxSection {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--th-layout-spacing) / 2);
+}
+
+.dropdownListboxSection + .dropdownListboxSection {
+  margin-block-start: calc(var(--th-layout-spacing) / 2);
+}
+
+.dropdownListboxHeader {
+  position: sticky;
+  /* Offsets the popover's padding so the header sticks to its edge */
+  inset-block-start: calc(var(--th-layout-spacing) / -2);
+  z-index: 1;
+  padding: calc(var(--th-layout-spacing) / 2) calc(var(--th-layout-spacing) / 4) calc(var(--th-layout-spacing) / 4);
+  background-color: var(--th-theme-background);
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: var(--th-theme-text);
+}
+
+.dropdownListboxHeaderFlag {
+  margin-inline-end: 0.25em;
+  font-family: "Twemoji Country Flags", sans-serif;
 }
 
 .dropdownListboxItem {

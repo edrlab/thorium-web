@@ -10,7 +10,7 @@
 /coverage
 
 # next.js
-/.next/
+.next/
 /out/
 
 # production
@@ -47,3 +47,4 @@ next-env.d.ts
 
 # Rollup
 .rollup.cache
+certificates

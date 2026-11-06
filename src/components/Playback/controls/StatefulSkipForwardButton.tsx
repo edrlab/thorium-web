@@ -4,9 +4,9 @@ import ForwardIcon from "./assets/icons/forward_media.svg";
 import Forward5Icon from "./assets/icons/forward_5.svg";
 import Forward10Icon from "./assets/icons/forward_10.svg";
 import Forward30Icon from "./assets/icons/forward_30.svg";
+import SkipNextIcon from "./assets/icons/skip_next.svg";
 
 import { StatefulActionIcon } from "../../Actions/Triggers/StatefulActionIcon";
-import audioStyles from "./assets/styles/thorium-web.audioPlayback.module.css";
 
 import { useNavigator } from "@/core/Navigator";
 import { useAppSelector } from "@/lib/hooks";
@@ -18,20 +18,25 @@ const forwardIconMap: Record<number, React.ElementType> = {
   30: Forward30Icon,
 };
 
-export const StatefulSkipForwardButton = ({ isDisabled }: { isDisabled?: boolean }) => {
+export const StatefulSkipForwardButton = ({ className, isDisabled }: { className: string, isDisabled?: boolean }) => {
   const { t } = useI18n();
-  const { skipForward } = useNavigator().media;
+  const { playback } = useNavigator();
+  const { skipForward } = playback;
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
   const skipForwardInterval = useAppSelector(state => state.audioSettings.skipForwardInterval);
 
-  const Icon = forwardIconMap[skipForwardInterval] ?? ForwardIcon;
+  const Icon = isAudio ? forwardIconMap[skipForwardInterval] ?? ForwardIcon : SkipNextIcon;
+  const label = isAudio
+    ? t("reader.playback.actions.skipForward.descriptive")
+    : t("reader.actions.goToNextSentence.descriptive");
 
   return (
     <StatefulActionIcon
       onPress={ skipForward }
       isDisabled={ isDisabled }
-      aria-label={ t("reader.playback.actions.skipForward.descriptive") }
-      tooltipLabel={ t("reader.playback.actions.skipForward.descriptive") }
-      className={ audioStyles.audioSkipForwardButton }
+      aria-label={ label }
+      tooltipLabel={ label }
+      className={ className }
     >
       <Icon aria-hidden="true" focusable="false" />
     </StatefulActionIcon>

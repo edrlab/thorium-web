@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 import { 
   ThLineHeightOptions, 
@@ -287,7 +288,8 @@ export const settingsSlice = createSlice({
     },
     setWordSpacing: (state, action) => {
       handleSpacingSetting(state, action, ThSpacingSettingsKeys.wordSpacing);
-    }
+    },
+    hydrateSettings: (state, action: PayloadAction<HydratePayload<SettingsReducerState>>) => hydrateState(state, initialState, action.payload)
   }
 });
 
@@ -312,7 +314,8 @@ export const {
   setTextAlign,
   setTextNormalization,
   setNoRuby,
-  setWordSpacing
+  setWordSpacing,
+  hydrateSettings
 } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

@@ -32,7 +32,7 @@ export const StatefulHyphens = ({ standalone = true }: StatefulSettingsItemProps
   
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.hyphens);
+  const prefKey = getPreferenceKey(ThSettingsKeys.hyphens, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: boolean) => {
     await submitPreferences({ [prefKey]: value });

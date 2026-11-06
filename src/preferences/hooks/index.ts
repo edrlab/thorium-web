@@ -6,3 +6,4 @@ export * from "./useFilteredPreferenceKeys";
 export * from "./useTheming";
 export * from "./useSharedPreferences";
 export * from "./useGlobalPreferences";
+export * from "./useReadAlongPreferences";

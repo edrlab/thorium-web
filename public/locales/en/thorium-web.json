@@ -123,6 +123,38 @@
         "high": "High",
         "max": "Max"
       }
+    },
+    "readAlong": {
+      "player": {
+        "actions": "Player actions",
+        "mediaActions": "Read aloud actions"
+      },
+      "settings": {
+        "voice": {
+          "advanced": {
+            "trigger": "Customize",
+            "tooltip": "Customize voice, volume and pitch"
+          }
+        },
+        "highlight": {
+          "advanced": {
+            "trigger": "Customize",
+            "tooltip": "Customize highlight styles and colors"
+          }
+        },
+        "prosody": {
+          "advanced": {
+            "trigger": "Customize",
+            "tooltip": "Customize speed and pauses"
+          }
+        },
+        "verbosity": {
+          "advanced": {
+            "trigger": "Customize",
+            "tooltip": "Customize what is announced and when"
+          }
+        }
+      }
     }
   },
   "audio": {

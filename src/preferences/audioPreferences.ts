@@ -24,6 +24,8 @@ import {
 import { AudioContentProtectionConfig } from "./models/protection";
 import {
   ActionKey,
+  ThSheetSizeConstraint,
+  ThSheetSizeConstraintKeys,
   ThShortcutsPref
   } from "./preferences";
 import { validateObjectKeys } from "./helpers";
@@ -153,7 +155,7 @@ export interface ThAudioPreferences<K extends AudioCustomizableKeys = {}> {
         scrim: string;
       };
       constraints?: {
-        [key in ThAudioConstraintKeys]?: number | null;
+        [key in ThAudioConstraintKeys]?: key extends ThSheetSizeConstraintKeys ? ThSheetSizeConstraint : number | null;
       };
     };
     breakpoints: BreakpointsMap<number | null>;

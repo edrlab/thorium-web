@@ -1,0 +1,390 @@
+/* Full width as containment drops the intrinsic width */
+.miniPlayer {
+  --readAlong-miniPlayer-gap: 0.5rem;
+  --readAlong-miniPlayer-zone-gap: 2rem;
+  box-sizing: border-box;
+  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  gap: var(--readAlong-miniPlayer-zone-gap);
+  width: 100%;
+  min-width: 0;
+  padding-inline: var(--th-layout-spacing);
+}
+
+/* Grows as much as the actions, so the space before them mirrors this one and centers the visible unit */
+.miniPlayer::after {
+  content: "";
+  flex: 1 1 0;
+  margin-inline-start: calc(var(--readAlong-miniPlayer-zone-gap) * -1);
+}
+
+/* Absorbs nearly all the shrinking, otherwise the actions shrink below their always visible actions and overflow menu */
+.miniPlayerMetadata {
+  display: flex;
+  align-items: center;
+  gap: var(--readAlong-miniPlayer-gap);
+  flex: 0 1000 auto;
+  min-width: calc(var(--th-icon-size, 24px) * 2);
+}
+
+.miniPlayerExpandButton {
+  text-align: start;
+  border-radius: var(--th-layout-radius);
+}
+
+.miniPlayerExpandButton[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+/* Sized by its height so the radius follows the image's own aspect ratio */
+.miniPlayerCover {
+  box-sizing: border-box;
+  flex: none;
+  width: auto;
+  max-width: calc(var(--th-icon-size, 24px) * 2);
+  height: calc(var(--th-icon-size, 24px) * 2);
+  object-fit: contain;
+  border-radius: var(--th-layout-radius);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.miniPlayerCoverPlaceholder {
+  width: calc(var(--th-icon-size, 24px) * 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--th-theme-subdue);
+}
+
+.miniPlayerCoverPlaceholder svg {
+  width: 60%;
+  height: 60%;
+  fill: var(--th-theme-text);
+}
+
+.miniPlayerText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.miniPlayerHeading,
+.miniPlayerSubheading {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.miniPlayerHeading {
+  font-weight: bold;
+}
+
+.miniPlayerPlayerActions,
+.miniPlayerControls {
+  flex: none;
+}
+
+.miniPlayerPlayerActions,
+.miniPlayerActions {
+  display: flex;
+  align-items: center;
+}
+
+/* Grows from its actions' width as much as the trailing spacer, so its collapsible bar can fit actions in the space left */
+.miniPlayerActions {
+  flex: 1 1 auto;
+  min-width: calc(var(--th-icon-size, 24px) * 1.5);
+}
+
+.miniPlayerActionsBar {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.miniPlayerPlayerActionsBar,
+.miniPlayerPlaybackControls,
+.miniPlayerActionsBar {
+  display: flex;
+  align-items: center;
+  gap: var(--readAlong-miniPlayer-gap);
+}
+
+/* Equal side columns center the controls on their own, whatever the actions' widths */
+.miniPlayerControlsOnly {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.miniPlayerControlsOnly::after {
+  content: none;
+}
+
+/* Base size the playback buttons scale from */
+.miniPlayerPlaybackControls {
+  --readAlong-icon-base: 18px;
+}
+
+/* Visually hidden rather than removed, so the title stays available to assistive technologies */
+@container (max-width: 400px) {
+  .miniPlayerText {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .miniPlayerMetadata {
+    flex: none;
+  }
+}
+
+/* Positions the progression over the space the mini player leaves at its end */
+.miniPlayerContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.miniPlayerProgression {
+  box-sizing: border-box;
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  display: flex;
+  align-items: center;
+  padding-inline: var(--th-layout-spacing);
+  white-space: nowrap;
+}
+
+.miniPlayerProgressionGhost {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* The bottom bar holding the mini player stays visible in immersive mode, doubled class to win over the reader's rules */
+:global(.thorium_web_layeredUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  transform: translateY(0);
+  box-shadow: var(--th-theme-elevate);
+}
+
+:global(.thorium_web_stackedUI.thorium_web_isImmersive:not(.thorium_web_isHovering)) .pinnedBottomBar.pinnedBottomBar {
+  opacity: 1;
+}
+
+/* Sheet types nest the body differently, so every element between the sheet and the player flexes */
+.readAlongSheet,
+.readAlongSheet :has(.player) {
+  display: flex;
+  flex-direction: column;
+}
+
+.readAlongSheet :has(.player),
+.readAlongSheet .player {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.readAlongSheet .player {
+  overflow-y: auto;
+}
+
+/* Modal and fullscreen sheets apply it to the dialog, whose wrapper they size; doubled class to win over the modal dialog's cap */
+.readAlongSheet.readAlongDialogSheet {
+  max-height: 100%;
+}
+
+/* Popovers and modals only cap their height, so the cover sizes its children with container units */
+.readAlongSheet .playerCover {
+  container-type: size;
+  flex: 0 1 var(--th-layout-constraints-cover, 300px);
+  height: auto;
+  min-height: 100px;
+}
+
+.readAlongSheet .playerCoverFigure {
+  height: 100cqh;
+}
+
+.player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--th-layout-spacing) * 2);
+  padding-block: var(--th-layout-spacing);
+}
+
+/* The cover sizes its image against a definite height, which this wrapper provides */
+.playerCover {
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  width: 100%;
+  height: var(--th-layout-constraints-cover, 300px);
+}
+
+.playerCoverFigure {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+  min-height: 100px;
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: 100%;
+  margin: 0;
+}
+
+.playerCoverImage {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--th-layout-radius);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.playerCoverPlaceholder {
+  height: 100%;
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--th-theme-background);
+  border-radius: var(--th-layout-radius);
+  border: 1px solid var(--th-theme-subdue);
+  filter: drop-shadow(var(--th-theme-elevate));
+}
+
+.playerCoverPlaceholder svg {
+  width: 50%;
+  height: 50%;
+  fill: var(--th-theme-text);
+}
+
+.playerCoverLoadingOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: var(--th-layout-constraints-cover, 300px);
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--th-layout-radius);
+  background-color: color-mix(in srgb, var(--th-theme-background) 60%, transparent);
+}
+
+.playerCoverLoadingIcon {
+  width: calc(var(--th-icon-size, 24px) * 2);
+  height: calc(var(--th-icon-size, 24px) * 2);
+  fill: var(--th-theme-text);
+  animation: readAlongCoverSpin 1.2s linear infinite;
+}
+
+@keyframes readAlongCoverSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.playerPlaybackControls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  --readAlong-icon-base: var(--th-icon-size, 24px);
+}
+
+.skipBackwardButton,
+.skipForwardButton {
+  --th-icon-size: calc(var(--readAlong-icon-base) * (3/2));
+  padding: calc(var(--th-icon-size) * (1/6));
+}
+
+.playPauseButton {
+  --th-icon-size: calc(var(--readAlong-icon-base) * 2);
+  padding: calc(var(--th-icon-size) * (1/8));
+}
+
+.readAlongExpandedActions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  --readAlong-icon-base: var(--th-icon-size, 24px);
+}
+
+@container (max-width: 300px) {
+  .playerPlaybackControls,
+  .readAlongExpandedActions {
+    --th-icon-size: 18px;
+  }
+}
+
+/* Set on the triggers since the base is read from the bar's own --th-icon-size */
+.readAlongExpandedActions > * {
+  --th-icon-size: calc(var(--readAlong-icon-base) * (5/4));
+}
+
+.playerMetadata {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  gap: var(--th-layout-spacing);
+  text-align: center;
+}
+
+.playerMetadataTitleGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 0;
+}
+
+.playerMetadataTitle {
+  margin: 0;
+  font-size: 1em;
+  font-weight: bold;
+  color: var(--th-theme-text);
+}
+
+.playerMetadataSubtitle {
+  display: block;
+  margin: 0;
+  margin-top: calc(var(--th-layout-spacing) / 4);
+  font-weight: normal;
+  color: var(--th-theme-text);
+}
+
+.playerMetadataAuthors {
+  margin: 0;
+  color: var(--th-theme-subdue-text);
+}
+
+@container (max-width: 300px) {
+  .playerMetadata {
+    font-size: 0.875rem;
+  }
+}
+
+.playerChapter {
+  margin: 0;
+  color: var(--th-theme-subdue-text);
+}

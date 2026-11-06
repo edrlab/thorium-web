@@ -29,7 +29,7 @@ import {
 } from "@edrlab/thorium-web/audio";
 
 const App = ({ manifestUrl }) => {
-  const { publication, localDataKey, isLoading, error } = usePublication({
+  const { publication, selfLink, localDataKey, isLoading, error } = usePublication({
     url: manifestUrl,
     onError: (error) => console.error("Publication loading error:", error)
   });
@@ -44,6 +44,7 @@ const App = ({ manifestUrl }) => {
           <StatefulPlayer
             publication={ publication }
             localDataKey={ localDataKey }
+            publicationKey={ selfLink }
             positionStorage={{
               get: () => getStoredPosition(localDataKey),
               set: (locator) => storePosition(localDataKey, locator)
@@ -60,7 +61,9 @@ The `StatefulPlayer` accepts the following props:
 
 - `publication`: `Publication` — the Readium Publication object.
 - `localDataKey`: `string | null` — unique key for storing local reading data (position, etc.).
+- `publicationKey`: `string | null` (optional) — the publication’s key for its settings in IndexedDB, e.g. `usePublication`’s `selfLink`.
 - `positionStorage`: `PositionStorage` (optional) — custom interface for persisting the playback position.
+- `settingsStorage`: `SettingsStorage` (optional) — custom interface for persisting the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `coverUrl`: `string` (optional) — explicit cover image URL (falls back to publication metadata).
 

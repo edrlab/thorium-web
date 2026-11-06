@@ -12,7 +12,8 @@ This document outlines the available styling classes and custom properties for t
 6. [Reader Components](#reader-components)
 7. [Table of Contents](#table-of-contents)
 8. [Audio Components](#audio-components)
-9. [Misc Components](#misc-components)
+9. [Read Along Components](#read-along-components)
+10. [Misc Components](#misc-components)
 
 ## Button Component
 
@@ -76,6 +77,7 @@ This document outlines the available styling classes and custom properties for t
 #### Draggable Sheet
 
 - `.thorium_web_sheets_draggableHeader` - Header for draggable sheets
+- `.thorium_web_sheets_draggableHeaderActions` - Wrapper of the header actions and close button, when there are header actions
 - `.thorium_web_sheets_dragIndicator` - Visual indicator for draggable sheets
 - `.thorium_web_sheets_draggableScrim` - Scrim behind draggable sheet
 - `.thorium_web_sheets_draggableContainer` - Container for draggable content
@@ -115,7 +117,7 @@ This document outlines the available styling classes and custom properties for t
 
 ### Header & Footer
 
-> These classes apply to Epub/WebPub readers only. For audio, see [Audio App Structure](#audio-app-structure).
+> These classes apply to Epub/WebPub readers only. For audio, see [Audio Components](#audio-components).
 
 - `.thorium_web_reader_app_topBar` - Top navigation bar
 - `.thorium_web_reader_app_bottomBar` - Bottom navigation bar
@@ -169,9 +171,16 @@ This document outlines the available styling classes and custom properties for t
 - `.thorium_web_reader_settings_sliderWithPresetsRadio` - Individual radio button preset for slider
 - `.thorium_web_reader_settings_numberField` - Number input
 - `.thorium_web_reader_settings_numberFieldWrapper` - Number input wrapper
+- `.thorium_web_reader_settings_disclosure` - Collapsible section
+- `.thorium_web_reader_settings_disclosureHeading` - Collapsible section heading
+- `.thorium_web_reader_settings_disclosureButton` - Collapsible section trigger
+- `.thorium_web_reader_settings_disclosurePanel` - Collapsible section content
 - `.thorium_web_reader_settings_dropdown` - Dropdown menu
 - `.thorium_web_reader_settings_dropdownButton` - Dropdown button
 - `.thorium_web_reader_settings_dropdownListbox` - Dropdown list
+- `.thorium_web_reader_settings_dropdownListboxSection` - Dropdown group of items
+- `.thorium_web_reader_settings_dropdownListboxHeader` - Dropdown group header
+- `.thorium_web_reader_settings_dropdownListboxHeaderFlag` - Dropdown group header flag
 - `.thorium_web_reader_settings_dropdownListboxItem` - Dropdown item
 - `.thorium_web_reader_settings_dropdownPopover` - Dropdown popover
 - `.thorium_web_reader_settings_switch` - Toggle switch
@@ -296,6 +305,103 @@ This document outlines the available styling classes and custom properties for t
 - `.thorium_web_audioProgressBar_seekableRange` - Seekable range overlay
 - `.thorium_web_audioProgressBar_elapsed` - Elapsed time display
 - `.thorium_web_audioProgressBar_remaining` - Remaining time display
+
+## Read Along Components
+
+### Mini Player
+
+- `.thorium_web_readAlong_miniPlayer` - Mini player root; an inline-size container whose zones are centered as a single unit
+- `.thorium_web_readAlong_miniPlayerControlsOnly` - Mini player of type `controlsOnly`, without metadata, its playback controls centered between the actions and player actions
+- `.thorium_web_readAlong_miniPlayerPlayerActions` - Wrapper of the player actions (expand and close)
+- `.thorium_web_readAlong_miniPlayerPlayerActionsBar` - Player actions toolbar
+- `.thorium_web_readAlong_miniPlayerMetadata` - Metadata area, cover and text; also applied to the expand button in the bottom bar
+- `.thorium_web_readAlong_miniPlayerExpandButton` - Metadata area when it is a button expanding the player
+- `.thorium_web_readAlong_miniPlayerCover` - Cover image, or placeholder when no cover is available
+- `.thorium_web_readAlong_miniPlayerCoverPlaceholder` - Placeholder shown when no cover is available
+- `.thorium_web_readAlong_miniPlayerText` - Wrapper of the heading and subheading; visually hidden when the mini player is narrower than 480px
+- `.thorium_web_readAlong_miniPlayerHeading` - Publication title
+- `.thorium_web_readAlong_miniPlayerSubheading` - Current chapter
+- `.thorium_web_readAlong_miniPlayerControls` - Wrapper of the playback controls
+- `.thorium_web_readAlong_miniPlayerPlaybackControls` - Playback controls toolbar
+- `.thorium_web_readAlong_miniPlayerActions` - Wrapper of the mini player’s actions
+- `.thorium_web_readAlong_miniPlayerActionsBar` - Mini player’s actions toolbar, collapsing into an overflow menu
+- `.thorium_web_readAlong_miniPlayerContainer` - Wrapper of the mini player and its progression in the bottom bar
+- `.thorium_web_readAlong_miniPlayerProgression` - Progression shown in the space after the player actions, in its normal or compact form when it fits
+- `.thorium_web_readAlong_miniPlayerProgressionGhost` - Hidden copy of the progression’s normal and compact forms, used to measure them
+
+#### Custom Properties
+
+- `--readAlong-miniPlayer-zone-gap` - Gap between zones (player actions, metadata, playback controls, actions)
+- `--readAlong-miniPlayer-gap` - Gap within a zone
+
+### Expanded Player
+
+- `.thorium_web_readAlong_player` - Expanded player root
+- `.thorium_web_readAlong_playerCover` - Cover wrapper, giving the cover a definite height
+- `.thorium_web_readAlong_playerCoverFigure` - Cover figure
+- `.thorium_web_readAlong_playerCoverImage` - Cover image
+- `.thorium_web_readAlong_playerCoverPlaceholder` - Placeholder shown when no cover is available
+- `.thorium_web_readAlong_playerCoverLoadingOverlay` - Overlay shown on top of the cover image while read along is loading
+- `.thorium_web_readAlong_playerCoverLoadingIcon` - Spinning icon shown inside the overlay (or replacing the placeholder icon) while read along is loading
+- `.thorium_web_readAlong_playerMetadata` - Metadata container
+- `.thorium_web_readAlong_playerMetadataTitleGroup` - Group of the title and subtitle
+- `.thorium_web_readAlong_playerMetadataTitle` - Publication title
+- `.thorium_web_readAlong_playerMetadataSubtitle` - Publication subtitle
+- `.thorium_web_readAlong_playerMetadataAuthors` - Authors list
+- `.thorium_web_readAlong_playerChapter` - Current chapter
+- `.thorium_web_readAlong_playerPlaybackControls` - Playback controls toolbar
+- `.thorium_web_readAlong_readAlongExpandedActions` - Expanded player’s actions toolbar
+
+### Playback Buttons
+
+In both the mini and expanded players.
+
+- `.thorium_web_readAlong_skipBackwardButton` - Previous sentence button
+- `.thorium_web_readAlong_playPauseButton` - Play/pause button
+- `.thorium_web_readAlong_skipForwardButton` - Next sentence button
+
+#### Custom Properties
+
+- `--readAlong-icon-base` - Base icon size the playback buttons scale from, set on the playback controls toolbars; `18px` in the mini player
+
+### Sheets
+
+- `.thorium_web_readAlong_readAlongSheet` - Sheet hosting the expanded player
+- `.thorium_web_readAlong_readAlongDialogSheet` - That sheet’s dialog, in modal and fullscreen sheets
+- `.thorium_web_readAlong_pinnedBottomBar` - Reader’s bottom bar while it holds the mini player
+
+### Volume Action
+
+- `.thorium_web_readAlongVolume_button` - Volume button
+- `.thorium_web_readAlongVolume_wrapper` - Volume wrapper
+- `.thorium_web_readAlongVolume_slider` - Volume slider
+- `.thorium_web_readAlongVolume_sliderTrack` - Volume slider track
+- `.thorium_web_readAlongVolume_sliderThumb` - Volume slider thumb
+
+### Rate Action
+
+- `.thorium_web_readAlongRate_button` - Rate button
+- `.thorium_web_readAlongRate_label` - Rate label (e.g. `1×`)
+- `.thorium_web_readAlongRate_wrapper` - Rate wrapper
+- `.thorium_web_readAlongRate_slider` - Rate slider, in the slider and slider-with-presets variants
+- `.thorium_web_readAlongRate_numberField` - Rate number field (number field variant)
+
+### Sleep Timer Action
+
+- `.thorium_web_readAlongSleepTimer_button` - Sleep timer button
+- `.thorium_web_readAlongSleepTimer_label` - Sleep timer label
+- `.thorium_web_readAlongSleepTimer_wrapper` - Sleep timer wrapper
+- `.thorium_web_readAlongSleepTimer_listbox` - Sleep timer preset listbox
+- `.thorium_web_readAlongSleepTimer_listboxItem` - Sleep timer preset item
+- `.thorium_web_readAlongSleepTimer_durationField` - Sleep timer duration input group
+- `.thorium_web_readAlongSleepTimer_instruction` - Sleep timer instruction text
+- `.thorium_web_readAlongSleepTimer_inputs` - Sleep timer inputs container
+- `.thorium_web_readAlongSleepTimer_fieldGroup` - Sleep timer field group
+- `.thorium_web_readAlongSleepTimer_fieldInput` - Sleep timer field input
+- `.thorium_web_readAlongSleepTimer_unitLabel` - Sleep timer unit label
+- `.thorium_web_readAlongSleepTimer_remaining` - Remaining sleep time display
+- `.thorium_web_readAlongSleepTimer_cancelButton` - Sleep timer cancel button
+- `.thorium_web_readAlongSleepTimer_startButton` - Sleep timer action button
 
 ## Misc Components
 

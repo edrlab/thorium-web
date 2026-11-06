@@ -1,21 +1,10 @@
 .wrapper {}
 
 .button {
-  --th-icon-size: calc(var(--audio-icon-base) * (5/4));
-  padding: calc(var(--th-icon-size) * (1/4));
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  outline: none;
-}
-
-.button[data-focus-visible] {
-  outline: 2px solid var(--th-theme-focus);
-}
-
-.button[data-disabled] {
-  color: var(--th-theme-disable);
 }
 
 .button:has(.label) {

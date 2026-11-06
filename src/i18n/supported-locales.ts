@@ -2,7 +2,7 @@
  * List of supported locales in the application.
  * These locales are used for i18n configuration and language selection.
  */
-export const supportedLocales = ["ar","da", "en", "es", "et", "fi", "fr", "it", "lt", "pl", "pt", "sv", "ta"] as const;
+export const supportedLocales = ["ar","da", "en", "es", "et", "fi", "fr", "it", "lt", "pl", "pt-BR", "pt-PT", "sv", "ta"] as const;
 
 export type SupportedLocale = typeof supportedLocales[number];
 

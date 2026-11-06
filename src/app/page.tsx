@@ -33,6 +33,13 @@ const books = [
     rendition: "Reflowable EPUB"
   },
   {
+    title: "Le Rouge et le Noir",
+    author: "Stendhal",
+    cover: "/images/LeRougeEtLeNoir.png",
+    url: "/read/le-rouge-et-le-noir",
+    rendition: "Reflowable EPUB"
+  },
+  {
     title: "Bella the Dragon",
     author: "Barbara Nick, Elaine Steckler",
     cover: "/images/Bella.jpg",

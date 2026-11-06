@@ -4,19 +4,22 @@ import { useCallback, useEffect, useRef } from "react";
 
 import readerStyles from "./assets/styles/thorium-web.reader.app.module.css";
 import readerPaginationStyles from "./assets/styles/thorium-web.reader.pagination.module.css";
+import readAlongStyles from "./ReadAlong/assets/styles/thorium-web.readAlong.module.css";
 
-import { ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance } from "@/preferences/models";
+import { ThActionsKeys, ThBreakpoints, ThLayoutUI, ThFormatPref, ThProgressionFormat, ThNavigationAffordance, defaultReadAlongAction } from "@/preferences/models";
 
 import { ThFooter } from "@/core/Components/Reader/ThFooter";
 import { StatefulReaderProgression } from "./StatefulReaderProgression";
 import { ThInteractiveOverlay } from "../core/Components/Reader/ThInteractiveOverlay";
 import { StatefulReaderPagination } from "./StatefulReaderPagination";
 import { ThPaginationLinkProps } from "@/core/Components/Reader/ThPagination";
+import { StatefulReadAlongMiniPlayer } from "./ReadAlong/StatefulReadAlongMiniPlayer";
+import { StatefulReadAlongMiniPlayerProgression } from "./ReadAlong/StatefulReadAlongMiniPlayerProgression";
 
 import { Link, Publication } from "@readium/shared";
 
 import { useNavigator } from "@/core/Navigator";
-import { useFocusWithin, useLocale } from "react-aria";
+import { FocusScope, useFocusWithin, useLocale } from "react-aria";
 import { useI18n } from "@/i18n/useI18n";
 import { usePreferences } from "@/preferences/hooks/usePreferences";
 
@@ -24,6 +27,7 @@ import { setHovering } from "@/lib/readerReducer";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useIsScroll, useIsPageBased } from "@/hooks";
 import { useAdjacentReadingOrderItems } from "./hooks/useAdjacentReadingOrderItems";
+import { useReadAlongState } from "./ReadAlong/Hooks/useReadAlongState";
 
 import classNames from "classnames";
 
@@ -41,6 +45,9 @@ export const StatefulReaderFooter = ({
   const { t } = useI18n();
   const { direction } = useLocale();
   const footerRef = useRef<HTMLDivElement>(null);
+  const miniPlayerContainerRef = useRef<HTMLDivElement>(null);
+  const miniPlayerRef = useRef<HTMLElement>(null);
+  const miniPlayerActionsRef = useRef<HTMLDivElement>(null);
   const isImmersive = useAppSelector(state => state.reader.isImmersive);
   const isHovering = useAppSelector(state => state.reader.isHovering);
   const hasScrollAffordance = useAppSelector(state => state.reader.hasScrollAffordance);
@@ -50,9 +57,15 @@ export const StatefulReaderFooter = ({
   const breakpoint = useAppSelector(state => state.theming.containerBreakpoint);
   const reducedMotion = useAppSelector(state => state.theming.prefersReducedMotion);
   const adjacentTimelineItems = useAppSelector(state => state.publication.adjacentTimelineItems);
+  // Read-along state is global, so it is ignored in profiles that don't implement read along
+  const isReadAlongProfile = useAppSelector(state => state.reader.profile !== "divina");
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked) && isReadAlongProfile;
   const { previous: previousReadingOrderItem, next: nextReadingOrderItem } = useAdjacentReadingOrderItems(publication.readingOrder);
   const { preferences } = usePreferences();
   const affordance = preferences.affordances.scroll.affordance;
+  const { isActive: isReadAlongActive, isExpanded: isReadAlongExpanded } = useReadAlongState();
+  const showReadAlong = isReadAlongProfile && isReadAlongActive && !isReadAlongExpanded;
+  const showMiniPlayerProgression = (preferences.actions.keys[ThActionsKeys.readAlong]?.miniPlayer ?? defaultReadAlongAction.miniPlayer).progression;
 
   const dispatch = useAppDispatch();
 
@@ -138,32 +151,48 @@ export const StatefulReaderFooter = ({
 
   useEffect(() => {
     // Blur any focused element when entering immersive mode
-    if (isImmersive) {
+    // The mini player stays visible in immersive mode, so it keeps focus
+    if (isImmersive && !showReadAlong) {
       const focusElement = document.activeElement;
       if (focusElement && footerRef.current?.contains(focusElement)) {
         (focusElement as HTMLElement).blur();
       }
     }
-  }, [isImmersive]);
+  }, [isImmersive, showReadAlong]);
 
   return(
     <>
     <ThInteractiveOverlay
       className={ classNames(readerStyles.barOverlay, readerStyles.footerOverlay) }
-      isActive={ layout === ThLayoutUI.layered && isImmersive && !isHovering }
+      isActive={ layout === ThLayoutUI.layered && isImmersive && !isHovering && !showReadAlong }
       onMouseEnter={ setHover }
       onMouseLeave={ removeHover }
     />
 
     <ThFooter
       ref={ footerRef }
-      className={ readerStyles.bottomBar }
+      className={ classNames(readerStyles.bottomBar, showReadAlong && readAlongStyles.pinnedBottomBar) }
       aria-label={ t("reader.app.footer.label") }
       onMouseEnter={ setHover }
       onMouseLeave={ removeHover }
       { ...focusWithinProps }
     >
-      { (isScroll)
+      { showReadAlong
+        ? <div ref={ miniPlayerContainerRef } className={ readAlongStyles.miniPlayerContainer }>
+            <FocusScope restoreFocus={ true }>
+              <StatefulReadAlongMiniPlayer ref={ miniPlayerRef } playerActionsRef={ miniPlayerActionsRef } />
+            </FocusScope>
+            { showMiniPlayerProgression && (
+              <StatefulReadAlongMiniPlayerProgression
+                containerRef={ miniPlayerContainerRef }
+                miniPlayerRef={ miniPlayerRef }
+                playerActionsRef={ miniPlayerActionsRef }
+                formatPref={ progressionFormatPref }
+                fallbackVariant={ progressionFormatFallback }
+              />
+            ) }
+          </div>
+        : (isScroll)
         ? <StatefulReaderPagination
             aria-label={ t("reader.navigation.scroll.wrapper") }
             links={ updateLinks() }
@@ -174,11 +203,13 @@ export const StatefulReaderFooter = ({
               },
               leftButton: {
                 className: readerPaginationStyles.leftButton,
-                preventFocusOnPress: true
+                preventFocusOnPress: true,
+                isDisabled: isNavigationLocked
               },
               rightButton: {
                 className: readerPaginationStyles.rightButton,
-                preventFocusOnPress: true
+                preventFocusOnPress: true,
+                isDisabled: isNavigationLocked
               }
             } }
           >

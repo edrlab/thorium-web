@@ -48,6 +48,10 @@
                 "compact": "Next",
                 "descriptive": "Next sentence"
             },
+            "goToNextTrack": {
+                "compact": "Next",
+                "descriptive": "Next track"
+            },
             "goToPosition": {
                 "compact": "Go to…",
                 "descriptive": "Go to position"
@@ -68,8 +72,22 @@
                 "compact": "Previous",
                 "descriptive": "Previous sentence"
             },
+            "goToPreviousTrack": {
+                "compact": "Previous",
+                "descriptive": "Previous track"
+            },
+            "goToReadAloudPosition": {
+                "compact": "Back to current sentence",
+                "descriptive": "Go back to the sentence being read"
+            },
             "readAloud": {
                 "compact": "Read aloud"
+            },
+            "rotateImage": {
+                "compact": "Rotate"
+            },
+            "stopReadAloud": {
+                "compact": "Stop reading aloud"
             }
         },
         "annotations": {
@@ -92,6 +110,9 @@
                     "description": "New bookmarks added while reading will show up in this list.",
                     "title": "No bookmarks"
                 },
+                "events": {
+                    "added": "Bookmark added"
+                },
                 "title": "Bookmarks"
             },
             "note": {
@@ -111,16 +132,33 @@
         },
         "playback": {
             "actions": {
+                "collapsePlayer": {
+                    "descriptive": "Collapse player"
+                },
+                "expandPlayer": {
+                    "descriptive": "Expand player"
+                },
+                "next": "Next",
                 "pause": "Pause",
                 "play": "Play",
+                "previous": "Previous",
                 "skipBackward": {
                     "compact": "Rewind",
                     "descriptive": "Skip backward"
                 },
+                "skipBackwardBy": {
+                    "descriptive": "Skip backward {{ duration }}"
+                },
                 "skipForward": {
                     "compact": "Forward",
                     "descriptive": "Skip forward"
+                },
+                "skipForwardBy": {
+                    "descriptive": "Skip forward {{ duration }}"
                 }
+            },
+            "errors": {
+                "ttsLanguageNotSupported": "This language is not supported by the text-to-speech voice."
             },
             "preferences": {
                 "audio": {
@@ -136,17 +174,133 @@
                 },
                 "playbackRate": {
                     "compact": "Speed",
-                    "descriptive": "Playback rate"
+                    "descriptive": "Playback rate",
+                    "value": "{{ rate }}×"
+                },
+                "readAloud": {
+                    "abbreviations": {
+                        "after": "With their expansion",
+                        "inline": "Expanded",
+                        "never": "As written",
+                        "title": "Abbreviations"
+                    },
+                    "additionalLanguages": "Additional languages",
+                    "autoPause": {
+                        "block": "After each paragraph",
+                        "none": "Off",
+                        "page": "After each page",
+                        "spread": "After each spread",
+                        "title": "Pause automatically",
+                        "utterance": "After each sentence"
+                    },
+                    "bibliography": {
+                        "after": "After the sentence",
+                        "inline": "Where they are referenced",
+                        "never": "Never",
+                        "title": "Bibliographic references"
+                    },
+                    "glossary": {
+                        "after": "After the sentence",
+                        "inline": "Where they are referenced",
+                        "never": "Never",
+                        "title": "Glossary definitions"
+                    },
+                    "highlight": {
+                        "presets": {
+                            "authored": "Authored",
+                            "custom": "Custom",
+                            "mask": "Focus",
+                            "none": "None",
+                            "sentence": "Sentence",
+                            "sentenceAndWord": "Sentence and word",
+                            "title": "Highlight presets",
+                            "word": "Word"
+                        },
+                        "sentenceStyle": "Sentence highlight",
+                        "styles": {
+                            "highlight": "Highlight",
+                            "highlightUnderline": "Highlight and underline",
+                            "mask": "Dim the rest",
+                            "none": "None",
+                            "outline": "Outline",
+                            "textColor": "Text color",
+                            "underline": "Underline"
+                        },
+                        "title": "Highlight",
+                        "wordStyle": "Word highlight"
+                    },
+                    "keepCentered": {
+                        "label": "Keep the sentence read in the middle of the screen when scrolling",
+                        "title": "Keep centered"
+                    },
+                    "language": {
+                        "always": "Always, including inline phrases",
+                        "blockLevel": "For passages in another language",
+                        "none": "Never",
+                        "title": "Switch voice for other languages"
+                    },
+                    "languageOverride": {
+                        "declared": "As declared ({{ language }})",
+                        "title": "Language of the publication",
+                        "undeclared": "Not declared"
+                    },
+                    "notes": {
+                        "after": "After the sentence",
+                        "inline": "Where they are referenced",
+                        "never": "Never",
+                        "title": "Notes"
+                    },
+                    "pageBreaks": {
+                        "after": "After the sentence",
+                        "inline": "Where they appear",
+                        "never": "Never",
+                        "title": "Page breaks"
+                    },
+                    "pauseDuration": "Pause between sentences",
+                    "pitch": "Pitch",
+                    "prosody": {
+                        "presets": {
+                            "autoPause": "Auto pause",
+                            "custom": "Custom",
+                            "default": "Default",
+                            "fast": "Fast",
+                            "slow": "Slow",
+                            "title": "Rhythm presets"
+                        },
+                        "title": "Rhythm"
+                    },
+                    "title": "Read aloud settings",
+                    "verbosity": {
+                        "few": "Few",
+                        "most": "Many",
+                        "none": "None",
+                        "some": "Some",
+                        "title": "Announcements"
+                    },
+                    "voice": {
+                        "prerecorded": "Prerecorded voice",
+                        "system": "System default",
+                        "title": "Voice"
+                    }
                 },
                 "sleepTimer": {
                     "compact": "Timer",
+                    "custom": {
+                        "duration": "Duration",
+                        "endTime": "End time",
+                        "until": "Until {{ time }}"
+                    },
                     "descriptive": "Sleep timer",
+                    "off": "Off",
                     "presets": {
+                        "custom": "Custom",
                         "endOfChapter": "End of chapter",
+                        "endOfNextChapter": "End of next chapter",
                         "endOfResource": "End of resource"
                     }
                 }
-            }
+            },
+            "trackN": "Track {{ index }}"
         },
         "preferences": {
             "brightness": "Brightness",
@@ -190,6 +344,8 @@
                 },
                 "publisher": "Publisher's font",
                 "sans": "Sans-serif",
+                "serif": "Serif",
+                "specialized": "Specialized",
                 "title": "Font family"
             },
             "fontSize": "Font size",
@@ -298,6 +454,9 @@
             "zoom": "Zoom"
         },
         "progression": {
+            "page": {
+                "descriptive": "Page {{ index }}"
+            },
             "pagesLeft": {
                 "descriptive_one": "{{ count }} page left",
                 "descriptive_other": "{{ count }} pages left"
@@ -311,6 +470,9 @@
                 "descriptive_other": "{{ count }} pages left in publication"
             },
             "percentage": "{{ percentage }}%",
+            "position": {
+                "descriptive": "Position {{ index }}"
+            },
             "positionsLeft": {
                 "compact_one": "{{ count }} left",
                 "compact_other": "{{ count }} left",
@@ -330,6 +492,10 @@
                 "descriptive_other": "{{ count }} positions left in publication"
             },
             "range": "{{ start }}–{{ end }}",
+            "timeLeftInPublication": {
+                "compact": "{{ duration }} left",
+                "descriptive": "{{ duration }} left in publication"
+            },
             "xOfY": {
                 "compact": "{{ x }} of {{ y }}",
                 "descriptive": "{{ x }} of {{ y }} ({{ z }})"

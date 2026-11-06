@@ -8,7 +8,6 @@ import { supportedLocales } from "./supported-locales";
 export const DEFAULT_CONFIG: InitOptions = {
   fallbackLng: "en",
   load: "all",
-  nonExplicitSupportedLngs: true,
   supportedLngs: supportedLocales,
   detection: {
     order: ["navigator"],

@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { useAppSelector } from "@/lib/hooks";
 import { usePrevious } from "@/core/Hooks/usePrevious";
 import { useIsScroll } from "./useIsScroll";
@@ -33,11 +35,15 @@ export const useReaderTransitions = (): ReaderTransitions => {
   const hasUserNavigated = useAppSelector(state => state.reader.hasUserNavigated);
   const isScroll = useIsScroll();
   
+  // One snapshot so the flags describe the latest change of any of these states
+  const state = useMemo(() => ({ isImmersive, isFullscreen, isScroll, hasUserNavigated }), [isImmersive, isFullscreen, isScroll, hasUserNavigated]);
+  const previous = usePrevious(state);
+
   // Previous states
-  const wasImmersive = usePrevious(isImmersive) ?? false;
-  const wasFullscreen = usePrevious(isFullscreen) ?? false;
-  const wasScroll = usePrevious(isScroll) ?? false;
-  const wasUserNavigated = usePrevious(hasUserNavigated) ?? false;
+  const wasImmersive = previous?.isImmersive ?? false;
+  const wasFullscreen = previous?.isFullscreen ?? false;
+  const wasScroll = previous?.isScroll ?? false;
+  const wasUserNavigated = previous?.hasUserNavigated ?? false;
 
   // State transitions
   const fromImmersive = wasImmersive && !isImmersive;

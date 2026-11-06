@@ -1,0 +1,70 @@
+"use client";
+
+import { useCallback, useContext } from "react";
+
+import { ThAudioActionKeys, ThAudioKeys, ThReadAlongActionKeys, ThReadAlongKeys, defaultReadAlongSleepTimer } from "@/preferences/models";
+import { ThAudioPreferencesContext } from "@/preferences/ThAudioPreferencesContext";
+import { ThPreferencesContext } from "@/preferences/ThPreferencesContext";
+
+import { useReadAloudNavigator } from "@/core/Hooks/ReadAloud/useReadAloudNavigator";
+import { usePlaybackStatus } from "../../../hooks/usePlaybackStatus";
+
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { setSleepTimerOnFragmentEnd, setSleepTimerOnTrackEnd, setSleepTimerRemainingSeconds } from "@/lib/playerReducer";
+import { setReadAlongSleepTimer } from "@/lib/readAlongPlayerReducer";
+
+// Read along has no audio preferences provider, the reader's one holds its preferences instead.
+// Its sleep timer has no end of track or fragment, so those stay false.
+export const useSleepTimerAction = () => {
+  const audioContext = useContext(ThAudioPreferencesContext);
+  const readerContext = useContext(ThPreferencesContext);
+  const isAudio = useAppSelector(state => state.reader.profile === "audio");
+
+  const { isLoaded: isReadAloudLoaded } = useReadAloudNavigator();
+  const dispatch = useAppDispatch();
+
+  const { isPlaying, isLoading } = usePlaybackStatus();
+  const remainingSeconds = useAppSelector(state => isAudio
+    ? state.player.sleepTimer.remainingSeconds
+    : state.readAlongPlayer.sleepTimer.remainingSeconds
+  );
+  const onTrackEnd = useAppSelector(state => isAudio && state.player.sleepTimer.onTrackEnd);
+  const onFragmentEnd = useAppSelector(state => isAudio && state.player.sleepTimer.onFragmentEnd);
+
+  const actionKey = isAudio ? ThAudioActionKeys.sleepTimer : ThReadAlongActionKeys.sleepTimer;
+
+  const config = isAudio && audioContext
+    ? audioContext.preferences.settings.keys[ThAudioKeys.sleepTimer]
+    : readerContext?.preferences.readAlong?.settings.keys[ThReadAlongKeys.sleepTimer] ?? defaultReadAlongSleepTimer;
+
+  const isDisabled = isAudio ? isLoading : !isReadAloudLoaded || isLoading;
+
+  const setRemainingSeconds = useCallback((seconds: number | null) => {
+    if (isAudio) {
+      dispatch(setSleepTimerRemainingSeconds(seconds));
+    } else {
+      dispatch(setReadAlongSleepTimer({ remainingSeconds: seconds }));
+    }
+  }, [isAudio, dispatch]);
+
+  const setOnTrackEnd = useCallback((value: boolean) => {
+    if (isAudio) dispatch(setSleepTimerOnTrackEnd(value));
+  }, [isAudio, dispatch]);
+
+  const setOnFragmentEnd = useCallback((value: boolean) => {
+    if (isAudio) dispatch(setSleepTimerOnFragmentEnd(value));
+  }, [isAudio, dispatch]);
+
+  return {
+    actionKey,
+    config,
+    remainingSeconds,
+    onTrackEnd,
+    onFragmentEnd,
+    isPlaying,
+    isDisabled,
+    setRemainingSeconds,
+    setOnTrackEnd,
+    setOnFragmentEnd
+  };
+};

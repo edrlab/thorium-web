@@ -1,6 +1,6 @@
 "use client";
 
-import SkipNextIcon from "./assets/icons/skip_next.svg";
+import SkipNextIcon from "../../Playback/controls/assets/icons/skip_next.svg";
 
 import { StatefulActionIcon } from "../../Actions/Triggers/StatefulActionIcon";
 import audioStyles from "./assets/styles/thorium-web.audioPlayback.module.css";

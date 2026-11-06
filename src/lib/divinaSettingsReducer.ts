@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 export interface DivinaSettingsReducerState {
   quality: string | null;
@@ -29,7 +30,8 @@ export const divinaSettingsSlice = createSlice({
     },
     setDivinaStripWidth: (state, action) => {
       state.stripWidth = action.payload
-    }
+    },
+    hydrateDivinaSettings: (state, action: PayloadAction<HydratePayload<DivinaSettingsReducerState>>) => hydrateState(state, initialState, action.payload)
   }
 });
 
@@ -40,7 +42,8 @@ export const {
   setDivinaQuality,
   setDivinaScrolled,
   setDivinaSpreads,
-  setDivinaStripWidth
+  setDivinaStripWidth,
+  hydrateDivinaSettings
 } = divinaSettingsSlice.actions;
 
 export default divinaSettingsSlice.reducer;

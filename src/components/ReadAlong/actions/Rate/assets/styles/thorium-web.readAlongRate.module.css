@@ -1,0 +1,40 @@
+.wrapper {
+  width: auto;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button:has(.label) {
+  padding-bottom: calc(var(--th-icon-size) * (2/3));
+}
+
+.label {
+  position: absolute;
+  bottom: calc(var(--th-icon-size) * (1/4));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1;
+  font-size: calc(var(--th-icon-size, 24px) * (5/12));
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+}
+
+/* Playback rate - slider with presets variant */
+
+.slider {
+  min-width: 260px;
+}
+
+/* Playback rate - number field variant */
+
+.numberField {
+  min-width: 140px;
+  display: flex;
+  justify-content: center;
+}

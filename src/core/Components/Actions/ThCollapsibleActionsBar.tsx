@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Fragment } from "react";
+import React, { RefObject, useMemo, useRef } from "react";
 
 const MENU_DEPENDENCIES = ["Trigger"];
 
@@ -21,6 +21,45 @@ export interface ThCollapsibleActionsBarProps extends ThActionsBarProps {
   compounds?: {
     menu: THMenuProps<string> | React.ReactElement<typeof ThMenu>;
   }
+}
+
+interface ThCollapsibleActionProps {
+  Trigger: ThActionEntry<string>["Trigger"];
+  Target: ThActionEntry<string>["Target"];
+  associatedKey?: string;
+  barRef: RefObject<HTMLDivElement | null>;
+  targetPlacement: "top" | "bottom";
+  triggerProps: Omit<ThActionsBarProps, "ref">;
+}
+
+const ThCollapsibleAction = ({
+  Trigger,
+  Target,
+  associatedKey,
+  barRef,
+  targetPlacement,
+  triggerProps
+}: ThCollapsibleActionProps) => {
+  const triggerRef = useRef<HTMLElement | null>(null);
+
+  // Triggers that don't forward their ref leave the target anchored to the bar
+  const anchorRef = useMemo<RefObject<HTMLElement | null>>(() => ({
+    get current() {
+      return triggerRef.current ?? barRef.current;
+    }
+  }), [barRef]);
+
+  return (
+    <>
+    <Trigger
+      ref={ triggerRef }
+      variant={ ThActionsTriggerVariant.button }
+      { ...(associatedKey ? { associatedKey: associatedKey } : {}) }
+      { ...triggerProps }
+    />
+    { Target && <Target triggerRef={ anchorRef } placement={ targetPlacement } /> }
+    </>
+  )
 }
 
 export const ThCollapsibleActionsBar = ({
@@ -60,15 +99,15 @@ export const ThCollapsibleActionsBar = ({
       )}
 
       { Actions.ActionIcons.map(({ Trigger, Target, key, associatedKey }) =>
-          <Fragment key={ key }>
-            <Trigger
-              key={ `${ key }-trigger` }
-              variant={ ThActionsTriggerVariant.button }
-              { ...(associatedKey ? { associatedKey: associatedKey } : {}) }
-              { ...props }
-            />
-            { Target && <Target key={ `${ key }-container` } triggerRef={ resolvedRef } placement={ targetPlacement } /> }
-          </Fragment>
+          <ThCollapsibleAction
+            key={ key }
+            Trigger={ Trigger }
+            Target={ Target }
+            associatedKey={ associatedKey }
+            barRef={ resolvedRef }
+            targetPlacement={ targetPlacement }
+            triggerProps={ props }
+          />
         )
       }
 
