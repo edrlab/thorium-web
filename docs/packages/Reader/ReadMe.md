@@ -59,6 +59,9 @@ The Reader expects the following props:
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
 - `plugins`: `ReaderPlugins` (optional) — per-profile plugin factories (see [Plugins](#plugins))
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
+- `resolveCoverUrl`: `(url: string) => string` (optional) — rewrites absolute http(s) cover URLs before they are fetched, e.g. to route them through a CORS proxy. Currently only the audio player fetches covers (see [Cover URLs](#cover-urls))
+- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional, audio only) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles
+- `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional, audio only) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:
   - For `"audio"`: `{ initialPreferences?: ThAudioPreferences; adapter?: ThAudioPreferencesAdapter }`
   - For `"epub"` / `"webPub"` / `"divina"`: `{ initialPreferences?: ThPreferences; adapter?: ThPreferencesAdapter }`
@@ -95,6 +98,26 @@ It is critical you wrap this component in a `<ThStoreProvider>` for it to work p
 
 > [!CAUTION]
 > When using `<StatefulReaderWrapper>` and all other components from `@edrlab/thorium-web/reader`, you must use `<ThStoreProvider>` from this same path. Using a store from a different path will result in a separate context that the components cannot access.
+
+### Cover URLs
+
+For audio publications, the player fetches the cover to display it and to generate the player's theme from its colors. External covers must therefore be served with CORS headers, or routed through a proxy with `resolveCoverUrl`:
+
+```tsx
+<StatefulReaderWrapper
+  profile={ profile }
+  publication={ publication }
+  localDataKey={ localDataKey }
+  resolveCoverUrl={ (url) => `/my-proxy?url=${ encodeURIComponent(url) }` }
+/>
+```
+
+Only absolute http(s) URLs are passed to the resolver. Relative and `blob:` URLs are used as-is. Without `resolveCoverUrl`, cover URLs are used unchanged.
+
+> [!NOTE]
+> Previously, external cover URLs were always rewritten to `/api/proxy?url=…`, a route that only exists in the Thorium Web app. If your integration provides a route at that path, pass a resolver pointing to it to keep using it.
+
+If you use `StatefulPlayer` directly instead of `StatefulReaderWrapper`, provide the resolver with `ThCoverUrlResolverContext`, as described in the [Audio package documentation](../Audio/ReadMe.md#cover-urls).
 
 ### i18n configuration
 
