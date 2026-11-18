@@ -2,7 +2,7 @@
 
 import { Key, useCallback } from "react";
 
-import { GndRole, Interruption } from "@readium/navigator";
+import { GndRole, Interruption, interruptionValues } from "@readium/navigator";
 
 import { StatefulSettingsItemProps } from "../../../Settings/models/settings";
 
@@ -13,7 +13,7 @@ import { ListBox, ListBoxItem } from "react-aria-components";
 
 import { useNavigator } from "@/core/Navigator";
 import { useI18n } from "@/i18n/useI18n";
-import { interruptionValues, InterruptionSettingKey, useInterruption } from "./hooks/useInterruption";
+import { InterruptionSettingKey, useInterruption } from "./hooks/useInterruption";
 
 export interface StatefulReadAlongInterruptionProps extends StatefulSettingsItemProps {
   settingKey: InterruptionSettingKey;

@@ -13,8 +13,6 @@ import { setReadAlongInterruptions } from "@/lib/readAlongSettingsReducer";
 
 export type InterruptionSettingKey = ThReadAlongKeys.notes | ThReadAlongKeys.pageBreaks | ThReadAlongKeys.abbreviations | ThReadAlongKeys.bibliography | ThReadAlongKeys.glossary;
 
-export const interruptionValues: Interruption[] = ["never", "inline", "after"];
-
 /**
  * Hook to read `role` never, inline where it interrupts the text, or after the sentence
  */
