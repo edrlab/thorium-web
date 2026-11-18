@@ -19,7 +19,7 @@ export interface ReadAloudSettingsObject {
   utteranceStyle: ReadAloudSettings["utteranceStyle"] | null;
   wordStyle: ReadAloudSettings["wordStyle"] | null;
   voice: ReadAloudSettings["voice"] | null;
-  languageOverride: string | null;
+  primaryLanguageOverride: string | null;
 }
 
 export interface ReadAloudSettingsCache {
@@ -59,7 +59,7 @@ export const useReadAloudSettingsCache = (
       utteranceStyle,
       wordStyle,
       voice,
-      languageOverride,
+      primaryLanguageOverride: languageOverride,
     },
   });
 
@@ -79,7 +79,7 @@ export const useReadAloudSettingsCache = (
       utteranceStyle,
       wordStyle,
       voice,
-      languageOverride,
+      primaryLanguageOverride: languageOverride,
     },
   }), [
     format,

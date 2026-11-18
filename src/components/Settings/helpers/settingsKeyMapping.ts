@@ -55,7 +55,7 @@ const SETTINGS_KEY_TO_PREFERENCE = {
     [ThReadAlongKeys.glossary]: "interruptions",
     [ThReadAlongKeys.keepCentered]: "keepCentered",
     [ThReadAlongKeys.language]: "language",
-    [ThReadAlongKeys.languageOverride]: "languageOverride",
+    [ThReadAlongKeys.languageOverride]: "primaryLanguageOverride",
     [ThReadAlongKeys.notes]: "interruptions",
     [ThReadAlongKeys.pageBreaks]: "interruptions",
     [ThReadAlongKeys.pauseDuration]: "pauseDuration",
