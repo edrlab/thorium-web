@@ -9,11 +9,7 @@ It automatically selects between EPUB, WebPub, Divina, and Audio readers while h
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels
-```
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Reader Component
 

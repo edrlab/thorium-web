@@ -9,14 +9,7 @@ It shares its preferences system, store, and most of its components with the EPU
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels
-```
-
-> [!IMPORTANT]
-> Divina requires `@readium/navigator` `^2.11.1`, `@readium/shared` `^2.6.0`, and `@readium/navigator-html-injectables` `^2.8.4`.
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Reader Component
 

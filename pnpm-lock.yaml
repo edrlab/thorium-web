@@ -211,13 +211,13 @@ importers:
         specifier: ^2.0.5
         version: 2.0.5
       '@readium/navigator':
-        specifier: ^2.15.0
+        specifier: ~2.15.0
         version: 2.15.0(typescript@5.9.3)
       '@readium/navigator-html-injectables':
-        specifier: ^2.10.1
-        version: 2.10.1
+        specifier: ~2.11.0
+        version: 2.11.0
       '@readium/shared':
-        specifier: ^2.9.0
+        specifier: ~2.9.0
         version: 2.9.0
       '@reduxjs/toolkit':
         specifier: ^2.12.0
@@ -2074,12 +2074,20 @@ packages:
     resolution: {integrity: sha512-gq6KyHKmuCqydU6sBqczbVLkZo8VWdAOdPniXJRwoL/qQyLcXp/619xR5Qn/43AE55/2cDKqmINcHJLKs0JcTA==}
     engines: {node: '>=24'}
 
+  '@readium/guided-navigation@1.4.0':
+    resolution: {integrity: sha512-kFDV8mZ6HzEulZQORxLQ3ugMDaQESq4tGF/RNO+Eap91ZY5KFZjAepaLeYjjnfzqN5cnm6DedPVgrGtPvtXYrw==}
+    engines: {node: '>=24'}
+
   '@readium/helpers@1.3.0':
     resolution: {integrity: sha512-AHVIKPSyRUBCe5FPAnDuA/SO2ZOkGvHhmycZTdBUbMtQK6xlgRLh04pDCl4YBxnlfnxeAglp06JLRw/ldTLU7Q==}
     engines: {node: '>=24'}
 
   '@readium/navigator-html-injectables@2.10.1':
     resolution: {integrity: sha512-PJZm8WetSdi4L2FXm36cLgBBw72T5UwMs1WldwNnKD+W7O/+EJKVYjEKUb2Yp/a7f3lEo5olcp77yT+FHjeFkg==}
+    engines: {node: '>=24'}
+
+  '@readium/navigator-html-injectables@2.11.0':
+    resolution: {integrity: sha512-gSi0KeXO7oAGgif35PdQLnr3lCyXzcHqNZwH08t5lHdxgtSSu7n4BgiSKDGvCPxuI+z5Io6ECbC0AJu2tmhBhA==}
     engines: {node: '>=24'}
 
   '@readium/navigator@2.15.0':
@@ -7002,12 +7010,24 @@ snapshots:
       '@readium/shared': 2.9.0
       css-selector-generator: 3.9.4
 
+  '@readium/guided-navigation@1.4.0':
+    dependencies:
+      '@readium/helpers': 1.3.0
+      '@readium/shared': 2.9.0
+      css-selector-generator: 3.9.4
+
   '@readium/helpers@1.3.0':
     dependencies:
       user-agent-data-types: 0.4.3
 
   '@readium/navigator-html-injectables@2.10.1':
     dependencies:
+      '@readium/helpers': 1.3.0
+      '@readium/shared': 2.9.0
+
+  '@readium/navigator-html-injectables@2.11.0':
+    dependencies:
+      '@readium/guided-navigation': 1.4.0
       '@readium/helpers': 1.3.0
       '@readium/shared': 2.9.0
 
