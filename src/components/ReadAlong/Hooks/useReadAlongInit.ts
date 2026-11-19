@@ -159,13 +159,14 @@ export const useReadAlongInit = ({
     const { publication } = visualNavigator;
     const provider = configRef.current?.provider?.(publication) ?? new PublicationGuidedNavigationProvider(publication, { generateFromMarkup });
     const engine = configRef.current?.engine?.(publication);
+    const { readFromPointerRules, contextualizationOverrides, segmentationOverrides, substitutions } = configRef.current ?? {};
 
     let cancelled = false;
 
     // Fixed layout splits sentences into positioned text fragments
     const defaults: IReadAloudDefaults = { ...readAlongDefaults, reconstruct: isFXL, detachable, readFromPointer, startInViewport };
 
-    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults, provider, engine, keepAwake }, async () => {
+    ReadAloudNavigatorLoad({ navigator: visualNavigator, listeners, preferences, defaults, provider, engine, keepAwake, readFromPointerRules, contextualizationOverrides, segmentationOverrides, substitutions }, async () => {
       // Same voices as the voice selector, an empty list leaves it unknown
       const { publicationLanguage } = cache.current;
       voices = await getVoices({ languages: publicationLanguage ? [publicationLanguage] : undefined });

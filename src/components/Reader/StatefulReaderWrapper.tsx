@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 
 import { Publication, Locator } from "@readium/shared";
-import { getScriptMode, GuidedNavigationProvider, ReadiumSpeechPlaybackEngine } from "@readium/navigator";
+import { ContextualizationOverrides, getScriptMode, GuidedNavigationProvider, ReadFromPointerRule, ReadiumSpeechPlaybackEngine, SegmentationOverrides, SubstitutionTable } from "@readium/navigator";
 import { ThThemeKeys, ThemeKeyType, useTheming } from "@/preferences";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
@@ -70,6 +70,10 @@ export interface ReadAlongConfig {
   provider?: (publication: Publication) => GuidedNavigationProvider;
   // Called on each start, as the read-aloud navigator destroys its engine when it stops
   engine?: (publication: Publication) => ReadiumSpeechPlaybackEngine;
+  readFromPointerRules?: ReadFromPointerRule[];
+  contextualizationOverrides?: ContextualizationOverrides;
+  segmentationOverrides?: SegmentationOverrides;
+  substitutions?: SubstitutionTable;
 }
 
 export interface StatefulReaderProps {

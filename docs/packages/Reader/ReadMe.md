@@ -60,7 +60,7 @@ The Reader expects the following props:
 - `publicationKey`: `string | null` (optional) — the publication’s key for its settings in IndexedDB, e.g. `usePublication`’s `selfLink`
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
 - `settingsStorage`: `SettingsStorage` (optional) — an interface for persisting each publication’s settings, instead of IndexedDB (see [SettingsStorage Interface](#settingsstorage-interface))
-- `readAlong`: `ReadAlongConfig` (optional) — factories for read along’s Guided Navigation provider and speech engine, for `"epub"` and `"webPub"` (see [Read Along](../../customization/ReadAlong.md#provider-and-engine))
+- `readAlong`: `ReadAlongConfig` (optional) — factories for read along’s Guided Navigation provider and speech engine, and the read-aloud navigator’s configuration, for `"epub"` and `"webPub"` (see [Read Along](../../customization/ReadAlong.md#provider-and-engine))
 - `plugins`: `ReaderPlugins` (optional) — per-profile plugin factories (see [Plugins](#plugins))
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:

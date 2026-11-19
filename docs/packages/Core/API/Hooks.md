@@ -282,6 +282,10 @@ interface ReadAloudNavigatorLoadProps {
   engine?: ReadiumSpeechPlaybackEngine;
   provider?: GuidedNavigationProvider;
   keepAwake?: boolean; // Keeps the screen awake while playing, true by default
+  readFromPointerRules?: ReadFromPointerRule[]; // Content read from its start when pressed, defaultReadFromPointerRules by default
+  contextualizationOverrides?: ContextualizationOverrides; // Wording, shapes and placeholders of announcements
+  segmentationOverrides?: SegmentationOverrides; // Sentence suppressions and segmenter
+  substitutions?: SubstitutionTable; // Rewrites of ASCII imitations of symbols, merged over builtInSubstitutions
 }
 
 function useReadAloudNavigator(): {

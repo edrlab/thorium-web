@@ -15,7 +15,7 @@ interface StatefulReaderProps {
   plugins?: ThPlugin[];         // Optional reader plugins
   positionStorage?: PositionStorage; // Custom storage for position data
   settingsStorage?: SettingsStorage; // Custom storage for the publication’s settings
-  readAlong?: ReadAlongConfig;  // Read along provider and engine factories
+  readAlong?: ReadAlongConfig;  // Read along provider and engine factories, navigator configuration
 }
 ```
 

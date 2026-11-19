@@ -8,7 +8,7 @@ It is configured in three places:
 
 - `actions.keys.readAlong`: the reader action that starts read along, and where its players show;
 - `readAlong`: the players’ own actions and the read-along settings;
-- the reader’s `readAlong` prop: the Guided Navigation provider and speech engine, see [Provider and Engine](#provider-and-engine).
+- the reader’s `readAlong` prop: the Guided Navigation provider and speech engine, see [Provider and Engine](#provider-and-engine), and the navigator’s configuration, see [Navigator Configuration](#navigator-configuration).
 
 ## What Is Read
 
@@ -104,6 +104,26 @@ The reader’s `readAlong` prop, for the `"epub"` and `"webPub"` profiles, repla
   readAlong={{
     provider: (publication) => new MyGuidedNavigationProvider(publication),
     engine: (publication) => new MySpeechEngine(publication.metadata.languages)
+  }}
+/>
+```
+
+## Navigator Configuration
+
+The reader’s `readAlong` prop also takes values given as they are to the TS-Toolkit `ReadAloudNavigator`, each time read along starts:
+
+- `readFromPointerRules`: which content is read from its start (`"container"`) rather than from the pressed utterance (`"exact"`), by Guided Navigation role and an optional CSS selector, when idle, playing, or playing in that content. From the pressed element outwards, the first matching rule decides. Defaults to the TS-Toolkit’s `defaultReadFromPointerRules`.
+- `contextualizationOverrides`: the wording, shapes and placeholders of announcements, e.g. “Figure: …”, as `@readium/speech` takes them.
+- `segmentationOverrides`: the suppressions and segmenter used to split text into sentences, as `@readium/speech` takes them.
+- `substitutions`: rewrites of ASCII imitations of symbols, e.g. “(c)” read as “©”, merged by key over `@readium/speech`’s `builtInSubstitutions`, a `null` rule removing a built-in one.
+
+```tsx
+<StatefulReaderWrapper
+  profile="epub"
+  publication={ publication }
+  localDataKey={ localDataKey }
+  readAlong={{
+    readFromPointerRules: [{ role: "aside", idle: "container", playing: "container" }, ...defaultReadFromPointerRules]
   }}
 />
 ```

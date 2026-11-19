@@ -5,6 +5,7 @@ import { useCallback, useSyncExternalStore } from "react";
 import { Locator } from "@readium/shared";
 import { FrameClickEvent } from "@readium/navigator-html-injectables";
 import {
+  ContextualizationOverrides,
   GuidedNavigationProvider,
   IReadAloudDefaults,
   IReadAloudPreferences,
@@ -14,8 +15,11 @@ import {
   ReadAloudSettings,
   ReadAloudState,
   ReadAloudVoicesOptions,
+  ReadFromPointerRule,
   ReadiumSpeechPlaybackEngine,
-  ReadiumSpeechVoice
+  ReadiumSpeechVoice,
+  SegmentationOverrides,
+  SubstitutionTable
 } from "@readium/navigator";
 
 // Module scoped, singleton instance of navigator
@@ -53,6 +57,10 @@ export interface ReadAloudNavigatorLoadProps {
   engine?: ReadiumSpeechPlaybackEngine;
   provider?: GuidedNavigationProvider;
   keepAwake?: boolean;
+  readFromPointerRules?: ReadFromPointerRule[];
+  contextualizationOverrides?: ContextualizationOverrides;
+  segmentationOverrides?: SegmentationOverrides;
+  substitutions?: SubstitutionTable;
 }
 
 export const useReadAloudNavigator = () => {
@@ -85,7 +93,11 @@ export const useReadAloudNavigator = () => {
           provider: config.provider,
           preferences: config.preferences || {},
           defaults: config.defaults || {},
-          keepAwake: config.keepAwake
+          keepAwake: config.keepAwake,
+          readFromPointerRules: config.readFromPointerRules,
+          contextualizationOverrides: config.contextualizationOverrides,
+          segmentationOverrides: config.segmentationOverrides,
+          substitutions: config.substitutions
         }
       );
     } catch (error) {
