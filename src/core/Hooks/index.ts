@@ -3,6 +3,7 @@
 export * from "./useBreakpoints";
 export * from "./useColorScheme";
 export * from "./useContrast";
+export * from "./useCoverUrlResolver";
 export * from "./useDocumentTitle";
 export * from "./useForcedColors";
 export * from "./useFullscreen";

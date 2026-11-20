@@ -18,6 +18,11 @@
   padding: calc(var(--th-icon-size) * (1/5));
 }
 
+.audioPreviousButton[data-disabled],
+.audioNextButton[data-disabled] {
+  color: var(--th-theme-disable);
+}
+
 .audioSkipBackwardButton,
 .audioSkipForwardButton {
   --th-icon-size: calc(var(--audio-icon-base) * (3/2));

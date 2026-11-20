@@ -32,7 +32,7 @@ import { useI18n } from "@/i18n/useI18n";
 
 import { useAppSelector } from "@/lib/hooks";
 
-import { proxyUrl } from "@/helpers/proxyUrl";
+import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
 import classNames from "classnames";
 
@@ -55,6 +55,7 @@ export const StatefulReadAlongMiniPlayer = ({
   const { preferences } = usePreferences();
   const { theming } = useSharedPreferences();
   const { readAlongActionsMap } = usePlugins();
+  const resolveCoverUrl = useCoverUrlResolver();
 
   const miniPlayerActions = preferences.readAlong.actions.miniPlayer;
   const actionsKeys = preferences.readAlong.actions.keys;
@@ -91,7 +92,7 @@ export const StatefulReadAlongMiniPlayer = ({
       onExpand={ () => setExpanded(true) }
       expandLabel={ t("reader.playback.actions.expandPlayer.descriptive") }
       cover={ isControlsOnly ? undefined : coverUrl
-        ? <img className={ readAlongStyles.miniPlayerCover } src={ proxyUrl(coverUrl) } alt="" crossOrigin="anonymous" />
+        ? <img className={ readAlongStyles.miniPlayerCover } src={ resolveCoverUrl(coverUrl) } alt="" crossOrigin="anonymous" />
         : <span className={ classNames(readAlongStyles.miniPlayerCover, readAlongStyles.miniPlayerCoverPlaceholder) }>
             <ReadAlongIcon aria-hidden="true" focusable="false" />
           </span>

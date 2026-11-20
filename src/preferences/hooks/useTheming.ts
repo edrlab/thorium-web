@@ -15,8 +15,8 @@ import { useMonochrome } from "@/core/Hooks/useMonochrome";
 import { propsToCSSVars } from "@/core/Helpers/propsToCSSVars";
 import { prefixString } from "@/core/Helpers/prefixString";
 import { extractThemeFromImage } from "../helpers/themeGeneration";
-import { proxyUrl } from "@/helpers/proxyUrl";
 import { useContainerBreakpoints } from "@/core/Hooks/useContainerBreakpoints";
+import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
 export interface ThemeTokens {
   background: CSSColor;
@@ -88,13 +88,14 @@ export const useTheming = <T extends string>({
   const monochrome = useMonochrome(onMonochromeChange);
   const reducedMotion = useReducedMotion(onReducedMotionChange);
   const reducedTransparency = useReducedTransparency(onReducedTransparencyChange);
+  const resolveCoverUrl = useCoverUrlResolver();
   
   // Extract theme from cover when needed
   useEffect(() => {
     if (autoThemeSource === "cover" && coverUrl && !coverThemeTokens) {
       const extractTheme = async () => {
         try {
-          const themeTokens = await extractThemeFromImage(proxyUrl(coverUrl) ?? coverUrl);
+          const themeTokens = await extractThemeFromImage(resolveCoverUrl(coverUrl) ?? coverUrl);
           setCoverThemeTokens(themeTokens);
           onCoverThemeGenerated?.(themeTokens);
         } catch (error) {
@@ -105,7 +106,7 @@ export const useTheming = <T extends string>({
       
       extractTheme();
     }
-  }, [autoThemeSource, coverUrl, coverThemeTokens, onCoverThemeGenerated]);
+  }, [autoThemeSource, coverUrl, coverThemeTokens, onCoverThemeGenerated, resolveCoverUrl]);
 
   const updateThemeColorMetaTag = useCallback((color: string): void => {
     if (typeof document === "undefined") return;

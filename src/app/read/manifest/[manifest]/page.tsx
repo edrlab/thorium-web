@@ -6,6 +6,7 @@ import { ErrorDisplay } from "@/components/Misc";
 import { usePublication } from "@/hooks/usePublication";
 import { useAppSelector } from "@/lib/hooks";
 import { verifyManifestUrl } from "@/app/api/verify-manifest/verifyDomain";
+import { proxyCoverUrl } from "@/app/api/proxy/proxyCoverUrl";
 import { ErrorHandler, ProcessedError } from "@/helpers/errorHandler";
 
 // Publication only exists client-side, so keep the reader out of the server bundle
@@ -72,6 +73,7 @@ export default function ManifestPage({ params }: Props) {
           localDataKey={ localDataKey }
           publicationKey={ selfLink }
           isLoading={ isLoading || publicationLoading }
+          resolveCoverUrl={ proxyCoverUrl }
         />
       ) : null }
     </>

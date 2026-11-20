@@ -9,7 +9,7 @@ import { ThCover } from "@/core/Components/Playback/ThCover";
 import { useI18n } from "@/i18n/useI18n";
 import { usePlaybackStatus } from "./hooks/usePlaybackStatus";
 
-import { proxyUrl } from "@/helpers/proxyUrl";
+import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
 export interface StatefulCoverProps {
   ref?: Ref<HTMLElement>;
@@ -28,12 +28,13 @@ export interface StatefulCoverProps {
 export const StatefulCover = ({ ref, coverUrl, title, placeholder, className, compounds }: StatefulCoverProps) => {
   const { t } = useI18n();
   const { isLoading } = usePlaybackStatus();
+  const resolveCoverUrl = useCoverUrlResolver();
 
   return (
     <ThCover
       ref={ ref }
       className={ className }
-      src={ coverUrl ? proxyUrl(coverUrl) : undefined }
+      src={ resolveCoverUrl(coverUrl) }
       alt={ title || t("audio.player.coverAlt") }
       isLoading={ isLoading }
       placeholder={ placeholder }

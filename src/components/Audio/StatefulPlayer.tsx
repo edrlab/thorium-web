@@ -13,7 +13,7 @@ import { NavigatorProvider } from "@/core/Navigator";
 import { Locator, Publication } from "@readium/shared";
 import { ContextMenuEvent, SuspiciousActivityEvent } from "@readium/navigator-html-injectables";
 import { fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
-import { AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
+import { AudioMseLoaderFactory, AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
 import { PositionStorage, SettingsStorage } from "../Reader/StatefulReaderWrapper";
 import { ThAudioPlayerComponent } from "@/preferences/models";
 
@@ -77,6 +77,8 @@ export interface StatefulPlayerProps {
   settingsStorage?: SettingsStorage;
   coverUrl?: string;
   containerRefSetter?: (el: Element | null) => void;
+  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  audioMseLoaderFactory?: AudioMseLoaderFactory;
 }
 
 export const StatefulPlayer = ({
@@ -87,7 +89,9 @@ export const StatefulPlayer = ({
   publicationKey,
   settingsStorage,
   coverUrl,
-  containerRefSetter
+  containerRefSetter,
+  mediaElementSetup,
+  audioMseLoaderFactory
 }: StatefulPlayerProps) => {
   const [pluginsRegistered, setPluginsRegistered] = useState(false);
   const isSettingsHydrated = useSettingsStorage(publicationKey ?? null, "audio", settingsStorage);
@@ -109,12 +113,12 @@ export const StatefulPlayer = ({
 
   return (
     <ThPluginProvider>
-      <StatefulPlayerInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } coverUrl={ coverUrl } containerRefSetter={ containerRefSetter } />
+      <StatefulPlayerInner publication={ publication } localDataKey={ localDataKey } positionStorage={ positionStorage } coverUrl={ coverUrl } containerRefSetter={ containerRefSetter } mediaElementSetup={ mediaElementSetup } audioMseLoaderFactory={ audioMseLoaderFactory } />
     </ThPluginProvider>
   );
 };
 
-const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, coverUrl, containerRefSetter }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; coverUrl?: string; containerRefSetter?: (el: Element | null) => void }) => {
+const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, coverUrl, containerRefSetter, mediaElementSetup, audioMseLoaderFactory }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; coverUrl?: string; containerRefSetter?: (el: Element | null) => void; mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>; audioMseLoaderFactory?: AudioMseLoaderFactory }) => {
   const { preferences } = useAudioPreferences();
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);
@@ -157,7 +161,7 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
   const getFocusedDockableKey = useFocusedDockableKey();
 
   const audioNavigator = useAudioNavigator();
-  const { canGoBackward, canGoForward, submitPreferences, pause, isPlaying, timeline: getNavigatorTimeline } = audioNavigator;
+  const { canGoBackward, canGoForward, isTrackStart, isTrackEnd, submitPreferences, pause, isPlaying, timeline: getNavigatorTimeline } = audioNavigator;
 
   useSleepTimerCountdown();
 
@@ -227,17 +231,13 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
     positionChanged: (locator) => {
       setLocalData(locator);
 
-      if (canGoBackward()) {
-        dispatch(setPublicationStart(false));
-      } else {
-        dispatch(setPublicationStart(true));
-      }
-
-      if (canGoForward()) {
-        dispatch(setPublicationEnd(false));
-      } else {
-        dispatch(setPublicationEnd(true));
-      }
+      // canGoBackward/canGoForward only express whether another *track*
+      // exists, which conflates "on the last track" with "at the end of the
+      // publication" which is incorrect for single-file audiobooks (e.g. m4b), where
+      // they are false from the first second. isTrackStart/isTrackEnd also
+      // require the playback position to actually be at the boundary.
+      dispatch(setPublicationStart(!canGoBackward() && isTrackStart()));
+      dispatch(setPublicationEnd(!canGoForward() && isTrackEnd()));
     },
     trackLoaded: () => {
       dispatch(setTrackReady(true));
@@ -304,7 +304,7 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
       }
     },
     contextMenu: (_data: ContextMenuEvent) => {}
-  }), [setLocalData, canGoBackward, canGoForward, isPlaying, dispatch, cache, submitPreferences, getNavigatorTimeline, handleTimelineNavigation, clearCurrentTocEntry, clearAdjacentItems, handleSleepTimerEndOfFragment, handleContinuousPlay, profile, getFocusedDockableKey]);
+  }), [setLocalData, canGoBackward, canGoForward, isTrackStart, isTrackEnd, isPlaying, dispatch, cache, submitPreferences, getNavigatorTimeline, handleTimelineNavigation, clearCurrentTocEntry, clearAdjacentItems, handleSleepTimerEndOfFragment, handleContinuousPlay, profile, getFocusedDockableKey]);
 
   // getLocalData() returns a plain JSON.parse()'d object on cold load (not yet a real
   // Locator instance) — the navigator calls Timeline.locate() on this at startup, which
@@ -322,6 +322,8 @@ const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, cover
     cache,
     contentProtectionConfig: resolveAudioContentProtectionConfig(preferences.contentProtection, t),
     keyboardPeripherals,
+    mediaElementSetup,
+    mseLoaderFactory: audioMseLoaderFactory,
     onNavigatorLoaded: () => dispatch(setLoading(false)),
   });
 
