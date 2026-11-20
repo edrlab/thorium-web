@@ -4,7 +4,7 @@ export const PUBLICATION_MANIFESTS = {
   "les-diaboliques": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXNfZGlhYm9saXF1ZXMuZXB1Yg/manifest.json",
   "le-rouge-et-le-noir": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZS1yb3VnZS1ldC1sZS1ub2lyLWZyLWVuLmVwdWI/manifest.json",
   "bella-the-dragon": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9CZWxsYU9yaWdpbmFsMy5lcHVi/manifest.json",
-  "text-and-audio": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby90ZXh0LWFuZC1hdWRpby5lcHVi/manifest.json",
+  "level0":"https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXZlbDAtdGV4dC1hbmQtYXVkaW8uZXB1Yg/manifest.json",
   "thorium-reader-user-guide-english": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvdGhvcml1bS1yZWFkZXItdXNlci1ndWlkZS1lbmdsaXNoLmVwdWI/manifest.json",
   "thorium-reader-user-guide-french": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvZ3VpZGUtdXRpbGlzYXRldXItdGhvcml1bS1yZWFkZXItZnJhbmNhaXMuZXB1Yg/manifest.json",
   "thorium-reader-user-guide-spanish": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvZ3VpYS11c3VhcmlvLXRob3JpdW0tcmVhZGVyLWVzcGFub2wuZXB1Yg/manifest.json",
