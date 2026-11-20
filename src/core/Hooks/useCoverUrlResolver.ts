@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext } from "react";
+import { createContext, useCallback, useContext, useLayoutEffect, useRef } from "react";
 
 /**
  * Rewrites an absolute http(s) cover URL before it is fetched, e.g. to route
@@ -17,19 +17,23 @@ export const ThCoverUrlResolverContext = createContext<ThCoverUrlResolver | unde
  */
 export const useCoverUrlResolver = () => {
   const resolver = useContext(ThCoverUrlResolverContext);
+  // Read through a ref so inline resolvers don't change identity and refetch the cover
+  const resolverRef = useRef(resolver);
+  useLayoutEffect(() => { resolverRef.current = resolver; }, [resolver]);
 
   return useCallback((url: string | undefined): string | undefined => {
-    if (!url || !resolver) return url;
+    const currentResolver = resolverRef.current;
+    if (!url || !currentResolver) return url;
 
     try {
       const parsed = new URL(url);
       if (parsed.protocol === "http:" || parsed.protocol === "https:") {
-        return resolver(url);
+        return currentResolver(url);
       }
     } catch {
       // relative or invalid — return as-is
     }
 
     return url;
-  }, [resolver]);
+  }, []);
 };
