@@ -104,11 +104,13 @@ It is critical you wrap this component in a `<ThStoreProvider>` for it to work p
 For audio publications, the player fetches the cover to display it and to generate the player's theme from its colors. External covers must therefore be served with CORS headers, or routed through a proxy with `resolveCoverUrl`:
 
 ```tsx
+const resolveCoverUrl = (url: string) => `/my-proxy?url=${ encodeURIComponent(url) }`;
+
 <StatefulReaderWrapper
   profile={ profile }
   publication={ publication }
   localDataKey={ localDataKey }
-  resolveCoverUrl={ (url) => `/my-proxy?url=${ encodeURIComponent(url) }` }
+  resolveCoverUrl={ resolveCoverUrl }
 />
 ```
 
