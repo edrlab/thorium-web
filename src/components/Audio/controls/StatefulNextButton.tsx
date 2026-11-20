@@ -16,8 +16,7 @@ import { Link } from "@readium/shared";
 export const StatefulNextButton = ({ isDisabled }: { isDisabled?: boolean }) => {
   const { t } = useI18n();
   const { preferences } = useAudioPreferences();
-  const { goForward, goLink } = useNavigator().media;
-  const atEnd = useAppSelector(state => state.publication.atPublicationEnd);
+  const { goForward, goLink, canGoForward } = useNavigator().media;
   const nextTimelineItem = useAppSelector(state => state.publication.adjacentTimelineItems.next);
   const { next: nextTocItem } = useAdjacentTocItems();
 
@@ -38,7 +37,7 @@ export const StatefulNextButton = ({ isDisabled }: { isDisabled?: boolean }) => 
   return (
     <StatefulActionIcon
       onPress={ handlePress }
-      isDisabled={ isDisabled || ((isTimeline || isToc) ? !nextItem : atEnd) }
+      isDisabled={ isDisabled || ((isTimeline || isToc) ? !nextItem : !canGoForward()) }
       aria-label={ label }
       tooltipLabel={ label }
       className={ audioStyles.audioNextButton }

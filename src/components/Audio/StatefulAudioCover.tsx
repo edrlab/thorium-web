@@ -9,7 +9,7 @@ import { useI18n } from "@/i18n/useI18n";
 
 import { useAppSelector } from "@/lib/hooks";
 
-import { proxyUrl } from "@/helpers/proxyUrl";
+import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
 interface StatefulAudioCoverProps {
   ref?: Ref<HTMLElement>;
@@ -19,6 +19,7 @@ interface StatefulAudioCoverProps {
 
 export function StatefulAudioCover({ ref, coverUrl, title }: StatefulAudioCoverProps) {
   const { t } = useI18n();
+  const resolveCoverUrl = useCoverUrlResolver();
   const isTrackReady = useAppSelector(state => state.player.isTrackReady);
   const isStalled = useAppSelector(state => state.player.isStalled);
 
@@ -28,7 +29,7 @@ export function StatefulAudioCover({ ref, coverUrl, title }: StatefulAudioCoverP
     <figure ref={ ref } className={ styles.audioCoverSection }>
       { coverUrl ? (
         <img
-          src={ proxyUrl(coverUrl) }
+          src={ resolveCoverUrl(coverUrl) }
           alt={ title || t("audio.player.coverAlt") }
           className={ styles.audioCoverImage }
           crossOrigin="anonymous"

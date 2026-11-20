@@ -63,6 +63,8 @@ The `StatefulPlayer` accepts the following props:
 - `positionStorage`: `PositionStorage` (optional) — custom interface for persisting the playback position.
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `coverUrl`: `string` (optional) — explicit cover image URL (falls back to publication metadata).
+- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles.
+- `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`.
 
 > [!IMPORTANT]
 > Due to the complexity the player has to handle, it does not currently accept `children`. You must wrap it in a `<ThStoreProvider>`, a `<ThAudioPreferencesProvider>`, and a `<ThI18nProvider>`, in that order.
@@ -79,6 +81,24 @@ It accepts three optional props:
 - `adapter`: your own `ThAudioPreferencesAdapter` if you need custom persistence logic.
 - `initialPreferences`: your own `ThAudioPreferences` to override the defaults.
 - `devMode`: boolean to enable dev mode — this disables all content protection settings.
+
+### Cover URLs
+
+The player loads the cover as a CORS image (`crossOrigin="anonymous"`), so external covers must be served with CORS headers. To route them through a proxy, provide a resolver with `ThCoverUrlResolverContext`:
+
+```tsx
+import { ThCoverUrlResolverContext } from "@edrlab/thorium-web/audio";
+
+const resolveCoverUrl = (url: string) => `/my-proxy?url=${ encodeURIComponent(url) }`;
+
+<ThCoverUrlResolverContext.Provider value={ resolveCoverUrl }>
+  <ThAudioPreferencesProvider>
+    { /* ... */ }
+  </ThAudioPreferencesProvider>
+</ThCoverUrlResolverContext.Provider>
+```
+
+Only absolute http(s) URLs are passed to the resolver. Relative and `blob:` URLs are used as-is. Without a resolver, cover URLs are used unchanged. When using `StatefulReaderWrapper`, pass the resolver as its `resolveCoverUrl` prop instead.
 
 ### Styling
 

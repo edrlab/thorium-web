@@ -6,6 +6,7 @@ import { usePublication } from "@/hooks/usePublication";
 import { useAppSelector } from "@/lib/hooks";
 import { verifyManifestUrl } from "@/app/api/verify-manifest/verifyDomain";
 import { StatefulReaderWrapper } from "@/components/Reader/StatefulReaderWrapper";
+import { proxyCoverUrl } from "@/app/api/proxy/proxyCoverUrl";
 import { ErrorHandler, ProcessedError } from "@/helpers/errorHandler";
 
 type Params = { manifest: string };
@@ -64,6 +65,7 @@ export default function ManifestPage({ params }: Props) {
           publication={ publication }
           localDataKey={ localDataKey }
           isLoading={ isLoading || publicationLoading }
+          resolveCoverUrl={ proxyCoverUrl }
         />
       ) : null }
     </>
