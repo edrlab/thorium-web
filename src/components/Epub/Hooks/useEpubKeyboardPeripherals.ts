@@ -12,12 +12,15 @@ import { useActionComponentStatus } from "../../Actions/hooks/useActionComponent
 
 import { useAppSelector } from "@/lib/hooks";
 
-import { NavPeripheralType, toActionPeripheralType, toDockingPeripheralType, ZOOM_IN_KEY_COMBOS, ZOOM_OUT_KEY_COMBOS } from "@/helpers/peripherals";
+import { NavPeripheralType, PlaybackPeripheralType, toActionPeripheralType, toDockingPeripheralType, ZOOM_IN_KEY_COMBOS, ZOOM_OUT_KEY_COMBOS } from "@/helpers/peripherals";
 
 export const useEpubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
   const isScroll = useIsScroll();
   const isFXL = useAppSelector(state => state.publication.isFXL);
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
   const noScroll = useObservableCondition(!isScroll);
+  const spaceTurnsPages = useObservableCondition(!isScroll && !isReadAlongActive);
+  const readAlongActive = useObservableCondition(isReadAlongActive);
   const zoomActive = useObservableCondition(!isFXL);
   const { actionsKeys, docking } = useActionsPreferences();
   const { isSupported: isFullscreenSupported } = useFullscreen();
@@ -39,8 +42,9 @@ export const useEpubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
     };
 
     const config: IKeyboardPeripheralsConfig = [
-      { type: NavPeripheralType.progressForward,  keyCombos: [{ keyCode: 32,              suppressOnInteractiveElement: true, condition: noScroll }] },
-      { type: NavPeripheralType.progressBackward, keyCombos: [{ keyCode: 32, shift: true, suppressOnInteractiveElement: true, condition: noScroll }] },
+      { type: PlaybackPeripheralType.playPause,   keyCombos: [{ keyCode: 32,              suppressOnInteractiveElement: true, condition: readAlongActive }] },
+      { type: NavPeripheralType.progressForward,  keyCombos: [{ keyCode: 32,              suppressOnInteractiveElement: true, condition: spaceTurnsPages }] },
+      { type: NavPeripheralType.progressBackward, keyCombos: [{ keyCode: 32, shift: true, suppressOnInteractiveElement: true, condition: spaceTurnsPages }] },
       { type: NavPeripheralType.moveRight,        keyCombos: [{ keyCode: 39,              suppressOnInteractiveElement: true, condition: noScroll }] },
       { type: NavPeripheralType.moveLeft,         keyCombos: [{ keyCode: 37,              suppressOnInteractiveElement: true, condition: noScroll }] },
       { type: NavPeripheralType.moveUp,           keyCombos: [{ keyCode: 38,              suppressOnInteractiveElement: true, condition: noScroll },
@@ -64,5 +68,5 @@ export const useEpubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
     }
 
     return config;
-  }, [noScroll, zoomActive, actionsKeys, docking.keys, isFullscreenAvailable, isTocAvailable, isSettingsAvailable, isJumpToPositionAvailable]);
+  }, [noScroll, spaceTurnsPages, readAlongActive, zoomActive, actionsKeys, docking.keys, isFullscreenAvailable, isTocAvailable, isSettingsAvailable, isJumpToPositionAvailable]);
 };

@@ -7,7 +7,7 @@ export interface ThGlobalPreferences {
 export const createGlobalPreferences = (params: ThGlobalPreferences): ThGlobalPreferences => {
   if (params.locale) {
     const languageCode = params.locale.split("-")[0];
-    if (!isSupportedLocale(languageCode)) {
+    if (!isSupportedLocale(params.locale) && !isSupportedLocale(languageCode)) {
       console.warn(`Locale "${ params.locale }" is not supported. Supported locales: ${ supportedLocales.join(", ") }. Falling back to browser/OS language settings.`);
       return { ...params, locale: undefined };
     }

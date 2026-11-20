@@ -52,7 +52,7 @@ export const StatefulDivinaQuality = () => {
     // no such variants exist in its manifests)
   ].filter(item => preferences.settings.keys[ThSettingsKeys.divinaQuality].choices.includes(item.value));
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.divinaQuality);
+  const prefKey = getPreferenceKey(ThSettingsKeys.divinaQuality, "divina");
 
   const updatePreference = useCallback(async (value: string) => {
     await submitPreferences({ [prefKey]: value as DivinaQuality });

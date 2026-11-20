@@ -40,6 +40,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
 
   const profile = useAppSelector(state => state.reader.profile);
   const actionState = useAppSelector(state => profile ? state.actions.keys[profile][ThActionsKeys.toc] : undefined);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
   const dispatch = useAppDispatch();
   const docking = useDocking(ThActionsKeys.toc);
   const sheetType = docking.sheetType;
@@ -54,7 +55,7 @@ export const StatefulTocContainer = ({ triggerRef }: StatefulActionContainerProp
     useTocContent({ isOpen: actionState?.isOpen ?? false, tocTree, tocEntry: tocEntryId });
 
   const handleAction = (keys: Selection) => {
-    if (keys === "all" || !keys || keys.size === 0) return;
+    if (isNavigationLocked || keys === "all" || !keys || keys.size === 0) return;
 
     const key = [...keys][0] as string;
     const matched = findTocItemById(tocTree || [], key);

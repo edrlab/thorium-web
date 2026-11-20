@@ -15,7 +15,7 @@ interface EffectiveRangeResult {
  */
 export const useEffectiveRange = (
   preferred: [number, number],
-  supportedRange: [number, number] | undefined,
+  supportedRange: readonly [number, number] | undefined,
   presets?: number[]
 ): EffectiveRangeResult => {
   return useMemo(() => {
@@ -28,7 +28,7 @@ export const useEffectiveRange = (
       const prefMax = Math.max(...preferred);
       const supMin = Math.min(...supportedRange);
       const supMax = Math.max(...supportedRange);
-      range = (prefMin >= supMin && prefMax <= supMax) ? preferred : supportedRange;
+      range = (prefMin >= supMin && prefMax <= supMax) ? preferred : [supportedRange[0], supportedRange[1]];
     }
 
     if (!presets) return { range };

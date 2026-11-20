@@ -49,7 +49,7 @@ export const StatefulLayout = () => {
     }
   ];
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.layout, readerProfile);
+  const prefKey = getPreferenceKey(ThSettingsKeys.layout, readerProfile === "divina" ? "divina" : "epub");
 
   const updatePreference = useCallback(async (value: string) => {
     const derivedValue = value === ThLayoutOptions.scroll;

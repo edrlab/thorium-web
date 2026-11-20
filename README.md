@@ -36,7 +36,7 @@ The development server will automatically reload the page when you make changes 
 To use Thorium Web in your own project, install the package and its peer dependencies:
 
 ```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels 
+npm install @edrlab/thorium-web "@readium/css@^2.0.5" "@readium/navigator@~2.15.0" "@readium/navigator-html-injectables@~2.11.0" "@readium/shared@~2.9.0" "@reduxjs/toolkit@^2.11.2" "i18next@^26.4.2" "i18next-browser-languagedetector@^8.2.1" "i18next-http-backend@^4.0.2" "motion@^12.34.3" "react@^19.3.0" "react-aria@^3.52.1" "react-aria-components@^1.21.1" "react-dom@^19.3.0" "react-i18next@^17.0.15" "react-modal-sheet@5.2.1" "react-redux@^9.3.0" "react-resizable-panels@^4.13.3" "react-stately@^3.50.0"
 ```
 
 Then you can import and use the components in your own code:

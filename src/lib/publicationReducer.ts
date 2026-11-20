@@ -54,46 +54,46 @@ export const publicationSlice = createSlice({
   name: "publication",
   initialState,
   reducers: {
-    setFontLanguage: (state, action) => {
+    setFontLanguage: (state: PublicationReducerState, action) => {
       state.fontLanguage = action.payload
     },
-    setFXL: (state, action) => {
+    setFXL: (state: PublicationReducerState, action) => {
       state.isFXL = action.payload
     },
-    setManifestScrolled: (state, action) => {
+    setManifestScrolled: (state: PublicationReducerState, action) => {
       state.isManifestScrolled = action.payload
     },
-    setRTL: (state, action) => {
+    setRTL: (state: PublicationReducerState, action) => {
       state.isRTL = action.payload
     },
-    setScriptMode: (state, action) => {
+    setScriptMode: (state: PublicationReducerState, action) => {
       state.scriptMode = action.payload
     },
-    setHasDisplayTransformability: (state, action) => {
+    setHasDisplayTransformability: (state: PublicationReducerState, action) => {
       state.hasDisplayTransformability = action.payload
     },
-    setPositionsList: (state, action) => {
+    setPositionsList: (state: PublicationReducerState, action) => {
       state.positionsList = action.payload
     },
-    setPublicationStart: (state, action) => {
+    setPublicationStart: (state: PublicationReducerState, action) => {
       state.atPublicationStart = action.payload
     },
-    setPublicationEnd: (state, action) => {
+    setPublicationEnd: (state: PublicationReducerState, action) => {
       state.atPublicationEnd = action.payload
     },
-    setProgress: (state, action: { payload: Progress }) => {
+    setProgress: (state: PublicationReducerState, action: { payload: Progress }) => {
       state.progress = action.payload;
     },
-    setTocTree: (state, action: { payload: TocItem[] | undefined }) => {
+    setTocTree: (state: PublicationReducerState, action: { payload: TocItem[] | undefined }) => {
       state.toc.tree = action.payload;
     },
-    setAdjacentTimelineItems: (state, action: { payload: { previous: TimelineItemRef | null; next: TimelineItemRef | null } }) => {
+    setAdjacentTimelineItems: (state: PublicationReducerState, action: { payload: { previous: TimelineItemRef | null; next: TimelineItemRef | null } }) => {
       state.adjacentTimelineItems = action.payload;
     },
-    setCoverTheme: (state, action: { payload: ThemeTokens | undefined }) => {
+    setCoverTheme: (state: PublicationReducerState, action: { payload: ThemeTokens | undefined }) => {
       state.coverTheme = action.payload;
     },
-    setTocEntry: (state, action: { payload: TocItem | null }) => {
+    setTocEntry: (state: PublicationReducerState, action: { payload: TocItem | null }) => {
       state.toc.currentEntry = action.payload ? toEntryRef(action.payload) : null;
     }
   }

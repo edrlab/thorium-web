@@ -7,10 +7,15 @@ import { useActionsPreferences } from "@/preferences/hooks/useActionsPreferences
 import { useFullscreen } from "@/core/Hooks/useFullscreen";
 import { useFilteredPreferenceKeys } from "@/preferences/hooks/useFilteredPreferenceKeys";
 import { useActionComponentStatus } from "../../Actions/hooks/useActionComponentStatus";
+import { useObservableCondition } from "@/core/Hooks/useObservableCondition";
 
-import { NavPeripheralType, toActionPeripheralType, toDockingPeripheralType, ZOOM_IN_KEY_COMBOS, ZOOM_OUT_KEY_COMBOS } from "@/helpers/peripherals";
+import { useAppSelector } from "@/lib/hooks";
+
+import { NavPeripheralType, PlaybackPeripheralType, toActionPeripheralType, toDockingPeripheralType, ZOOM_IN_KEY_COMBOS, ZOOM_OUT_KEY_COMBOS } from "@/helpers/peripherals";
 
 export const useWebPubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
+  const isReadAlongActive = useAppSelector(state => state.readAlongPlayer.isActive);
+  const readAlongActive = useObservableCondition(isReadAlongActive);
   const { actionsKeys, docking } = useActionsPreferences();
   const { isSupported: isFullscreenSupported } = useFullscreen();
   const { webPubActionKeys } = useFilteredPreferenceKeys();
@@ -29,6 +34,7 @@ export const useWebPubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
     };
 
     const config: IKeyboardPeripheralsConfig = [
+      { type: PlaybackPeripheralType.playPause, keyCombos: [{ keyCode: 32, suppressOnInteractiveElement: true, condition: readAlongActive }] },
       { type: NavPeripheralType.zoomIn,  keyCombos: [...ZOOM_IN_KEY_COMBOS]  },
       { type: NavPeripheralType.zoomOut, keyCombos: [...ZOOM_OUT_KEY_COMBOS] },
     ];
@@ -44,5 +50,5 @@ export const useWebPubKeyboardPeripherals = (): IKeyboardPeripheralsConfig => {
     }
 
     return config;
-  }, [actionsKeys, docking.keys, isFullscreenAvailable, isTocAvailable, isSettingsAvailable, isJumpToPositionAvailable]);
+  }, [readAlongActive, actionsKeys, docking.keys, isFullscreenAvailable, isTocAvailable, isSettingsAvailable, isJumpToPositionAvailable]);
 };

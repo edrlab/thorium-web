@@ -4,11 +4,7 @@ The Core package provides the foundational building blocks for creating reading 
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels  
-```
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Package Structure
 
@@ -48,4 +44,4 @@ Please refer to the [Preferences documentation](./Preferences.md) for more infor
 
 ## Related Documentation
 
-- [Epub Package](./Epub.md)
+- [Epub Package](../Epub/ReadMe.md)

@@ -9,11 +9,7 @@ It automatically selects between EPUB, WebPub, Divina, and Audio readers while h
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels
-```
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Reader Component
 
@@ -25,7 +21,7 @@ You can use it like this:
 import { StatefulReaderWrapper, ThStoreProvider, usePublication } from "@edrlab/thorium-web/reader";
 
 const App = ({ manifestUrl }) => {
-  const { publication, profile, localDataKey, isLoading, error } = usePublication({
+  const { publication, profile, selfLink, localDataKey, isLoading, error } = usePublication({
     url: manifestUrl,
     onError: (error) => console.error("Publication loading error:", error)
   });
@@ -39,6 +35,7 @@ const App = ({ manifestUrl }) => {
         profile={ profile }
         publication={ publication }
         localDataKey={ localDataKey }
+        publicationKey={ selfLink }
         positionStorage={{
           get: () => getStoredPosition(localDataKey),
           set: (locator) => storePosition(localDataKey, locator)
@@ -56,11 +53,14 @@ The Reader expects the following props:
 - `profile`: `"epub" | "webPub" | "audio" | "divina" | undefined | null` — the publication profile to determine which reader to render
 - `publication`: `Publication` — the Readium Publication object
 - `localDataKey`: `string | null` — a unique key for storing local reading data (bookmarks, positions, etc.)
+- `publicationKey`: `string | null` (optional) — the publication’s key for its settings in IndexedDB, e.g. `usePublication`’s `selfLink`
 - `positionStorage`: `PositionStorage` (optional) — an interface for persisting reading positions
+- `settingsStorage`: `SettingsStorage` (optional) — an interface for persisting each publication’s settings, instead of IndexedDB (see [SettingsStorage Interface](#settingsstorage-interface))
+- `readAlong`: `ReadAlongConfig` (optional) — factories for read along’s Guided Navigation provider and speech engine, and the read-aloud navigator’s configuration, for `"epub"` and `"webPub"` (see [Read Along](../../customization/ReadAlong.md#provider-and-engine))
 - `plugins`: `ReaderPlugins` (optional) — per-profile plugin factories (see [Plugins](#plugins))
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
 - `resolveCoverUrl`: `(url: string) => string` (optional) — rewrites absolute http(s) cover URLs before they are fetched, e.g. to route them through a CORS proxy. Currently only the audio player fetches covers (see [Cover URLs](#cover-urls))
-- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional, audio only) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles
+- `mediaElementSetup`: `AudioMediaElementSetup` (optional, audio only) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles
 - `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional, audio only) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:
   - For `"audio"`: `{ initialPreferences?: ThAudioPreferences; adapter?: ThAudioPreferencesAdapter }`
@@ -183,6 +183,8 @@ const epubPlugins = async (): Promise<ThPlugin[]> => {
 />
 ```
 
+Besides `actions` and `settings`, `components` accepts `primaryAudioActions` for the audio player’s media bar, and `readAlongActions` for the read-along players. Read-along actions are Trigger/Target pairs like reader actions, keyed by the `readAlongAction` custom key (see [Read Along](../../customization/ReadAlong.md#extending-read-along)).
+
 The wrapper will not mount the reader until the factory has resolved, ensuring the plugin registry is initialised with the correct plugins from the start. Only the factory matching the active profile is called — unused factories are never loaded.
 
 ### ReaderPlugins Interface
@@ -206,6 +208,29 @@ interface PositionStorage {
   set: (locator: Locator) => void | Promise<void>; // Set reading position
 }
 ```
+
+### SettingsStorage Interface
+
+Each publication keeps its glocal and local settings in IndexedDB, keyed by `publicationKey`, according to their [storage strategies](../Core/API/Store.md#settings-storage-strategies). On its first opening, a publication starts from the last glocal values set in any publication, and from the defaults of local ones. After that, changes in other publications don’t affect it. Global settings aren’t stored per publication. Where IndexedDB is unavailable, the global settings are used. Without `publicationKey` nor `settingsStorage`, settings are only stored globally.
+
+```typescript
+interface SettingsStorage {
+  get: () => StoredSettings | undefined | Promise<StoredSettings | undefined>; // Get the publication’s settings
+  set: (settings: StoredSettings) => void | Promise<void>; // Set the publication’s settings
+}
+
+interface StoredSettings {
+  settings?: Partial<SettingsReducerState>;             // EPUB
+  webPubSettings?: Partial<WebPubSettingsReducerState>; // WebPub
+  divinaSettings?: Partial<DivinaSettingsReducerState>; // Divina
+  audioSettings?: Partial<AudioSettingsState>;          // Audio
+  readAlongSettings?: Partial<ReadAlongSettingsReducerState>; // EPUB and WebPub
+  readAlongPlayer?: Pick<ReadAlongPlayerReducerState, "isActive" | "layout">; // EPUB and WebPub, this publication only
+  theme?: ThemeStateObject;                    // EPUB, Divina and Audio, as WebPub has no theme
+}
+```
+
+Only the reader’s profile settings that aren’t global are stored. The reading theme and verbosity are stored for the publication’s format only, e.g. `theme.fxl` for a fixed-layout EPUB. `readAlongPlayer` is never stored globally: a publication without its own starts with read along off. `get` is read once, when the reader mounts, which waits for it. `set` is called once on the first opening, and after each change, with all the publication’s glocal and local settings.
 
 ### Supported Profiles
 

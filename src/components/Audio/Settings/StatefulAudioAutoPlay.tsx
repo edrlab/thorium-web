@@ -2,6 +2,9 @@
 
 import { useCallback } from "react";
 
+import { ThAudioKeys } from "@/preferences/models";
+import { getPreferenceKey } from "../../Settings/helpers/settingsKeyMapping";
+
 import { StatefulSwitch } from "../../Settings/StatefulSwitch";
 
 import { useI18n } from "@/i18n/useI18n";
@@ -23,11 +26,13 @@ export const StatefulAudioAutoPlay = ({
   const dispatch = useAppDispatch();
   const { submitPreferences, getSetting } = useNavigator().media;
 
+  const prefKey = getPreferenceKey(ThAudioKeys.autoPlay, "audio");
+
   const updatePreference = useCallback(async (isSelected: boolean) => {
-    await submitPreferences({ autoPlay: isSelected });
-    const effectiveAutoPlay = getSetting("autoPlay");
+    await submitPreferences({ [prefKey]: isSelected });
+    const effectiveAutoPlay = getSetting(prefKey);
     dispatch(setAutoPlay(effectiveAutoPlay));
-  }, [submitPreferences, getSetting, dispatch]);
+  }, [prefKey, submitPreferences, getSetting, dispatch]);
 
   return (
     <StatefulSwitch

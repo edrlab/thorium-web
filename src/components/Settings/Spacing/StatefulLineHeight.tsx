@@ -35,7 +35,7 @@ export const StatefulLineHeight = ({ standalone = true }: StatefulSettingsItemPr
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.lineHeight);
+  const prefKey = getPreferenceKey(ThSettingsKeys.lineHeight, isWebPub ? "webPub" : "epub");
 
   const { getEffectiveSpacingValue, setLineHeight } = useSpacingPresets();
 

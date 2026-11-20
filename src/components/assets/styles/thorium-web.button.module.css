@@ -46,6 +46,7 @@
   outline: 2px solid var(--th-theme-focus);
 }
 
+.icon[data-disabled],
 .backButton[data-disabled] {
   color: var(--th-theme-disable)
 }
