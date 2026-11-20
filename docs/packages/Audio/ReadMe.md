@@ -62,7 +62,7 @@ The `StatefulPlayer` accepts the following props:
 - `settingsStorage`: `SettingsStorage` (optional) — custom interface for persisting the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `coverUrl`: `string` (optional) — explicit cover image URL (falls back to publication metadata).
-- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles.
+- `mediaElementSetup`: `AudioMediaElementSetup` (optional) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles.
 - `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`.
 
 > [!IMPORTANT]

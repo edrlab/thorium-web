@@ -13,7 +13,7 @@ import { NavigatorProvider } from "@/core/Navigator";
 import { Locator, Publication } from "@readium/shared";
 import { ContextMenuEvent, SuspiciousActivityEvent } from "@readium/navigator-html-injectables";
 import { fromActionPeripheralType, fromDockingPeripheralType } from "@/helpers/peripherals";
-import { AudioMseLoaderFactory, AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
+import { AudioMediaElementSetup, AudioMseLoaderFactory, AudioNavigatorListeners, KeyboardPeripheralEventData } from "@readium/navigator";
 import { PositionStorage, SettingsStorage } from "../Reader/StatefulReaderWrapper";
 import { ThAudioPlayerComponent } from "@/preferences/models";
 
@@ -77,7 +77,7 @@ export interface StatefulPlayerProps {
   settingsStorage?: SettingsStorage;
   coverUrl?: string;
   containerRefSetter?: (el: Element | null) => void;
-  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  mediaElementSetup?: AudioMediaElementSetup;
   audioMseLoaderFactory?: AudioMseLoaderFactory;
 }
 
@@ -118,7 +118,7 @@ export const StatefulPlayer = ({
   );
 };
 
-const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, coverUrl, containerRefSetter, mediaElementSetup, audioMseLoaderFactory }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; coverUrl?: string; containerRefSetter?: (el: Element | null) => void; mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>; audioMseLoaderFactory?: AudioMseLoaderFactory }) => {
+const StatefulPlayerInner = ({ publication, localDataKey, positionStorage, coverUrl, containerRefSetter, mediaElementSetup, audioMseLoaderFactory }: { publication: Publication; localDataKey: string | null; positionStorage?: PositionStorage; coverUrl?: string; containerRefSetter?: (el: Element | null) => void; mediaElementSetup?: AudioMediaElementSetup; audioMseLoaderFactory?: AudioMseLoaderFactory }) => {
   const { preferences } = useAudioPreferences();
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);

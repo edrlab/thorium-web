@@ -60,7 +60,7 @@ The Reader expects the following props:
 - `plugins`: `ReaderPlugins` (optional) — per-profile plugin factories (see [Plugins](#plugins))
 - `i18n`: `Partial<InitOptions>` (optional) — i18next initialization options forwarded to `ThI18nProvider`. Use this to add extra namespaces, change the backend load path, or pass any other i18next config (see [i18n configuration](#i18n-configuration))
 - `resolveCoverUrl`: `(url: string) => string` (optional) — rewrites absolute http(s) cover URLs before they are fetched, e.g. to route them through a CORS proxy. Currently only the audio player fetches covers (see [Cover URLs](#cover-urls))
-- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional, audio only) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles
+- `mediaElementSetup`: `AudioMediaElementSetup` (optional, audio only) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles
 - `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional, audio only) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`
 - `preferences`: (optional) — profile-specific preferences to pass to the underlying provider. The shape depends on `profile`:
   - For `"audio"`: `{ initialPreferences?: ThAudioPreferences; adapter?: ThAudioPreferencesAdapter }`

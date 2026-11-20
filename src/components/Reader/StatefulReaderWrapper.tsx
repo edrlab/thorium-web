@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 
 import { Publication, Locator } from "@readium/shared";
-import { AudioMseLoaderFactory, ContextualizationOverrides, getScriptMode, GuidedNavigationProvider, ReadFromPointerRule, ReadiumSpeechPlaybackEngine, SegmentationOverrides, SubstitutionTable } from "@readium/navigator";
+import { AudioMediaElementSetup, AudioMseLoaderFactory, ContextualizationOverrides, getScriptMode, GuidedNavigationProvider, ReadFromPointerRule, ReadiumSpeechPlaybackEngine, SegmentationOverrides, SubstitutionTable } from "@readium/navigator";
 import { ThThemeKeys, ThemeKeyType, useTheming } from "@/preferences";
 
 import { usePreferences } from "@/preferences/hooks/usePreferences";
@@ -116,7 +116,7 @@ export interface ReaderComponentProps<
    * the first src is assigned, so the host can prepare it. Use for MSE/EME
    * setups. Loading is deferred until a returned promise settles.
    */
-  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  mediaElementSetup?: AudioMediaElementSetup;
   /**
    * Audio profile only: when provided, media bytes reach the playback element
    * through Media Source Extensions — the navigator creates one loader per
@@ -207,7 +207,7 @@ interface AudioContentProps {
   settingsStorage?: SettingsStorage;
   coverUrl?: string;
   externalLoading: boolean;
-  mediaElementSetup?: (element: HTMLMediaElement) => void | Promise<void>;
+  mediaElementSetup?: AudioMediaElementSetup;
   /**
    * Audio profile only: MSE loader factory — see
    * {@link ReaderComponentProps.audioMseLoaderFactory}.
