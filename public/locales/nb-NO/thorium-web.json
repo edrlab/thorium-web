@@ -1,1 +1,150 @@
-{}
+{
+    "home": {
+        "title": "Velkommen til Thorium Web",
+        "description": [
+            "Thorium Web er et nettbasert leseprogram med åpen kildekode for e-bøker, lydbøker og tegneserier. Alle kan sette opp sin egen instans.",
+            "Denne instansen er laget for å lese nettpublikasjoner som er falt i det fri eller har åpen tilgang. Etter hvert vil den få et eget API for slike publikasjoner.",
+            "I mellomtiden legger vi ut et utvalg testpublikasjoner for å utforske mulighetene."
+        ]
+    },
+    "reader": {
+        "app": {
+            "loading": "Laster inn",
+            "printingDisabled": "Utskrift er deaktivert",
+            "publicationWrapper": "Du er nå inne i publikasjonen.",
+            "errors": {
+                "title": "Feil",
+                "notFound": "Fant ikke publikasjonen.",
+                "accessDenied": "Tilgang nektet.",
+                "network": "Serveren er utilgjengelig. Prøv igjen senere.",
+                "serverError": "Serverfeil. Prøv igjen senere.",
+                "clientError": "Ugyldig forespørsel.",
+                "generic": "Kunne ikke laste inn publikasjonen."
+            },
+            "docking": {
+                "dockingLeft": "Fast panel til venstre",
+                "dockingRight": "Fast panel til høyre",
+                "dockingEmpty": "Tomt for øyeblikket",
+                "dockingClosed": "Lukket, inneholder {{ action }}"
+            },
+            "header": {
+                "backLink": {
+                    "trigger": "Tilbake til biblioteket",
+                    "tooltip": "Bibliotek"
+                },
+                "label": "Toppfelt",
+                "runningHead": "Kolumnetittel",
+                "actions": "Handlinger"
+            },
+            "footer": {
+                "label": "Bunnfelt"
+            },
+            "progression": {
+                "wrapper": "Gjeldende lesefremdrift",
+                "referenceFallback": "gjeldende kapittel",
+                "pubFallback": "publikasjonen"
+            },
+            "docker": {
+                "wrapper": "Panelplassering",
+                "dockToLeft": {
+                    "trigger": "Fest til venstre side",
+                    "tooltip": "Fest til venstre"
+                },
+                "dockToRight": {
+                    "trigger": "Fest til høyre side",
+                    "tooltip": "Fest til høyre"
+                },
+                "popover": {
+                    "trigger": "Vis i et vindu",
+                    "tooltip": "Sprettoppvindu"
+                },
+                "fullscreen": {
+                    "trigger": "Vis over innholdet",
+                    "tooltip": "Overlegg"
+                }
+            },
+            "back": {
+                "trigger": "Tilbake"
+            }
+        },
+        "navigation": {
+            "scroll": {
+                "wrapper": "Naviger i publikasjonen"
+            }
+        },
+        "fullscreen": {
+            "tooltip": "Fullskjerm",
+            "trigger": "Slå fullskjerm av eller på",
+            "close": "Avslutt fullskjerm"
+        },
+        "toc": {
+            "entries": "Oppføringer i tabellen"
+        },
+        "jumpToPosition": {
+            "go": "Gå",
+            "label": "Velg en posisjon fra {{ positionStart }} til {{ positionEnd }}:",
+            "error": {
+                "notFound": "Fant ikke posisjonen."
+            }
+        },
+        "overflowMenu": {
+            "active": {
+                "tooltip": "Flere handlinger",
+                "trigger": "Åpne eller lukk menyen"
+            },
+            "hint": {
+                "tooltip": "Vis eller skjul handlinger",
+                "trigger": "Vis handlinger"
+            }
+        },
+        "settings": {
+            "text": {
+                "advanced": {
+                    "tooltip": "Flere alternativer",
+                    "trigger": "Flere formateringsvalg"
+                }
+            },
+            "spacing": {
+                "advanced": {
+                    "tooltip": "Flere alternativer",
+                    "trigger": "Flere valg for avstand"
+                }
+            }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Vis to sider ved siden av hverandre"
+            },
+            "divinaStripWidth": "Stripebredde",
+            "divinaQuality": {
+                "title": "Bildekvalitet",
+                "auto": "Automatisk",
+                "low": "Lav",
+                "high": "Høy",
+                "max": "Maksimal"
+            }
+        }
+    },
+    "audio": {
+        "player": {
+            "progress": "Avspillingsfremdrift",
+            "controls": "Avspillingskontroller",
+            "mediaControls": "Lydinnstillinger",
+            "coverAlt": "Lydbokomslag"
+        },
+        "remotePlayback": {
+            "trigger": "Avspilling på annen enhet",
+            "connected": "Tilkoblet ekstern enhet"
+        },
+        "settings": {
+            "sleepTimer": {
+                "hours": "t",
+                "minutes": "min",
+                "seconds": "s",
+                "start": "Start",
+                "instruction": "Avspillingen settes på pause når den angitte tiden er ute.",
+                "remaining": "Settes på pause om {{ remaining }}"
+            }
+        }
+    }
+}
