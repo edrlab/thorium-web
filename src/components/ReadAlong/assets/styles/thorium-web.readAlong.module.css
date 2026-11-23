@@ -179,6 +179,12 @@
   opacity: 1;
 }
 
+/* Keeps fixed-layout pages clear of the layered bottom bar pinned by the mini player */
+.pinnedBottomBarOffset {
+  box-sizing: border-box;
+  padding-block-end: calc(var(--th-icon-size, 24px) * 2.5);
+}
+
 /* Sheet types nest the body differently, so every element between the sheet and the player flexes */
 .readAlongSheet,
 .readAlongSheet :has(.player) {

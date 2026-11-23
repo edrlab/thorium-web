@@ -369,6 +369,7 @@ In both the mini and expanded players.
 - `.thorium_web_readAlong_readAlongSheet` - Sheet hosting the expanded player
 - `.thorium_web_readAlong_readAlongDialogSheet` - That sheet’s dialog, in modal and fullscreen sheets
 - `.thorium_web_readAlong_pinnedBottomBar` - Reader’s bottom bar while it holds the mini player
+- `.thorium_web_readAlong_pinnedBottomBarOffset` - Fixed-layout publication wrapper while the mini player is pinned in the layered UI
 
 ### Volume Action
 

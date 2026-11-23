@@ -9,6 +9,7 @@ import {
 
 import readerStyles from "../assets/styles/thorium-web.reader.app.module.css";
 import arrowStyles from "../assets/styles/thorium-web.reader.paginatedArrow.module.css";
+import readAlongStyles from "../ReadAlong/assets/styles/thorium-web.readAlong.module.css";
 
 import {
   ThLayoutDirection,
@@ -252,7 +253,8 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
   }, [dispatch]);
   
   const { handleFullscreen } = useFullscreen(onFsChange);
-  const { toggleActive: toggleReadAlong } = useReadAlongState();
+  const { toggleActive: toggleReadAlong, isExpanded: isReadAlongExpanded } = useReadAlongState();
+  const hasPinnedBottomBarOffset = isFXL && layoutUI === ThLayoutUI.layered && isReadAlongActive && !isReadAlongExpanded;
 
   const epubNavigator = useEpubNavigator();
   const readAloudNavigator = useReadAloudNavigator();
@@ -695,7 +697,7 @@ const StatefulReaderInner = ({ publication, localDataKey, positionStorage, readA
             </nav> 
             : <></> }
 
-            <article className={ readerStyles.wrapper } aria-label={ t("reader.app.publicationWrapper") }>
+            <article className={ classNames(readerStyles.wrapper, hasPinnedBottomBarOffset && readAlongStyles.pinnedBottomBarOffset) } aria-label={ t("reader.app.publicationWrapper") }>
               <div id="thorium-web-container" className={ readerStyles.iframeContainer } ref={ container }></div>
             </article>
 
