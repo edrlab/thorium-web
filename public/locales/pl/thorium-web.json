@@ -103,6 +103,19 @@
                     "trigger": "Więcej opcji odstępów"
                 }
             }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Wyświetlaj dwie strony obok siebie"
+            },
+            "divinaStripWidth": "Szerokość pasa / Szerokość taśmy",
+            "divinaQuality": {
+                "title": "Jakość obrazu",
+                "auto": "Automatyczna",
+                "low": "Niska",
+                "high": "Wysoka",
+                "max": "Maksymalna"
+            }
         }
     },
     "audio": {
@@ -126,5 +139,13 @@
                 "remaining": "Wstrzymanie za {{ remaining }}"
             }
         }
+    },
+    "home": {
+        "title": "Witamy w Thorium Web",
+        "description": [
+            "Thorium Web to przeglądarkowa aplikacja open-source do czytania e-booków, audiobooków i komiksów, którą każdy może wdrożyć.",
+            "Ta instancja została zaprojektowana z myślą o udostępnianiu w internecie publikacji z domeny publicznej oraz publikacji otwartego dostępu i w przyszłości udostępni dedykowane dla nich API.",
+            "W międzyczasie publikujemy szereg publikacji testowych, aby pokazać jej możliwości."
+        ]
     }
 }

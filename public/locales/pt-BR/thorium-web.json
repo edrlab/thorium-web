@@ -2,7 +2,7 @@
     "reader": {
         "app": {
             "loading": "Carregando",
-            "publicationWrapper": "Você está na publicação.",
+            "publicationWrapper": "Você agora está na publicação.",
             "docking": {
                 "dockingLeft": "Painel ancorado à esquerda",
                 "dockingRight": "Painel ancorado à direita",
@@ -48,6 +48,16 @@
             },
             "back": {
                 "trigger": "Voltar"
+            },
+            "printingDisabled": "A impressão foi desativada",
+            "errors": {
+                "title": "Erro",
+                "notFound": "Publicação não encontrada.",
+                "accessDenied": "Acesso negado.",
+                "network": "Servidor indisponível - tente novamente mais tarde.",
+                "serverError": "Erro no servidor - tente novamente mais tarde.",
+                "clientError": "Solicitação inválida.",
+                "generic": "Não foi possível carregar a publicação."
             }
         },
         "navigation": {
@@ -65,7 +75,10 @@
         },
         "jumpToPosition": {
             "go": "Ir",
-            "label": "Selecione uma posição de {{ positionStart }} a {{ positionEnd }}:"
+            "label": "Selecione uma posição de {{ positionStart }} a {{ positionEnd }}:",
+            "error": {
+                "notFound": "Posição não encontrada."
+            }
         },
         "overflowMenu": {
             "active": {
@@ -89,6 +102,49 @@
                     "tooltip": "Mais opções",
                     "trigger": "Mais opções de espaçamento"
                 }
+            }
+        },
+        "preferences": {
+            "divinaSpreads": {
+                "label": "Exibir duas páginas lado a lado"
+            },
+            "divinaStripWidth": "Largura da tira",
+            "divinaQuality": {
+                "title": "Qualidade da imagem",
+                "auto": "Automática",
+                "low": "Baixa",
+                "high": "Alta",
+                "max": "Máx"
+            }
+        }
+    },
+    "home": {
+        "title": "Bem-vindo ao Thorium Web",
+        "description": [
+            "O Thorium Web é um leitor web de código aberto para e-books, audiolivros e histórias em quadrinhos, que qualquer pessoa pode implementar.",
+            "Esta instância foi projetada para oferecer suporte à leitura de publicações em domínio público e de acesso aberto na Web e, futuramente, disponibilizará uma API especificamente para elas.",
+            "Enquanto isso, estamos publicando uma série de publicações de teste para explorar do que a ferramenta é capaz."
+        ]
+    },
+    "audio": {
+        "player": {
+            "progress": "Progresso da reprodução",
+            "controls": "Controles de reprodução",
+            "mediaControls": "Configurações de áudio",
+            "coverAlt": "Capa de audiolivro"
+        },
+        "remotePlayback": {
+            "trigger": "Reprodução remota",
+            "connected": "Conectado remotamente"
+        },
+        "settings": {
+            "sleepTimer": {
+                "hours": "h",
+                "minutes": "min",
+                "seconds": "s",
+                "start": "Iniciar",
+                "instruction": "A reprodução será pausada após a duração definida.",
+                "remaining": "Pausando em {{ remaining }}"
             }
         }
     }
