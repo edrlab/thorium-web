@@ -94,7 +94,7 @@ export const generateThemeFromColor = (color: string): ThemeTokens => {
     hover,
     onHover:  text,
     select,
-    onSelect: "inherit",
+    onSelect: "currentColor",
     focus,
     elevate,
     immerse: isLight ? "0.6" : "0.4",

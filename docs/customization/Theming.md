@@ -399,4 +399,6 @@ The `keys` object contains the themes (key of `ThThemeKeys` enum as a property) 
 - `elevate`: the drop shadow of containers
 - `immerse`: the opacity of immersive mode (value in the range `[0...1]` as a string)
 
+Tokens become `--th-theme-*` custom properties on `:root`, and are passed to the publication as its reading colors, so a CSS-wide keyword such as `inherit` isn’t a valid token value and is ignored.
+
 The colors of the read-along highlight aren’t theme tokens: highlight themes declare them for each reading theme. If you add a reading theme, add it to every highlight theme too, see [Highlight Themes](./ReadAlong.md#highlight-themes).

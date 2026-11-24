@@ -15,6 +15,7 @@ import { useMonochrome } from "@/core/Hooks/useMonochrome";
 import { propsToCSSVars } from "@/core/Helpers/propsToCSSVars";
 import { prefixString } from "@/core/Helpers/prefixString";
 import { extractThemeFromImage } from "../helpers/themeGeneration";
+import { validThemeToken } from "../helpers/validThemeToken";
 import { useContainerBreakpoints } from "@/core/Hooks/useContainerBreakpoints";
 import { useCoverUrlResolver } from "@/core/Hooks/useCoverUrlResolver";
 
@@ -120,6 +121,20 @@ export const useTheming = <T extends string>({
     metaTag.setAttribute("content", color);
   }, []);
 
+  // Removing an invalid token also clears the previous theme’s value
+  const applyThemeCustomProps = useCallback((themeTokens: ThemeTokens) => {
+    const props = propsToCSSVars(themeTokens, { prefix: prefixString("theme") });
+    for (let p in props) {
+      const value = validThemeToken(props[p]);
+      if (value === null) {
+        document.documentElement.style.removeProperty(p);
+      } else {
+        document.documentElement.style.setProperty(p, value);
+      }
+    }
+    updateThemeColorMetaTag(themeTokens.background);
+  }, [updateThemeColorMetaTag]);
+
   const initThemingCustomProps = useCallback(() => {
     for (let p in initProps) {
       document.documentElement.style.setProperty(p, initProps[p])
@@ -169,14 +184,8 @@ export const useTheming = <T extends string>({
       return;
     }
   
-    const props = propsToCSSVars(themeTokens, { prefix: prefixString("theme") });
-      
-    for (let p in props) {
-      document.documentElement.style.setProperty(p, props[p])
-    }
-
-    updateThemeColorMetaTag(themeTokens.background);
-  }, [inferThemeAuto, updateThemeColorMetaTag, themeKeys, coverThemeTokens]);
+    applyThemeCustomProps(themeTokens);
+  }, [inferThemeAuto, applyThemeCustomProps, themeKeys, coverThemeTokens]);
 
   // On mount add custom props to :root/html
   useEffect(() => {
@@ -192,12 +201,8 @@ export const useTheming = <T extends string>({
   // Apply cover theme as soon as tokens are available
   useEffect(() => {
     if (!coverThemeTokens || theme !== "auto") return;
-    const props = propsToCSSVars(coverThemeTokens, { prefix: prefixString("theme") });
-    for (let p in props) {
-      document.documentElement.style.setProperty(p, props[p]);
-    }
-    updateThemeColorMetaTag(coverThemeTokens.background);
-  }, [coverThemeTokens, theme, updateThemeColorMetaTag]);
+    applyThemeCustomProps(coverThemeTokens);
+  }, [coverThemeTokens, theme, applyThemeCustomProps]);
 
   const themeResolved = autoThemeSource !== "cover" || !coverUrl || !!coverThemeTokens || coverThemeFailed;
 
