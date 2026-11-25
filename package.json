@@ -77,8 +77,8 @@
   },
   "peerDependencies": {
     "@readium/css": "^2.0.5",
-    "@readium/navigator": "~2.16.1",
-    "@readium/navigator-html-injectables": "~2.11.0",
+    "@readium/navigator": "~2.17.0",
+    "@readium/navigator-html-injectables": "~2.11.1",
     "@readium/shared": "~2.9.0",
     "@reduxjs/toolkit": "^2.11.2",
     "i18next": "^26.4.2",
@@ -97,8 +97,8 @@
   },
   "dependencies": {
     "@readium/css": "^2.0.5",
-    "@readium/navigator": "~2.16.1",
-    "@readium/navigator-html-injectables": "~2.11.0",
+    "@readium/navigator": "~2.17.0",
+    "@readium/navigator-html-injectables": "~2.11.1",
     "@readium/shared": "~2.9.0",
     "@reduxjs/toolkit": "^2.12.0",
     "classnames": "^2.5.1",
