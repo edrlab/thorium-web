@@ -28,6 +28,7 @@ export const StatefulJumpToPositionContainer = ({
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);
   const actionState = useAppSelector(state => profile ? state.actions.keys[profile][ThActionsKeys.jumpToPosition] : undefined);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
   const positionsList = useAppSelector(state => state.publication.positionsList);
 
   const positionNumbers = useAppSelector(state => state.publication.progress?.progression?.currentPositions);
@@ -79,7 +80,7 @@ export const StatefulJumpToPositionContainer = ({
   const handleAction = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!positionsList) return;
+    if (!positionsList || isNavigationLocked) return;
 
     setErrorMessage(undefined); // Clear previous errors
 
@@ -107,7 +108,7 @@ export const StatefulJumpToPositionContainer = ({
     // Divina jumps instantly: animating across the publication would sweep
     // through (and needlessly load) every page in between
     go(locator, !reducedMotion && profile !== "divina", cb);
-  }, [position, positionsList, reducedMotion, profile, t, positionInRange, go, setOpen, dispatch]);
+  }, [position, positionsList, isNavigationLocked, reducedMotion, profile, t, positionInRange, go, setOpen, dispatch]);
 
   // Since we are using an intermediary local state, we must keep track when positionNumbers changes
   useEffect(() => {
@@ -140,7 +141,7 @@ export const StatefulJumpToPositionContainer = ({
           compounds={{
             button: {
               className: jumpToPositionStyles.button,
-              isDisabled: !position || positionInRange()
+              isDisabled: isNavigationLocked || !position || positionInRange()
             }
           }}
         >

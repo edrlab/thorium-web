@@ -6,6 +6,11 @@
   --audio-icon-base: var(--th-icon-size, 24px);
 }
 
+/* Set on the triggers since the base is read from the wrapper's own --th-icon-size */
+.wrapper > * {
+  --th-icon-size: calc(var(--audio-icon-base) * (5/4));
+}
+
 @container (max-width: 300px) {
   .wrapper {
     --th-icon-size: 18px;

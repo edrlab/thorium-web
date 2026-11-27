@@ -80,7 +80,7 @@ export const StatefulFontFamily = ({ standalone = true }: StatefulSettingsItemPr
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.fontFamily);
+  const prefKey = getPreferenceKey(ThSettingsKeys.fontFamily, isWebPub ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (key: Key | null) => {
     if (!key || key === fontFamily) return;

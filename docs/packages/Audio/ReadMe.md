@@ -9,11 +9,7 @@ It also provides its components so you can build your own in a consistent way, a
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels
-```
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Player Component
 
@@ -29,7 +25,7 @@ import {
 } from "@edrlab/thorium-web/audio";
 
 const App = ({ manifestUrl }) => {
-  const { publication, localDataKey, isLoading, error } = usePublication({
+  const { publication, selfLink, localDataKey, isLoading, error } = usePublication({
     url: manifestUrl,
     onError: (error) => console.error("Publication loading error:", error)
   });
@@ -44,6 +40,7 @@ const App = ({ manifestUrl }) => {
           <StatefulPlayer
             publication={ publication }
             localDataKey={ localDataKey }
+            publicationKey={ selfLink }
             positionStorage={{
               get: () => getStoredPosition(localDataKey),
               set: (locator) => storePosition(localDataKey, locator)
@@ -60,10 +57,12 @@ The `StatefulPlayer` accepts the following props:
 
 - `publication`: `Publication` — the Readium Publication object.
 - `localDataKey`: `string | null` — unique key for storing local reading data (position, etc.).
+- `publicationKey`: `string | null` (optional) — the publication’s key for its settings in IndexedDB, e.g. `usePublication`’s `selfLink`.
 - `positionStorage`: `PositionStorage` (optional) — custom interface for persisting the playback position.
+- `settingsStorage`: `SettingsStorage` (optional) — custom interface for persisting the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
 - `plugins`: `ThPlugin[]` (optional) — override the default plugin set.
 - `coverUrl`: `string` (optional) — explicit cover image URL (falls back to publication metadata).
-- `mediaElementSetup`: `(element: HTMLMediaElement) => void | Promise<void>` (optional) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles.
+- `mediaElementSetup`: `AudioMediaElementSetup` (optional) — called with the playback element before its first `src` is assigned, so you can prepare it for MSE/EME. Loading waits until a returned promise settles.
 - `audioMseLoaderFactory`: `AudioMseLoaderFactory` (optional) — when provided, media reaches the playback element through Media Source Extensions: the navigator creates one loader per track with this factory, and the loader does all the fetching. Use it for EME-encrypted audio, which browsers poorly support through `src`.
 
 > [!IMPORTANT]

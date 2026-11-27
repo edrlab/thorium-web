@@ -1,0 +1,133 @@
+.wrapper {}
+
+.button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button:has(.label) {
+  padding-bottom: calc(var(--th-icon-size) * (2/3));
+}
+
+.label {
+  position: absolute;
+  bottom: calc(var(--th-icon-size) * (1/4));
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  line-height: 1;
+  font-size: calc(var(--th-icon-size, 24px) * (5/12));
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+}
+
+.listbox {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--th-layout-spacing) / 2);
+}
+
+.listboxItem {
+  padding: calc(var(--th-layout-spacing) / 4);
+  border-radius: var(--th-layout-radius);
+  outline: none;
+  cursor: default;
+}
+
+.listboxItem[data-selected] {
+  background-color: var(--th-theme-hover);
+  font-weight: bold;
+}
+
+.listboxItem[data-hovered]:not([data-selected]) {
+  background-color: var(--th-theme-hover);
+  color: var(--th-theme-onHover);
+}
+
+.listboxItem[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+/* Sleep timer duration field */
+
+.durationField {
+  display: flex;
+  flex-direction: column;
+}
+
+.instruction {
+  display: block;
+  margin: 0 0 var(--th-layout-spacing) 0;
+}
+
+.inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--th-layout-spacing) / 4);
+  margin-bottom: var(--th-layout-spacing);
+}
+
+.fieldGroup {
+  display: contents;
+}
+
+.fieldInput {
+  width: 4ch;
+  text-align: center;
+  background: transparent;
+  border: 2px solid var(--th-theme-subdue);
+  border-radius: var(--th-layout-radius);
+  padding: calc(var(--th-icon-size, 24px) * (1/4)) calc(var(--th-layout-spacing) / 2);
+  color: var(--th-theme-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  outline: none;
+}
+
+.fieldInput[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+.unitLabel {
+  margin-inline-end: calc(var(--th-layout-spacing) / 4);
+}
+
+.remaining {
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
+  margin: 0 0 var(--th-layout-spacing) 0;
+}
+
+.cancelButton {
+  margin-top: var(--th-layout-spacing);
+}
+
+/* Start button */
+
+.startButton {
+  padding: calc(var(--th-icon-size, 24px) * (1/4)) calc(var(--th-icon-size, 24px) * (1/2));
+  border-radius: var(--th-layout-radius);
+  border: 2px solid var(--th-theme-subdue);
+  background: transparent;
+  color: var(--th-theme-text);
+  cursor: default;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.startButton[data-hovered] {
+  background-color: var(--th-theme-hover);
+  color: var(--th-theme-onHover)
+}
+
+.startButton[data-focus-visible] {
+  outline: 2px solid var(--th-theme-focus);
+}
+
+.startButton[data-disabled] {
+  color: var(--th-theme-disable);
+}

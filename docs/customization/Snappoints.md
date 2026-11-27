@@ -46,6 +46,7 @@ For instance:
 
 - `minHeight: full-height` will make the bottom sheet an animated fullscreen sheet you can close by dragging but with no snap point.
 - `peekHeight: content-height` will make the bottom sheet draggable with 2 snap points, effectively transforming the `peekHeight` into the max height, constrained by its content’s. 
+- `maxHeight: 100` or `maxHeight: full-height`, with neither `minHeight` nor `peekHeight`, will make the bottom sheet open at full height, with no other snap point: dragging it down closes it.
 
 ## Examples
 

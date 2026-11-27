@@ -47,6 +47,7 @@ export const ThSliderWithPresets = ({
   compounds,
   range,
   step,
+  isDisabled,
   ...props
 }: ThSliderWithPresetsProps) => {
   const currentValue = Array.isArray(value) ? value[0] : value;
@@ -73,6 +74,7 @@ export const ThSliderWithPresets = ({
         range={ range }
         step={ step }
         compounds={ compounds?.slider }
+        isDisabled={ isDisabled }
         { ...props }
       />
       <ThRadioGroup
@@ -80,6 +82,7 @@ export const ThSliderWithPresets = ({
         value={ radioValue }
         onChange={ handleChange }
         items={ radioItems }
+        isDisabled={ isDisabled }
         compounds={{
           wrapper: compounds?.presetsWrapper,
           radio: compounds?.preset,

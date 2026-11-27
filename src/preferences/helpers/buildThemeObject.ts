@@ -1,6 +1,8 @@
 import { ThColorScheme } from "@/core/Hooks/useColorScheme";
 import { ThemeTokens } from "../hooks/useTheming";
 
+import { validThemeToken } from "./validThemeToken";
+
 export interface buildThemeProps<T extends string> {
   theme?: string;
   themeKeys: { [key in T]?: ThemeTokens },
@@ -30,12 +32,12 @@ export const buildThemeObject = <T extends string>({
   const themeToken = themeKeys[theme as T];
   if (themeToken) {
     themeProps = {
-      backgroundColor: themeToken.background,
-      textColor: themeToken.text,
-      linkColor: themeToken.link,
-      selectionBackgroundColor: themeToken.select,
-      selectionTextColor: themeToken.onSelect,
-      visitedColor: themeToken.visited
+      backgroundColor: validThemeToken(themeToken.background),
+      textColor: validThemeToken(themeToken.text),
+      linkColor: validThemeToken(themeToken.link),
+      selectionBackgroundColor: validThemeToken(themeToken.select),
+      selectionTextColor: validThemeToken(themeToken.onSelect),
+      visitedColor: validThemeToken(themeToken.visited)
     };
   } else {
     // Fallback if theme doesn't exist

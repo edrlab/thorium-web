@@ -1,13 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState } from "react";
 
 export const usePrevious = <T>(value: T): T | null => {
-  const ref = useRef<T | null>(null);
-  
-  useEffect(() => {
-    ref.current = value;
-  }, [value]); 
+  const [current, setCurrent] = useState(value);
+  const [previous, setPrevious] = useState<T | null>(null);
 
-  return ref.current;
+  if (current !== value) {
+    setCurrent(value);
+    setPrevious(current);
+  }
+
+  return previous;
 }

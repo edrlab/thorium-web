@@ -187,6 +187,28 @@ const prefs = createPreferences<MyKeys>({
 });
 ```
 
+Read-along has its own customizable keys, declared the same way:
+
+- `readAlongAction`: actions of the read-along player, added to `readAlong.actions` and rendered through the plugin `readAlongActions` map;
+- `readAlong`: read-along settings, added to `readAlong.settings`. Their `keys` entries are typed as range settings;
+- `readAlongVoice`: components of the voice group, added to `readAlong.settings.voice`, like `text` and `spacing`;
+- `readAlongHighlight`: components of the highlight group, added to `readAlong.settings.highlight`, like `text` and `spacing`;
+- `readAlongProsody`: components of the prosody group, added to `readAlong.settings.prosody`, like `text` and `spacing`;
+- `readAlongVerbosity`: components of the verbosity group, added to `readAlong.settings.verbosity`, like `text` and `spacing`.
+
+```typescript
+type MyKeys = {
+  readAlongAction: ThReadAlongActionKeys | "myReadAlongAction";
+  readAlong: ThReadAlongKeys | "myReadAlongSetting";
+  readAlongVoice: ThReadAlongVoiceKeys | "myVoiceSetting";
+  readAlongHighlight: ThReadAlongHighlightKeys | "myHighlightSetting";
+  readAlongProsody: ThReadAlongProsodyKeys | "myProsodySetting";
+  readAlongVerbosity: ThReadAlongVerbosityKeys | "myVerbositySetting";
+} & CustomizableKeys;
+```
+
+See the [Read Along doc](./ReadAlong.md) for more details.
+
 ### Using the Provider
 
 The `ThPreferencesProvider` component provides a React context for accessing Thorium Web preferences throughout your application. It serves as the central point for managing and distributing preference settings to all components.

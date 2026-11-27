@@ -1,13 +1,19 @@
 "use client";
 
 import { use, useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { ErrorDisplay } from "@/components/Misc";
 import { usePublication } from "@/hooks/usePublication";
 import { useAppSelector } from "@/lib/hooks";
 import { verifyManifestUrl } from "@/app/api/verify-manifest/verifyDomain";
-import { StatefulReaderWrapper } from "@/components/Reader/StatefulReaderWrapper";
 import { proxyCoverUrl } from "@/app/api/proxy/proxyCoverUrl";
 import { ErrorHandler, ProcessedError } from "@/helpers/errorHandler";
+
+// Publication only exists client-side, so keep the reader out of the server bundle
+const StatefulReaderWrapper = dynamic(
+  () => import("@/components/Reader/StatefulReaderWrapper").then(mod => mod.StatefulReaderWrapper),
+  { ssr: false }
+);
 
 type Params = { manifest: string };
 
@@ -39,6 +45,7 @@ export default function ManifestPage({ params }: Props) {
     error, 
     publication, 
     profile,
+    selfLink,
     localDataKey
   } = usePublication({
     url: manifestUrl,
@@ -64,6 +71,7 @@ export default function ManifestPage({ params }: Props) {
           profile={ profile }
           publication={ publication }
           localDataKey={ localDataKey }
+          publicationKey={ selfLink }
           isLoading={ isLoading || publicationLoading }
           resolveCoverUrl={ proxyCoverUrl }
         />

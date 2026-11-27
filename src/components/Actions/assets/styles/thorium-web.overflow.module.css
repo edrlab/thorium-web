@@ -18,7 +18,7 @@
   border: 1px solid var(--th-theme-subdue);
   filter: drop-shadow(var(--th-theme-elevate));
   box-sizing: border-box;
-  max-width: var(--th-layout-constraints-popover, 500px);
+  max-width: var(--th-layout-constraints-popover-width, var(--th-layout-constraints-popover, 500px));
   width: max-content;
 }
 

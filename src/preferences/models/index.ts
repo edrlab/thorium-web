@@ -7,3 +7,4 @@ export * from "./protection";
 export * from "./settings";
 export * from "./theme";
 export * from "./ui";
+export * from "./readAlong";

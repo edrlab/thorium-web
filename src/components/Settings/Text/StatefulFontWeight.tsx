@@ -34,7 +34,7 @@ export const UnstableStatefulFontWeight = ({ standalone = true }: StatefulSettin
 
   const { getSetting, submitPreferences } = useNavigator().visual;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.fontWeight);
+  const prefKey = getPreferenceKey(ThSettingsKeys.fontWeight, isWebPub ? "webPub" : "epub");
 
   const items = [
     {

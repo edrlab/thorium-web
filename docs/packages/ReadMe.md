@@ -17,10 +17,10 @@ The Thorium Web package is organized into several sub-packages:
 To use the Thorium Web package, you will need to add it as a dependency in your project. You can do this by running the following command:
 
 ```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels  
+npm install @edrlab/thorium-web "@readium/css@^2.0.5" "@readium/navigator@~2.15.0" "@readium/navigator-html-injectables@~2.11.0" "@readium/shared@~2.9.0" "@reduxjs/toolkit@^2.11.2" "i18next@^26.4.2" "i18next-browser-languagedetector@^8.2.1" "i18next-http-backend@^4.0.2" "motion@^12.34.3" "react@^19.3.0" "react-aria@^3.52.1" "react-aria-components@^1.21.1" "react-dom@^19.3.0" "react-i18next@^17.0.15" "react-modal-sheet@5.2.1" "react-redux@^9.3.0" "react-resizable-panels@^4.13.3" "react-stately@^3.50.0"
 ```
 
-Components are relying on peer dependencies to work. You must install them manually.
+Components are relying on peer dependencies to work. You must install them manually. The command installs each of them within the range Thorium Web supports: `@readium/navigator`, `@readium/navigator-html-injectables` and `@readium/shared` are pinned to a minor version, as the TS-Toolkit can ship breaking changes in minor versions.
 
 Note that these components do not require Next.js, you should be able to use them in any React application or React framework of your choice.
 

@@ -20,7 +20,7 @@ export const lightTheme = {
   hover: "#d9d9d9",               // color of background for :hover
   onHover: ReadiumCSSColors.textColor, // color of text for :hover
   select: "#b4d8fe",              // color of selected background
-  onSelect: "inherit",            // color of selected text
+  onSelect: "currentColor",       // color of selected text
   focus: "#0067f4",               // color of :focus-visible
   elevate: "0px 0px 2px #808080", // drop shadow of containers
   immerse: "0.6"                  // opacity of immersive mode
@@ -36,7 +36,7 @@ export const darkTheme = {
   hover: "#404040",
   onHover: "#FEFEFE",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#0067f4",
   elevate: "0px 0px 2px #808080",
   immerse: "0.4"
@@ -52,7 +52,7 @@ export const paperTheme = {
   hover: "#edd7ab",
   onHover: "#121212",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#0067f4",
   elevate: "0px 0px 2px #8c8c8c",
   immerse: "0.5"
@@ -68,7 +68,7 @@ export const sepiaTheme = {
   hover: "#ccb07f",
   onHover: "#000000",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#004099",
   elevate: "0px 0px 2px #8c8c8c",
   immerse: "0.45"
@@ -84,7 +84,7 @@ export const contrast1Theme = {
   hover: "#404040",
   onHover: "#ffff00",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#0067f4",
   elevate: "0px 0px 2px #808000",
   immerse: "0.4"
@@ -100,7 +100,7 @@ export const contrast2Theme = {
   hover: "#4444bb",
   onHover: "#ffffff",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#6BA9FF",
   elevate: "0px 0px 2px #808080",
   immerse: "0.4"
@@ -116,7 +116,7 @@ export const contrast3Theme = {
   hover: "#6fc383",
   onHover: "#000000",
   select: "#b4d8fe",
-  onSelect: "inherit",
+  onSelect: "currentColor",
   focus: "#004099",
   elevate: "0px 0px 2px #8c8c8c",
   immerse: "0.45"

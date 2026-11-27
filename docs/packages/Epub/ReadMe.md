@@ -9,11 +9,7 @@ It also provides with its components to build your owns in a consistent way, and
 
 ## Installation
 
-Thorium Web relies on peer dependencies to work. You must install them manually.
-
-```bash
-npm install @edrlab/thorium-web @readium/css @readium/navigator @readium/navigator-html-injectables @readium/shared react-redux @reduxjs/toolkit i18next i18next-browser-languagedetector i18next-http-backend motion react-aria react-aria-components react-stately react-modal-sheet react-resizable-panels 
-```
+Thorium Web relies on peer dependencies to work. You must install them manually, see [Usage](../ReadMe.md#usage) for the command.
 
 ## Reader Component
 
@@ -111,8 +107,10 @@ The Reader expects the following props:
 - `localDataKey`: a key for storing reader position and settings locally.
 - `plugins` (optional): the components (actions, settings) to use in the reader. More below.
 - `positionStorage` (optional): custom storage interface for position data.
+- `settingsStorage` (optional): custom storage interface for the publication’s settings, see [SettingsStorage Interface](../Reader/ReadMe.md#settingsstorage-interface).
+- `readAlong` (optional): factories for read along’s Guided Navigation provider and speech engine, see [Read Along](../../customization/ReadAlong.md#provider-and-engine).
 
-You can take a look how the NextJS app is currently doing in [the Read Page](../../src/app/read/[identifier]/page.tsx).
+You can take a look how the NextJS app is currently doing in [the Read Page](../../../src/app/read/[identifier]/page.tsx).
 
 > [!IMPORTANT]
 > Due to the complexity the reader has to handle, it does not currently accept `children`. This also explains why it requires dependencies (Redux, Preferences) and is not directly stylable. We are hopeful these limitations may be removed in the future but it will require some additional effort. If you have any ideas, please let us know. In the meantime, you can build your own reader component if you want to use the other components exported from this package.
@@ -242,7 +240,7 @@ A setting is an object that contains the following properties:
 - `type` (optional): the type of the setting. Can be `undefined | "text" | "spacing"`
 
 > [!NOTE]
-> The `type` property is important for components that can be displayed in the text and spacing wrappers, which allows for displaying them in a subpanel of the settings menu. See the documentation for [these advanced components](../customization/Settings.md#advanced-components) for more information.
+> The `type` property is important for components that can be displayed in the text and spacing wrappers, which allows for displaying them in a subpanel of the settings menu. See the documentation for [these advanced components](../../customization/Settings.md#advanced-components) for more information.
 
 Let’s imagine you want to extend the default plugins:
 
@@ -388,8 +386,8 @@ The `<StatefulReader>` Component will then register these components but will no
 `@edrlab/thorium-web/core/preferences` provides with default preferences, as well as default `enums`, and a helper to create them.
 
 > [!NOTE]
-> Preferences are extensively documented in the [Customization Guide](../customization/Customization.md).
-> [Handling Preferences](../customization/HandlingPreferences.md) can serve as a good starting point to understand how to create your own.
+> Preferences are extensively documented in the [Customization Guide](../../customization/Customization.md).
+> [Handling Preferences](../../customization/HandlingPreferences.md) can serve as a good starting point to understand how to create your own.
 
 To add your custom components to the Reader Component, you need to configure the preferences.
 
@@ -435,4 +433,4 @@ Once everything is set up, your scroll switch should be displayed in the setting
 
 ## Related Documentation
 
-- [Core Package](./Core/Guide.md)
+- [Core Package](../Core/ReadMe.md)

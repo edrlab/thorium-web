@@ -1,6 +1,6 @@
 "use client";
 
-export * from "./StatefulBottomSheet";
+export * from "./BottomSheet";
 export * from "./StatefulCompactPopoverSheet";
 export * from "./StatefulDockedSheet";
 export * from "./StatefulFullScreenSheet";

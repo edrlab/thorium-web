@@ -12,6 +12,11 @@ const PLUGIN_FILES = [
   "src/components/Plugins/helpers/createAudioDefaultPlugin.ts",
 ];
 
+const INSTALL_COMMAND_FILES = [
+  "README.md",
+  "docs/packages/ReadMe.md",
+];
+
 const bump = (version, type) => {
   const [major, minor, patch] = version.split(".").map(Number);
   if (type === "major") return `${ major + 1 }.0.0`;
@@ -47,5 +52,21 @@ for (const relPath of PLUGIN_FILES) {
   } else {
     fs.writeFileSync(filePath, updated);
     console.log(`  ${ relPath }: updated to ${ newVersion }`);
+  }
+}
+
+// Quoted, as cmd.exe drops an unquoted ^
+const peerSpecs = Object.entries(pkg.peerDependencies ?? {}).map(([name, range]) => `"${ name }@${ range }"`);
+const installCommand = ["npm install @edrlab/thorium-web", ...peerSpecs].join(" ");
+
+for (const relPath of INSTALL_COMMAND_FILES) {
+  const filePath = path.join(root, relPath);
+  const content = fs.readFileSync(filePath, "utf-8");
+  const updated = content.replace(/^npm install @edrlab\/thorium-web\b.*$/gm, installCommand);
+  if (updated === content) {
+    console.log(`  ${ relPath }: install command already up to date`);
+  } else {
+    fs.writeFileSync(filePath, updated);
+    console.log(`  ${ relPath }: install command updated`);
   }
 }

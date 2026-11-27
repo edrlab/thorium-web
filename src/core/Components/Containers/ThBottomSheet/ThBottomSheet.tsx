@@ -60,6 +60,8 @@ const ThBottomSheetContainer = ({
   sheetRef,
   sheetState,
   isDraggable, 
+  hasPartialSnap,
+  isDismissable,
   isKeyboardDismissDisabled,
   focusOptions,
   detent,
@@ -70,6 +72,8 @@ const ThBottomSheetContainer = ({
   sheetState: OverlayTriggerState;
   onFullHeight?: Omit<React.ComponentProps<typeof Sheet.Container>, "children">;
   isDraggable?: boolean;
+  hasPartialSnap?: boolean;
+  isDismissable?: boolean;
   isKeyboardDismissDisabled?: boolean;
   focusOptions?: UseFirstFocusableProps;
   detent?: SheetDetent;
@@ -82,7 +86,7 @@ const ThBottomSheetContainer = ({
   const overlay = useOverlay({ 
     onClose: sheetState.close, 
     isOpen: true, 
-    isDismissable: true,
+    isDismissable: isDismissable,
     isKeyboardDismissDisabled: isKeyboardDismissDisabled
   }, containerRef);
   const [isFullHeight, setFullHeight] = useState<boolean>(false);
@@ -184,7 +188,7 @@ const ThBottomSheetContainer = ({
       <Sheet.Content 
         scrollRef={ scrollerRef }
         { ...compounds?.content }
-        { ...(isDraggable && compounds?.content?.disableDrag ? { style: { ...compounds?.content?.style, paddingBottom: autoPadding } as { [key: string]: any }} : {})}
+        { ...(hasPartialSnap && compounds?.content?.disableDrag ? { style: { ...compounds?.content?.style, paddingBottom: autoPadding } as { [key: string]: any }} : {})}
       >
         { Body }
       </Sheet.Content>
@@ -201,6 +205,7 @@ export const ThBottomSheet = ({
   onOpenChange,
   ref,
   focusOptions,
+  isDismissable = true,
   isKeyboardDismissDisabled,
   detent,
   snapPoints,
@@ -216,6 +221,8 @@ export const ThBottomSheet = ({
   });
 
   const isDraggable = useMemo(() => snapPoints && snapPoints.length > 1, [snapPoints]);
+  // Content is padded by the drag offset only to stay reachable at heights between closed and full
+  const hasPartialSnap = useMemo(() => !!snapPoints?.some(point => point !== 0 && point !== 1), [snapPoints]);
 
   return(
     <>
@@ -229,15 +236,17 @@ export const ThBottomSheet = ({
     >
       <OverlayProvider>
         <FocusScope 
-          contain={ true } 
+          contain={ isDismissable } 
           // If not set to true, focus is not contained on open
-          autoFocus={ true } 
+          autoFocus={ isDismissable } 
           restoreFocus={ true }
         >
           <ThBottomSheetContainer 
             sheetRef={ resolvedRef } 
             sheetState={ sheetState } 
             isDraggable= { isDraggable }
+            hasPartialSnap={ hasPartialSnap }
+            isDismissable={ isDismissable }
             isKeyboardDismissDisabled={ isKeyboardDismissDisabled }
             focusOptions={ focusOptions }
             detent={ detent }

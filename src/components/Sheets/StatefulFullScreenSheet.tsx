@@ -12,6 +12,8 @@ export const StatefulFullScreenSheet = (props: StatefulFullScreenSheetProps) => 
     <StatefulModalBase
       { ...props }
       sheetClassName={ sheetStyles.fullscreen }
+      // Its height is the viewport's, whatever the panel
+      uniformPanelHeight={ false }
     />
   )
 }

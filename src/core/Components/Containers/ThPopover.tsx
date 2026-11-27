@@ -10,9 +10,11 @@ import { Dialog, DialogProps, Popover, PopoverProps } from "react-aria-component
 
 import { useObjectRef } from "react-aria";
 import { useFirstFocusable } from "./hooks/useFirstFocusable";
+import { UseUniformPanelHeightProps, useUniformPanelHeight } from "./hooks/useUniformPanelHeight";
 
 export interface ThPopoverProps extends Omit<PopoverProps, "children">, ThContainerProps {
   triggerRef: React.RefObject<HTMLElement | null>;
+  uniformPanelHeightOptions?: Omit<UseUniformPanelHeightProps, "ref">;
   compounds?: {
     dialog: WithRef<DialogProps, HTMLDivElement>;
   }
@@ -23,6 +25,7 @@ export const ThPopover = ({
   id,
   triggerRef,
   focusOptions,
+  uniformPanelHeightOptions,
   compounds,
   maxHeight,
   children,
@@ -36,6 +39,12 @@ export const ThPopover = ({
   } : undefined;
 
   useFirstFocusable(updatedFocusOptions);
+
+  useUniformPanelHeight({
+    ref: resolvedRef,
+    isOpen: false,
+    ...uniformPanelHeightOptions
+  });
 
   const computeMaxHeight = () => {
     if (!resolvedRef.current) return;

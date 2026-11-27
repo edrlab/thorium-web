@@ -51,7 +51,7 @@ export const StatefulZoom = () => {
       ? (preferencesEditor as any)?.zoom 
       : (preferencesEditor as EpubPreferencesEditor)?.fontSize;
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.zoom, readerProfile);
+  const prefKey = getPreferenceKey(ThSettingsKeys.zoom, readerProfile === "webPub" ? "webPub" : "epub");
 
   const updatePreference = useCallback(async (value: number | number[]) => {
     const normalizedValue = Array.isArray(value) ? value[0] : value;

@@ -47,7 +47,7 @@ export const StatefulColumns = () => {
 
   const { submitPreferences, getSetting } = useEpubNavigator();
 
-  const prefKey = getPreferenceKey(ThSettingsKeys.columns);
+  const prefKey = getPreferenceKey(ThSettingsKeys.columns, "epub");
 
   const items = useMemo(() => [
     {

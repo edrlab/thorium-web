@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HydratePayload, hydrateState } from "./helpers/hydrateState";
 
 export interface AudioSettingsState {
   volume: number;
@@ -55,6 +56,7 @@ export const audioSettingsSlice = createSlice({
     setEnableMediaSession: (state, action) => {
       state.enableMediaSession = action.payload;
     },
+    hydrateAudioSettings: (state, action: PayloadAction<HydratePayload<AudioSettingsState>>) => hydrateState(state, initialState, action.payload),
   },
 });
 
@@ -68,6 +70,7 @@ export const {
   setPollInterval,
   setAutoPlay,
   setEnableMediaSession,
+  hydrateAudioSettings,
 } = audioSettingsSlice.actions;
 
 export default audioSettingsSlice.reducer;

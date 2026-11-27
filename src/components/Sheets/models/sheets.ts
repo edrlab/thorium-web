@@ -13,7 +13,9 @@ export interface StatefulSheet {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   onClosePress: () => void;
+  closeLabel?: string;
   docker?: ThDockingKeys[];
+  headerActions?: ReactNode;
   children?: ReactNode;
   resetFocus?: unknown;
   focusWithinRef?: RefObject<HTMLElement | null>;

@@ -20,6 +20,7 @@ export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTrigger
   const { t } = useI18n();
   const profile = useAppSelector(state => state.reader.profile);
   const actionState = useAppSelector(state => profile ? state.actions.keys[profile][ThActionsKeys.jumpToPosition] : undefined);
+  const isNavigationLocked = useAppSelector(state => state.readAlongPlayer.isNavigationLocked);
   const positionsList = useAppSelector(state => state.publication.positionsList);
   const dispatch = useAppDispatch();
 
@@ -45,6 +46,7 @@ export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTrigger
           shortcut={ preferences.actionsKeys[ThActionsKeys.jumpToPosition].shortcut }
           id={ ThActionsKeys.jumpToPosition }
           onAction={ () => setOpen(!actionState?.isOpen) }
+          isDisabled={ isNavigationLocked }
         />
       : <StatefulActionIcon
           visibility={ preferences.actionsKeys[ThActionsKeys.jumpToPosition].visibility }
@@ -53,6 +55,7 @@ export const StatefulJumpToPositionTrigger = ({ variant }: StatefulActionTrigger
           tooltipLabel={ t("reader.actions.goToPosition.compact") }
           shortcut={ preferences.actionsKeys[ThActionsKeys.jumpToPosition].shortcut }
           onPress={ () => setOpen(!actionState?.isOpen) }
+          isDisabled={ isNavigationLocked }
         >
           <TargetIcon aria-hidden="true" focusable="false" />
         </StatefulActionIcon>

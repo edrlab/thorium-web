@@ -28,6 +28,8 @@ import {
   defaultFullscreenAction,
   defaultTocAction,
   defaultJumpToPositionAction,
+  defaultReadAlongAction,
+  defaultReadAlongPreferences,
   defaultContentProtectionConfig,
   defaultFontCollection,
   defaultLetterSpacing,
@@ -232,8 +234,8 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       },
       constraints: {
         [ThSheetTypes.bottomSheet]: 600, // Max-width of all bottom sheets
-        [ThSheetTypes.popover]: 600, // Max-width of all popover sheets
-        [ThSheetTypes.modal]: 600, // Max-width of all modal sheets
+        [ThSheetTypes.popover]: { width: 600, height: null }, // Max-width and max-height of all popover sheets
+        [ThSheetTypes.modal]: { width: 600, height: null }, // Max-width and max-height of all modal sheets
         pagination: 1024, // Max-width of pagination component
         dropdown: 250 // Max-height of main UI dropdowns
       }
@@ -330,18 +332,21 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     reflowOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     fxlOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen,
       ThActionsKeys.jumpToPosition
     ],
     webPubOrder: [
       ThActionsKeys.settings,
       ThActionsKeys.toc,
+      ThActionsKeys.readAlong,
       ThActionsKeys.fullscreen
     ],
     divinaOrder: [
@@ -356,8 +361,10 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
       [ThActionsKeys.fullscreen]: defaultFullscreenAction,
       [ThActionsKeys.toc]: defaultTocAction,
       [ThActionsKeys.jumpToPosition]: defaultJumpToPositionAction,
+      [ThActionsKeys.readAlong]: defaultReadAlongAction,
     }
   },
+  readAlong: defaultReadAlongPreferences,
   docking: {
     displayOrder: [
       ThDockingKeys.transient,
@@ -367,7 +374,7 @@ export const defaultPreferences: ThPreferences<DefaultKeys> = createPreferences<
     dock: {
       [ThBreakpoints.compact]: ThDockingTypes.none,
       [ThBreakpoints.medium]: ThDockingTypes.none,
-      [ThBreakpoints.expanded]: ThDockingTypes.start,
+      [ThBreakpoints.expanded]: ThDockingTypes.end,
       [ThBreakpoints.large]: ThDockingTypes.both,
       [ThBreakpoints.xLarge]: ThDockingTypes.both
     },
