@@ -446,7 +446,7 @@ export const defaultReadAlongProsodyPresets = {
 };
 
 export const defaultReadAlongPreferences = {
-  generateFromMarkup: false,
+  generateFromMarkup: true,
   readFromPointer: true,
   detachable: true,
   startInViewport: true,
