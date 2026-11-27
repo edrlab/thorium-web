@@ -4,16 +4,24 @@ export const PUBLICATION_MANIFESTS = {
   "les-diaboliques": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXNfZGlhYm9saXF1ZXMuZXB1Yg/manifest.json",
   "le-rouge-et-le-noir": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZS1yb3VnZS1ldC1sZS1ub2lyLWZyLWVuLmVwdWI/manifest.json",
   "bella-the-dragon": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9CZWxsYU9yaWdpbmFsMy5lcHVi/manifest.json",
-  "level0":"https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXZlbDAtdGV4dC1hbmQtYXVkaW8uZXB1Yg/manifest.json",
-  "level1":"https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXZlbDEuZXB1Yg/manifest.json",
+  // Thorium guides
   "thorium-reader-user-guide-english": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvdGhvcml1bS1yZWFkZXItdXNlci1ndWlkZS1lbmdsaXNoLmVwdWI/manifest.json",
   "thorium-reader-user-guide-french": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvZ3VpZGUtdXRpbGlzYXRldXItdGhvcml1bS1yZWFkZXItZnJhbmNhaXMuZXB1Yg/manifest.json",
   "thorium-reader-user-guide-spanish": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvdGhvcml1bS1kZXNrdG9wLXVzZXItZ3VpZGUvZ3VpYS11c3VhcmlvLXRob3JpdW0tcmVhZGVyLWVzcGFub2wuZXB1Yg/manifest.json",
+  // Accessibility tests
   "Fundamental-Accessibility-Tests-Basic-Functionality-v2.0.0": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL2RhaXN5L2VwdWItYWNjZXNzaWJpbGl0eS10ZXN0cy9yZWxlYXNlcy9kb3dubG9hZC9mdW5kYW1lbnRhbC0yLjAvRnVuZGFtZW50YWwtQWNjZXNzaWJpbGl0eS1UZXN0cy1CYXNpYy1GdW5jdGlvbmFsaXR5LXYyLjAuMC5lcHVi/manifest.json",
   "Fundamental-Accessibility-Tests-Non-Visual-Reading-v2.0.1": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL2RhaXN5L2VwdWItYWNjZXNzaWJpbGl0eS10ZXN0cy9yZWxlYXNlcy9kb3dubG9hZC9ub24tdmlzdWFsLXJlYWRpbmctMi4wLjEvRnVuZGFtZW50YWwtQWNjZXNzaWJpbGl0eS1UZXN0cy1Ob24tVmlzdWFsLVJlYWRpbmctdjIuMC4xLmVwdWI/manifest.json",
   "Fundamental-Accessibility-Tests-Visual-Adjustments-v2.0.0": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL2RhaXN5L2VwdWItYWNjZXNzaWJpbGl0eS10ZXN0cy9yZWxlYXNlcy9kb3dubG9hZC9mdW5kYW1lbnRhbC0yLjAvRnVuZGFtZW50YWwtQWNjZXNzaWJpbGl0eS1UZXN0cy1WaXN1YWwtQWRqdXN0bWVudHMtdjIuMC4wLmVwdWI/manifest.json",
   "Advanced-Accessibility-Tests-Media-Overlays-v1.0.0": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL2RhaXN5L2VwdWItYWNjZXNzaWJpbGl0eS10ZXN0cy9yZWxlYXNlcy9kb3dubG9hZC9tZWRpYS1vdmVybGF5cy0xLjAvQWR2YW5jZWQtQWNjZXNzaWJpbGl0eS1UZXN0cy1NZWRpYS1PdmVybGF5cy12MS4wLjAuZXB1Yg/manifest.json",
   "Accessibility-Tests-Extended-Descriptions-v1.1.1": "https://publication-server.readium.org/webpub/aHR0cHM6Ly9naXRodWIuY29tL2RhaXN5L2VwdWItYWNjZXNzaWJpbGl0eS10ZXN0cy9yZWxlYXNlcy9kb3dubG9hZC9tYXRoLWV4dGRlc2MtMS4xLjEvQWNjZXNzaWJpbGl0eS1UZXN0cy1FeHRlbmRlZC1EZXNjcmlwdGlvbnMtdjEuMS4xLmVwdWI/manifest.json",
+  // Accessible comics experiments
+  "level0": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXZlbDAtdGV4dC1hbmQtYXVkaW8uZXB1Yg/manifest.json",
+  "level1": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9sZXZlbDEuZXB1Yg/manifest.json",
+  "pepper-carrot-01": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9wZXBwZXItY2Fycm90LWVwMDEtbGV2ZWwxLmVwdWI/manifest.json",
+  "pepper-carrot-02": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9wZXBwZXItY2Fycm90LWVwMDItbGV2ZWwxLmVwdWI/manifest.json",
+  "pepper-carrot-03": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9wZXBwZXItY2Fycm90LWVwMDMtbGV2ZWwxLmVwdWI/manifest.json",
+  "pepper-carrot-04": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9wZXBwZXItY2Fycm90LWVwMDQtbGV2ZWwxLmVwdWI/manifest.json",
+  "pepper-carrot-05": "https://publication-server.readium.org/webpub/Z3M6Ly9yZWFkaXVtLXBsYXlncm91bmQtZmlsZXMvZGVtby9wZXBwZXItY2Fycm90LWVwMDUtbGV2ZWwxLmVwdWI/manifest.json",
   // Additional experimental web publications
   "readium-css": "https://readium.org/css/docs/manifest.json",
   "moby-dick-webpub": "https://readium.org/webpub-manifest/examples/MobyDick/manifest.json",
